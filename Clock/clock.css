@@ -1,0 +1,38 @@
+:root{
+    --color: #ffffff;
+}
+
+*{
+    margin: 0;
+    width: 100%;
+    overflow-y: hidden;
+}
+
+.main-container{
+    width: 100vw;
+    height: 100vh;
+    background-color: #0D1117;
+    position: relative;
+}
+
+h1{
+    width: 100%;
+    position: absolute;
+    margin-top: 10%;
+    font-size: 8vw;
+    font-weight: bold;
+    text-align: center;
+    color: var(--color);
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 5px;
+}
+
+#clock{
+    width: 100%;
+    position: absolute;
+    margin-top: 20%;
+    font-size: 9vw;
+    color: var(--color);
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}

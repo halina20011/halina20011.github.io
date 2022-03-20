@@ -1,0 +1,39 @@
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4{
+    font-family: 'Roboto', sans-serif;
+}
+
+p{
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    /* color: white; */
+}
+
+a{
+    font-family: 'Roboto', sans-serif;
+}
+
+.paragraph{
+    position: relative;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.ul{
+    text-decoration: underline;
+}
+
+/* ############################################################################################ */
+/*                                      Custom HTML TAGS                                        */
+/* ############################################################################################ */
+
+bold{
+    font-weight: bold;
+}
+
+val{
+    background-color: rgba(0, 0, 0, 0.3);
+}

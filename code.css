@@ -1,0 +1,140 @@
+#number, #codeText{
+    white-space: pre;
+}
+
+#sameLine, #number{
+    display:inline-block;
+}
+
+[class*="codeWindow"]{
+    display: block;
+    position: relative;
+    background-color:rgb(66, 66, 66);
+    padding: 10px 10px 10px 10px;
+}
+
+.codeExplain{
+    display: block;
+    position: relative;
+    background-color:rgb(66, 66, 66);
+    padding: 10px 10px 10px 10px;
+}
+
+#codeText{
+    font-family: 'Roboto', sans-serif;
+}
+
+#number{
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+/* 
+|codeSettings
+    -|copyButton
+        -|button
+            -|img 
+*/
+
+.codeSettings button:hover{
+    background-color: rgba(0, 0, 0, 30%);
+}
+
+.codeSettings{
+    width: 100%;
+    height: 20px;
+    box-sizing: border-box;
+}
+
+[class*="copyCodeWindowButton"]{
+    width: 20px;
+    height: 20px;
+    float: right;
+    padding-right: 2px;
+    border: none;
+    background-image: url('/images/Icons/copy.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: rgba(0,0,0,0);
+}
+[class*="downloadCodeWindowButton"]{
+    width: 20px;
+    height: 20px;
+    float: right;
+    padding-right: 2px;
+    border: none;
+    background-image: url('/images/Icons/download.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: rgba(0,0,0,0);
+}
+
+
+/* button atribute */
+/* .codeSettings button{
+    width: 20px;
+    height: 20px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+} */
+
+/* image atribute */
+.codeSettings div img{
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+
+.copyText{
+    /* transform-origin: center; */
+    position: absolute;
+    text-align: center;
+    align-items: center;
+    /* width: calc(100% * 0.2); 20 */
+    /* height: calc(100% * 0.2); 20 */
+    padding: calc(100% * 0.02);
+    background-color: rgb(22, 22, 22);
+    border-radius: 10px;
+    color: white;
+    /*100 / 2 = 50,
+    20 / 2 = 10, 
+    2/2 = 1, 
+    50 - 10 - 1 = 39 */
+    top: 39%;
+    left: 39%;
+    display: none;
+}
+
+.hide{display: none;}
+.show{display: block;}
+
+@keyframes showAnimation {
+    /* 0% {background-color:red;}
+    100% {background-color:white;} */
+    0% {opacity: 0;}
+    10% {opacity: 1;}
+    70% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+/* "void", "HIGH", "LOW", "int", "String", "char", "const" */
+.variables{
+    color: rgb(0, 151, 156);
+}
+
+/* "#include", "#define", "while", "loop", "setup", "if", "else", */
+.logicalOperators{
+    color: rgb(94, 109, 3);
+}
+
+/* "Serial", "begin", "pinMode", "digitalWrite", "delay", "available", "readString", "toInt", "millis" */
+.functions{
+    color: rgb(167, 67, 0);
+}
+
+.logicalOperators, .variables, .functions{
+    display: inline;
+}

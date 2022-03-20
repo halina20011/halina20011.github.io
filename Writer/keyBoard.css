@@ -1,0 +1,199 @@
+:root{
+
+    /* --height: 32px; */
+    --key1Width: 2vw;     /* 16px */
+    --key2Width: 3.25vw;  /* 26px */
+    --key3Width: 3.625vw; /* 29px */
+    --key4Width: 2.625vw; /* 21px */
+    --key5Width: 10.65vw; /* 85px */
+    --key6Width: 4.75vw;  /* 38px */
+    --key7Width: 5.25vw;  /* 42px */
+    --key8Width: 4vw;     /* 32px */
+    --key9Width: 3.875vw; /* 31px */
+    --key10Width: 5.1vw;    /* 40px */
+    --height: 2vw;
+}
+
+.Key1{
+    position: relative;
+    display: inline-block;
+    /* width: calc(16px * 2); */
+    /* height: 32px; */
+    width: var(--key1Width);
+    height: var(--height);
+    /* border-radius: 2px; */
+    border: none;
+}
+
+.Key2{
+    position: relative;
+    display: inline-block;
+    /* width: calc(26px * 2); */
+    width: var(--key2Width);
+    height: var(--height);
+    /* border-radius: 2px; */
+    border: none;
+}
+
+.Key3{
+    position: relative;
+    display: inline-block;
+    /* width: calc(29px * 2); */
+    width:var(--key3Width);
+    height: var(--height);
+    /* border-radius: 2px; */
+    border: none;
+}
+
+.Key4{
+    position: relative;
+    display: inline-block;
+    /* width: calc(21px * 2); */
+    width:var(--key4Width);
+    height: var(--height);
+    /* border-radius: 2px; */
+    border: none;
+}
+
+.Key5{
+    position: relative;
+    display: inline-block;
+    /* width: calc(85px * 2); */
+    width:var(--key5Width);
+    height: var(--height);
+    /* border-radius: 2px; */
+    border: none;
+}
+
+.Key6{
+    position: relative;
+    display: inline-block;
+    /* width: calc(38px * 2); */
+    width: var(--key6Width);
+    height: var(--height);
+    /* border-radius: 2px; */
+    border: none;
+}
+
+.Key7{
+    position: relative;
+    display: inline-block;
+    /* width: calc(42px * 2); */
+    width: var(--key7Width);
+    height: var(--height);
+    /* border-radius: 2px; */
+    border: none;
+}
+
+.Key8{
+    position: relative;
+    display: inline-block;
+    /* width: calc(32px * 2); */
+    width: var(--key8Width);
+    height: var(--height);
+    /* border-radius: 2px; */
+    border: none;
+}
+
+.Key9{
+    position: relative;
+    display: inline-block;
+    /* width: calc(31px * 2); */
+    width: var(--key9Width);
+    height: var(--height);
+    /* border-radius: 2px; */
+    border: none;
+}
+
+.Key10{
+    position: relative;
+    display: inline-block;
+    /* width: calc(40px * 2); */
+    width: var(--key10Width);
+    height: var(--height);
+    /* border-radius: 2px; */
+    border: none;
+}
+
+/* .first-row */
+[class*="row"]{
+    /* box-sizing: border-box; */
+    margin-top: 4px;
+    display: flex;
+    width: 100%;
+    /* border: solid rgba(0,0,0,0) 4px; */
+    max-height: var(--height);
+    gap: 5px;
+}
+
+/* .second-row
+
+.third-row
+
+.fourth-row
+
+.fifth-row */
+
+#R2{
+    background-color: rgba(59, 26, 248, 0.5);
+}
+
+#L2{
+    background-color: rgb(17, 0, 110, 0.5);
+}
+#R3, #L3{
+    background-color: rgb(51, 204, 51, 0.5);
+}
+
+#R4, #L4{
+    background-color: rgb(189, 37, 37, 0.5);
+}
+
+#R5, #L5{
+    background-color: rgb(255, 204, 0, 0.5);
+}
+
+#L1{
+    background-color: rgb(161, 161, 161, 0.5);
+}
+
+#Out{
+    /* border: 100px; */
+    /* border-radius: 2px; */
+    border: none;
+    background-color:rgba(177, 177, 177, 0.5);
+    /* border-color: rgb(0, 0, 1); */
+}
+
+/* #a96, #a1, #a2, #a3, #a4, #a5, #a6, #a7, #a8, #a9, #a0, #a45, #a61, #Backspace,
+#Tab, #Q, #W, #E, #R, #T, #Y, #U, #I, #O, #P, #a91, #a93, #a92,
+#capsLock, #A, #S, #D, #F, #G, #H, #J, #K, #L, #a59, #a39, #Enter,
+#Shift, #Z, #X, #C, #C, #V, #B, #N, #M, #a44, #a46, #a47, #Shift2, #Up,
+#Ctrl, #Fn, #Win, #Alt,  #Space, #Ctrl2, #Panel, #Left, #Down{ */
+[class*="row"] > div > button{
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0,0,0,0.0);
+    box-sizing: border-box;
+    border: none;
+    overflow: hidden;
+}
+
+
+#letter{
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: calc(2vh);
+}
+
+#borderOn{
+    border: 2px inset;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+}

@@ -1,0 +1,17 @@
+.circuit{
+    position:relative;
+    box-sizing: border-box;
+    width: 100%;
+    height: 400px;
+    /* background-color: rgb(55, 55, 55); */
+    padding: 20px;
+    border-radius: 5px;
+    /* background-color: aqua; */
+}
+
+.circuitImage{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <title>Photo</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/text.css"></link>
+    <link rel="stylesheet" type="text/css" href="/style.css"> </link>
+    <link rel="stylesheet" type="text/css" href="photo.css"></link>
+</head>
+<body>
+    <div class="row">
+        <div class="column-left">
+            <div id="includedContent"></div> 
+        </div>
+        <div class="column-middle">
+            <div class="textBox" id="js-container">
+                <input type="file"accept="image/png" id="inputImage"/>
+                <canvas id="canvas"></canvas>
+                <input type="range" id="range" name="cowbell" min="0" max="100" value="90" step="10">
+                <label for="cowbell">Cowbell</label>
+                <input type="color">
+            </div>
+            <script src="photo.js"></script>
+            <!-- <script src="slider.js"></script> -->
+        </div>
+        <div class="column-right">
+            <h2>Links</h2>
+            <div class="Links">
+                <a href="https://www.youtube.com/channel/UCG0h6r6T1joRASO29JV9qMQ" class="icon">
+                    <img src="/images/youtube.svg" alt="https://www.freepik.com"> 
+                </a>
+                <a href="https://www.instagram.com/mario.durakovic/" class="icon">
+                    <img src="/images/Instagram.svg" alt="https://www.freepik.com"> 
+                </a>
+                <a href="https://github.com/halina20011/" class="icon">
+                    <img src="/images/github.svg" alt="https://www.freepik.com"> 
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

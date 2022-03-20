@@ -1,0 +1,121 @@
+{
+    "index": {
+        "Metaballs": {
+            "className": "MetaballsProject",
+            "path": "/metaballs/metaballs.html",
+            "imgPath": "/images/Miniature/metaballs.jpeg",
+            "name": "Metaballs",
+            "projectTextInfo": [
+                "Play with metaballs."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss":  [
+                [".MetaballsProject:hover > .backgroundImg > .img",[["background-image: url('/images/Miniature/metaballs.gif')!important;"]]]]
+        },
+        "Tic-tac-toe": {
+            "className": "TicTacToeProject",
+            "path": "/TicTacToe/ticTacToe.html",
+            "imgPath": "/images/Miniature/TicTacToe.png",
+            "name": "Tic-tac-toe",
+            "projectTextInfo": [
+                "Play Tic-tac-toe with AI.", 
+                "This small project I made to learn minimax algorithm. Try to beat it."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
+        "Test typing": {
+            "className": "WriterProject",
+            "path": "/Writer/writer.html",
+            "imgPath": "/images/Miniature/w.png",
+            "name": "Test typing",
+            "projectTextInfo": [
+                "Do you want to practice typing on the keyboard?", 
+                "You can choose which letters you want to practice or upload the file or text you want to try to write"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
+
+        "Clock": {
+            "className": "ClockProject",
+            "path ": "/Clock/clock.html",
+            "imgPath": "/images/Miniature/Clock/ClockBackground.png",
+            "name": "Clock",
+            "projectTextInfo": [
+                "real time clock", 
+                "Just a clock."
+            ],
+            "addAdicionalThings": [
+                ["div",[
+                    ["class", "clockArrow1"],
+                    ["position: absolute"],
+                    ["width: 100%"],
+                    ["background-size: 100%"],
+                    ["background-repeat: no-repeat"],
+                    ["padding-bottom: 100%"],
+                    ["background-image: url(/images/Miniature/Clock/ClockArrow1.png)"]]
+                ],
+                ["div", [
+                    ["class", "clockArrow2"],
+                    ["position: absolute"],
+                    ["width: 100%"],
+                    ["background-size: 100%"],
+                    ["background-repeat: no-repeat"],
+                    ["padding-bottom: 100%"],
+                    ["background-image: url(/images/Miniature/Clock/ClockArrow2.png)"]]
+                ]
+            ],
+            "addScript": "/Clock/clockAnimation.js",
+            "addCss": null
+        }
+    },
+    "arduino": {
+        "arduinoBlinkLed": {
+            "className": "arduinoBlinkLedProject",
+            "path": "/Arduino/ArduinoBlinkLed.html",
+            "imgPath": "/images/Miniature/Led.svg",
+            "name": "Arduino blink led",
+            "projectTextInfo": [
+                "Learn Arduino", 
+                "In this lecture you are going to learn how to blink led with arduino."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": [
+                ["img", ["top: 7%;"]]
+                ]
+        },
+        
+        "arduinoFadeLed": {
+            "className": "arduinoFadeLedProject",
+            "path": "/Arduino/ArduinoFadeLed.html",
+            "imgPath": "#",
+            "name": "Arduino fade led",
+            "projectTextInfo": [
+                "Learn Arduino", 
+                "In this lecture you are going to learn how to fade led with arduino."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
+        
+        "arduinoFadeDLed": {
+            "className": "arduinoFadeLedDProject",
+            "path": "/Arduino/ArduinoFadeLed.html",
+            "imgPath": "#",
+            "name": "Arduino fade led with delay",
+            "projectTextInfo": [
+                "Learn Arduino", 
+                "In this lecture you are going to learn how to fade led using delay with arduino."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        }
+    }
+}

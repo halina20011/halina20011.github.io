@@ -1,0 +1,6 @@
+.progress__highlight{
+    transition: width 0.15s linear;
+    background:#03c4a1;
+    height:100%;
+    width:0%;
+}

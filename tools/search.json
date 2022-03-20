@@ -1,0 +1,20 @@
+{
+    "index":{
+        "name": "Home",
+        "about": "Home page",
+        "image": "/images/Icons/home.png",
+        "path": "/"
+    },
+    "write":{
+        "name": "Writer",
+        "about": "Practice typing on the keyboard.",
+        "image": "/images/Miniature/w.png",
+        "path": "/Arduino/arduino.html"
+    },
+    "arduino":{
+        "name": "Arduino",
+        "about": "Arduino page",
+        "image": "/images/Icons/arduino.png",
+        "path": "/Arduino/arduino.html"
+    }
+}
