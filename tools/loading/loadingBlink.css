@@ -1,0 +1,49 @@
+/* ####################### Loading Screen ############################ */
+.loadingScreen{
+    position: fixed;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.623);
+}
+
+.loadingScreen > div{
+    position: relative;
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    /* animation-play-state: paused; */
+}
+
+#loadingDot1{
+    left: -10px;
+}
+
+.loadingDot1{
+    animation: dotBlink 1.2s infinite linear;
+    animation-delay: 0s;
+}
+
+.loadingDot2{
+    animation: dotBlink 1.2s infinite linear;
+    animation-delay: 0.4s;
+}
+
+#loadingDot3{
+    left: 10px;
+}
+
+.loadingDot3{
+    animation: dotBlink 1.2s infinite linear;
+    animation-delay: 0.8s;
+}
+
+@keyframes dotBlink {
+    0%, 40%, 100% { background-color: rgba(255, 255, 255, 0.2)}
+    20% { background-color: rgba(255, 255, 255, 1)}
+}

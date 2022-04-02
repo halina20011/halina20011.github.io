@@ -1,4 +1,4 @@
-var canvas = document.querySelector('#my-canvas');
+var canvas = document.getElementById('my-canvas');
 var context = canvas.getContext('2d');
 
 var image = context.createImageData(canvas.width, canvas.height);
@@ -122,7 +122,7 @@ function swapBuffer() {
 function clear(){
     for(var x = 0; x < canvas.width; x++){
         for(var y = 0; y < canvas.height; y++){
-            drawPixel(x, y, {r: 0, g:   0, b:   0, a: 0});
+            drawPixel(x, y, 0, 0, 0, 0);
         }
     }
 }
@@ -158,7 +158,7 @@ function drawCircle(x, y, radius){
         angle = i;
         x1 = radius * Math.cos(angle * Math.PI / 180);
         y1 = radius * Math.sin(angle * Math.PI / 180);
-        drawPixel(x + x1, y + y1, {r:0, g:0, b:0, a:255});
+        drawPixel(x + x1, y + y1, 0, 0, 0, 255);
     }
 }
 
@@ -253,36 +253,26 @@ var imagesFile = {imagesBase64: []}
 
 var _downloadImages = false;
 
-document.getElementById('button-Download').addEventListener("click", function(e) {getImage();});
+// document.getElementById('button-Download').addEventListener("click", function(e) {getImage();});
 
-document.getElementById('button-DownloadStart').addEventListener("click", function(e) {_downloadImages = true});
-document.getElementById('button-DownloadStop').addEventListener("click", function(e) {_downloadImages = false});
+// document.getElementById('button-DownloadStart').addEventListener("click", function(e) {_downloadImages = true});
+// document.getElementById('button-DownloadStop').addEventListener("click", function(e) {_downloadImages = false});
 
-document.getElementById('button-DownloadAll').addEventListener("click", function(e) {downloadAll();});
+// document.getElementById('button-DownloadAll').addEventListener("click", function(e) {downloadAll();});
 
 var filename = "imagesBase64.json"
 
 function downloadAll(){
-    // console.log(_images.length);
-    // for(var i = 0; i < _images.length; i++){
-    //     console.log(_images[i][0],_images[i][1]);
-    //     downloadImage(_images[i][0],_images[i][1])
-    // }
-    // _images = []
     stringJsonImagesFile =  JSON.stringify(imagesFile)
-    downloadImage(generateTextFileUrl(stringJsonImagesFile), filename)
+    download(generateTextFileUrl(stringJsonImagesFile), filename)
     imagesFile.imagesBase64 = []
     console.log("Downloaded!")
-    
 }
 
 function downloadImages(){
     if(_downloadImages == true){
         console.log(index);
         var dataURL = canvas.toDataURL("image/jpeg", 1.0);
-        // var file =[dataURL, `${index}.jpeg`]
-        
-        // _images.push(file);
         imagesFile.imagesBase64.push(dataURL)
     }
 }
@@ -290,7 +280,7 @@ function downloadImages(){
 function getImage(){
     var dataURL = canvas.toDataURL("image/jpeg", 1.0);
 
-    downloadImage(dataURL, `${index}.jpeg`);
+    download(dataURL, `${index}.jpeg`);
 }
 
 function generateTextFileUrl(txt) {
@@ -300,23 +290,14 @@ function generateTextFileUrl(txt) {
         window.URL.revokeObjectURL(textFile);
     }
     textFileUrl = window.URL.createObjectURL(fileData);
-    // Returns a reference to the global variable holding the URL
-    // Again, this is better than generating and returning the URL itself from the function as it will eat memory if the file contents are large or regularly changing
-    console.log(textFileUrl);
     return textFileUrl;
 };
 
 
 // Save | Download image
-function downloadImage(data, filename = 'untitled.jpeg') {
-    // convertURIToImageData(URI).then(function(imageData) {
-    //     console.log(imageData);
-    // });
-
-
+function download(data, filename = 'untitled.jpeg') {
     var a = document.createElement('a');
     a.href = data;
-    console.log(data);
     a.download = filename;
     document.body.appendChild(a);
     a.click();

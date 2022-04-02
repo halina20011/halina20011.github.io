@@ -23,7 +23,7 @@ function moveHead(direction){
     var position = column_up.getBoundingClientRect();
     var topPosition = toPercentage(position.top, "height");
     // console.log(position)
-    console.log("direction: " + direction + "  " + topPosition);
+    // console.log("direction: " + direction + "  " + topPosition);
     if(direction == "Down" && topPosition == 0){ 
         // console.log("Down");
         column_up.classList.add("collapsedColumnUp");

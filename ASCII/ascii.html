@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Halina's ASCII converotor</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Free web programming tutorials">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/images/Halina-Circle.png" type="image/x-icon">
+    <meta name="keywords" content="Halina programming, Arduino learn">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/text.css"></link>
+    <link rel="stylesheet" type="text/css" href="/style.css"></link>
+    <link rel="stylesheet" type="text/css" href="/head.css"></link>
+    <link rel="stylesheet" type="text/css" href="/Menu/dropDownMenu.css"></link>
+    <link rel="stylesheet" type="text/css" href="/ScrollProgressBar/ScrollProgressBar.css">
+    <link rel="stylesheet" type="text/css" href="ascii.css">
+    <link rel="stylesheet" type="text/css" href="/tools/loading/loadingBlink.css">
+    <script defer type="module" src="ascii.js"></script>
+    <script src="/Menu/dropDownMenu.js"></script>
+</head>
+<body>
+    <div class="row">
+        <div class="loadingScreen" id="loadingScreen" data-title=".dotBlink">
+            <div class="loadingDot1" id="loadingDot1"></div>
+            <div class="loadingDot2" id="loadingDot2"></div>
+            <div class="loadingDot3" id="loadingDot3"></div>
+        </div>
+        <div class="column-up" id="column-up">
+        </div>
+        <div class="column-display" id="column-display">
+            <div class="column-left" id="column-left">
+            </div>
+            <div class="column-middle" id="column-middle">
+                <!-- <div class="progress">
+                    <div class="progress__highlight" id="js-highlight"></div>
+                </div> -->
+                <div class="textBox" id="js-container">
+                    <h1>ASCII Generator</h1>
+                    <div class="text" style="margin: 4px;">
+                        <p>1. If you want first change color of text.</p>
+                        <p>2. Upload your image that you wish to be ascii generated from.</p>
+                        <p>3. Wait. Process takes max 10 seconds.</p>
+                        <p>4. Generated image preview is not precise when using bigger pictures, better click on "View generated image".</p>
+                        <p>5. Generaded result can be downloaded in txt or png format.</p>
+                        <div class="fS4"></div>
+                        <p>- Max size of input image is 430px. If input image is bigger, image will be resized.</p>
+                    </div>
+                    <div class="inputFileHeader">
+                        <label for="imgInput">Upload file</label>
+                        <input type="file" accept="image/*" class="imgInput" id="imgInput"> <!-- accept=".png"-->
+                        <p class="imgInputValue" id="imgInputValue">None</p>
+                        <div class="inputFile"></div>
+                    </div>
+                    
+                    <!-- Holder for original files-->
+                    <div class="originalContentHeader" id="originalContentHeader">
+                        <p>Original image:</p>
+                        <div>
+                            <div class="originalImageHolder" id="originalImageHolder">
+                                <canvas class="originalImage" id="originalImage"></canvas>
+                                <div id="noneTextOriginal">None</div>
+                            </div>
+                            <div class="settings border5">
+                                <p style="display: inline-block; vertical-align: middle;">Text color:</p>
+                                <input type="color" id="colorPalet" value="#000000" style="display: inline-block; vertical-align: middle;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fS4"></div>
+
+                    <div class="generatedTextContentDiv">
+                        <p>Generated text:</p>
+                        <div>
+                            <div class="generatedTextHolder" id="generatedTextHolder">
+                                <p class="generatedText">None</p>
+                            </div>
+                            <div class="settings border5">
+                                <p>Text font size:</p>
+                                <div class="setting border5">
+                                    <input type="range" class="textSizeSlider slider" id="textSizeSlider" min="1" max="16" value="16" step="1">
+                                    <p class="textSizeSliderValue" id="textSizeSliderValue">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fS4"></div>
+
+                    <!-- Holder for generated files-->
+                    <div class="generatedContentHeader" id="generatedContentHeader">
+                        <p>Generated image:</p>
+                        <button class="downloadButton" id="downloadText">Download generated image .txt</button>
+                        <button class="downloadButton" id="downloadImage">Download generated image .png</button>
+                        <button class="downloadButton" id="linkToImage">View generated image</button>
+                        <div>
+                            <div class="generatedImageHolder" id="generatedImageHolder">
+                                <div class="generatedImage" id="generatedImage"></div>
+                                <div id="noneTextGenerated">None</div>
+                                <canvas id="newCanvas" style="display: noen;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column-right" id="column-right">
+            </div>
+        </div>
+        <div class="column-down"></div>
+    </div>
+    <script src="/sideNavigation.js"></script>
+    <script type="module" src="/tools/importFile.js"></script>
+    <script type="module" src="/tools/search.js"></script>
+    <script src="/head.js"></script>
+</body>
+</html>

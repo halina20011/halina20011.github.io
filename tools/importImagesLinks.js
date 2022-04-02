@@ -159,7 +159,7 @@ function generateElement(dataList){
             for(var i = 0; i< addCss.length;i++){
                 console.log(addCss[i][1][0])
                 console.log(addCss[i][0])
-                if(addCss[i][0] == 'img'){
+                if(addCss[i][0].indexOf("img") > -1 && addCss[i][0].indexOf(":") == -1){
                     classImg.style.cssText += addCss[i][1];
                 }
                 else if(addCss[i][0].indexOf(classImg.className) > -1){

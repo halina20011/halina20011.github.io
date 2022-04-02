@@ -1,5 +1,21 @@
 {
     "index": {
+        "ASCIIGenerator": {
+            "className": "AsciiGeneratorProject",
+            "path": "/ASCII/ascii.html",
+            "imgPath": "/images/Miniature/asciiGenerator.png",
+            "name": "ASCII Generator",
+            "projectTextInfo": [
+                "Convert image to ASCII text."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss":  [
+                [".AsciiGeneratorProject > .backgroundImg > .img",
+                    [["background-color: rgb(0, 0, 0, 1);"]]
+                ]
+                ]
+        },
         "Metaballs": {
             "className": "MetaballsProject",
             "path": "/metaballs/metaballs.html",
