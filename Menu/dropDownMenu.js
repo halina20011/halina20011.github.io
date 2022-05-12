@@ -1,5 +1,3 @@
-// const 
-
 function roll(dropDowncontent, plusIndex = 0) {
     // var name = dropDowncontent.substring(dropDowncontent.length - 16)
     // console.log(dropDowncontent)
@@ -20,7 +18,7 @@ function roll(dropDowncontent, plusIndex = 0) {
 }
 
 function rollDiv(dropDowncontent) {
-    document.getElementsByClassName(dropDowncontent)[0].classList.toggle("show");//arduinoDropdown
+    document.getElementsByClassName(dropDowncontent)[0].classList.toggle("show"); //arduinoDropdown
     // var arrow = document.getElementById(name);
     // if(document.getElementsByClassName(dropDowncontent)[0].classList.contains("show") == true){
     //     arrow.style.borderTop = "none";

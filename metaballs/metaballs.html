@@ -20,67 +20,69 @@
         <div class="column-up" id="column-up">
         </div>
         <div class="column-display" id="column-display">
-            <div class="column-left" id="column-left">
-            </div>
-            <div class="column-middle" id="column-middle">
-                <div class="textBox" id="js-container">
-                    <div class="window">
-                        <h1 style="text-align: center;">Metaballs</h1>
-                        <div class="fS8"></div>
-                        <canvas class="my-canvas" id="my-canvas" width="400" height="400"></canvas>
-                        <div class="settings">
-                            <p>Settings</p>
-                            <div class="info">
-                                <p>If you want to set other color of viewport, first enable it with "cusom colors" checkbox.</p>
-                                <div class="fS4"></div>
-                                <p>Then check checkbox with specific color that you want to change and move slider. After thet you need to save settings with button "Save settings".</p>
-                                <div class="fS4"></div>
-                                <p>If you change all colors, it won't work!!!</p>
-                                <div class="fS4"></div>
-                            </div>
-                            <div class="customColors">
-                                <p>Custom colors</p>
-                                <input class="checkboxCustomColors" id="checkboxCustomColors" type="checkbox">
-                                <div class="colorRed">
-                                    <input class="checkboxRed" id="checkboxRed" type="checkbox">
-                                    <div class="slider">
-                                        <input class="sliderRed" id="sliderRed" type="range" min="0" max="255" step="1" value="0">
-                                        <div class="redSliderVal" id="redSliderVal"></div>
+            <div class="contentContainer">
+                <div class="column-left" id="column-left">
+                </div>
+                <div class="column-middle" id="column-middle">
+                    <div class="textBox" id="js-container">
+                        <div class="window">
+                            <h1 style="text-align: center;">Metaballs</h1>
+                            <div class="fS8"></div>
+                            <canvas class="my-canvas" id="my-canvas" width="400" height="400"></canvas>
+                            <div class="settings">
+                                <p>Settings</p>
+                                <div class="info">
+                                    <p>If you want to set other color of viewport, first enable it with "cusom colors" checkbox.</p>
+                                    <div class="fS4"></div>
+                                    <p>Then check checkbox with specific color that you want to change and move slider. After thet you need to save settings with button "Save settings".</p>
+                                    <div class="fS4"></div>
+                                    <p>If you change all colors, it won't work!!!</p>
+                                    <div class="fS4"></div>
+                                </div>
+                                <div class="customColors">
+                                    <p>Custom colors</p>
+                                    <input class="checkboxCustomColors" id="checkboxCustomColors" type="checkbox">
+                                    <div class="colorRed">
+                                        <input class="checkboxRed" id="checkboxRed" type="checkbox">
+                                        <div class="slider">
+                                            <input class="sliderRed" id="sliderRed" type="range" min="0" max="255" step="1" value="0">
+                                            <div class="redSliderVal" id="redSliderVal"></div>
+                                        </div>
+                                    </div>
+                                    <div class="colorGreen">
+                                        <input class="checkboxGreen" id="checkboxGreen" type="checkbox">
+                                        <div class="slider">
+                                            <input class="sliderGreen" id="sliderGreen" type="range" min="0" max="255" step="1" value="0">
+                                            <div class="greenSliderVal" id="greenSliderVal"></div>
+                                        </div>
+                                    </div>
+                                    <div class="colorBlue">
+                                        <input class="checkboxBlue" id="checkboxBlue" type="checkbox">
+                                        <div class="slider">
+                                            <input class="sliderBlue" id="sliderBlue" type="range" min="0" max="255" step="1" value="0">
+                                            <div class="blueSliderVal" id="blueSliderVal"></div>
+                                        </div>
+                                    </div>
+                                    <div class="saveSettingsDiv">
+                                        <button class="saveSettings" id="saveSettings">Save settings</button>
                                     </div>
                                 </div>
-                                <div class="colorGreen">
-                                    <input class="checkboxGreen" id="checkboxGreen" type="checkbox">
-                                    <div class="slider">
-                                        <input class="sliderGreen" id="sliderGreen" type="range" min="0" max="255" step="1" value="0">
-                                        <div class="greenSliderVal" id="greenSliderVal"></div>
-                                    </div>
+                                <div class="videoSettings">
+                                    <button class="button-StartStop" id="button-StartStop"></button>
+                                    <!-- <button class="button-Download" id="button-Download"></button>
+                                    <button class="button-DownloadStart" id="button-DownloadStart"></button>
+                                    <button class="button-DownloadStop" id="button-DownloadStop"></button>
+                                    <button class="button-DownloadAll" id="button-DownloadAll"></button> -->
                                 </div>
-                                <div class="colorBlue">
-                                    <input class="checkboxBlue" id="checkboxBlue" type="checkbox">
-                                    <div class="slider">
-                                        <input class="sliderBlue" id="sliderBlue" type="range" min="0" max="255" step="1" value="0">
-                                        <div class="blueSliderVal" id="blueSliderVal"></div>
-                                    </div>
-                                </div>
-                                <div class="saveSettingsDiv">
-                                    <button class="saveSettings" id="saveSettings">Save settings</button>
-                                </div>
-                            </div>
-                            <div class="videoSettings">
-                                <button class="button-StartStop" id="button-StartStop"></button>
-                                <!-- <button class="button-Download" id="button-Download"></button>
-                                <button class="button-DownloadStart" id="button-DownloadStart"></button>
-                                <button class="button-DownloadStop" id="button-DownloadStop"></button>
-                                <button class="button-DownloadAll" id="button-DownloadAll"></button> -->
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="column-right" id="column-right">
+                </div>
             </div>
-            <div class="column-right" id="column-right">
-            </div>
+            <div class="column-down"></div>
         </div>
-        <div class="column-down"></div>
     </div>
     <script src="metaballs.js"></script>
     <!-- <script type="module" src="/art/geometry.js"></script> -->

@@ -1,12 +1,15 @@
 var column_up = document.getElementById("column-up");
 var column_display = document.getElementById("column-display");
+var table = document.getElementById("table");
 
 window.addEventListener('scroll', function(event) {scroll(event);}, false );
 
 var newValue = 0;
 var oldValue = 0;
-function scroll(event){
+
+function scroll(){
     newValue = window.pageYOffset;
+    // console.log("MOVE");
     if(oldValue > newValue){
         moveHead("Up");
     }
@@ -16,27 +19,17 @@ function scroll(event){
     oldValue = newValue;
 }
 
-// var column_display;
-// var column_left;
-
 function moveHead(direction){
-    var position = column_up.getBoundingClientRect();
-    var topPosition = toPercentage(position.top, "height");
-    // console.log(position)
-    // console.log("direction: " + direction + "  " + topPosition);
-    if(direction == "Down" && topPosition == 0){ 
-        // console.log("Down");
-        column_up.classList.add("collapsedColumnUp");
-        column_display.classList.add("collapsedColumnMiddle");
-        // moveTopObject(column_up, 0, -2, 30, "vw")
+    // var position = document.body.getBoundingClientRect();
+    // var topPosition = toPercentage(position.top, "height");
+    if(direction == "Down"){ 
+        column_up.style.top = "-4vh";
+        if(table) table.style.top = "4vh";
+    } 
+    else if(direction == "Up"){
+        column_up.style.top = "0vh";
+        if(table) table.style.top = "8vh";
     }
-    else if(direction == "Up" && topPosition != 0){
-        // console.log("Up");
-        column_up.classList.remove("collapsedColumnUp");
-        column_display.classList.remove("collapsedColumnMiddle");
-        // moveTopObject(column_up, -2, 0, 30, "vw")
-    }
-    // console.log(topPosition);
 }
 
 function moveTopObject(_el, _start, _stop, _time, _units){

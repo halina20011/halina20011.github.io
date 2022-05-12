@@ -18,10 +18,10 @@
     <script type="module" src="/tools/download.js"></script>
 </head>
 <body>
-    <div class="row">
-        <div class="column-up" id="column-up">
-        </div>
-        <div class="column-display" id="column-display">
+    <div class="column-up" id="column-up">
+    </div>
+    <div class="column-display" id="column-display">
+        <div class="contentContainer">
             <div class="column-left" id="column-left">
             </div>
             <div class="column-middle" id="column-middle">
@@ -32,23 +32,24 @@
                     <h1>Arduino Blink Led</h1>
                     <div class="fS8"></div>
                     <div class="paragraph">
-                        <p1>In this tutorial we will learn how to blink the LED using Arduino Uno.</p1>
+                        <p>In this tutorial we will learn how to blink the LED using Arduino Uno.</p>
                     </div>
                     <div class="freeLine"></div>
     
-                    
-                    <h2>You will need:</h2>
+                    <jumpLink id="PartsOrToolsYouWillNeed"></jumpLink>
+                    <h2>Parts Or Tools You Will Need:</h2>
                     <div class="paragraph" >
-                        <p >Arduino Uno</p>
-                        <p >Led diode (any color, i will use white)</p>
-                        <p >220 Ohm resistor (how i calculate resistor value later in tutorial)</p>
-                        <p >Some male to female wires.</p>
+                        <p>Arduino Uno</p>
+                        <p>Led diode (any color, i will use white)</p>
+                        <p>220 Ohm resistor (how i calculate resistor value later in tutorial)</p>
+                        <p>Some male to female wires.</p>
                     </div>
                     <div class="freeLine"></div>
                     <!-- ###################################################################### -->
                     <!--                    How to calculate resistor value                     -->
                     <!-- ###################################################################### -->
-                    <h2>How to calculate resistor value</h2>
+                    <jumpLink id="HowToCalculateResistorValue"></jumpLink>
+                    <h2 id="HowToCalculateResistorValue">How to calculate resistor value</h2>
                     <div class="paragraph">
                         <p>To calculate corect resistor value we first need to know these values:</p>
                         <div class="paragraph">
@@ -114,67 +115,97 @@
                         <p>R = 160 ohm</p>
                         <div class="fS8"></div>
                         <p>Because 160 ohm resistor is not standard resistor value you can use
-                           any resistor value bigger then 160 ohm. That is why we we use 220 ohm resistor.</p>
+                            any resistor value bigger then 160 ohm. That is why we we use 220 ohm resistor.</p>
                         
                     </div>
                     <div class="freeLine"></div>
-    
+                    
+                    <jumpLink id="Circuit"></jumpLink>
                     <h2>Circuit</h2>
-                        <p1 id="newLine" class="paragraph">Now we can connect the circuit according to the following circuit:</p1>
+                    <p1 id="newLine" class="paragraph">Now we can connect the circuit according to the following circuit:</p1>
                     <div class="circuit">
                         <div class="circuitImage" style="background-image: url('/images/Miniature/Led.svg');"></div>
                     </div>
-                    <div class="codeWindow1" id="codeWindow1">
-                        <p class="copyText" id="copyText">The text has been copied.</p>
-                        <div class="codeSettings">
-                            <button class="copyCodeWindowButton1" onclick="copyTextFromFile('copyCodeWindowButton1')"></button>
-                            <button class="downloadCodeWindowButton1" onclick="downloadFile('copyCodeWindowButton1')"></button>
+    
+                    <div class="freeLine"></div>
+                    <jumpLink id="Code"></jumpLink>
+                    <h2>Code</h2>
+                    <div class="paragraph">
+                        <div class="codeWindow1" id="codeWindow1">
+                            <!-- <div><p id="number">1</p><code id="codeText">void setup() {</code></div>
+                                <div><p id="number">1</p><code id="codeText">    Serial.begin(115200);</code></div>
+                                <div><p id="number">1</p><code id="codeText">    pinMode(led, OUTPUT);</code></div>
+                                <div><p id="number">1</p><code id="codeText">}</code></div>
+                                <div><p id="number">1</p><code id="codeText"></code></div>
+                                <div><p id="number">1</p><code id="codeText">void loop() {</code></div>
+                                    <div><p id="number">1</p><code id="codeText">    digitalWrite(led, HIGH);</code></div>
+                                    <div><p id="number">1</p><code id="codeText">    delay(100);</code></div>
+                                    <div><p id="number">1</p><code id="codeText">    digitalWrite(led, LOW);</code></div>
+                                    <div><p id="number">1</p><code id="codeText">    delay(100);</code></div>
+                            <div><p id="number">1</p><code id="codeText">}</code></div> -->
                         </div>
-                        <!-- <hr> -->
-                        <!-- <div><p id="number">1</p><code id="codeText">void setup() {</code></div>
-                        <div><p id="number">1</p><code id="codeText">    Serial.begin(115200);</code></div>
-                        <div><p id="number">1</p><code id="codeText">    pinMode(led, OUTPUT);</code></div>
-                        <div><p id="number">1</p><code id="codeText">}</code></div>
-                        <div><p id="number">1</p><code id="codeText"></code></div>
-                        <div><p id="number">1</p><code id="codeText">void loop() {</code></div>
-                        <div><p id="number">1</p><code id="codeText">    digitalWrite(led, HIGH);</code></div>
-                        <div><p id="number">1</p><code id="codeText">    delay(100);</code></div>
-                        <div><p id="number">1</p><code id="codeText">    digitalWrite(led, LOW);</code></div>
-                        <div><p id="number">1</p><code id="codeText">    delay(100);</code></div>
-                        <div><p id="number">1</p><code id="codeText">}</code></div> -->
                     </div>
                     <div class="freeLine"></div>
-    
-    
+                    
+                    <!-- ###################################################################### -->
+                    <!--                        Code explanation                                -->
+                    <!-- ###################################################################### -->
+                    <jumpLink id="CodeExplanation"></jumpLink>
                     <h2>Code explanation</h2>
                     <div class="paragraph" >
                         <div class="fS8"></div>
+                        
                         <div class="codeExplain" id="codeExplain">
-                            <p class="copyText" id="copyText">The text has been copied.</p>
-                            <div><p id="number">1   </p><code id="codeText">int led = 2;</code></div>
+                            <div><p id="number">1</p><code id="codeText">int led = 11;</code></div>
                         </div>
+                        
                         <div class="fS8"></div>
-                        <p>Set the led variable to pin 13. And it is not necessary to use variables in the code, but if we had more extensive code and, for example,
-                            we wanted to change pin 12 to another number, then we don't have to look for all 12 in the code and 
-                            change it manually. All we have to do is change the number of the variable in the beginning.</p>
+    
+                        <p>Set the led variable to pin 11. And it is not necessary to use variables in the code, but if we had more extensive code and, for example,
+                            we wanted to change pin 11 to another number, then we don't have to look for all 11 in the code and 
+                            change it manually. All we have to do is change the number of the variable in the beginning.
+                        </p>
+                
                         <div class="freeLine"></div>
                         <div class="codeExplain" id="codeExplain">
-                            <p class="copyText" id="copyText">The text has been copied.</p>
-                            <div><p id="number">1   </p><code id="codeText">pinMode(led, OUTPUT);</code></div>
+                            <div><p id="number">1</p><code id="codeText">pinMode(led, OUTPUT);</code></div>
                         </div>
                         <div class="fS8"></div>
                         <p>Initialize the digital pin as an output.</p>
+                        
+                        <div class="freeLine"></div>
+                        <div class="codeExplain" id="codeExplain">
+                            <div><p id="number">1</p><code id="codeText">digitalWrite(led, HIGH);</code></div>
+                        </div>
+                        <div class="fS8"></div>
+                        <p>Write a HIGH or a LOW value to a digital pin. <a href="https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/">More info</a></p>
+                        <div class="freeLine"></div>
+    
+                        <div class="codeExplain" id="codeExplain">
+                            <div><p id="number">1</p><code id="codeText">delay(delayTime);</code></div>
+                        </div>
+                        <div class="fS8"></div>
+                        <p>Pauses the program for the amount of time (in milliseconds) that we specified as parameter. <a href="https://www.arduino.cc/reference/en/language/functions/time/delay/">More info</a></p>
                     </div>
-                    <script type="module" src="/code.js"></script>
                 </div>
             </div>
             <div class="column-right" id="column-right">
+                <div class="table" id="table">
+                    <p>Table of contents</p>
+                    <div class="content">
+                        <button onclick="document.location='#PartsOrToolsYouWillNeed'">Parts Or Tools You Will Need.</button>
+                        <button onclick="document.location='#HowToCalculateResistorValue'">How To Calculate Resistor Value</button>
+                        <button onclick="document.location='#Circuit'">Circuit</button>
+                        <button onclick="document.location='#Code'">Code</button>
+                        <button onclick="document.location='#CodeExplanation'">CodeExplanation</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="column-down"></div>
-        <!-- <div class="column-down"></div> -->
     </div>
-    <script src="/sideNavigation.js"></script>
+        <!-- <div class="column-down"></div> -->
+    <script type="module" src="/code.js"></script>
     <script type="module" src="/tools/importFile.js"></script>
     <script type="module" src="/tools/search.js"></script>
     <script type="module" src="/tools/import.js"></script>

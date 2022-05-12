@@ -1,9 +1,25 @@
-#number, #codeText{
+#number, code{
     white-space: pre;
 }
 
 #sameLine, #number{
     display:inline-block;
+}
+
+#number:after{
+    content: "";
+    display: inline-block;
+    background-color: rgb(54, 54, 54);
+    width: 2px;
+    height: 20px;
+    margin-right: 4px;
+    margin-left: 4px;
+}
+
+#number:before{
+    content: "0";
+    display: inline-block;
+    color: rgba(0, 0, 0, 0);
 }
 
 [class*="codeWindow"]{
@@ -20,7 +36,7 @@
     padding: 10px 10px 10px 10px;
 }
 
-#codeText{
+code{
     font-family: 'Roboto', sans-serif;
 }
 
@@ -60,6 +76,7 @@
     background-repeat: no-repeat;
     background-color: rgba(0,0,0,0);
 }
+
 [class*="downloadCodeWindowButton"]{
     width: 20px;
     height: 20px;
@@ -135,6 +152,10 @@
     color: rgb(167, 67, 0);
 }
 
-.logicalOperators, .variables, .functions{
+.other{
+    color: rgb(141, 99, 138);
+}
+
+.logicalOperators, .variables, .functions, .other{
     display: inline;
 }

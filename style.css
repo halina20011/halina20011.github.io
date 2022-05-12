@@ -3,35 +3,16 @@
     padding: 0;
 }
 
-/* .MetaballsProject:hover > .backgroundImg > .img{
-    background-image: url('/images/Miniature/metaballs.gif')!important;
-} */
-
-html, body {width:100%}
-
 body{
-    width: 100%;
-    max-width: 100%;
-    min-width: 100%;
-    height: 200%;
-    background-color: #0D1117;
-}
-
-.row{
     position: relative;
     width: 100%;
-    max-width: 100%;
+    min-height: 100vh;
+    background-color: #0D1117;
 }
 
 /* ################################################################################# */
 /*                                      COLUMN                                       */
 /* ################################################################################# */
-
-.column-display{
-    position: relative;
-    width: 100%;
-    padding-top: 8vh;
-}
 
 .column-up{
     position: fixed;
@@ -42,40 +23,48 @@ body{
     z-index: 1;
 }
 
-
-.column-right{
-    position: relative;
-    top: 4vw;
-    width: 25%;
-    float: right;
-    background-color: rgb(63, 63, 63);
+.contentContainer{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
 }
 
-.column-left{
-    z-index: 2;
-    position: absolute;
-    width: 25%;
-    display: none;
-    float: left;
-    background-color: rgb(63, 63, 63);
-}
 
-.column-middle {
+.column-display{
     position: relative;
-    width: 50%;
-    left: 25%;
-    background-color: #555;
-    z-index: 0;
-    min-height: 82vh;
+    width: 100%;
+    padding-top: 8vh;
 }
 
 .column-down{
     position: relative;
     width: 100%;
     background-color: black;
-    /* height: 100px; */
-    height:10vh;
-    bottom: 0px;
+    height: 10vh;
+}
+
+.column-left{
+    position: relative;
+    /* background-color: rgb(63, 63, 63); */
+}
+
+.column-middle {
+    position: relative;
+    background-color: #555;
+    z-index: 0;
+    min-height: 82vh;
+    border: 10px solid rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+}
+
+.column-right{
+    width: 100%;
+    height: 100%;
+}
+
+.table{
+    position: sticky;
+    top: 8vh;
 }
 
 .progress{
@@ -89,16 +78,32 @@ body{
     right: 15%;
     z-index: 10;
 }
-/* .Search button{
-    width: 40px;
-    height: 100%;
-    float: right;
-} */
 
 /* Inside this class is text*/
 .textBox{
     position: relative;
-    padding: 10px;
+}
+
+.table{
+    border: 10px solid #0D1117;
+    padding-top: 2px;
+    background-color: rgb(63, 63, 63);
+    width: 60%;
+}
+.table > p{
+    padding: 5px;
+}
+
+.table > .content >button{
+    width: 100%;
+    background-color: rgb(92, 92, 92);
+    text-align: left;
+    border: none;
+    padding: 5px;
+}
+
+.table > .content >button:hover{
+    background-color: rgb(104, 104, 104);
 }
 
 #newLine{
@@ -142,6 +147,11 @@ body{
 .freeLine{
     width: 100%;
     height: 16px;
+}
+
+jumpLink{
+    position: relative;
+    top: -8vh;
 }
 
 /* ################# */

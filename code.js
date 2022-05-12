@@ -1,21 +1,7 @@
 import {getText} from "/tools/import.js";
 
-const copyB = document.getElementById('copy');
-// copyB.addEventListener('click', function() {copyText();}, false)
-const downloadB = document.getElementById('downloadCodeWindowButton1');
-// downloadB.addEventListener('click', function() {downloadFile();}, false)
-
-getElements(0, 100, "")
-
-function getElements(from, to, baseName){
-    var codeWindows = document.querySelectorAll("[class^=codeWindow]")
-    console.log(codeWindows[0])
-}
-
-var index = 2;
-
 // Get filename
-var Url = window.location.href
+var Url = window.location.href;
 var urls = Url.split("/");
 for(var i = 0; i < urls.length; i++){
     if(urls[i] == ''){
@@ -23,12 +9,15 @@ for(var i = 0; i < urls.length; i++){
     }
 }
 
-var html = urls[urls.length - 1]
-html = html.replace(".html", "")
+var htmlName = urls[urls.length - 1]
+htmlName = htmlName.split("#")[0];
+htmlName = htmlName.replace(".html", "")
 
-function getFullFileUrl(fileNumber){
-    return "/Codes/" + html + fileNumber +".ino";
-}
+let codeUrl = "/Codes/" + htmlName + ".ino";
+
+// function getFullFileUrl(fileNumber){
+//     return "/Codes/" + htmlName + fileNumber + ".ino";
+// }
 
 function getListOfLines(filePath){
     var textFromFile = getText(filePath);
@@ -40,69 +29,40 @@ function getListOfLines(filePath){
     return listOfLines
 }
 
-var listOfCodeWindows = []
-for(var i = 0; i < Infinity; i++){
-    var codeWindow = document.getElementById('code' + i);
-    // console.log(i);
-    if(codeWindow != null){
-        console.log(codeWindow)
+// for(var i = 0; i < Infinity; i++){
+//     var codeWindow = document.getElementById('code' + i);
+//     // console.log(i);
+//     if(codeWindow != null){
+//         console.log(codeWindow)
+//     }
+//     if(i >= 100){
+//         break;
+//     }
+// }
+
+function getMultitplyOfTen(number, current = 1){
+    var answer = number / Math.pow(10, current);
+    if(answer < 1) { 
+        return current; 
     }
-    if(i >= 100){
-        break;
-    }
+    return getMultitplyOfTen(number, current += 1);
 }
 
-var codeWindow = document.getElementById('codeWindow1');
-
-function getA(number, current){
-    var answer = number/ current;
-    if(answer < 10){
-        return current;
-    }
-    else{
-        var a = getA(number, current * 10);
-        return a;
-    }
-}
-
-function getSpace(number, max){
-    var number = getA(number, 1);
-    var stringLength = 0;
-    if(max < 10){
-        stringLength = 0 * index;
-    }
-    else if(max < 100){
-        if(number < 10){
-            stringLength = 1 * index;
-        }
-        else{
-            stringLength = 0 * index;
-        }
-    }
-    else if(max < 1000){
-        stringLength = 2 * index;
-    }
-    else if(max < 10000){
-        stringLength = 3 * index;
-    }
-    return stringLength;
+function calculateNumberOfSpaces(number, max){
+    let spacesToAdd = 0;
+    let numberPower = getMultitplyOfTen(number, 1);
+    let numberMaxPower = getMultitplyOfTen(max, 1);
+    spacesToAdd = numberMaxPower - numberPower;
+    return spacesToAdd;
 }
 
 function makeCodeHeader(parent){
     // <p class="copyText" id="copyText">The text has been copied.</p>
     // <div class="codeSettings">
-    //     <div class="copyButton">
-    //         <button class="copy" id="copy">
-    //             <img src="/images/Icons/copy.png" alt="copy">
-    //         </button>
-    //     </div>
-    //     <div class="downloadButton" id="downloadButton">
-    //         <button class="download">
-    //             <img src="/images/Icons/download.png" alt="download">
-    //         </button>
-    //     </div>
+    //     <button class="copyCodeWindowButton1" id="copyCodeWindowButton1"></button>
+    //     <button class="downloadCodeWindowButton1" id="downloadCodeWindowButton1"></button>
     // </div> 
-    return
+
     var copyText = document.createElement("p");
     copyText.className = "copyText";
     copyText.id = "copyText";
@@ -115,19 +75,17 @@ function makeCodeHeader(parent){
     codeSettings.className = "codeSettings"
     parent.appendChild(codeSettings);
 
-    var copyButtonClass = document.createElement("div");
-    copyButtonClass.className = "copyButton"
-    codeSettings.appendChild(copyButtonClass);
+    // COPY BUTTON
+    let copyButton = document.createElement("button");
+    copyButton.className = "copyCodeWindowButton1";
+    copyButton.id =        "copyCodeWindowButton1";
+    codeSettings.appendChild(copyButton);
 
-    var copyButton = document.createElement("button");
-    copyButton.className = "copy";
-    copyButton.id = "copy";
-    copyButtonClass.appendChild(copyButton);
-
-    var copyImg = document.createElement("img")
-    copyImg.src = "/images/Icons/copy.png"
-    copyImg.alt = "copy";
-    copyButton.appendChild(copyImg);
+    // DONWLOAD BUTTON
+    let downloadButton = document.createElement("button");
+    downloadButton.className = "downloadCodeWindowButton1";
+    downloadButton.id =        "downloadCodeWindowButton1";
+    codeSettings.appendChild(downloadButton);
 }
 
 function makeElements(_code, listOfLines){
@@ -150,15 +108,17 @@ function makeElements(_code, listOfLines){
     var countOfChilds = _code.childElementCount;
     for(var i = 0; i < countOfChilds; i++){
         if(i > 1){
-            var stringLength = getSpace(i - 1, countOfChilds);
-            
-            var string = "";
-            if(stringLength >= 1){
-                for(var x = 0; x < stringLength; x++){
-                    string += " ";
-                }
-            }
-            _code.children[i].children[0].innerText = i - 1 + " " + string;
+            var stringLength = calculateNumberOfSpaces(i - 1, countOfChilds);
+            var spaces = "0".repeat(stringLength);
+            // _code.children[i].children[0].innerText = i - 1 + " " + spaces;
+
+            let spaceElement = document.createElement("p");
+            spaceElement.innerHTML = spaces;
+            spaceElement.style.display = "inline-block";
+            spaceElement.style.color = "rgba(0, 0, 0, 0)"
+
+            _code.children[i].children[0].appendChild(spaceElement);
+            _code.children[i].children[0].innerHTML += i - 1;
             _code.children[i].children[0].style.fontFamily = 'Roboto,sans-serif';
         }
     }
@@ -185,21 +145,6 @@ function drawLines(_code){
             }
             else{
                 _code.children[i].style.backgroundColor = "rgba(0, 90, 170, 0.1)"
-            }
-        }
-    }
-}
-
-const codeExplain = document.getElementsByClassName("codeExplain");
-for(var i = 0; i < codeExplain.length; i++){
-    var el = codeExplain[i]
-    for(var x = 0; x < el.childElementCount; x++){
-        if(x != 0){
-            if(x % 2){
-                codeExplain[i].children[x].style.backgroundColor = "rgba(0, 132, 255, 0.1)"
-            }
-            else{
-                codeExplain[i].children[x].style.backgroundColor = "rgba(0, 90, 170, 0.1)"
             }
         }
     }
@@ -241,13 +186,17 @@ function stringToList(text){
             words = "";
         }
     }
-    // console.log(listOfWords);
+    // console.log(listOfWords)
     return listOfWords;
 }
 
-const variables = ["void", "OUTPUT","HIGH", "LOW", "int", "String", "char", "const"];
+const variables = ["void", "OUTPUT", "HIGH", "LOW", "int", "char", "String", "float", "const"];
 const logicalOperators = ["#include", "#define", "while", "loop", "setup", "if", "else"];
-const functions = ["Serial", "begin", "pinMode", "digitalWrite", "delay", "available", "readString", "toInt", "millis"];
+const functions = ["Serial", "begin", "pinMode", "digitalWrite", "analogWrite", "delay", "available", "readString", "toInt", "millis"];
+const other = ["for"]
+
+let listOfHighlightedWords = [variables, logicalOperators, functions, other]
+let listOfHighlightedWordsClassName = ["variables", "logicalOperators", "functions", "other"]
 
 function changeTextColor(parent, skipElement){
     // var parent = document.getElementsByClassName('code');
@@ -262,28 +211,20 @@ function changeTextColor(parent, skipElement){
             var list = stringToList(text); //Convert String to List
             for(var i = 0; i < list.length; i++){
                 var word = list[i];
-                var checked = false
-                for(var z = 0; z < variables.length; z++){
-                    if(word == variables[z]){
-                        changeColor(code, word, 'variables');
-                        checked = true;
-                        break;
+                let checked = false;
+                // List through all highlighted words list
+                for(let _i = 0; _i < listOfHighlightedWords.length; _i++){
+                    for(let _x = 0; _x < listOfHighlightedWords[_i].length; _x++){
+                        if(word == listOfHighlightedWords[_i][_x]){
+                            changeColor(code, word, listOfHighlightedWordsClassName[_i]);
+                            checked = true;
+                            break;
+                        }
                     }
                 }
-                for(var z = 0; z < logicalOperators.length; z++){
-                    if(word == logicalOperators[z]){
-                        changeColor(code, word, 'logicalOperators');
-                        checked = true;
-                        break;
-                    }
-                }
-                for(var z = 0; z < functions.length; z++){
-                    if(word == functions[z]){
-                        changeColor(code, word, 'functions');
-                        checked = true;
-                        break;
-                    }
-                }
+                // if(list[i] == " "){
+                //     code.innerHTML += " ";
+                // }
                 if(list[i] == "TAB"){
                     code.innerHTML += "    ";
                 }
@@ -302,10 +243,6 @@ function changeColor(parent, text, className){
     parent.appendChild(div);
 }
 
-function downloadFile(name){
-    getFullFileUrl(name);
-}
-
 function download(link){
     var element = document.createElement('a');
     element.setAttribute('href', link);
@@ -318,7 +255,8 @@ function download(link){
 }
 
 function copyTextFromFile(name){
-    var textFromFile = getText(getFullFileUrl(""));
+    var textFromFile = getText(codeUrl);
+    navigator.clipboard.writeText(textFromFile);
     showCopyText();
 }
 
@@ -331,17 +269,10 @@ function showCopyText(){
     }, 2000)
 }
 
-// download('/Codes/ArduinoBlinkLed.ino')
-for(var i = 0; i < codeExplain.length; i++){
-    changeTextColor(codeExplain[i], 0);
-}
-
 function makeCodeWindow(className){
-    var code = className
+    var code = className;
 
-    var url = getFullFileUrl("");
-
-    var listOfLines = getListOfLines(url);
+    var listOfLines = getListOfLines(codeUrl);
     
     makeCodeHeader(code);
     makeElements(code, listOfLines); // Make lines by file text
@@ -350,4 +281,29 @@ function makeCodeWindow(className){
     changeTextColor(code, 1);
 }
 
-makeCodeWindow(codeWindow)
+let codeWindow = document.getElementById('codeWindow1');
+makeCodeWindow(codeWindow);
+
+const copyButton = document.getElementById('copyCodeWindowButton1');
+copyButton.addEventListener('click', function() {copyTextFromFile(htmlName);}, false);
+const downloadButton = document.getElementById('downloadCodeWindowButton1');
+downloadButton.addEventListener('click', function() {download(codeUrl);}, false);
+
+const codeExplain = document.getElementsByClassName("codeExplain");
+
+for(var i = 0; i < codeExplain.length; i++){
+    var el = codeExplain[i]
+    for(var x = 0; x < el.childElementCount; x++){
+        if(x % 2){
+            codeExplain[i].children[x].style.backgroundColor = "rgba(0, 132, 255, 0.1)"
+        }
+        else{
+            codeExplain[i].children[x].style.backgroundColor = "rgba(0, 90, 170, 0.1)"
+        }
+    }
+}
+
+// download('/Codes/ArduinoBlinkLed.ino')
+for(var i = 0; i < codeExplain.length; i++){
+    changeTextColor(codeExplain[i], -1);
+}

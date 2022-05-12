@@ -1,7 +1,7 @@
 .settings{
     position: relative;
     box-sizing: border-box;
-    background-color:aqua;
+    /* background-color:aqua; */
 }
 
 .selectSize{
@@ -20,9 +20,9 @@
     width: 30vw;
     height: 30vw;
     /* aspect-ratio: 1 / 1; */
-    box-sizing: content-box;
-    border: solid 10vw rgba(0,0,0,0);
-    border-top: solid 0vw rgba(0,0,0,0);
+    border: solid 5vw rgba(0,0,0,0);
+    /* border-top: solid 0vw rgba(0,0,0,0); */
+    box-sizing: border-box;
 }
 
 .window3x3{

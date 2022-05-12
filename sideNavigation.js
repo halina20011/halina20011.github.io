@@ -188,13 +188,11 @@ function moveLeft(_el, _start, _stop, _time){
     // _start = parseFloat(getComputedStyle(_el).transform.split(',')[4]) || 0;
     // console.log(_start, _stop, _time);
 
-    // animate
     _el.animate([{ left: +_start+'%'}, { left: +_stop+'%' }], _time).onfinish = function(){
         _el.style.left = +_stop+'%'; // block the element transition to the '_stop' position
     };
 }
 function scaleWidth(_el, _start, _stop, _time, _units){
-    // animate
     console.log(_units);
     _el.animate([{ width: +_start+_units}, { width: +_stop+_units}], _time).onfinish = function(){
         _el.style.width = +_stop+_units; // block the element transition to the '_stop' position

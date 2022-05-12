@@ -28,6 +28,7 @@ buttonDonwloadImage.addEventListener("click", function() {download(generatedImag
 const colorPalet = document.getElementById("colorPalet");
 
 const maxPixels = 430;
+// const listOfASCII =  ["█", "W", "A", "H", "D", "L", "@", "I", "#", "/", "_"];
 const listOfASCII =  ["W", "A", "H", "D", "L", "@", "I", "#", "/", "_"];
 //                     0                                           255
 // console.log(listOfASCII.slice(0).reverse())
