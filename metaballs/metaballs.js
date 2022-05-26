@@ -4,11 +4,9 @@ var context = canvas.getContext('2d');
 var image = context.createImageData(canvas.width, canvas.height);
 var data = image.data;
 
-
 var playAnimation = true;
 var buttonStart = document.getElementById("button-StartStop")
 var buttonStartListener = buttonStart.addEventListener("click", function() {changeStateOfPlayPauseButton()}, false)
-
 
 function changeStateOfPlayPauseButton(){
     playAnimation = !playAnimation;

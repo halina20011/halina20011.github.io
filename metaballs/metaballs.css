@@ -54,15 +54,12 @@
 }
 
 .customColors > p{
-    width: 50%;
     display: inline-block;
 }
-
 
 /* Set to normally colorRed, colorGreen, colorBlue to be hidden*/
 .checkboxCustomColors ~ div{
     display: none;
-    /* justify-content: space-evenly; */
     vertical-align: top;
 }
 

@@ -1,0 +1,43 @@
+.window{
+    display:flex;
+}
+
+.window > div{
+    padding: 10px;
+}
+
+.window > .settings{
+    width: 48%;
+}
+
+.my-canvas{
+    display: inline-block;
+    position: relative;
+    border: 1px solid;
+    height: 100%;
+    width: 50%;
+    background-color: black;
+}
+
+.resolution{
+    display: flex;
+}
+
+.resolution > select{
+    width: 100%;
+}
+
+.resolution > div{
+    margin: 0px 10px 0px 0px;
+}
+
+.color{
+    display: flex;
+}
+.color > p{
+    margin: 0px 10px 0px 0px;
+}
+
+.color > input{
+    width: 100%;
+}
