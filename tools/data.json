@@ -16,6 +16,18 @@
                 ]
                 ]
         },
+        "MarchingSquares": {
+            "className": "MarchingSquaresProject",
+            "path": "/marchingSquares/marchingSquares.html",
+            "imgPath": "/images/Miniature/marchingSquares.jpg",
+            "name": "Marching Squares",
+            "projectTextInfo": [
+                "Play with algorithm called Marching Squares."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss":  null
+        },
         "Metaballs": {
             "className": "MetaballsProject",
             "path": "/metaballs/metaballs.html",
