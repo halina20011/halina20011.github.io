@@ -5,16 +5,16 @@ var image = context.createImageData(canvas.width, canvas.height);
 var data = image.data;
 
 var playAnimation = true;
-var buttonStart = document.getElementById("button-StartStop")
-var buttonStartListener = buttonStart.addEventListener("click", function() {changeStateOfPlayPauseButton()}, false)
+var buttonStart = document.getElementById("button-StartStop");
+var buttonStartListener = buttonStart.addEventListener("click", function() {changeStateOfPlayPauseButton()}, false);
 
 function changeStateOfPlayPauseButton(){
     playAnimation = !playAnimation;
     if(playAnimation == true){
-        buttonStart.style.backgroundImage = "url(\"/images/Icons/pause.png\")"
+        buttonStart.style.backgroundImage = "url(\"/images/Icons/pause.png\")";
     }
     else{
-        buttonStart.style.backgroundImage = "url(\"/images/Icons/play.png\")"
+        buttonStart.style.backgroundImage = "url(\"/images/Icons/play.png\")";
     }
 }
 
@@ -70,13 +70,13 @@ function changeColor(checkbox, slider, value){
     }
 }
 
-var color = []
+var color = [];
 color = save();
 
 function save(){
-    var color = []
-    var checkboxs = [checkboxRed, checkboxGreen, checkboxBlue]
-    var sliders = [sliderRed, sliderGreen, sliderBlue]
+    var color = [];
+    var checkboxs = [checkboxRed, checkboxGreen, checkboxBlue];
+    var sliders = [sliderRed, sliderGreen, sliderBlue];
     for(var i = 0; i < checkboxs.length; i++){
         if(checkboxs[i].checked == true){
             color.push(sliders[i].value);
@@ -97,8 +97,8 @@ class BALL {
         this.velocityY = velocityY;
 
     }
-    move() {
-        var mRadius = this.radius
+    move(){
+        var mRadius = this.radius;
         if(this.x > (canvas.width - mRadius) || (this.x < 0 + mRadius)){
             this.velocityX *= -1;
             if(this.velocityY == 0){this.velocityY = Math.random();}
@@ -118,8 +118,8 @@ function swapBuffer() {
 }
 
 function clear(){
-    for(var x = 0; x < canvas.width; x++){
-        for(var y = 0; y < canvas.height; y++){
+    for(var x = 0; x < canvas.width; x++) {
+        for(var y = 0; y < canvas.height; y++) {
             drawPixel(x, y, 0, 0, 0, 0);
         }
     }
@@ -132,8 +132,9 @@ class rgbaColor{
         this.b = b;
         this.a = a;
     }
+    
     getColor(){
-        return [r, g, b, a]
+        return [r, g, b, a];
     }
 }
 
@@ -151,9 +152,8 @@ function drawPixel(x, y, r, g, b, a) {
 
 function drawCircle(x, y, radius){
     var resoluton = 1;
-    var angle, x1, y1
-    for(var i = 0; i < 360; i += resoluton){
-        angle = i;
+    var x1, y1;
+    for(var angle = 0; angle < 360; angle += resoluton){
         x1 = radius * Math.cos(angle * Math.PI / 180);
         y1 = radius * Math.sin(angle * Math.PI / 180);
         drawPixel(x + x1, y + y1, 0, 0, 0, 255);
@@ -168,10 +168,13 @@ function dist(x1, y1, x2, y2){
 }
 
 function random(min, max){
-    var r = (Math.random() * (max - min + 1) + min);
-    return r;
+    // Math.random() returns a float between 0 (inclusive) and 1 (exclusive).
+    // x = Math.random(), 0.0 <= x < 1.0
+    // Calculate range between min and max. 
+    // Multiply `range` with random float.
+    // Add min to result to number in correct interval.
+    return (Math.random() * (max - min + 1) + min);
 }
-// 
 
 // var ball1 = new BALL(50, 50, 50, 0, 1);
 // var ball2 = new BALL(50, 50, 50, 1, 0)
@@ -190,21 +193,21 @@ function MetaBalls(_metaBalls, _r, _g, _b){
     for(var x = 0; x < canvas.width; x++){
         for(var y = 0; y < canvas.height; y++){
             var sum = 0;
-            for(var i = 0; i < _metaBalls.length; i++){
-                var ball = _metaBalls[i]
+            for (var i = 0; i < _metaBalls.length; i++){
+                var ball = _metaBalls[i];
                 var d = dist(x, y, ball.x, ball.y);
                 // sum += ball.radius / d * 250;
                 sum += ball.radius / d * 150;
                 // sum += ball.radius / d * 100;
             }
             if(_r == null){
-                r = sum
+                r = sum;
             }
             if(_g == null){
-                g = sum
+                g = sum;
             }
             if(_b == null){
-                b = sum
+                b = sum;
             }
             drawPixel(x, y, r, g, b, 255);
         }
@@ -213,9 +216,9 @@ function MetaBalls(_metaBalls, _r, _g, _b){
 
 function drawMetaBalls(_metaBalls){
     if(checkboxCustomColors.checked == true){
-        var r = color[0]
-        var g = color[1]
-        var b = color[2]
+        var r = color[0];
+        var g = color[1];
+        var b = color[2];
         MetaBalls(_metaBalls, r, g, b);
     }
     else{
@@ -225,7 +228,6 @@ function drawMetaBalls(_metaBalls){
 
 var index = 0;
 function main(){
-    // clear();
     if(playAnimation == true){
         drawMetaBalls(metaBallsList);
         for(var i = 0; i < metaBallsList.length; i++){
@@ -261,17 +263,17 @@ var _downloadImages = false;
 var filename = "imagesBase64.json"
 
 function downloadAll(){
-    stringJsonImagesFile =  JSON.stringify(imagesFile)
-    download(generateTextFileUrl(stringJsonImagesFile), filename)
-    imagesFile.imagesBase64 = []
-    console.log("Downloaded!")
+    stringJsonImagesFile =  JSON.stringify(imagesFile);
+    download(generateTextFileUrl(stringJsonImagesFile), filename);
+    imagesFile.imagesBase64 = [];
+    console.log("Downloaded!");
 }
 
 function downloadImages(){
     if(_downloadImages == true){
         console.log(index);
         var dataURL = canvas.toDataURL("image/jpeg", 1.0);
-        imagesFile.imagesBase64.push(dataURL)
+        imagesFile.imagesBase64.push(dataURL);
     }
 }
 
