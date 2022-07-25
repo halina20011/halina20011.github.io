@@ -1,5 +1,5 @@
-import {getText} from "/tools/import.js";
-import {createLink} from "/tools/import.js";
+import {getText} from "/Tools/import.js";
+import {createLink} from "/Tools/import.js";
 // import {resizeInfoText} from "/size.js";
 
 var text = getText("/Menu/dropDownMenu.html")

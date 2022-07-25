@@ -1,9 +1,9 @@
-import {loadJSON} from "/tools/import.js"
+import {loadJSON} from "/Tools/import.js"
 
 const textInput = document.getElementById("search");
 const searchDropDown = document.getElementsByClassName("searchDropDown")[0];
 
-var data = loadJSON('/tools/search.json');
+var data = loadJSON('/Tools/search.json');
 var searchOptions = []
 getSearchOptions()
 

@@ -35,7 +35,7 @@
     width: 100%;
     height: 100%;
     background-color:rgb(0, 47, 61);
-    background-image: url("/images/bar.png");
+    background-image: url("/Images/bar.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -43,7 +43,7 @@
 .winIndicator{
     position: absolute;
     width: 100%;
-    background-image: "/images/WinIndicator.png");
+    background-image: "/Images/WinIndicator.png");
     background-repeat:no-repeat;
     background-size: 100% 100%;
     padding-bottom: 100%;
@@ -73,7 +73,7 @@
 }
 
 /* .chracterButton1{
-    background-image: url("/images/x.png");
+    background-image: url("/Images/x.png");
     background-repeat:no-repeat;
     background-size: 100% 100%;
     padding-bottom: 100%;

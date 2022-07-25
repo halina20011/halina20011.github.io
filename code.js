@@ -1,4 +1,4 @@
-import {getText} from "/tools/import.js";
+import {getText} from "/Tools/import.js";
 
 // Get filename
 var Url = window.location.href;

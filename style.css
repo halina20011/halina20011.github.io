@@ -158,7 +158,7 @@ body{
     outline: none;
     /* overflow: hidden; */
     float: left;
-    background: url("/images/Icons/home.png");
+    background: url("/Images/Icons/home.png");
     background-repeat: no-repeat;
     background-position: right;
     background-size: 40px;
@@ -335,14 +335,14 @@ jumpLink{
     margin: 0px 0px 0px 5px;
 }
 
-.refreshButton  { background-image: url("/images/Icons/refresh.png");  }
-.addButton      { background-image: url("/images/Icons/plus.png");     }
-.removeButton   { background-image: url("/images/Icons/minus.png");    }
+.refreshButton  { background-image: url("/Images/Icons/refresh.png");  }
+.addButton      { background-image: url("/Images/Icons/plus.png");     }
+.removeButton   { background-image: url("/Images/Icons/minus.png");    }
 
-.downloadButton  { background-image: url("/images/Icons/download.png"); }
-.downloadAllButton  { background-image: url("/images/Icons/download.png"); background-color: rgb(48, 48, 48); }
+.downloadButton  { background-image: url("/Images/Icons/download.png"); }
+.downloadAllButton  { background-image: url("/Images/Icons/download.png"); background-color: rgb(48, 48, 48); }
 
-.playButton     { background-image: url("/images/Icons/play.png");  }
-.pauseButton     { background-image: url("/images/Icons/pause.png");  }
+.playButton     { background-image: url("/Images/Icons/play.png");  }
+.pauseButton     { background-image: url("/Images/Icons/pause.png");  }
 
-.timelapseButton     { background-image: url("/images/Icons/timelapse.png");  }
+.timelapseButton     { background-image: url("/Images/Icons/timelapse.png");  }

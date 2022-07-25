@@ -1,5 +1,5 @@
-var x = "/images/x.png";
-var o = "/images/o.png";
+var x = "/Images/x.png";
+var o = "/Images/o.png";
 
 var currentTurn = "X";
 
@@ -40,7 +40,7 @@ const chracterButton9 = document.getElementById('chracterButton9')
 const characterSpot9 = document.getElementById('characterSpot9');
 
 const winIndicator = document.getElementsByClassName("winIndicator")[0]
-const refreshButton = document.getElementById("refresh");
+const refreshButton = document.getElementById("refreshButton");
 
 chracterButton1.addEventListener('click', function() {move(0,0);}, false)
 chracterButton2.addEventListener('click', function() {move(0,1);}, false)
@@ -188,7 +188,7 @@ function drawCharacter(){
                 buttons[i][j].style.backgroundSize = "100% 100%";
             }
             // else{
-            //     spots[i][j].src = "/images/none.png";
+            //     spots[i][j].src = "/Images/none.png";
             // }
         }
     }

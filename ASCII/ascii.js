@@ -1,4 +1,4 @@
-import {startLoadingAnimation, stopLoadingAnimation} from '/tools/loading/toggleLoading.js'
+import {startLoadingAnimation, stopLoadingAnimation} from '/Tools/loading/toggleLoading.js'
 
 stopLoadingAnimation();
 // startLoadingAnimation();

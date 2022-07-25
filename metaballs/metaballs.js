@@ -11,10 +11,10 @@ var buttonStartListener = buttonStart.addEventListener("click", function() {chan
 function changeStateOfPlayPauseButton(){
     playAnimation = !playAnimation;
     if(playAnimation == true){
-        buttonStart.style.backgroundImage = "url(\"/images/Icons/pause.png\")";
+        buttonStart.style.backgroundImage = "url(\"/Images/Icons/pause.png\")";
     }
     else{
-        buttonStart.style.backgroundImage = "url(\"/images/Icons/play.png\")";
+        buttonStart.style.backgroundImage = "url(\"/Images/Icons/play.png\")";
     }
 }
 

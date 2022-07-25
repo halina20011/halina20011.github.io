@@ -71,7 +71,7 @@ code{
     float: right;
     padding-right: 2px;
     border: none;
-    background-image: url('/images/Icons/copy.png');
+    background-image: url('/Images/Icons/copy.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-color: rgba(0,0,0,0);
@@ -83,7 +83,7 @@ code{
     float: right;
     padding-right: 2px;
     border: none;
-    background-image: url('/images/Icons/download.png');
+    background-image: url('/Images/Icons/download.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-color: rgba(0,0,0,0);

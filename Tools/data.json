@@ -2,8 +2,8 @@
     "index": {
         "MandelbrotSet": {
             "className": "MandelbrotSetProject",
-            "path": "/mandelbrotSet/mandelbrotSet.html",
-            "imgPath": "/images/Miniature/mandelbrotSet.jpeg",
+            "path": "/MandelbrotSet/mandelbrotSet.html",
+            "imgPath": "/Images/Miniature/mandelbrotSet.jpeg",
             "name": "Mandelbrot set",
             "projectTextInfo": [
                 "Explore what is Mandelbrot set."
@@ -11,12 +11,12 @@
             "addAdicionalThings": null,
             "addScript": null,
             "addCss":  [
-                [".MandelbrotSetProject:hover > .backgroundImg > .img",[["background-image: url('/images/Miniature/mandelbrotSet.gif')!important;"]]]]
+                [".MandelbrotSetProject:hover > .backgroundImg > .img",[["background-image: url('/Images/Miniature/mandelbrotSet.gif')!important;"]]]]
         },
         "FourierSeries": {
             "className": "FourierSeriesProject",
             "path": "/FourierSeries/fourierSeries.html",
-            "imgPath": "images/Miniature/fourierSeries.jpeg",
+            "imgPath": "Images/Miniature/fourierSeries.jpeg",
             "name": "Fourier Series",
             "projectTextInfo": [
                 "Explore what is Fourier series."
@@ -24,12 +24,12 @@
             "addAdicionalThings": null,
             "addScript": null,
             "addCss":  [
-                [".FourierSeriesProject:hover > .backgroundImg > .img",[["background-image: url('/images/Miniature/fourierSeries.gif')!important;"]]]]
+                [".FourierSeriesProject:hover > .backgroundImg > .img",[["background-image: url('/Images/Miniature/fourierSeries.gif')!important;"]]]]
         },
         "ASCIIGenerator": {
             "className": "AsciiGeneratorProject",
             "path": "/ASCII/ascii.html",
-            "imgPath": "/images/Miniature/asciiGenerator.png",
+            "imgPath": "/Images/Miniature/asciiGenerator.png",
             "name": "ASCII Generator",
             "projectTextInfo": [
                 "Convert image to ASCII text."
@@ -45,7 +45,7 @@
         "MarchingSquares": {
             "className": "MarchingSquaresProject",
             "path": "/marchingSquares/marchingSquares.html",
-            "imgPath": "/images/Miniature/marchingSquares.jpg",
+            "imgPath": "/Images/Miniature/marchingSquares.jpg",
             "name": "Marching Squares",
             "projectTextInfo": [
                 "Play with algorithm called Marching Squares."
@@ -57,7 +57,7 @@
         "Metaballs": {
             "className": "MetaballsProject",
             "path": "/metaballs/metaballs.html",
-            "imgPath": "/images/Miniature/metaballs.jpeg",
+            "imgPath": "/Images/Miniature/metaballs.jpeg",
             "name": "Metaballs",
             "projectTextInfo": [
                 "Play with metaballs."
@@ -65,12 +65,12 @@
             "addAdicionalThings": null,
             "addScript": null,
             "addCss":  [
-                [".MetaballsProject:hover > .backgroundImg > .img",[["background-image: url('/images/Miniature/metaballs.gif')!important;"]]]]
+                [".MetaballsProject:hover > .backgroundImg > .img",[["background-image: url('/Images/Miniature/metaballs.gif')!important;"]]]]
         },
         "Tic-tac-toe": {
             "className": "TicTacToeProject",
             "path": "/TicTacToe/ticTacToe.html",
-            "imgPath": "/images/Miniature/TicTacToe.png",
+            "imgPath": "/Images/Miniature/TicTacToe.png",
             "name": "Tic-tac-toe",
             "projectTextInfo": [
                 "Play Tic-tac-toe with AI.", 
@@ -83,7 +83,7 @@
         "Test typing": {
             "className": "WriterProject",
             "path": "/Writer/writer.html",
-            "imgPath": "/images/Miniature/w.png",
+            "imgPath": "/Images/Miniature/w.png",
             "name": "Test typing",
             "projectTextInfo": [
                 "Do you want to practice typing on the keyboard?", 
@@ -97,7 +97,7 @@
         "Clock": {
             "className": "ClockProject",
             "path ": "/Clock/clock.html",
-            "imgPath": "/images/Miniature/Clock/ClockBackground.png",
+            "imgPath": "/Images/Miniature/Clock/ClockBackground.png",
             "name": "Clock",
             "projectTextInfo": [
                 "real time clock", 
@@ -111,7 +111,7 @@
                     ["background-size: 100%"],
                     ["background-repeat: no-repeat"],
                     ["padding-bottom: 100%"],
-                    ["background-image: url(/images/Miniature/Clock/ClockArrow1.png)"]]
+                    ["background-image: url(/Images/Miniature/Clock/ClockArrow1.png)"]]
                 ],
                 ["div", [
                     ["class", "clockArrow2"],
@@ -120,7 +120,7 @@
                     ["background-size: 100%"],
                     ["background-repeat: no-repeat"],
                     ["padding-bottom: 100%"],
-                    ["background-image: url(/images/Miniature/Clock/ClockArrow2.png)"]]
+                    ["background-image: url(/Images/Miniature/Clock/ClockArrow2.png)"]]
                 ]
             ],
             "addScript": "/Clock/clockAnimation.js",
@@ -131,7 +131,7 @@
         "arduinoBlinkLed": {
             "className": "arduinoBlinkLedProject",
             "path": "/Arduino/ArduinoBlinkLed.html",
-            "imgPath": "/images/Miniature/Led.svg",
+            "imgPath": "/Images/Miniature/Led.svg",
             "name": "Arduino blink led",
             "projectTextInfo": [
                 "Learn Arduino", 

@@ -118,34 +118,34 @@
 }
 
 .button-StartStop{
-    background-image: url("/images/Icons/pause.png");
+    background-image: url("/Images/Icons/pause.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
 
 .button-Download{
-    background-image: url("/images/Icons/download.png");
+    background-image: url("/Images/Icons/download.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
 
 
 .button-DownloadStart{
-    background-image: url("/images/Icons/download.png");
+    background-image: url("/Images/Icons/download.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-color: green;
 }
 
 .button-DownloadStop{
-    background-image: url("/images/Icons/download.png");
+    background-image: url("/Images/Icons/download.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-color: red;
 }
 
 .button-DownloadAll{
-    background-image: url("/images/Icons/download.png");
+    background-image: url("/Images/Icons/download.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }

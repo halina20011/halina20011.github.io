@@ -1,4 +1,4 @@
-import {loadJSON} from "/tools/import.js"
+import {loadJSON} from "/Tools/import.js"
 
 const importSpot = document.getElementById("importSpot");
 
@@ -9,13 +9,13 @@ if(!pageName){
     pageName = "index";
 }
 
-var data = loadJSON('/tools/data.json'); //Get file data.json
+var data = loadJSON('/Tools/data.json'); //Get file data.json
 // console.log(data);
 
 var sheet = document.createElement("link");
 sheet.rel = "stylesheet"
 sheet.type = "text/css"
-sheet.href = "/tools/importImagesLinks.css"
+sheet.href = "/Tools/importImagesLinks.css"
 importSpot.appendChild(sheet);  //Import css style
 
 var pageData = data[pageName]; 
