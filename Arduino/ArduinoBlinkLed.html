@@ -8,13 +8,12 @@
     <link rel="icon" href="/images/Halina-Circle.png" type="image/x-icon">
     <meta name="keywords" content="Halina programming, Arduino learn, Arduino Blink Led, Blink Led">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/code.css"></link>
-    <link rel="stylesheet" type="text/css" href="/text.css"></link>
-    <link rel="stylesheet" type="text/css" href="/style.css"></link>
-    <link rel="stylesheet" type="text/css" href="/head.css"></link>
-    <link rel="stylesheet" type="text/css" href="/Menu/dropDownMenu.css"></link>
+    <link rel="stylesheet" type="text/css" href="/code.css">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="/Menu/dropDownMenu.css">
     <script src="/Menu/dropDownMenu.js"></script>
-    <link rel="stylesheet" type="text/css" href="Arduino.css"></link>
+    <link rel="stylesheet" type="text/css" href="Arduino.css">
     <script type="module" src="/tools/download.js"></script>
 </head>
 <body>
@@ -25,168 +24,163 @@
             <div class="column-left" id="column-left">
             </div>
             <div class="column-middle" id="column-middle">
-                <div class="progress">
-                    <div class="progress__highlight" id="js-highlight"></div>
+                <h1>Arduino Blink Led</h1>
+                <div class="fS8"></div>
+                <div class="paragraph">
+                    <p>In this tutorial we will learn how to blink the LED using Arduino Uno.</p>
                 </div>
-                <div class="textBox" id="js-container">
-                    <h1>Arduino Blink Led</h1>
-                    <div class="fS8"></div>
+                <div class="freeLine"></div>
+
+                <jumpLink id="PartsOrToolsYouWillNeed"></jumpLink>
+                <h2>Parts Or Tools You Will Need:</h2>
+                <div class="paragraph" >
+                    <p>Arduino Uno</p>
+                    <p>Led diode (any color, i will use white)</p>
+                    <p>220 Ohm resistor (how i calculate resistor value later in tutorial)</p>
+                    <p>Some male to female wires.</p>
+                </div>
+                <div class="freeLine"></div>
+                <!-- ###################################################################### -->
+                <!--                    How to calculate resistor value                     -->
+                <!-- ###################################################################### -->
+                <jumpLink id="HowToCalculateResistorValue"></jumpLink>
+                <h2 id="HowToCalculateResistorValue">How to calculate resistor value</h2>
+                <div class="paragraph">
+                    <p>To calculate corect resistor value we first need to know these values:</p>
                     <div class="paragraph">
-                        <p>In this tutorial we will learn how to blink the LED using Arduino Uno.</p>
-                    </div>
-                    <div class="freeLine"></div>
-    
-                    <jumpLink id="PartsOrToolsYouWillNeed"></jumpLink>
-                    <h2>Parts Or Tools You Will Need:</h2>
-                    <div class="paragraph" >
-                        <p>Arduino Uno</p>
-                        <p>Led diode (any color, i will use white)</p>
-                        <p>220 Ohm resistor (how i calculate resistor value later in tutorial)</p>
-                        <p>Some male to female wires.</p>
-                    </div>
-                    <div class="freeLine"></div>
-                    <!-- ###################################################################### -->
-                    <!--                    How to calculate resistor value                     -->
-                    <!-- ###################################################################### -->
-                    <jumpLink id="HowToCalculateResistorValue"></jumpLink>
-                    <h2 id="HowToCalculateResistorValue">How to calculate resistor value</h2>
-                    <div class="paragraph">
-                        <p>To calculate corect resistor value we first need to know these values:</p>
+                        <div class="fS8"></div>
+                        
+                        <!-- Forward voltage -->
+                        <h4>Led Forward voltage</h4>
+                        <div class="fS4"></div>
+                        
                         <div class="paragraph">
-                            <div class="fS8"></div>
-                            
-                            <!-- Forward voltage -->
-                            <h4>Led Forward voltage</h4>
-                            <div class="fS4"></div>
-                            
-                            <div class="paragraph">
-                                <p> Forward voltage is the amount of voltage lost in the LED when operated at a certain current,
-                                    it is usually about 20 mA (0.020 A). 
-                                    You can often find "forward voltage" shown on the datasheets as Vf.
-                                    Forward voltage depends mostly on the color of the LED. 
-                                    Standard 5mm LED red, orange and yellow LEDs have a forward voltage about 1.8 V - 2.2 V, 
-                                    while white, blue, pure-green and UV LEDs have a forward voltage about 3.0 V - 3.3 V. </p>
-                                <p>I'm using red LED so forward voltage is around 1.8 V.</p>
+                            <p> Forward voltage is the amount of voltage lost in the LED when operated at a certain current,
+                                it is usually about 20 mA (0.020 A). 
+                                You can often find "forward voltage" shown on the datasheets as Vf.
+                                Forward voltage depends mostly on the color of the LED. 
+                                Standard 5mm LED red, orange and yellow LEDs have a forward voltage about 1.8 V - 2.2 V, 
+                                while white, blue, pure-green and UV LEDs have a forward voltage about 3.0 V - 3.3 V. </p>
+                            <p>I'm using red LED so forward voltage is around 1.8 V.</p>
+                        </div>
+                        <div class="fS8"></div>
+                        
+                        <!-- Led current -->
+                        <h4>Led current</h4>
+                        <div class="fS4"></div>
+
+                        <div class="paragraph">
+                            <p>The current determines how much the LED is bright. If you give too little power the LED will not light. 
+                                However, if you overdo it, you will destroy the LED.
+                                The maximum current that can flow through the LED is around 25 mA - 30 mA.</p> 
+                                <p>But I like to use 20 mA to drive Led, because otherwise LED would be too bright.</p>
                             </div>
                             <div class="fS8"></div>
                             
-                            <!-- Led current -->
-                            <h4>Led current</h4>
-                            <div class="fS4"></div>
-    
-                            <div class="paragraph">
-                                <p>The current determines how much the LED is bright. If you give too little power the LED will not light. 
-                                    However, if you overdo it, you will destroy the LED.
-                                    The maximum current that can flow through the LED is around 25 mA - 30 mA.</p> 
-                                    <p>But I like to use 20 mA to drive Led, because otherwise LED would be too bright.</p>
-                                </div>
-                                <div class="fS8"></div>
-                                
-                            <!-- Power output -->
-                            <h4>Power output</h4>
-                            <div class="fS4"></div>
-    
-                            <div class="paragraph">
-                                <p>Because we use arduino uno, output when is turn pin on voltage output is 5.0V.</p>
-                            </div>
-                            <div class="fS8"></div>
-                            
+                        <!-- Power output -->
+                        <h4>Power output</h4>
+                        <div class="fS4"></div>
+
+                        <div class="paragraph">
+                            <p>Because we use arduino uno, output when is turn pin on voltage output is 5.0V.</p>
                         </div>
-                        <p>When we know what values we need we can calculate resistor value with Ohm's law. Formula for Ohm's law is V = I * R.
-                            Where V is the voltage and units are volts,
-                                I is the current and units are amperes
-                            and R is the resistance and units are ohms.
-                        </p>
-                        <p>Because we need to calculate resistance and not voltage we need to change the formula to R = V / I.</p>
-                        <div class="fS4"></div>
-                        <p>Now we have to calculate V by subtracting 
-                            <bold>power output</bold>
-                            and 
-                            <bold>LED forward voltage</bold>.
-                        </p>
-                        <div class="fS4"></div>
-                        <p>V = power output - LED forward voltage</p>
-                        <p>V = 5 V - 1.8 V</p>
-                        <p>V = 3.2 V</p>
-                        <div class="fS4"></div>
-                        <p>I = 20 mA = 0.02 A</p>
                         <div class="fS8"></div>
-                        <p>R = 3.2 / 0.02</p>
-                        <p>R = 160 ohm</p>
-                        <div class="fS8"></div>
-                        <p>Because 160 ohm resistor is not standard resistor value you can use
-                            any resistor value bigger then 160 ohm. That is why we we use 220 ohm resistor.</p>
                         
                     </div>
-                    <div class="freeLine"></div>
+                    <p>When we know what values we need we can calculate resistor value with Ohm's law. Formula for Ohm's law is V = I * R.
+                        Where V is the voltage and units are volts,
+                            I is the current and units are amperes
+                        and R is the resistance and units are ohms.
+                    </p>
+                    <p>Because we need to calculate resistance and not voltage we need to change the formula to R = V / I.</p>
+                    <div class="fS4"></div>
+                    <p>Now we have to calculate V by subtracting 
+                        <bold>power output</bold>
+                        and 
+                        <bold>LED forward voltage</bold>.
+                    </p>
+                    <div class="fS4"></div>
+                    <p>V = power output - LED forward voltage</p>
+                    <p>V = 5 V - 1.8 V</p>
+                    <p>V = 3.2 V</p>
+                    <div class="fS4"></div>
+                    <p>I = 20 mA = 0.02 A</p>
+                    <div class="fS8"></div>
+                    <p>R = 3.2 / 0.02</p>
+                    <p>R = 160 ohm</p>
+                    <div class="fS8"></div>
+                    <p>Because 160 ohm resistor is not standard resistor value you can use
+                        any resistor value bigger then 160 ohm. That is why we we use 220 ohm resistor.</p>
                     
-                    <jumpLink id="Circuit"></jumpLink>
-                    <h2>Circuit</h2>
-                    <p1 id="newLine" class="paragraph">Now we can connect the circuit according to the following circuit:</p1>
-                    <div class="circuit">
-                        <div class="circuitImage" style="background-image: url('/images/Miniature/Led.svg');"></div>
-                    </div>
-    
-                    <div class="freeLine"></div>
-                    <jumpLink id="Code"></jumpLink>
-                    <h2>Code</h2>
-                    <div class="paragraph">
-                        <div class="codeWindow1" id="codeWindow1">
-                            <!-- <div><p id="number">1</p><code id="codeText">void setup() {</code></div>
-                                <div><p id="number">1</p><code id="codeText">    Serial.begin(115200);</code></div>
-                                <div><p id="number">1</p><code id="codeText">    pinMode(led, OUTPUT);</code></div>
-                                <div><p id="number">1</p><code id="codeText">}</code></div>
-                                <div><p id="number">1</p><code id="codeText"></code></div>
-                                <div><p id="number">1</p><code id="codeText">void loop() {</code></div>
-                                    <div><p id="number">1</p><code id="codeText">    digitalWrite(led, HIGH);</code></div>
-                                    <div><p id="number">1</p><code id="codeText">    delay(100);</code></div>
-                                    <div><p id="number">1</p><code id="codeText">    digitalWrite(led, LOW);</code></div>
-                                    <div><p id="number">1</p><code id="codeText">    delay(100);</code></div>
-                            <div><p id="number">1</p><code id="codeText">}</code></div> -->
-                        </div>
-                    </div>
-                    <div class="freeLine"></div>
-                    
-                    <!-- ###################################################################### -->
-                    <!--                        Code explanation                                -->
-                    <!-- ###################################################################### -->
-                    <jumpLink id="CodeExplanation"></jumpLink>
-                    <h2>Code explanation</h2>
-                    <div class="paragraph" >
-                        <div class="fS8"></div>
-                        
-                        <div class="codeExplain" id="codeExplain">
-                            <div><p id="number">1</p><code id="codeText">int led = 11;</code></div>
-                        </div>
-                        
-                        <div class="fS8"></div>
-    
-                        <p>Set the led variable to pin 11. And it is not necessary to use variables in the code, but if we had more extensive code and, for example,
-                            we wanted to change pin 11 to another number, then we don't have to look for all 11 in the code and 
-                            change it manually. All we have to do is change the number of the variable in the beginning.
-                        </p>
+                </div>
+                <div class="freeLine"></div>
                 
-                        <div class="freeLine"></div>
-                        <div class="codeExplain" id="codeExplain">
-                            <div><p id="number">1</p><code id="codeText">pinMode(led, OUTPUT);</code></div>
-                        </div>
-                        <div class="fS8"></div>
-                        <p>Initialize the digital pin as an output.</p>
-                        
-                        <div class="freeLine"></div>
-                        <div class="codeExplain" id="codeExplain">
-                            <div><p id="number">1</p><code id="codeText">digitalWrite(led, HIGH);</code></div>
-                        </div>
-                        <div class="fS8"></div>
-                        <p>Write a HIGH or a LOW value to a digital pin. <a href="https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/">More info</a></p>
-                        <div class="freeLine"></div>
-    
-                        <div class="codeExplain" id="codeExplain">
-                            <div><p id="number">1</p><code id="codeText">delay(delayTime);</code></div>
-                        </div>
-                        <div class="fS8"></div>
-                        <p>Pauses the program for the amount of time (in milliseconds) that we specified as parameter. <a href="https://www.arduino.cc/reference/en/language/functions/time/delay/">More info</a></p>
+                <jumpLink id="Circuit"></jumpLink>
+                <h2>Circuit</h2>
+                <p1 id="newLine" class="paragraph">Now we can connect the circuit according to the following circuit:</p1>
+                <div class="circuit">
+                    <div class="circuitImage" style="background-image: url('/images/Miniature/Led.svg');"></div>
+                </div>
+
+                <div class="freeLine"></div>
+                <jumpLink id="Code"></jumpLink>
+                <h2>Code</h2>
+                <div class="paragraph">
+                    <div class="codeWindow1" id="codeWindow1">
+                        <!-- <div><p id="number">1</p><code id="codeText">void setup() {</code></div>
+                            <div><p id="number">1</p><code id="codeText">    Serial.begin(115200);</code></div>
+                            <div><p id="number">1</p><code id="codeText">    pinMode(led, OUTPUT);</code></div>
+                            <div><p id="number">1</p><code id="codeText">}</code></div>
+                            <div><p id="number">1</p><code id="codeText"></code></div>
+                            <div><p id="number">1</p><code id="codeText">void loop() {</code></div>
+                                <div><p id="number">1</p><code id="codeText">    digitalWrite(led, HIGH);</code></div>
+                                <div><p id="number">1</p><code id="codeText">    delay(100);</code></div>
+                                <div><p id="number">1</p><code id="codeText">    digitalWrite(led, LOW);</code></div>
+                                <div><p id="number">1</p><code id="codeText">    delay(100);</code></div>
+                        <div><p id="number">1</p><code id="codeText">}</code></div> -->
                     </div>
+                </div>
+                <div class="freeLine"></div>
+                
+                <!-- ###################################################################### -->
+                <!--                        Code explanation                                -->
+                <!-- ###################################################################### -->
+                <jumpLink id="CodeExplanation"></jumpLink>
+                <h2>Code explanation</h2>
+                <div class="paragraph" >
+                    <div class="fS8"></div>
+                    
+                    <div class="codeExplain" id="codeExplain">
+                        <div><p id="number">1</p><code id="codeText">int led = 11;</code></div>
+                    </div>
+                    
+                    <div class="fS8"></div>
+
+                    <p>Set the led variable to pin 11. And it is not necessary to use variables in the code, but if we had more extensive code and, for example,
+                        we wanted to change pin 11 to another number, then we don't have to look for all 11 in the code and 
+                        change it manually. All we have to do is change the number of the variable in the beginning.
+                    </p>
+            
+                    <div class="freeLine"></div>
+                    <div class="codeExplain" id="codeExplain">
+                        <div><p id="number">1</p><code id="codeText">pinMode(led, OUTPUT);</code></div>
+                    </div>
+                    <div class="fS8"></div>
+                    <p>Initialize the digital pin as an output.</p>
+                    
+                    <div class="freeLine"></div>
+                    <div class="codeExplain" id="codeExplain">
+                        <div><p id="number">1</p><code id="codeText">digitalWrite(led, HIGH);</code></div>
+                    </div>
+                    <div class="fS8"></div>
+                    <p>Write a HIGH or a LOW value to a digital pin. <a href="https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/">More info</a></p>
+                    <div class="freeLine"></div>
+
+                    <div class="codeExplain" id="codeExplain">
+                        <div><p id="number">1</p><code id="codeText">delay(delayTime);</code></div>
+                    </div>
+                    <div class="fS8"></div>
+                    <p>Pauses the program for the amount of time (in milliseconds) that we specified as parameter. <a href="https://www.arduino.cc/reference/en/language/functions/time/delay/">More info</a></p>
                 </div>
             </div>
             <div class="column-right" id="column-right">

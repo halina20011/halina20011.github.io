@@ -1,0 +1,34 @@
+.waveHolder{
+    max-height: 40vh;
+    width: 100%;
+    overflow-y: scroll;
+    box-sizing: border-box;
+}
+
+.waveHolder > div{
+    margin: 0px 0px 5px 0px;
+    width: 100%;
+    background-color:rgb(49, 49, 49);
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+    grid-template-columns: 2fr 1fr;
+}
+
+[class*="waveSettings"] > :nth-child(1){
+    height: calc(100% / 4 * 1);
+}
+
+[class*="waveSettings"] > :nth-child(2){
+    height: calc(100% / 4 * 2);
+}
+[class*="waveSettings"] > :nth-child(3){
+    height: calc(100% / 4 * 1);
+}
+
+.radiusHolder, .speedHolder{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}

@@ -174,29 +174,6 @@ function end(){
     counting = false;
 }
 
-function showKey(list, Order) {
-    var key = list[Order];
-    if(key == undefined){ //Chech if in list is no more letters
-        end();
-    }
-    else{
-        showedKey = key;
-        endScreen.style.display = "none";
-        words.innerHTML = listToString(listOfLetters);
-        highlight(words, order);
-    }
-};
-
-function highlight(textBox, index) {
-    var innerHTML = textBox.innerHTML;
-    var indexOf = innerHTML.length;
-    console.log(innerHTML, indexOf)
-    if (index >= 0) { 
-        innerHTML = innerHTML.substring(0, index) + "<span class='highlight'>" + innerHTML.substring(index, index + 1) + "</span>" + innerHTML.substring(1 + index, indexOf);
-        textBox.innerHTML = innerHTML;
-    }
-}
-
 function highlightWord(textBox, _class, text, from, to) {
     var indexOf = text.length;
     if (from < to) { 

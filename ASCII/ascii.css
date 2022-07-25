@@ -1,9 +1,8 @@
-*{ margin: 0px; border: 0px;}
-/* 
-.textBox > div, .textBox > div > div{
-    margin-top: 5px;
-    margin-bottom: 5px;
-} */
+* { margin: 0px; border: 0px;}
+
+button{
+    padding: 5px;
+}
 
 .inputFileHeader{
     width: 100%;
@@ -76,7 +75,7 @@ label[for=imgInput]{
     height: 20vw;
     width: 20vw;
     
-    margin: 5px solid rgba(80, 80, 80, 1); 
+    border: 5px solid rgba(80, 80, 80, 1); 
     box-sizing: border-box;
     background-color: rgb(133, 133, 133);
 }

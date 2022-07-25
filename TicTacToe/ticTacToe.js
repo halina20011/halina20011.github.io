@@ -1,5 +1,3 @@
-
-
 var x = "/images/x.png";
 var o = "/images/o.png";
 

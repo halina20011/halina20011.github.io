@@ -8,12 +8,12 @@
     <link rel="icon" href="/images/Halina-Circle.png" type="image/x-icon">
     <meta name="keywords" content="Halina programming, Arduino learn">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/text.css"></link>
-    <link rel="stylesheet" type="text/css" href="/style.css"></link>
-    <link rel="stylesheet" type="text/css" href="/head.css"></link>
-    <link rel="stylesheet" type="text/css" href="/Menu/dropDownMenu.css"></link>
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="/Menu/dropDownMenu.css">
     <link rel="stylesheet" type="text/css" href="/ScrollProgressBar/ScrollProgressBar.css">
     <link rel="stylesheet" type="text/css" href="marchingSquares.css">
+    <link rel="stylesheet" type="text/css" href="/canvas/canvas.css">
 </head>
 <body>
     <div class="row">
@@ -24,27 +24,32 @@
                 <div class="column-left" id="column-left">
                 </div>
                 <div class="column-middle" id="column-middle">
-                    <div class="textBox" id="js-container">
-                        <h1 style="text-align: center;">Marching Squares</h1>
-                        <div class="fS8"></div>
-                        <div class="window">
-                            <canvas class="my-canvas" id="my-canvas" width="400" height="400"></canvas>
-                            <div class="settings">
-                                <button class="generate" id="generate">Generate</button>
-                                <button class="download" id="download">Download Image</button>
+                    <h1 style="text-align: center;">Marching Squares</h1>
+                    <div class="fS8"></div>
+                    <div class="window">
+                        <canvas class="my-canvas" id="my-canvas" width="400" height="400"></canvas>
+                        <div class="settings">
+                            <div class="sameLine">
+                                <button class="refreshButton" id="generate"></button>
+                                <button class="downloadButton" id="downloadImage"></button>
+                                <button class="autoRefresh" id="autoRefresh">Auto Refresh</button>
+                            </div>
+                            <div class="intervalSettings paragraph hidden" id="intervalSettings">
+                                <p>Timeout: </p>
+                                <input type="number" class="intervalInput" id="intervalInput" min="500" max="5000" step="100" style="width:50%" value="500">
+                            </div>
+                            <div class="fS8"></div>
+                            <div class="paragraph">
+                                <div id="widthText">Width: </div>
+                                <div id="heightText">Height: </div>
+                                <div class="resolution">
+                                    <div>Resolution:</div>
+                                    <select id="selectSize"><!-- <option></option> --></select>
+                                </div>
                                 <div class="fS8"></div>
-                                <div class="paragraph">
-                                    <div id="widthText">Width: </div>
-                                    <div id="heightText">Height: </div>
-                                    <div class="resolution">
-                                        <div>Resolution:</div>
-                                        <select id="selectSize"><!-- <option></option> --></select>
-                                    </div>
-                                    <div class="fS8"></div>
-                                    <div class="color">
-                                        <p>Color: </p>
-                                        <input type="color" value="#e5a50a" id="lineColor" style="border: 2px solid #000000; border-radius: 2px; width: 100%">
-                                    </div>
+                                <div class="color">
+                                    <p>Color: </p>
+                                    <input type="color" value="#e5a50a" id="colorOfLine" style="border: 2px solid #000000; border-radius: 2px; width: 100%">
                                 </div>
                             </div>
                         </div>

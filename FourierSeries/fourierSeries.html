@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Fourier series</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Free web programming tutorials">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/images/Halina-Circle.png" type="image/x-icon">
+    <meta name="keywords" content="Halina programming, Arduino learn">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="/canvas/canvas.css">
+    <link rel="stylesheet" type="text/css" href="/Menu/dropDownMenu.css">
+    <link rel="stylesheet" type="text/css" href="/ScrollProgressBar/ScrollProgressBar.css">
+    <link rel="stylesheet" type="text/css" href="fourierSeries.css">
+</head>
+<body>
+    <div class="row">
+        <div class="column-up" id="column-up">
+        </div>
+        <div class="column-display" id="column-display">
+            <div class="contentContainer">
+                <div class="column-left" id="column-left">
+                </div>
+                <div class="column-middle" id="column-middle">
+                    <h1 style="text-align: center">Fourier Series</h1>
+                    <div class="fS8"></div>
+                    <div div class="window">
+                        <canvas class="my-canvas" style="background-color:black;" id="my-canvas" width="400" height="400"></canvas>
+                        <div class="settings">
+                            <div class="buttons" style="position: relative; display:flex; justify-content: space-between;">
+                                <div></div>
+                                <div>
+                                    <button class="removeButton" id="removeButton"></button>
+                                    <button class="addButton" id="addButton"></button>
+                                    <button class="downloadButton" id="downloadImage"></button>
+                                    <button class="playButton" id="toggleDownload"></button>
+                                    <button class="downloadAllButton" id="downloadAll"></button>
+                                </div>
+                            </div>
+                            <div style="padding: 5px; display:flex; justify-content: space-between;">
+                                <p>Size multiple:</p>
+                                <p id="sizeMultiple">40</p>
+                            </div>
+                            <div class="waveHolder" id="waveHolder">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="column-right" id="column-right">
+                </div>
+            </div>
+            <div class="column-down"></div>
+        </div>
+    </body>
+    <script src="fourierSeries.js"></script>
+    <script src="/sideNavigation.js"></script>
+    <script type="module" src="/tools/importFile.js"></script>
+    <script type="module" src="/tools/search.js"></script> 
+    <script src="/head.js"></script>
+</body>
+</html>

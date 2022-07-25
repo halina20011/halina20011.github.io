@@ -3,37 +3,7 @@
     border: 0px;
 }
 
-.textBox{
-    width: 100%;
-    border: 10px solid rgba(255, 255, 255, 0);
-    box-sizing: border-box;
-    /* background-color: rgb(65, 65, 65); */
-}
-
-.settings{
-    position: relative;
-    float: right;
-    height: 100%;
-    width: 48%;
-    border: 1px solid black;
-    /* background-color:rgb(148, 148, 148); */
-}
-
-.my-canvas{
-    display: inline-block;
-    position: relative;
-    border: 1px solid;
-    height: 100%;
-    width: 50%;
-    background-color:aqua;
-}
-
 /* #################################### SETTINGS ############################################# */
-
-.settings > div, [class*="color"]{
-    border: 10px solid rgba(0, 0, 0, 0);
-    box-sizing: border-box;
-}
 
 .saveSettings{
     position: relative;
@@ -48,14 +18,6 @@
 .saveSettings:hover{background-color: rgb(155, 155, 155);}
 
 .saveSettings:active{background-color: rgb(118, 118, 118);}
-
-.customColors > input{
-    display: inline-block;
-}
-
-.customColors > p{
-    display: inline-block;
-}
 
 /* Set to normally colorRed, colorGreen, colorBlue to be hidden*/
 .checkboxCustomColors ~ div{

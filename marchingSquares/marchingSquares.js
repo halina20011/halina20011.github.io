@@ -9,16 +9,39 @@ let resolution = 0;
 let red, green, blue;
 
 let generateButton = document.getElementById('generate');
-generateButton.addEventListener('click', function(){ main(); }, false);
+generateButton.addEventListener('click', () => { main(); }, false);
 
 let selectSize = document.getElementById("selectSize");
-selectSize.addEventListener('change', function(){ changeResolution(); }, false);
+selectSize.addEventListener('change', () => { changeResolution(); }, false);
 
-let lineColor = document.getElementById("lineColor");
-lineColor.addEventListener("change", function(){ main(); }, false);
+let colorOfLine = document.getElementById("colorOfLine");
+colorOfLine.addEventListener("change", () => { main(); }, false);
 
-let downloadButton = document.getElementById("download");
-downloadButton.addEventListener("click", function() { downloadImage(); }, false);
+let downloadButton = document.getElementById("downloadImage");
+downloadButton.addEventListener("click", () => { downloadImage(); }, false);
+
+let autoRefreshButton = document.getElementById("autoRefresh")
+let intervalSettings = document.getElementById("intervalSettings");
+
+let interval = 100;
+
+autoRefreshButton.addEventListener("click", () => {
+    autoRefreshButton.classList.toggle("unchecked");
+    intervalSettings.classList.toggle("hidden");
+    a = function(){
+        if(autoRefreshButton.classList.contains("unchecked") == true){
+            main();
+            let intervalInput = document.getElementById("intervalInput");
+            interval = intervalInput.value;
+            if(!interval){
+                interval = intervalInput.min;
+            }
+            console.log(interval);
+            setTimeout(a, interval);
+        }
+    }
+    setTimeout(a, interval);
+});
 
 function getPrimeFactors(number, list = []){
     if(number == 0 || number == 1){
@@ -194,7 +217,7 @@ function drawIsolines(Field, resolution, columns, rows){
             let D = Field[i + 1][j];
 
             let state = D * 1 + C * 2 + B * 4 + A * 8;
-            // console.log(A, B, C, D, state);color = lineColor.value;
+            // console.log(A, B, C, D, state);color = colorOfLine.value;
             switch (state){
                 case 1:
                     drawLine(c[0], c[1], d[0], d[1]);
@@ -253,7 +276,7 @@ function main(){
     console.log("Generating");
     let field = [[]];
 
-    let color = lineColor.value;
+    let color = colorOfLine.value;
     let colorRgba = hexToRgb(color);
     red = colorRgba[0]
     green = colorRgba[1]

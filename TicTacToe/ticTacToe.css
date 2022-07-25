@@ -43,7 +43,7 @@
 .winIndicator{
     position: absolute;
     width: 100%;
-    background-image: url("/images/WinIndicator.png");
+    background-image: "/images/WinIndicator.png");
     background-repeat:no-repeat;
     background-size: 100% 100%;
     padding-bottom: 100%;

@@ -242,7 +242,7 @@ function main(){
 
 main();
 
-var interval = setInterval(function () {
+setInterval(function () {
     main();
 }, 10);
 

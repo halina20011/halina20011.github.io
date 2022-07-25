@@ -1,0 +1,95 @@
+.window{
+    width: 100%;
+    display: flex;
+}
+
+.my-canvas, .settings{
+    position: relative;
+    width: 50%;
+    height: 100%;
+    border: 1px solid black;
+    margin: 2px;
+    box-sizing: border-box;
+}
+
+.settings{
+    padding: 5px;
+}
+
+.sameLine { 
+    display: flex;
+    width: 100%;
+}
+
+.settingSameLine{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+.settingSameLine * ,.sameLine * {
+    margin: 0px 10px 0px 0px;
+}
+
+.settingSameLine *:last-child{
+    margin: 0px;
+    width: 100%;
+}
+
+.sameLine *:last-child{
+    margin: 0px;
+}
+
+.sameLine3Elements{
+    display: flex;
+    flex-flow: row;
+}
+
+.sameLine3Elements > *{
+    margin: 4px;
+}
+
+.sameLine3Elements :nth-child(1){
+    width: 20%;
+}
+
+.sameLine3Elements :nth-child(2){
+    width: 20%;
+}
+
+.sameLine3Elements :nth-child(3){
+    width: 60%;
+}
+
+.sameLine3Elements :nth-child(4){
+    width: 20%;
+}
+
+/* .sameLine3Elements:nth-child(1) {
+    width: 100px;
+} */
+
+@media only screen and (max-width: 600px) {
+    .window{
+        display: inline-block;
+    }
+    .my-canvas, .settings {
+        width: 100%;
+    }
+}
+
+.timelapse{
+    position: absolute; 
+    display: none;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 50%;
+    text-align: center;
+    background-color: #2b2b2b;
+    color:white;
+    z-index: 2;
+    padding: 10px;
+    border-radius:10px;
+}

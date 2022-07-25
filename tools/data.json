@@ -1,5 +1,31 @@
 {
     "index": {
+        "MandelbrotSet": {
+            "className": "MandelbrotSetProject",
+            "path": "/mandelbrotSet/mandelbrotSet.html",
+            "imgPath": "/images/Miniature/mandelbrotSet.jpeg",
+            "name": "Mandelbrot set",
+            "projectTextInfo": [
+                "Explore what is Mandelbrot set."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss":  [
+                [".MandelbrotSetProject:hover > .backgroundImg > .img",[["background-image: url('/images/Miniature/mandelbrotSet.gif')!important;"]]]]
+        },
+        "FourierSeries": {
+            "className": "FourierSeriesProject",
+            "path": "/FourierSeries/fourierSeries.html",
+            "imgPath": "images/Miniature/fourierSeries.jpeg",
+            "name": "Fourier Series",
+            "projectTextInfo": [
+                "Explore what is Fourier series."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss":  [
+                [".FourierSeriesProject:hover > .backgroundImg > .img",[["background-image: url('/images/Miniature/fourierSeries.gif')!important;"]]]]
+        },
         "ASCIIGenerator": {
             "className": "AsciiGeneratorProject",
             "path": "/ASCII/ascii.html",
