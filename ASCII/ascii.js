@@ -214,7 +214,7 @@ function drawTextImage(text, xMax, yMax){
     
     var scale = 1;
     var canvasNewWidth, canvasNewHeight;
-    var middleColumn = document.getElementById("column-middle").clientWidth;
+    var middleColumn = document.getElementById("columnMiddle").clientWidth;
 
     if(middleColumn * 2/3 < canvasWidth){
         scale = canvasWidth / (middleColumn * 2/3);

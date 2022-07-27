@@ -117,7 +117,7 @@ function updateSearch(event){
 
 // window.onclick = function(event) {
 //     console.log(event.target);
-//     var search = document.getElementsByClassName("Search")[0]
+//     var search = document.getElementsByClassName("search")[0]
 //     if(event.target.matches("#search")){
 //         search.classList.add("searchHover");
 //     }

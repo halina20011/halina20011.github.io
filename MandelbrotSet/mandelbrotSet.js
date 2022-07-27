@@ -1,4 +1,5 @@
 // https://rubenvannieuwpoort.nl/posts/smooth-iteration-count-for-the-mandelbrot-set
+// https://linas.org/art-gallery/escape/smooth.html
 
 import {DOWNLOADER} from "/canvas/download.js";
 

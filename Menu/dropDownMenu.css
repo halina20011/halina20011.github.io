@@ -33,16 +33,15 @@
 }
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {display:block;}
+.show { display: block; }
 
 .links{
     max-width: 500px;
     padding: 0px 20px 0px 20px;
 }
 
-.dropDown-item > :hover{
+.dropDown-item:hover{
     background-color: rgb(106, 106, 106);
-    
 }
 
 /* .dropdown div a button,  */
@@ -51,8 +50,6 @@
     background-color: rgb(110, 110, 110);
     border: none;
     box-sizing: border-box;
-    /* border: none; */
-    /*top left down right*/
     border: solid 7px rgba(255, 0, 0, 0);
     display: block;
     text-decoration: none;
@@ -61,17 +58,3 @@
     text-align: left;
     display: inline-block;
 }
-
-/* @media (max-width: 700px){
-    .info{
-        width: 4vh;
-    }
-} */
-
-/* ################################################################################################ */
-
-/* @media only screen and (max-width: 900px) { 
-    [class*="Project"]{
-        width: 100%;
-    }
-} */

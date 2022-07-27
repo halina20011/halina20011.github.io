@@ -1,6 +1,7 @@
 :root{
     /*                       calculate size of Project Window minus gap / 3 */
     --image-link-width: calc(100% / 3.05 - 10px / 3);
+    --image-link-width2: calc(100% / 2.05 - 10px / 2);
 }
 
 .projects{
@@ -10,16 +11,6 @@
 #href{
     color: black;
 }
-
-/* .importSpot{
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-} */
 
 .importSpot{
     display: grid;
@@ -42,7 +33,7 @@
 [class*="Project"]{
     position: relative;
     border: none;
-    height:auto;
+    height: auto;
     transform: scale(1);
     border-radius: 10%;
     overflow: hidden;
@@ -116,7 +107,7 @@
 }
 
 @media only screen and (max-width: 900px) { 
-    [class*="Project"]{
-        width: 100%;
+    .importSpot{
+        grid-template-columns: repeat(2, var(--image-link-width2));
     }
 }

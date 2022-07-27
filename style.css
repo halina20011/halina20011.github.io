@@ -1,3 +1,7 @@
+:root{
+    --column-height: 36px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -21,12 +25,12 @@ body{
 /*                                      COLUMN                                       */
 /* ################################################################################# */
 
-.column-up{
+.columnUp{
     position: fixed;
     background-color: rgb(255, 0, 98);
     width: 100%;
     max-width: 100%;
-    height: 8vh;
+    height: cacl(var(--column-height) * 2);
     z-index: 1;
 }
 
@@ -37,41 +41,41 @@ body{
 }
 
 
-.column-display{
+.columnDisplay{
     position: relative;
     width: 100%;
-    padding-top: 8vh;
+    padding-top: calc(36px * 2.0);
 }
 
-.column-down{
+.columnDown{
     position: relative;
     width: 100%;
     background-color: black;
     height: 10vh;
 }
 
-.column-left{
+.columnLeft{
     position: relative;
     /* background-color: rgb(63, 63, 63); */
 }
 
-.column-middle {
+.columnMiddle {
     position: relative;
     background-color: #555;
-    z-index: 0;
-    min-height: 82vh;
+    min-height: calc(100vh - 10vh - var(--column-height));
     border: 10px solid rgba(0, 0, 0, 0);
     box-sizing: border-box;
+    z-index: 0;
 }
 
-.column-right{
+.columnRight{
     width: 100%;
     height: 100%;
 }
 
 .table{
     position: sticky;
-    top: 8vh;
+    top: var(--column-height);
 }
 
 .progress{
@@ -105,7 +109,7 @@ body{
     padding: 5px;
 }
 
-.table > .content >button:hover{
+.table > .content > button:hover{
     background-color: rgb(104, 104, 104);
 }
 
@@ -119,20 +123,17 @@ body{
 
 .firstRow{
     width: 100%;
-    height: 4vh;
-    min-height: 32px;
+    height: var(--column-height);
     background-color: rgb(87, 87, 87);
 }
 
 .secondRow{
     width: 100%;
-    max-width: 100%;
-    height: 4vh;
-    min-height: 32px;
+    height: var(--column-height);
     background-color: rgb(114, 114, 114);
 }
 
-.Search{
+.search{
     position: relative;
     display: flex;
     float: right;
@@ -147,7 +148,7 @@ body{
     background-color: rgb(56, 56, 56);
 }
 
-.Search input{
+.search input{
     position: relative;
     border-radius: 100px;
     box-sizing: border-box;
@@ -164,7 +165,7 @@ body{
     background-size: 40px;
 }
 
-/* Settings for white line between  first and second row*/
+/* Settings for white line between first and second row*/
 .linee{
     position: relative;
     width: 100%;
@@ -277,7 +278,7 @@ body{
     .contentContainer{
         grid-template-columns: 0% 100% 0%;
     }
-    /* .column-up{
+    /* .columnUp{
         height: 10vh;
     }
     .firstRow, .secondRow{

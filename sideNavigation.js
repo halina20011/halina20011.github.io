@@ -15,8 +15,8 @@ function nav(){
     }
 }
 
-var column_middle = document.getElementById("column-middle");
-var column_left = document.getElementById("column-left");
+var column_middle = document.getElementById("columnMiddle");
+var column_left = document.getElementById("columnLeft");
 var progress = document.getElementsByClassName("progress")[0];
 var dropdown = document.getElementById("dropdown");
 var textInfo = document.getElementById("textInfo");
@@ -100,8 +100,8 @@ function closeNav(){
 }
 
 function getElements(){
-    column_middle = document.getElementById("column-middle");
-    column_left = document.getElementById("column-left");
+    column_middle = document.getElementById("columnMiddle");
+    column_left = document.getElementById("columnLeft");
     progress = document.getElementsByClassName("progress")[0];
     dropdown = document.getElementById("dropdown");
     textInfo = document.getElementById("textInfo");

@@ -56,7 +56,7 @@
         },
         "Metaballs": {
             "className": "MetaballsProject",
-            "path": "/metaballs/metaballs.html",
+            "path": "/Metaballs/metaballs.html",
             "imgPath": "/Images/Miniature/metaballs.jpeg",
             "name": "Metaballs",
             "projectTextInfo": [

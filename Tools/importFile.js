@@ -1,6 +1,5 @@
 import {getText} from "/Tools/import.js";
 import {createLink} from "/Tools/import.js";
-// import {resizeInfoText} from "/size.js";
 
 var text = getText("/Menu/dropDownMenu.html")
 var word = "<body>"
@@ -38,7 +37,7 @@ function listToString(list){
 }
 
 var code = listToString(lines)
-var columnUp = document.getElementById('column-up');
+var columnUp = document.getElementById('columnUp');
 createLink("/Menu/dropDownMenu.css", columnUp);
 columnUp.innerHTML += code;
 // resizeInfoText();
