@@ -51,18 +51,14 @@ function createResult(list){
     
     searchDropDown.appendChild(div);
 
-    var imageIconHolder = document.createElement("div");
-    imageIconHolder.className = "imageIconHolder";
-    div.appendChild(imageIconHolder);
+    var imageIcon = document.createElement("div");
+    imageIcon.className = "imageIcon";
+    imageIcon.style.backgroundImage = "url(" + imgPath + ")";
+    div.appendChild(imageIcon);
 
     var projectTextInfo = document.createElement("div");
     projectTextInfo.className = "projectTextInfo";
     div.appendChild(projectTextInfo);
-
-    var imageIcon = document.createElement("div");
-    imageIcon.className = "imageIcon"
-    imageIcon.style.backgroundImage = "url(" + imgPath + ")";
-    imageIconHolder.appendChild(imageIcon);
 
     var nameText = document.createElement("p");
     nameText.innerHTML = name;

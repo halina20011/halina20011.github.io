@@ -16,5 +16,11 @@
         "about": "Arduino page",
         "image": "/Images/Icons/arduino.png",
         "path": "/Arduino/arduino.html"
+    },
+    "mandelbrotSet":{
+        "name": "Mandelbrot set",
+        "about": "Mandelbrot set",
+        "image": "/Images/Miniature/mandelbrotSet.jpeg",
+        "path": "/MandelbrotSet/mandelbrotSet.html"
     }
 }
