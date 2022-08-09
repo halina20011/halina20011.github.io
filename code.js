@@ -111,9 +111,7 @@ function makeElements(_code, listOfLines){
         div.appendChild(codeText);
         let a = escapeHtmlFromUnsafe(text);
         console.log(a);
-        codeText.innerHTML = a;
-        
-        console.log(codeText.innerHTML);
+        codeText.innerHTML = a;        
     }
 
     var countOfChilds = _code.childElementCount;
