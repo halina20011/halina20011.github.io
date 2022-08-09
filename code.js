@@ -5,13 +5,13 @@ var Url = window.location.href;
 var urls = Url.split("/");
 for(var i = 0; i < urls.length; i++){
     if(urls[i] == ''){
-        urls.splice(i, 1)
+        urls.splice(i, 1);
     }
 }
 
-var htmlName = urls[urls.length - 1]
+var htmlName = urls[urls.length - 1];
 htmlName = htmlName.split("#")[0];
-htmlName = htmlName.replace(".html", "")
+htmlName = htmlName.replace(".html", "");
 
 let codeUrl = "/Codes/" + htmlName + ".ino";
 
@@ -24,21 +24,10 @@ function getListOfLines(filePath){
     var listOfLines = textFromFile.split("\n"); // Get text from file in format "one line one index of array"
 
     for (var i = 0; i < listOfLines.length; i++){
-        listOfLines[i] = listOfLines[i].replace("\r", "") // Remove "\n"
+        listOfLines[i] = listOfLines[i].replace("\r", "");
     }
     return listOfLines
 }
-
-// for(var i = 0; i < Infinity; i++){
-//     var codeWindow = document.getElementById('code' + i);
-//     // console.log(i);
-//     if(codeWindow != null){
-//         console.log(codeWindow)
-//     }
-//     if(i >= 100){
-//         break;
-//     }
-// }
 
 function getMultitplyOfTen(number, current = 1){
     var answer = number / Math.pow(10, current);
@@ -118,7 +107,7 @@ function makeElements(_code, listOfLines){
         div.appendChild(element); //Add
         
         var codeText = document.createElement("code"); //Make <code>
-        codeText.id = "codeText"
+        codeText.id = "codeText";
         div.appendChild(codeText);
         let a = escapeHtmlFromUnsafe(text);
         console.log(a);
@@ -132,12 +121,11 @@ function makeElements(_code, listOfLines){
         if(i > 1){
             var stringLength = calculateNumberOfSpaces(i - 1, countOfChilds);
             var spaces = "0".repeat(stringLength);
-            // _code.children[i].children[0].innerText = i - 1 + " " + spaces;
 
             let spaceElement = document.createElement("p");
             spaceElement.innerHTML = spaces;
             spaceElement.style.display = "inline-block";
-            spaceElement.style.color = "rgba(0, 0, 0, 0)"
+            spaceElement.style.color = "rgba(0, 0, 0, 0)";
 
             _code.children[i].children[0].appendChild(spaceElement);
             _code.children[i].children[0].innerHTML += i - 1;
@@ -146,27 +134,14 @@ function makeElements(_code, listOfLines){
     }
 }
 
-// window.addEventListener("click", function(event) {
-//     if(event.target.tagName == "IMG"){
-//         return
-//     }
-//     for(var i = 0; i < code.childElementCount; i++){
-//         if(i > 1){
-//             if(code.children[i].children[1].style.backgroundColor != "rgba(0, 0, 0, 0)"){
-//                 code.children[i].children[1].style.backgroundColor = "rgba(255, 0, 0, 0)";
-//             }
-//         }
-//     }
-// });
-
 function drawLines(_code){
     for(var i = 0; i < _code.childElementCount; i++){
         if(i != 0){
             if(i % 2){
-                _code.children[i].style.backgroundColor = "rgba(0, 132, 255, 0.1)"
+                _code.children[i].style.backgroundColor = "rgba(0, 132, 255, 0.1)";
             }
             else{
-                _code.children[i].style.backgroundColor = "rgba(0, 90, 170, 0.1)"
+                _code.children[i].style.backgroundColor = "rgba(0, 90, 170, 0.1)";
             }
         }
     }
@@ -181,7 +156,7 @@ function stringToList(text){
     var listOfCharacters = split(text); //Get Strign split by ""
     listOfCharacters.push(" "); //Add " " to end
     var listOfWords = []; //Make list
-    var words = "" //Make value to hold current word
+    var words = ""; //Make value to hold current word
     for (let i = 0; i < listOfCharacters.length; i++) {
         var letter = listOfCharacters[i];
         if(letter != " " && letter != ";" && letter != "(" && letter != ")"){
@@ -209,24 +184,18 @@ function stringToList(text){
 const variables = ["void", "OUTPUT", "HIGH", "LOW", "int", "char", "String", "float", "const"];
 const logicalOperators = ["#include", "#define", "while", "loop", "setup", "if", "else"];
 const functions = ["Serial", "begin", "pinMode", "digitalWrite", "analogWrite", "delay", "available", "readString", "toInt", "millis"];
-const other = ["for"]
+const other = ["for"];
 
-let listOfHighlightedWords = [variables, logicalOperators, functions, other]
-let listOfHighlightedWordsClassName = ["variables", "logicalOperators", "functions", "other"]
+let listOfHighlightedWords = [variables, logicalOperators, functions, other];
+let listOfHighlightedWordsClassName = ["variables", "logicalOperators", "functions", "other"];
 
 function changeTextColor(parent, skipElement){
-    // var parent = document.getElementsByClassName('code');
-    // var parent = document.getElementById('code');
-
-    // console.log(parent.childElementCount);
     for(var x = 0; x < parent.childElementCount; x++){
-        var code = parent.children[x].children[1]
+        var code = parent.children[x].children[1];
         if(x > skipElement){
             var text = escapeHtmlFromSafe(code.innerHTML); //Get text in line
             code.innerHTML = ""; //Remove Text
             var list = stringToList(text); //Convert String to List
-            console.log(text);
-            console.log(list);
             for(var i = 0; i < list.length; i++){
                 var word = list[i];
                 let checked = false;
@@ -254,7 +223,7 @@ function changeTextColor(parent, skipElement){
 function changeColor(parent, text, className){
     var div = document.createElement('div');
     div.innerHTML = escapeHtmlFromUnsafe(text);
-    div.className = className
+    div.className = className;
     parent.appendChild(div);
 }
 
@@ -307,7 +276,7 @@ downloadButton.addEventListener('click', function() {download(codeUrl);}, false)
 const codeExplain = document.getElementsByClassName("codeExplain");
 
 for(var i = 0; i < codeExplain.length; i++){
-    var el = codeExplain[i]
+    var el = codeExplain[i];
     for(var x = 0; x < el.childElementCount; x++){
         if(x % 2){
             codeExplain[i].children[x].style.backgroundColor = "rgba(0, 132, 255, 0.1)";
