@@ -10,7 +10,6 @@
 button{
     border: none;
     background-color: white;
-    border-radius: 5px;
     /* padding: 2px; */
 }
 
@@ -295,7 +294,9 @@ body{
 
 jumpLink{
     position: relative;
-    top: -8vh;
+    width: 100%;
+    display:inline-block;
+    top: calc(var(--column-height) * -2);
 }
 
 /* ################# */
@@ -313,7 +314,8 @@ jumpLink{
     --button-size: 30px;
 }
 
-[class*="Button"]{
+.refreshButton, .addButton, .removeButton, .downloadButton,
+.downloadAllButton, .playButton, .pauseButton, .timelapseButton{
     width: var(--button-size);
     height: var(--button-size);
     

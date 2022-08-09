@@ -2,7 +2,7 @@ var column_up = document.getElementById("columnUp");
 var column_display = document.getElementById("columnDisplay");
 var contentTable = document.getElementById("table");
 
-window.addEventListener('scroll', function(event) {scroll(event);}, false );
+window.addEventListener('scroll', function() {scroll();}, false );
 
 var newValue = 0;
 var oldValue = 0;
@@ -21,19 +21,16 @@ function scroll(){
 }
 
 function moveHead(direction){
-    // var position = document.body.getBoundingClientRect();
-    // var topPosition = toPercentage(position.top, "height");
-
     if(direction == "Down"){ 
         column_up.style.top = `-${height}px`;
-        if(contentTable) { // if contentTable is in document then move it too
-            table.style.top = `${height * 2}px`;
+        if(contentTable) { // If contentTable is in document then move it too
+            contentTable.style.top = `${height}px`;
         }
     } 
     else if(direction == "Up"){
         column_up.style.top = "0px"; 
         if(contentTable){
-            table.style.top = `${height * 2}px`;
+            contentTable.style.top = `${height * 2}px`;
             
         } 
     }

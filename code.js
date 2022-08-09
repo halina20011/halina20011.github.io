@@ -88,6 +88,24 @@ function makeCodeHeader(parent){
     codeSettings.appendChild(downloadButton);
 }
 
+function escapeHtmlFromUnsafe(unsafe){
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function escapeHtmlFromSafe(unsafe) {
+    return unsafe
+        .replace(/&amp;/g, "&")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, "\"")
+        .replace(/&#039;/g, "'");
+}
+
 function makeElements(_code, listOfLines){
     for(var i = 0; i < listOfLines.length; i++){
         var text = listOfLines[i];
@@ -101,8 +119,12 @@ function makeElements(_code, listOfLines){
         
         var codeText = document.createElement("code"); //Make <code>
         codeText.id = "codeText"
-        codeText.innerHTML = text;
         div.appendChild(codeText);
+        let a = escapeHtmlFromUnsafe(text);
+        console.log(a);
+        codeText.innerHTML = a;
+        
+        console.log(codeText.innerHTML);
     }
 
     var countOfChilds = _code.childElementCount;
@@ -155,38 +177,32 @@ function split(text){
 }
 
 function stringToList(text){
+    text = text.replace(/    /g, "TAB ");
     var listOfCharacters = split(text); //Get Strign split by ""
     listOfCharacters.push(" "); //Add " " to end
     var listOfWords = []; //Make list
     var words = "" //Make value to hold current word
-    var spaces = 0;
     for (let i = 0; i < listOfCharacters.length; i++) {
-        var letter = listOfCharacters[i]
-        if(spaces >= 4){
-            listOfWords.push("TAB");
-            listOfWords.push(" ");
-            spaces = 0;
-        }
+        var letter = listOfCharacters[i];
         if(letter != " " && letter != ";" && letter != "(" && letter != ")"){
             words += letter;
-            spaces = 0;
         }
         else if(letter == " "){
             if(words != ""){
                 listOfWords.push(words);
-                listOfWords.push(" ");
+                if(words != "TAB"){
+                    listOfWords.push(" ");
+                }
             }
-            spaces += 1;
             words = "";
         }
         else if(letter == ";" || letter == "(" || letter == ")"){
-            spaces = 0;
             listOfWords.push(words);
             listOfWords.push(letter);
             words = "";
         }
     }
-    // console.log(listOfWords)
+    // console.log(listOfWords);
     return listOfWords;
 }
 
@@ -206,9 +222,11 @@ function changeTextColor(parent, skipElement){
     for(var x = 0; x < parent.childElementCount; x++){
         var code = parent.children[x].children[1]
         if(x > skipElement){
-            var text = code.innerHTML; //Get text in line
+            var text = escapeHtmlFromSafe(code.innerHTML); //Get text in line
             code.innerHTML = ""; //Remove Text
             var list = stringToList(text); //Convert String to List
+            console.log(text);
+            console.log(list);
             for(var i = 0; i < list.length; i++){
                 var word = list[i];
                 let checked = false;
@@ -222,14 +240,11 @@ function changeTextColor(parent, skipElement){
                         }
                     }
                 }
-                // if(list[i] == " "){
-                //     code.innerHTML += " ";
-                // }
                 if(list[i] == "TAB"){
                     code.innerHTML += "    ";
                 }
                 else if (checked == false){
-                    code.innerHTML += list[i];
+                    code.innerHTML += escapeHtmlFromUnsafe(list[i]);
                 }
             }
         }
@@ -238,7 +253,7 @@ function changeTextColor(parent, skipElement){
 
 function changeColor(parent, text, className){
     var div = document.createElement('div');
-    div.innerHTML = text
+    div.innerHTML = escapeHtmlFromUnsafe(text);
     div.className = className
     parent.appendChild(div);
 }
@@ -273,7 +288,7 @@ function makeCodeWindow(className){
     var code = className;
 
     var listOfLines = getListOfLines(codeUrl);
-    
+    console.log(listOfLines);
     makeCodeHeader(code);
     makeElements(code, listOfLines); // Make lines by file text
 
@@ -295,15 +310,14 @@ for(var i = 0; i < codeExplain.length; i++){
     var el = codeExplain[i]
     for(var x = 0; x < el.childElementCount; x++){
         if(x % 2){
-            codeExplain[i].children[x].style.backgroundColor = "rgba(0, 132, 255, 0.1)"
+            codeExplain[i].children[x].style.backgroundColor = "rgba(0, 132, 255, 0.1)";
         }
         else{
-            codeExplain[i].children[x].style.backgroundColor = "rgba(0, 90, 170, 0.1)"
+            codeExplain[i].children[x].style.backgroundColor = "rgba(0, 90, 170, 0.1)";
         }
     }
 }
 
-// download('/Codes/ArduinoBlinkLed.ino')
 for(var i = 0; i < codeExplain.length; i++){
     changeTextColor(codeExplain[i], -1);
 }
