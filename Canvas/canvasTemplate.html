@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Fourier series</title>
+    <title>Canvas</title>
     <meta charset="UTF-8">
     <meta name="description" content="Free web programming tutorials">
     <meta name="author" content="Mario Duraković">
@@ -10,8 +10,7 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/text.css">
     <link rel="stylesheet" type="text/css" href="/style.css">
-    <link rel="stylesheet" type="text/css" href="/canvas/canvas.css">
-    <link rel="stylesheet" type="text/css" href="fourierSeries.css">
+    <link rel="stylesheet" type="text/css" href="/Canvas/canvas.css">
     <link rel="stylesheet" type="text/css" href="/Menu/dropDownMenu.css">
     <script src="/Menu/dropDownMenu.js"></script>
 </head>
@@ -24,24 +23,14 @@
                 <div class="columnLeft" id="columnLeft">
                 </div>
                 <div class="columnMiddle" id="columnMiddle">
-                    <h1 style="text-align: center">Fourier Series</h1>
+                    <h1 style="text-align: center">Canvas template</h1>
                     <div class="fS8"></div>
                     <div div class="window">
                         <canvas class="my-canvas" style="background-color:black;" id="my-canvas" width="400" height="400"></canvas>
                         <div class="settings">
-                            <div class="buttons" style="position: relative; display:flex; justify-content: space-between;">
-                                <div></div>
-                                <div>
-                                    <button class="removeButton" id="removeButton"></button>
-                                    <button class="addButton" id="addButton"></button>
-                                    <button class="downloadButton" id="downloadImage"></button>
-                                    <button class="playButton" id="toggleDownload"></button>
-                                    <button class="downloadAllButton" id="downloadAll"></button>
-                                </div>
-                            </div>
-                            <div style="padding: 5px; display:flex; justify-content: space-between;">
-                                <p>Size multiple:</p>
-                                <p id="sizeMultiple">40</p>
+                            <div class="buttons">
+                                <button class="addButton" id="addButton"></button>
+                                <button class="download" id="download"></button>
                             </div>
                             <div class="waveHolder" id="waveHolder">
                             </div>
@@ -55,7 +44,7 @@
             <div class="columnDown"></div>
         </div>
     </body>
-    <script src="fourierSeries.js"></script>
+    <script type="module" src="/Canvas/windowSetting.js"></script>
     <script src="/sideNavigation.js"></script>
     <script type="module" src="/Tools/importFile.js"></script>
     <script type="module" src="/Tools/search.js"></script> 

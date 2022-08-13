@@ -2,7 +2,7 @@
     "index": {
         "MandelbrotSet": {
             "className": "MandelbrotSetProject",
-            "path": "/MandelbrotSet/mandelbrotSet.html",
+            "path": "/Canvas/MandelbrotSet/mandelbrotSet.html",
             "imgPath": "/Images/Miniature/mandelbrotSet.jpeg",
             "name": "Mandelbrot set",
             "projectTextInfo": [
@@ -15,8 +15,8 @@
         },
         "FourierSeries": {
             "className": "FourierSeriesProject",
-            "path": "/FourierSeries/fourierSeries.html",
-            "imgPath": "Images/Miniature/fourierSeries.jpeg",
+            "path": "/Canvas/FourierSeries/fourierSeries.html",
+            "imgPath": "/Images/Miniature/fourierSeries.jpeg",
             "name": "Fourier Series",
             "projectTextInfo": [
                 "Explore what is Fourier series."
@@ -28,7 +28,7 @@
         },
         "ASCIIGenerator": {
             "className": "AsciiGeneratorProject",
-            "path": "/ASCII/ascii.html",
+            "path": "/Canvas/ASCII/ascii.html",
             "imgPath": "/Images/Miniature/asciiGenerator.png",
             "name": "ASCII Generator",
             "projectTextInfo": [
@@ -44,7 +44,7 @@
         },
         "MarchingSquares": {
             "className": "MarchingSquaresProject",
-            "path": "/marchingSquares/marchingSquares.html",
+            "path": "/Canvas/MarchingSquares/marchingSquares.html",
             "imgPath": "/Images/Miniature/marchingSquares.jpg",
             "name": "Marching Squares",
             "projectTextInfo": [
@@ -56,7 +56,7 @@
         },
         "Metaballs": {
             "className": "MetaballsProject",
-            "path": "/Metaballs/metaballs.html",
+            "path": "/Canvas/Metaballs/metaballs.html",
             "imgPath": "/Images/Miniature/metaballs.jpeg",
             "name": "Metaballs",
             "projectTextInfo": [
@@ -93,7 +93,6 @@
             "addScript": null,
             "addCss": null
         },
-
         "Clock": {
             "className": "ClockProject",
             "path ": "/Clock/clock.html",

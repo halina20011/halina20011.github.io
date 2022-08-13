@@ -1,7 +1,7 @@
 import {loadJSON} from "/Tools/import.js"
 
 const textInput = document.getElementById("search");
-const searchDropDown = document.getElementsByClassName("searchDropDown")[0];
+const searchDropDownItems = document.getElementsByClassName("searchDropDownItems")[0];
 
 var data = loadJSON('/Tools/search.json');
 var searchOptions = []
@@ -24,11 +24,11 @@ function getSearchOptions(){
 
 function removeResult(list){
     var name = list[0];
-    for(var x = 0; x < searchDropDown.childElementCount; x++){
-        if(searchDropDown.children[x].className == name){
+    for(var x = 0; x < searchDropDownItems.childElementCount; x++){
+        if(searchDropDownItems.children[x].className == name){
             var div = document.getElementsByClassName(name)[0];
             if(div != null){
-                searchDropDown.removeChild(div);
+                searchDropDownItems.removeChild(div);
             }
         }
     }
@@ -38,9 +38,9 @@ function createResult(list){
     var name = list[0];
     var about = list[1];
     var imgPath = list[2];
-    for(var x = 0; x < searchDropDown.childElementCount; x++){
-        if(searchDropDown.children[x].className == name){
-            // console.log(searchDropDown.children[x].className);
+    for(var x = 0; x < searchDropDownItems.childElementCount; x++){
+        if(searchDropDownItems.children[x].className == name){
+            // console.log(searchDropDownItems.children[x].className);
             return;
         }
     }
@@ -49,7 +49,7 @@ function createResult(list){
     div.className = list[0];
     div.setAttribute("onClick", 'location.href =\'' + list[3] +'\';');
     
-    searchDropDown.appendChild(div);
+    searchDropDownItems.appendChild(div);
 
     var imageIcon = document.createElement("div");
     imageIcon.className = "imageIcon";
