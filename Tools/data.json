@@ -130,7 +130,7 @@
         "arduinoBlinkLed": {
             "className": "arduinoBlinkLedProject",
             "path": "/Arduino/ArduinoBlinkLed.html",
-            "imgPath": "/Images/Miniature/Led.svg",
+            "imgPath": "/Images/Miniature/led.png",
             "name": "Arduino blink led",
             "projectTextInfo": [
                 "Learn Arduino", 
@@ -138,9 +138,7 @@
             ],
             "addAdicionalThings": null,
             "addScript": null,
-            "addCss": [
-                ["img", ["top: 7%;"]]
-                ]
+            "addCss": null
         },
         
         "arduinoFadeLed": {
