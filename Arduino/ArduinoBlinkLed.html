@@ -8,6 +8,9 @@
     <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
     <meta name="keywords" content="Halina programming, Arduino learn, Arduino Blink Led, Blink Led">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" type="text/css" href="/code.css">
     <link rel="stylesheet" type="text/css" href="/text.css">
     <link rel="stylesheet" type="text/css" href="/style.css">
@@ -128,19 +131,7 @@
                 <jumpLink id="Code"></jumpLink>
                 <h2>Code</h2>
                 <div class="paragraph">
-                    <div class="codeWindow1" id="codeWindow1">
-                        <!-- <div><p id="number">1</p><code id="codeText">void setup() {</code></div>
-                            <div><p id="number">1</p><code id="codeText">    Serial.begin(115200);</code></div>
-                            <div><p id="number">1</p><code id="codeText">    pinMode(led, OUTPUT);</code></div>
-                            <div><p id="number">1</p><code id="codeText">}</code></div>
-                            <div><p id="number">1</p><code id="codeText"></code></div>
-                            <div><p id="number">1</p><code id="codeText">void loop() {</code></div>
-                                <div><p id="number">1</p><code id="codeText">    digitalWrite(led, HIGH);</code></div>
-                                <div><p id="number">1</p><code id="codeText">    delay(100);</code></div>
-                                <div><p id="number">1</p><code id="codeText">    digitalWrite(led, LOW);</code></div>
-                                <div><p id="number">1</p><code id="codeText">    delay(100);</code></div>
-                        <div><p id="number">1</p><code id="codeText">}</code></div> -->
-                    </div>
+                    <codeWindow data-src="URL"></codeWindow>
                 </div>
                 <div class="freeLine"></div>
                 
@@ -152,9 +143,9 @@
                 <div class="paragraph" >
                     <div class="fS8"></div>
                     
-                    <div class="codeExplain" id="codeExplain">
-                        <div><p id="number">1</p><code id="codeText">int led = 11;</code></div>
-                    </div>
+                    <codeWindow data-src="innerText">
+                        <p>int led = 11;</p>
+                    </codeWindow>
                     
                     <div class="fS8"></div>
 
@@ -164,23 +155,25 @@
                     </p>
             
                     <div class="freeLine"></div>
-                    <div class="codeExplain" id="codeExplain">
-                        <div><p id="number">1</p><code id="codeText">pinMode(led, OUTPUT);</code></div>
-                    </div>
+                    <codeWindow data-src="innerText">
+                        <p>pinMode(led, OUTPUT);</p>
+                    </codeWindow>
                     <div class="fS8"></div>
                     <p>Initialize the digital pin as an output.</p>
                     
                     <div class="freeLine"></div>
-                    <div class="codeExplain" id="codeExplain">
-                        <div><p id="number">1</p><code id="codeText">digitalWrite(led, HIGH);</code></div>
-                    </div>
+                    <codeWindow data-src="innerText">
+                        <p>digitalWrite(led, HIGH);</p>
+                    </codeWindow>
+
                     <div class="fS8"></div>
                     <p>Write a HIGH or a LOW value to a digital pin. <a href="https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/">More info</a></p>
                     <div class="freeLine"></div>
 
-                    <div class="codeExplain" id="codeExplain">
-                        <div><p id="number">1</p><code id="codeText">delay(delayTime);</code></div>
-                    </div>
+                    <codeWindow data-src="innerText">
+                        <p>delay(delayTime);</p>
+                    </codeWindow>
+                    
                     <div class="fS8"></div>
                     <p>Pauses the program for the amount of time (in milliseconds) that we specified as parameter. <a href="https://www.arduino.cc/reference/en/language/functions/time/delay/">More info</a></p>
                 </div>

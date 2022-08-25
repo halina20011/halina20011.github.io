@@ -1,9 +1,24 @@
-#number, code{
+codeWindow {
+    display: block;
+    position: relative;
+    background-color:rgb(66, 66, 66);
+    padding: 10px 10px 10px 10px;
+    overflow: scroll;
+}
+
+#number, code, code > *{
     white-space: pre;
+    font-family: 'Roboto Mono', monospace;
 }
 
 #sameLine, #number{
     display:inline-block;
+}
+
+#number:before{
+    content: "0";
+    display: inline-block;
+    color: rgba(0, 0, 0, 0);
 }
 
 #number:after{
@@ -14,35 +29,6 @@
     height: 20px;
     margin-right: 4px;
     margin-left: 4px;
-}
-
-#number:before{
-    content: "0";
-    display: inline-block;
-    color: rgba(0, 0, 0, 0);
-}
-
-[class*="codeWindow"]{
-    display: block;
-    position: relative;
-    background-color:rgb(66, 66, 66);
-    padding: 10px 10px 10px 10px;
-}
-
-.codeExplain{
-    display: block;
-    position: relative;
-    background-color:rgb(66, 66, 66);
-    padding: 10px 10px 10px 10px;
-}
-
-.codeExplain{
-    padding: 10px;
-}
-
-code{
-    white-space: pre;
-    font-family: 'Roboto', sans-serif;
 }
 
 #number{
@@ -64,11 +50,17 @@ code{
     background-color: rgba(0, 0, 0, 30%);
 }
 
+:root{
+    --evenBackgroundColor: rgba(0, 132, 255, 0.102);
+    --oddBackgroundColor: rgba(0, 90, 170, 0.102);
+}
+
 .codeSettings{
-    /* width: 100%; */
+    background-color: var(--evenBackgroundColor);
+    width: 100%;
     height: 20px;
-    /* box-sizing: border-box; */
-    padding: 2px;
+    box-sizing: border-box;
+    padding: 0 2px;
 }
 
 
@@ -76,7 +68,7 @@ code{
     width: 20px;
     height: 20px;
     float: right;
-    padding-left: 4px;
+    margin-left: 2px;
     border: none;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -99,22 +91,15 @@ code{
 }
 
 .copyText{
-    /* transform-origin: center; */
     position: absolute;
-    text-align: center;
-    align-items: center;
-    /* width: calc(100% * 0.2); 20 */
-    /* height: calc(100% * 0.2); 20 */
-    padding: calc(100% * 0.02);
-    background-color: rgb(22, 22, 22);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
     border-radius: 10px;
+    background-color: rgb(22, 22, 22);
+    text-align: center;
     color: white;
-    /*100 / 2 = 50,
-    20 / 2 = 10, 
-    2/2 = 1, 
-    50 - 10 - 1 = 39 */
-    top: 39%;
-    left: 39%;
     display: none;
 }
 

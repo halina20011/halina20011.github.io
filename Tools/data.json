@@ -144,25 +144,11 @@
         "arduinoFadeLed": {
             "className": "arduinoFadeLedProject",
             "path": "/Arduino/ArduinoFadeLed.html",
-            "imgPath": "#",
+            "imgPath": "/Images/Miniature/led.png",
             "name": "Arduino fade led",
             "projectTextInfo": [
                 "Learn Arduino", 
                 "In this lecture you are going to learn how to fade led with arduino."
-            ],
-            "addAdicionalThings": null,
-            "addScript": null,
-            "addCss": null
-        },
-        
-        "arduinoFadeDLed": {
-            "className": "arduinoFadeLedDProject",
-            "path": "/Arduino/ArduinoFadeLed.html",
-            "imgPath": "#",
-            "name": "Arduino fade led with delay",
-            "projectTextInfo": [
-                "Learn Arduino", 
-                "In this lecture you are going to learn how to fade led using delay with arduino."
             ],
             "addAdicionalThings": null,
             "addScript": null,
