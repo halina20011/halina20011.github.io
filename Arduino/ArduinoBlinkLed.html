@@ -35,16 +35,20 @@
                 </div>
                 <div class="freeLine"></div>
 
+                <!-- ###################################################################### -->
+                <!--                     Parts or tools you will need                       -->
+                <!-- ###################################################################### -->
                 <jumpLink id="PartsOrToolsYouWillNeed"></jumpLink>
-                <h2>Parts Or Tools You Will Need:</h2>
+                <h2>Parts or tools you will need:</h2>
                 <div class="paragraph" >
                     <p>Arduino Uno</p>
-                    <p>Led diode (You can use any color)</p>
+                    <p>Led (You can use any color)</p>
                     <p>220 Ohm resistor</p>
                     <p>Breadboard</p>
-                    <p>Some male to female wires</p>
+                    <p>Some male and female wires</p>
                 </div>
                 <div class="freeLine"></div>
+
                 <!-- ###################################################################### -->
                 <!--                    How to calculate resistor value                     -->
                 <!-- ###################################################################### -->
@@ -120,14 +124,24 @@
                 </div>
                 <div class="freeLine"></div>
                 
+                <!-- ###################################################################### -->
+                <!--                              Circuit                                   -->
+                <!-- ###################################################################### -->
                 <jumpLink id="Circuit"></jumpLink>
                 <h2>Circuit</h2>
-                <p1 id="newLine" class="paragraph">Now we can connect the circuit according to the following circuit:</p1>
-                <div class="circuit">
-                    <div class="circuitImage" style="background-image: url('/Images/Miniature/Led.svg');"></div>
+                <div class="paragraph">
+                    <p>Now we can connect the circuit according to the following circuit:</p>
+                    <div class="circuit">
+                        <div class="circuitImage" style="background-image: url('/Images/Miniature/Led.svg');"></div>
+                    </div>
+                    <p>To connect LED to the Arduino you can use any digital pin that is 
+                        on the board (pin that has number from 0 to 13 on it).</p>
                 </div>
-
                 <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                            Code Window                                 -->
+                <!-- ###################################################################### -->
                 <jumpLink id="Code"></jumpLink>
                 <h2>Code</h2>
                 <div class="paragraph">
@@ -146,26 +160,24 @@
                     <codeWindow data-src="innerText">
                         <p>int led = 11;</p>
                     </codeWindow>
-                    
                     <div class="fS8"></div>
-
-                    <p>Set the led variable to pin 11. And it is not necessary to use variables in the code, but if we had more extensive code and, for example,
+                    <p>
+                        Set the led variable to pin 11. And it is not necessary to use variables in the code, but if we had more extensive code and, for example,
                         we wanted to change pin 11 to another number, then we don't have to look for all 11 in the code and 
                         change it manually. All we have to do is change the number of the variable in the beginning.
                     </p>
-            
                     <div class="freeLine"></div>
+
                     <codeWindow data-src="innerText">
                         <p>pinMode(led, OUTPUT);</p>
                     </codeWindow>
                     <div class="fS8"></div>
                     <p>Initialize the digital pin as an output.</p>
-                    
                     <div class="freeLine"></div>
+
                     <codeWindow data-src="innerText">
                         <p>digitalWrite(led, HIGH);</p>
                     </codeWindow>
-
                     <div class="fS8"></div>
                     <p>Write a HIGH or a LOW value to a digital pin. <a href="https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/">More info</a></p>
                     <div class="freeLine"></div>
@@ -173,7 +185,6 @@
                     <codeWindow data-src="innerText">
                         <p>delay(delayTime);</p>
                     </codeWindow>
-                    
                     <div class="fS8"></div>
                     <p>Pauses the program for the amount of time (in milliseconds) that we specified as parameter. <a href="https://www.arduino.cc/reference/en/language/functions/time/delay/">More info</a></p>
                 </div>
@@ -193,7 +204,6 @@
         </div>
         <div class="columnDown"></div>
     </div>
-        <!-- <div class="columnDown"></div> -->
     <script type="module" src="/code.js"></script>
     <script type="module" src="/Tools/importFile.js"></script>
     <script type="module" src="/Tools/search.js"></script>

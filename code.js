@@ -2,7 +2,7 @@ import {getText} from "/Tools/import.js";
 
 const codeExplain = document.getElementsByClassName("codeExplain");
 
-const variables = ["void", "OUTPUT", "HIGH", "LOW", "int", "char", "String", "float", "const"];
+const variables = ["void", "OUTPUT", "HIGH", "LOW", "int", "char", "String", "float", "const", "long"];
 const logicalOperators = ["#include", "#define", "while", "loop", "setup", "if", "else"];
 const functions = ["Serial", "begin", "pinMode", "digitalWrite", "analogWrite", "delay", "available", "readString", "toInt", "millis"];
 const other = ["for"];
@@ -59,9 +59,6 @@ function calculateNumberOfSpaces(number, max){
     return spacesToAdd;
 }
 
-function makeCodeHeader(parent){
-}
-
 function escapeHtmlFromUnsafe(unsafe){
     return unsafe
         .replace(/&/g, "&amp;")
@@ -81,41 +78,57 @@ function escapeHtmlFromSafe(unsafe) {
 }
 
 function makeCodeWindow(parentWindow){
+    // <div class="codeScrollWindow">
+    //     <div class="copyText" id="copyText">The text has been copied.</div>
+    //     <div></div>
+    //     <div class="codeSettings">
+    //         <button class="copyCodeWindowButton1" id="copyCodeWindowButton1"></button>
+    //         <button class="downloadCodeWindowButton1" id="downloadCodeWindowButton1"></button>
+    //     </div>
+    //     <div class="number"><div>0</div>1</div>
+    //     <div class="code">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+    //     <div class="number"><div>0</div>2</div>
+    //     <div class="code">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+    // </div>
+
     // Make list of code lines
     var listOfLines = [];
     let rawText = "";
     let name = "";
     let src = parentWindow.dataset["src"];
+    console.log(src);
+
     if(src == "URL"){
         listOfLines = getListOfLines(codeUrl);
         name = `${htmlName}.ino`;
     }
     else if(src == "innerText"){
-        
         for(let i = 0; i < parentWindow.childElementCount; i++){
-            listOfLines.push(parentWindow.children[i].innerText);
+            listOfLines.push(escapeHtmlFromSafe(parentWindow.children[i].innerHTML));
         }
         name = "codeExplanation.ino";
         parentWindow.innerText = "";
     }
+
+    let codeScrollWindow = document.createElement("div");
+    codeScrollWindow.className = "codeScrollWindow";
+    parentWindow.appendChild(codeScrollWindow);
+
     rawText = listOfLinesToText(listOfLines);
-    // <p class="copyText" id="copyText">The text has been copied.</p>
-    // <div class="codeSettings">
-    //     <button class="copyCodeWindowButton1" id="copyCodeWindowButton1"></button>
-    //     <button class="downloadCodeWindowButton1" id="downloadCodeWindowButton1"></button>
-    // </div> 
     
-    var copyText = document.createElement("p");
+    var copyText = document.createElement("div");
     copyText.className = "copyText";
     copyText.id = "copyText";
     copyText.innerHTML = "The text has been copied.";
     
-    parentWindow.appendChild(copyText);
+    codeScrollWindow.appendChild(copyText);
     
     // CODE SETTINGS
+    var emptyNumber = document.createElement("div");
     var codeSettings = document.createElement("div");
     codeSettings.className = "codeSettings"
-    parentWindow.appendChild(codeSettings);
+    codeScrollWindow.appendChild(emptyNumber);
+    codeScrollWindow.appendChild(codeSettings);
     
     // COPY BUTTON
     let copyButton = document.createElement("button");
@@ -134,38 +147,52 @@ function makeCodeWindow(parentWindow){
     
     for(var i = 0; i < listOfLines.length; i++){
         var text = listOfLines[i];
-        // <div><p id="number">1</p><code id="codeText"> text </code></div>
-        var div = document.createElement("div"); //Make <div>
-        parentWindow.appendChild(div);
-
-        // 1 is added to i, because there is allready "codeSettings" with evenBackgroundColor
-        if((i + 1)% 2 == 0){
-            div.style.backgroundColor = "var(--evenBackgroundColor)";
-        }
-        else{
-            div.style.backgroundColor = "var(--oddBackgroundColor)";
-        }
+        // <div class="number"><div>0</div>1</div>
+        // <div class="code">text</div>
      
-        var lineNumber = document.createElement("p"); //Make <p>
-        lineNumber.id = "number"; //Asing Id
+        var lineNumber = document.createElement("div");
+        lineNumber.className = "number"; //Asing Id
+
+        var numberBefore = document.createElement("div");
+        numberBefore.className = "numberBefore";
+        var numberAfter = document.createElement("div");
+        numberAfter.className = "numberAfter";
+
+        var number = document.createElement("div");
 
         // Make invisible numbers
         var stringLength = calculateNumberOfSpaces(i + 1, listOfLines.length);
         var spaces = "0".repeat(stringLength);
 
-        let spaceElement = document.createElement("p");
+        let spaceElement = document.createElement("div");
         spaceElement.innerHTML = spaces;
-        spaceElement.style.display = "inline-block";
+        // spaceElement.style.display = "inline-block";
         spaceElement.style.color = "rgba(0, 0, 0, 0)";
 
+        // lineNumber.appendChild(numberBefore);
         lineNumber.appendChild(spaceElement);
-        lineNumber.innerHTML += i + 1;
-        div.appendChild(lineNumber);
+        number.innerHTML = i + 1;
         
-        var codeText = document.createElement("code"); //Make <code>
-        codeText.id = "codeText";
-        div.appendChild(codeText);
+        lineNumber.appendChild(number);
+        // lineNumber.appendChild(numberAfter);
+        codeScrollWindow.appendChild(lineNumber);
+        
+        var codeText = document.createElement("div"); //Make <code>
+        codeText.className = "code";
+        codeScrollWindow.appendChild(codeText);
+
         let chnagedT = changeTextColor(text);
+
+        // 1 is added to i, because there is allready "codeSettings" with evenBackgroundColor
+        if((i + 1)% 2 == 0){
+            lineNumber.style.backgroundColor = "var(--evenBackgroundColor)";
+            codeText.style.backgroundColor = "var(--evenBackgroundColor)";
+        }
+        else{
+            lineNumber.style.backgroundColor = "var(--oddBackgroundColor)";
+            codeText.style.backgroundColor = "var(--oddBackgroundColor)";
+        }
+
         codeText.innerHTML = chnagedT;
     }
 }
@@ -204,6 +231,13 @@ function stringToList(text){
     return listOfWords;
 }
 
+function makeDiv(text, className = undefined){
+    if(className != undefined){
+        return `<div class="${className}">${escapeHtmlFromUnsafe(text)}</div>`
+    }
+    return `<div>${escapeHtmlFromUnsafe(text)}</div>`
+}
+
 function changeTextColor(text){
     let newElements = "";
     var list = stringToList(text); //Convert String to List
@@ -228,6 +262,7 @@ function changeTextColor(text){
             newElements += escapeHtmlFromUnsafe(list[i]);
         }
     }
+    console.log(newElements);
     return newElements;
 }
 
@@ -261,6 +296,7 @@ function showCopyText(copyTextElement){
 
 function makeAllCodeWindows(){
     let codeWindows = document.querySelectorAll("codeWindow");
+    console.log(codeWindows);
     codeWindows.forEach(element => {
         makeCodeWindow(element);
     });

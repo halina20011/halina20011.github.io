@@ -26,14 +26,22 @@ a{
     text-decoration: underline;
 }
 
+li{
+    list-style-type: square;
+    list-style-position: inside;
+}
+
 /* ############################################################################################ */
 /*                                      Custom HTML TAGS                                        */
 /* ############################################################################################ */
 
 bold{
+    font-weight: 900;
     font-weight: bold;
 }
 
 val{
+    padding: 0 4px;
+    border-radius: 4px;
     background-color: rgba(0, 0, 0, 0.3);
 }

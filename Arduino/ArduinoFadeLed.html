@@ -29,24 +29,89 @@
                 <h1>Arduino Fade Led</h1>
                 <div class="fs8"></div>
                 <div class="paragraph">
-                    <p>In this tutorial we will learn how to fade led using Arduino Uno.</p>
+                    <p>In this tutorial you will learn how to fade LED without using delay function using Arduino Uno.</p>
                 </div>
                 <dev class="freeLine"></dev>
                 
+                <!-- ###################################################################### -->
+                <!--                     Parts or tools you will need                       -->
+                <!-- ###################################################################### -->
                 <jumpLink id="PartsOrToolsYouWillNeed"></jumpLink>
                 <h2>Parts Or Tools You Will Need:</h2>
                 <div class="paragraph">
                     <p>Arduino Uno</p>
-                    <p>Led diode (any color, i will use white)</p>
+                    <p>LED (You can use any color)</p>
                     <p style="display: inline-block;">220 Ohm resistor (</p><a href="/Arduino/ArduinoBlinkLed.html#HowToCalculateResistorValue">Here</a> you can find how to calculate resistor value.)</p>
-                    <p>Some male to female wires.</p>
+                    <p>Some male and female wires.</p>
                 </div>
 
+                <!-- ###################################################################### -->
+                <!--                              Circuit                                   -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Circuit"></jumpLink>
+                <h2>Circuit</h2>
+                <div class="paragraph">
+                    <p>Now we can connect the circuit according to the following circuit:</p>
+                    <div class="circuit">
+                        <div class="circuitImage" style="background-image: url('/Images/Miniature/Led.svg');"></div>
+                    </div>
+                    <p>For connecting anode (positive side) of LED to the Arduino you can use any digital pin on the board that supports PWM.</p>
+                    <p>Pins that supports PWM are digitals pins that have this: "~" symbol on it.</p>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                            Code Window                                 -->
+                <!-- ###################################################################### -->
                 <jumpLink id="Code"></jumpLink>
                 <h2>Code</h2>
                 <div class="paragraph">
-                    <codeWindow data-src="URL"></codeWindow>
+                    <codeWindow data-src="URL">
+                            <!-- <div class="codeScrollWindow">
+                                <div class="copyText" id="copyText">The text has been copied.</div>
+                                <div></div>
+                                <div class="codeSettings">
+                                    <button class="copyCodeWindowButton1" id="copyCodeWindowButton1"></button>
+                                    <button class="downloadCodeWindowButton1" id="downloadCodeWindowButton1"></button>
+                                </div>
+                                <div class="number"><div>0</div>1</div>
+                                <div class="code">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+                                <div class="number"><div>0</div>2</div>
+                                <div class="code">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+                            </div> -->
+                    </codeWindow>
                 </div>
+
+                <!-- ###################################################################### -->
+                <!--                        Code explanation                                -->
+                <!-- ###################################################################### -->
+                <!-- <jumpLink id="CodeExplanation"></jumpLink>
+                <h2>Code explanation</h2>
+                <div class="paragraph" >
+                    <div class="fS8"></div>
+                    
+                    <codeWindow data-src="innerText">
+                        <p>int led = 11;</p>
+                        <p>int brightness = 0;</p>
+                        <p>int fadeAmount = 5;</p>
+                        <p></p>
+                        <p>int period = 1000;</p>
+                        <p>int _delay = (period / 2) / (255 / fadeAmount);</p>
+                        <p>long int lastF = 0;</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>We first declare some variables:</p>
+                    <div class="paragraph">
+                        <p><val>led</val> variable represents the number of PWM pin to which the LED is connected.</p>
+                        <p><val>brightness</val>: brightness value of LED.</p>
+                        <p><val>fadeAmount</val>: the amount that is added/subtracted to the brightness at each step</p>
+                        <p></p>
+                        <p><val>_delay</val>: how long should</p>
+                        <p><val>period</val>: time in milliseconds, how long should one repetition lasts.</p>
+                        <p>If the brightness reaches the limit, the value is reversed</p>
+                    </div>
+                    <div class="freeLine"></div>
+                </div> -->
             </div>
             <div class="columnRight" id="columnRight">
                 <div class="table" id="table">
@@ -60,7 +125,7 @@
             </div>
         </div>
         <div class="columnDown"></div>
-        </div>
+    </div>
     <script type="module" src="/code.js" ></script>
     <script src="/sideNavigation.js"></script>
     <script type="module" src="/Tools/importFile.js"></script>

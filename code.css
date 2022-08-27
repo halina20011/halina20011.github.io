@@ -1,37 +1,35 @@
+:root{
+    --firstLineheight: 20px;
+    --height: 20px;
+    --evenBackgroundColor: rgba(0, 132, 255, 0.102);
+    --oddBackgroundColor: rgba(0, 90, 170, 0.102);
+}
+
 codeWindow {
     display: block;
-    position: relative;
+    width: 100%;
     background-color:rgb(66, 66, 66);
     padding: 10px 10px 10px 10px;
-    overflow: scroll;
+    box-sizing: border-box;
+    overflow-y: scroll;
 }
 
-#number, code, code > *{
+.codeScrollWindow{
+    display: grid;
+    grid-template-columns: min-content auto;
+}
+
+.number, .number > *, .code, .code > *{
+    position: relative;
     white-space: pre;
+    display: inline-block;
     font-family: 'Roboto Mono', monospace;
+    height: var(--height);
+    vertical-align: top;
+    line-break: none;
 }
 
-#sameLine, #number{
-    display:inline-block;
-}
-
-#number:before{
-    content: "0";
-    display: inline-block;
-    color: rgba(0, 0, 0, 0);
-}
-
-#number:after{
-    content: "";
-    display: inline-block;
-    background-color: rgb(54, 54, 54);
-    width: 2px;
-    height: 20px;
-    margin-right: 4px;
-    margin-left: 4px;
-}
-
-#number{
+.number{ 
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
@@ -39,37 +37,49 @@ codeWindow {
     -o-user-select: none;
     user-select: none;
 }
-/* 
-|codeSettings
-    -|copyButton
-        -|button
-            -|img 
-*/
+
+.number::before{
+    content: "0";
+    color: rgba(0, 0, 0, 0);
+    height: var(--height);
+    display: inline-block;
+}
+
+.number:after{
+    content: "";
+    position: relative;
+    display: inline-block;
+    width: 2px;
+    height: var(--height);
+    margin-right: 4px;
+    margin-left: 4px;
+    background-color: rgb(54, 54, 54);
+}
 
 .codeSettings button:hover{
     background-color: rgba(0, 0, 0, 30%);
 }
 
-:root{
-    --evenBackgroundColor: rgba(0, 132, 255, 0.102);
-    --oddBackgroundColor: rgba(0, 90, 170, 0.102);
+.codeScrollWindow > div:nth-child(2), .codeScrollWindow > div:nth-child(3){
+    height: var(--firstLineheight);
+    padding: 2px;
+    background-color: var(--evenBackgroundColor)
+    /* padding-top: 10px; */
+    /* padding-right: 5px; */
 }
 
-.codeSettings{
-    background-color: var(--evenBackgroundColor);
-    width: 100%;
-    height: 20px;
-    box-sizing: border-box;
-    padding: 0 2px;
+.codeScrollWindow > div:nth-last-child(-n+2){
+    padding-bottom: 10px;
 }
 
-
-[class*="copyCodeWindowButton"], [class*="downloadCodeWindowButton"]{
-    width: 20px;
-    height: 20px;
+.codeSettings > button{
+    width: var(--firstLineheight);
+    height: var(--firstLineheight);
     float: right;
     margin-left: 2px;
-    border: none;
+    /* border: solid 2px rgba(0, 0, 0, 0); */
+    /* box-sizing: border-box; */
+    border-radius: 2px;
     background-size: 100%;
     background-repeat: no-repeat;
     background-color: rgba(0,0,0,0);
@@ -81,13 +91,6 @@ codeWindow {
 
 [class*="downloadCodeWindowButton"]{
     background-image: url('/Images/Icons/download.png');
-}
-
-/* image atribute */
-.codeSettings div img{
-    position: relative;
-    width: 20px;
-    height: 20px;
 }
 
 .copyText{
@@ -134,6 +137,8 @@ codeWindow {
     color: rgb(141, 99, 138);
 }
 
-.logicalOperators, .variables, .functions, .other{
-    display: inline;
-}
+/* .logicalOperators, .variables, .functions, .other{
+    height: var(--height);
+    display: inline-block;
+    text-align: center;
+} */

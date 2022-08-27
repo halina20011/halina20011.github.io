@@ -1,27 +1,29 @@
 int led = 11;
+int brightness = 0;
+int fadeAmount = 5;
 
-void setup() {
-    Serial.begin(9600);
+int period = 1000;
+int _delay = (period / 2) / (255 / fadeAmount);
+long int lastF = 0;
+
+void fade(){
+    long int t = millis();
+    if(t > lastF + _delay){
+        lastF = t;
+        
+        analogWrite(led, brightness);
+        brightness = brightness + fadeAmount;
+
+        if(brightness <= 0 || brightness >= 255) {
+            fadeAmount = -fadeAmount;
+        }
+    }
+}
+
+void setup(){
     pinMode(led, OUTPUT);
 }
 
-void loop() {
-    fade(led, 2);
-    unfade(led, 2);
-}
-
-void fade(int Led, float time){
-    time = time / 255 * 1000;
-    for(int i = 0; i < 255; i++){
-        analogWrite(Led, i);
-        delay(time);
-    }
-}
-
-void unfade(int Led, float time){
-    time = time / 255 * 1000;
-    for(int i = 255; i > 0; i--){
-        analogWrite(Led, i);
-        delay(time);
-    }
+void loop(){
+    fade();
 }
