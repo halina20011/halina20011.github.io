@@ -1,4 +1,4 @@
-import {startLoadingAnimation, stopLoadingAnimation} from '/Tools/loading/toggleLoading.js'
+import {startLoadingAnimation, stopLoadingAnimation} from '/Tools/loading/toggleLoading.js';
 
 stopLoadingAnimation();
 // startLoadingAnimation();
@@ -16,7 +16,7 @@ var originalImage = document.getElementById("originalImage");
 var generatedImageHolder = document.getElementById("generatedImageHolder");
 
 var generatedTextUrl = null;
-var generatedImageUrl = ""
+var generatedImageUrl = "";
 
 var buttonDonwloadText = document.getElementById("downloadText");
 var buttonDonwloadImage = document.getElementById("downloadImage");
@@ -45,8 +45,8 @@ function load(){
         
         var _bigger = null;
         if(imgWidth > imgHeight){ _bigger = "width"; }
-        else if(imgWidth < imgHeight) { _bigger = "height"}
-        if(imgWidth == imgHeight) { _bigger = "none"}
+        else if(imgWidth < imgHeight) { _bigger = "height"; }
+        if(imgWidth == imgHeight) { _bigger = "none"; }
         
         var biggerNumber = null;
         var smallerNumber = null;
@@ -102,7 +102,7 @@ function load(){
         // download(generatedTextUrl, "ascii.txt");                        //Download file as .txt
         stopLoadingAnimation();
     }
-    var fileName = imageInput.value.split("\\").pop(); //Split array and return last element.
+    var fileName = imageInput.value.split("\\").pop(); // Split array and return last element.
     imgInputValue.innerHTML = fileName;
     var fileUrl = URL.createObjectURL(imageInput.files[0]); //Converts img to url object
     img.src = fileUrl; //Set image to has same source as 
@@ -110,13 +110,13 @@ function load(){
 
 function getGrayscale(rgba){
     if(rgba[3] == 0) return 255;
-    return (rgba[0] + rgba[1] + rgba[2]) / 3
+    return (rgba[0] + rgba[1] + rgba[2]) / 3;
 }
 
 function asciiCharacter(grayscale){
     var p = grayscale / 255
     var index = (listOfASCII.length - 1) * p;
-    index = Math.round(index)
+    index = Math.round(index);
     return listOfASCII[index];
 }
 
@@ -129,9 +129,9 @@ function generateAsciiText(xMax, yMax, _context){
             // if(ASCII == undefined){
             //     console.log(rgba);
             // }
-            fileText+=ASCII
+            fileText += ASCII;
         }
-        fileText+= "\n";
+        fileText += "\n";
     }
     return fileText;
 }
@@ -157,7 +157,7 @@ function createCanvas(parrent, width, height){
 
     canvasElement.style.display = "none";
     
-    parrent.appendChild(canvasElement)
+    parrent.appendChild(canvasElement);
 
     var _canvas = document.getElementById('newCanvas');
     return _canvas;
@@ -185,15 +185,13 @@ function drawTextImage(text, xMax, yMax){
         listOfASCII.push(textSplit[i].split(''));
     }
     
-    // context.font = `${x * textM}px Roboto sans-serif`;
-    // context.font = `100 ${addPositionX}px Roboto, sans-serif`;
-    context.font = `100 ${addPositionX}px Roboto, sans-serif`;
+    context.font = `100 ${addPositionX}px 'Roboto Mono', monospace`;
     context.textAlign = "left"; 
     context.fillStyle = colorPalet.value;
     for(var _y = 0; _y < yMax; _y++){
         for(var _x = 0; _x < xMax; _x++){
             var xPos = addPositionX * _x;
-            var yPos = addPositionY * _y
+            var yPos = addPositionY * _y;
             context.fillText(listOfASCII[_y][_x].toUpperCase(), xPos, yPos);
         }
     }
@@ -206,7 +204,7 @@ function drawTextImage(text, xMax, yMax){
     // link.innerHTML = "Adress to image";
     // generatedContentHolder.appendChild(link);
     
-    linkToImage.setAttribute("onclick", `location.href = '${generatedImageUrl}';`)   //Hide none text
+    linkToImage.setAttribute("onclick", `location.href = '${generatedImageUrl}';`);   //Hide none text
     document.getElementById("noneTextGenerated").style.display = "none";
     
     // var contextGeneratedImage = document.getElementById("generatedImage").getContext("2d");
@@ -232,9 +230,9 @@ function drawTextImage(text, xMax, yMax){
     generatedImage.style.width = canvasNewWidth + 'px';
     generatedImage.style.height = canvasNewHeight + 'px';
 
-    generatedImage.style.backgroundColor = backgroundColor(hexToRgb(colorPalet.value))
+    generatedImage.style.backgroundColor = backgroundColor(hexToRgb(colorPalet.value));
 
-    var scaledImage = new Image()
+    var scaledImage = new Image();
     scaledImage.src = generatedImageUrl;
     
     scaledImage.width = canvasNewWidth;
@@ -248,7 +246,7 @@ function drawTextImage(text, xMax, yMax){
 
     generatedImage.appendChild(scaledImage);
     generatedImageHolder.onload = function() {
-        console.log("Shown")
+        console.log("Shown");
     }
 }
 
@@ -277,7 +275,7 @@ function drawText(text){
     // Append text
     for(var lineIndex = 0; lineIndex < y.length; lineIndex++){
         var p = document.createElement("p");
-        p.className = "generatedText"
+        p.className = "generatedText";
         p.innerHTML = y[lineIndex];
         generatedTextHoldder.appendChild(p);
     }
@@ -286,13 +284,20 @@ function drawText(text){
 var textSizeSlider = document.getElementById("textSizeSlider");
 var textSizeSliderValue = document.getElementById("textSizeSliderValue");
 
-textSizeSliderValue.innerHTML = textSizeSlider.value
+let precode = document.getElementById("precode");
 
-textSizeSlider.addEventListener("input", () => {changeTextSize();}, true)
+changeTextSize();
+textSizeSlider.addEventListener("input", () => {changeTextSize();}, false)
 
 function changeTextSize(){
-    var generatedText = document.getElementsByClassName("generatedText")
-    textSizeSliderValue.innerHTML = textSizeSlider.value
+    var generatedText = document.getElementsByClassName("generatedText");
+    textSizeSliderValue.innerText = textSizeSlider.value;
+    if(textSizeSliderValue.innerHTML < 10){
+        precode.innerHTML = "0";
+    }
+    else{
+        precode.innerHTML = "";
+    }
     for(var i = 0; i < generatedText.length; i++){
         generatedText.item(i).style.fontSize = textSizeSlider.value + "px";
     }
@@ -304,7 +309,7 @@ function hexToRgb(hex){
     var g = parseInt(hex.substr(3, 2), 16);
     var b = parseInt(hex.substr(5, 2), 16);
 
-    return [r, g, b]
+    return [r, g, b];
 }
 
 function backgroundColor(rgb){
@@ -312,12 +317,8 @@ function backgroundColor(rgb){
     var g = rgb[1];
     var b = rgb[2];
     // https://www.w3.org/TR/AERT/#color-contrast
-    var brigthness = ((r * 299) + (g * 587) + (b * 144)) / 1000
+    var brigthness = ((r * 299) + (g * 587) + (b * 144)) / 1000;
     return (brigthness > 125) ? "rgba(0, 0, 0, 1)" : "rgba(255, 255, 255, 1)";
 }
 
-backgroundColor(hexToRgb(colorPalet.value))
-
-function removeAllChildren(){
-
-}
+backgroundColor(hexToRgb(colorPalet.value));

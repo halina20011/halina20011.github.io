@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Halina's ASCII converotor</title>
+    <title>ASCII converotor</title>
     <meta charset="UTF-8">
     <meta name="description" content="Free web programming tutorials">
     <meta name="author" content="Mario Duraković">
@@ -45,7 +45,7 @@
                 </div>
                 <div class="inputFileHeader">
                     <label for="imgInput">Upload file</label>
-                    <input type="file" accept="image/*" class="imgInput" id="imgInput"> <!-- accept=".png"-->
+                    <input type="file" accept=".png, .jpg" class="imgInput" id="imgInput"> <!-- accept=".png"-->
                     <p class="imgInputValue" id="imgInputValue">None</p>
                     <div class="inputFile"></div>
                 </div>
@@ -53,7 +53,7 @@
                 <!-- Holder for original files-->
                 <div class="originalContentHeader" id="originalContentHeader">
                     <p>Original image:</p>
-                    <div>
+                    <div class="paragraph">
                         <div class="originalImageHolder" id="originalImageHolder">
                             <canvas class="originalImage" id="originalImage"></canvas>
                             <div id="noneTextOriginal">None</div>
@@ -64,12 +64,11 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="fS4"></div>
-
+                <div class="fS8"></div>
+                
                 <div class="generatedTextContentDiv">
                     <p>Generated text:</p>
-                    <div>
+                    <div class="paragraph">
                         <div class="generatedTextHolder" id="generatedTextHolder">
                             <p class="generatedText">None</p>
                         </div>
@@ -77,19 +76,21 @@
                             <p>Text font size:</p>
                             <div class="setting border5">
                                 <input type="range" class="textSizeSlider slider" id="textSizeSlider" min="1" max="16" value="16" step="1">
-                                <p class="textSizeSliderValue" id="textSizeSliderValue">0</p>
+                                <div class="textSizeSliderValueParent" id="textSizeSliderValueParent"><p id="precode">0</p><p id="textSizeSliderValue">0</p></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="fS4"></div>
+                <div class="fS8"></div>
 
                 <!-- Holder for generated files-->
                 <div class="generatedContentHeader" id="generatedContentHeader">
                     <p>Generated image:</p>
-                    <button class="downloadbutton" id="downloadText">Download generated image .txt</button>
-                    <button class="downloadbutton" id="downloadImage">Download generated image .png</button>
-                    <button class="downloadbutton" id="linkToImage">View generated image</button>
+                    <div class="buttons">
+                        <button class="downloadbutton" id="downloadText">Download generated image .txt</button>
+                        <button class="downloadbutton" id="downloadImage">Download generated image .png</button>
+                        <button class="downloadbutton" id="linkToImage">View generated image</button>
+                    </div>
                     <div>
                         <div class="generatedImageHolder" id="generatedImageHolder">
                             <div class="generatedImage" id="generatedImage"></div>
