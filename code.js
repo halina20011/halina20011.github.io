@@ -2,9 +2,9 @@ import {getText} from "/Tools/import.js";
 
 const codeExplain = document.getElementsByClassName("codeExplain");
 
-const variables = ["void", "OUTPUT", "HIGH", "LOW", "int", "char", "String", "float", "const", "long"];
+const variables = ["void", "OUTPUT", "INPUT", "HIGH", "LOW", "int", "char", "String", "float", "const", "long"];
 const logicalOperators = ["#include", "#define", "while", "loop", "setup", "if", "else"];
-const functions = ["Serial", "begin", "pinMode", "digitalWrite", "analogWrite", "delay", "available", "readString", "toInt", "millis"];
+const functions = ["Serial", "begin", "print", "println", "pinMode", "digitalWrite", "delayMicroseconds", "analogWrite", "delay", "pulseIn", "available", "readString", "toInt", "millis"];
 const other = ["for"];
 
 let listOfHighlightedWords = [variables, logicalOperators, functions, other];
@@ -146,19 +146,14 @@ function makeCodeWindow(parentWindow){
     codeSettings.appendChild(downloadButton);
     
     for(var i = 0; i < listOfLines.length; i++){
-        var text = listOfLines[i];
+        let text = listOfLines[i];
         // <div class="number"><div>0</div>1</div>
         // <div class="code">text</div>
      
-        var lineNumber = document.createElement("div");
+        let lineNumber = document.createElement("div");
         lineNumber.className = "number"; //Asing Id
 
-        var numberBefore = document.createElement("div");
-        numberBefore.className = "numberBefore";
-        var numberAfter = document.createElement("div");
-        numberAfter.className = "numberAfter";
-
-        var number = document.createElement("div");
+        let number = document.createElement("div");
 
         // Make invisible numbers
         var stringLength = calculateNumberOfSpaces(i + 1, listOfLines.length);
@@ -169,19 +164,15 @@ function makeCodeWindow(parentWindow){
         // spaceElement.style.display = "inline-block";
         spaceElement.style.color = "rgba(0, 0, 0, 0)";
 
-        // lineNumber.appendChild(numberBefore);
         lineNumber.appendChild(spaceElement);
-        number.innerHTML = i + 1;
-        
+        number.innerHTML = i + 1;        
         lineNumber.appendChild(number);
-        // lineNumber.appendChild(numberAfter);
+
         codeScrollWindow.appendChild(lineNumber);
         
         var codeText = document.createElement("div"); //Make <code>
         codeText.className = "code";
         codeScrollWindow.appendChild(codeText);
-
-        let chnagedT = changeTextColor(text);
 
         // 1 is added to i, because there is allready "codeSettings" with evenBackgroundColor
         if((i + 1)% 2 == 0){
@@ -192,7 +183,8 @@ function makeCodeWindow(parentWindow){
             lineNumber.style.backgroundColor = "var(--oddBackgroundColor)";
             codeText.style.backgroundColor = "var(--oddBackgroundColor)";
         }
-
+        
+        let chnagedT = changeTextColor(text);
         codeText.innerHTML = chnagedT;
     }
 }
@@ -209,7 +201,19 @@ function stringToList(text){
     var words = ""; //Make value to hold current word
     for (let i = 0; i < listOfCharacters.length; i++) {
         var letter = listOfCharacters[i];
-        if(letter != " " && letter != ";" && letter != "(" && letter != ")"){
+        if(letter == "/" && listOfCharacters.length != i + 1 && listOfCharacters[i + 1] == "/"){
+            if(words != ""){
+                listOfWords.push(words);
+                words = "";
+            }
+            let comment = text.substring(i, listOfCharacters.length);
+            if(i != 0){
+                listOfWords.push(" ");
+            }
+            listOfWords.push(comment);
+            break;
+        }
+        else if(letter != " " && letter != ";" && letter != "(" && letter != ")" && letter != "."){
             words += letter;
         }
         else if(letter == " "){
@@ -221,7 +225,7 @@ function stringToList(text){
             }
             words = "";
         }
-        else if(letter == ";" || letter == "(" || letter == ")"){
+        else if(letter == ";" || letter == "(" || letter == ")" || letter == "."){
             listOfWords.push(words);
             listOfWords.push(letter);
             words = "";
@@ -231,20 +235,18 @@ function stringToList(text){
     return listOfWords;
 }
 
-function makeDiv(text, className = undefined){
-    if(className != undefined){
-        return `<div class="${className}">${escapeHtmlFromUnsafe(text)}</div>`
-    }
-    return `<div>${escapeHtmlFromUnsafe(text)}</div>`
-}
-
 function changeTextColor(text){
     let newElements = "";
-    var list = stringToList(text); //Convert String to List
-    for(var i = 0; i < list.length; i++){
-        var word = list[i];
+    var syntaxList = stringToList(text); //Convert String to List
+    for(var i = 0; i < syntaxList.length; i++){
+        var word = syntaxList[i];
         let checked = false;
-        // List through all highlighted words list
+        // Check if syntax is comment
+        if(word.length > 2 && word.substring(0, 2) == "//"){
+            newElements += `<div class="comment">${escapeHtmlFromUnsafe(word)}</div>`;
+            continue;
+        }
+        // Go through the list with all highlighted words
         for(let _i = 0; _i < listOfHighlightedWords.length; _i++){
             for(let _x = 0; _x < listOfHighlightedWords[_i].length; _x++){
                 if(word == listOfHighlightedWords[_i][_x]){
@@ -255,11 +257,11 @@ function changeTextColor(text){
                 }
             }
         }
-        if(list[i] == "TAB"){
+        if(syntaxList[i] == "TAB"){
             newElements += "    ";
         }
         else if (checked == false){
-            newElements += escapeHtmlFromUnsafe(list[i]);
+            newElements += escapeHtmlFromUnsafe(syntaxList[i]);
         }
     }
     console.log(newElements);
