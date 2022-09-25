@@ -62,7 +62,7 @@ body{
     position: relative;
     background-color: #555;
     min-height: calc(100vh - 10vh - var(--column-height));
-    border: 10px solid rgba(0, 0, 0, 0);
+    padding: 10px 20px;
     box-sizing: border-box;
     z-index: 0;
 }
@@ -70,11 +70,6 @@ body{
 .columnRight{
     width: 100%;
     height: 100%;
-}
-
-.table{
-    position: sticky;
-    top: var(--column-height);
 }
 
 .progress{
@@ -94,13 +89,19 @@ body{
     padding-top: 2px;
     background-color: rgb(63, 63, 63);
     width: 60%;
+    position: sticky;
+    top: var(--column-height);
 }
 
 .table > p{
     padding: 5px;
 }
 
-.table > .content > button{
+.tableContent{
+    background-color: rgb(92, 92, 92);
+}
+
+.tableContent button{
     width: 100%;
     background-color: rgb(92, 92, 92);
     text-align: left;
@@ -108,7 +109,7 @@ body{
     padding: 5px;
 }
 
-.table > .content > button:hover{
+.table > .tableContent button:hover{
     background-color: rgb(104, 104, 104);
 }
 
@@ -299,7 +300,8 @@ body{
 jumpLink{
     position: relative;
     width: 100%;
-    display:inline-block;
+    display: block;
+    height: 0px;
     top: calc(var(--column-height) * -2);
 }
 

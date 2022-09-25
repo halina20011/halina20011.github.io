@@ -3,10 +3,10 @@
 <head>
     <title>Arduino Fade Led</title>
     <meta charset="UTF-8">
-    <meta name="description" content="Free web programming tutorials">
+    <meta name="description" content="Learn how to fade LED with Arduino.">
     <meta name="author" content="Mario Duraković">
     <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
-    <meta name="keywords" content="Halina programming, Arduino learn">
+    <meta name="keywords" content="Halina programming, Arduino learn, Arduino Fade LED, Fade LED">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,12 +20,10 @@
     <script src="/Menu/dropDownMenu.js"></script>
 </head>
 <body>
-    <div class="columnUp" id="columnUp">
-    </div>
+    <div class="columnUp" id="columnUp"></div>
     <div class="columnDisplay" id="columnDisplay">
         <div class="contentContainer">
-            <div class="columnLeft" id="columnLeft">
-            </div>
+            <div class="columnLeft" id="columnLeft"></div>
             <div class="columnMiddle" id="columnMiddle">
                 <h1>Arduino Fade Led</h1>
                 <div class="fs8"></div>
@@ -38,7 +36,7 @@
                 <!--                     Parts or tools you will need                       -->
                 <!-- ###################################################################### -->
                 <jumpLink id="PartsOrToolsYouWillNeed"></jumpLink>
-                <h2>Parts Or Tools You Will Need:</h2>
+                <h2>Parts or tools you will need</h2>
                 <div class="paragraph">
                     <p>Arduino Uno</p>
                     <p>LED (You can use any color)</p>
@@ -47,14 +45,14 @@
                 </div>
 
                 <!-- ###################################################################### -->
-                <!--                              Circuit                                   -->
+                <!--                          Circuit diagram                               -->
                 <!-- ###################################################################### -->
-                <jumpLink id="Circuit"></jumpLink>
-                <h2>Circuit</h2>
+                <jumpLink id="CircuitDiagram"></jumpLink>
+                <h2>Circuit diagram</h2>
                 <div class="paragraph">
                     <p>Now we can connect the circuit according to the following circuit:</p>
-                    <div class="circuit">
-                        <div class="circuitImage" style="background-image: url('/Images/Miniature/Led.svg');"></div>
+                    <div class="circuitDiagram">
+                        <img class="circuitImage" src="/Images/Schematics/Led.svg">
                     </div>
                     <p>For connecting anode (positive side) of LED to the Arduino you can use any digital pin on the board that supports PWM.</p>
                     <p>Pins that supports PWM are digitals pins that have this: "~" symbol on it.</p>
@@ -117,9 +115,9 @@
             <div class="columnRight" id="columnRight">
                 <div class="table" id="table">
                     <p>Table of contents</p>
-                    <div class="content">
-                        <button onclick="document.location='#PartsOrToolsYouWillNeed'">Parts Or Tools You Will Need.</button>
-                        <button onclick="document.location='#Circuit'">Circuit</button>
+                    <div class="tableContent">
+                        <button onclick="document.location='#PartsOrToolsYouWillNeed'">Parts Or Tools You Will Need</button>
+                        <button onclick="document.location='#CircuitDiagram'">Circuit diagram</button>
                         <button onclick="document.location='#Code'">Code</button>
                     </div>
                 </div>

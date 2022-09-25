@@ -77,12 +77,10 @@ function drawLine(x1, y1, x2, y2, rgba = [255, 255, 255, 255]){
     let err = dx / 2;
     let ystep;
 
-    if (y1 < y2)
-    {
+    if (y1 < y2){
         ystep = 1;
     }
-    else
-    {
+    else{
         ystep = -1;
     }
     for (let a = 0; x1 <= x2; x1++){

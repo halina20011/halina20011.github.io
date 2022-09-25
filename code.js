@@ -271,7 +271,7 @@ function changeTextColor(text){
 function downloadText(name, text){
     let textFileUrl = null;
     let fileData = new Blob([text], {type: 'text/plain'});
-    if (textFileUrl !== null) {
+    if(textFileUrl !== null){
         window.URL.revokeObjectURL(textFile);
     }
     textFileUrl = window.URL.createObjectURL(fileData);

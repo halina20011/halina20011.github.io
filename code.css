@@ -26,7 +26,8 @@ codeWindow {
     font-family: 'Roboto Mono', monospace;
     height: var(--height);
     vertical-align: top;
-    line-break: none;
+    /* line-break: none; */
+    line-break:strict;
 }
 
 .number{ 

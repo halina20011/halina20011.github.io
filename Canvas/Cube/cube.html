@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="/Canvas/canvas.css">
     <link rel="stylesheet" type="text/css" href="/Menu/dropDownMenu.css">
     <script src="/Menu/dropDownMenu.js"></script>
+    <script defer type="module" src="cube.js"></script>
 </head>
 <body>
     <div class="columnUp" id="columnUp">
@@ -37,6 +38,11 @@
                                 <button class="refreshButton" id="update"></button>
                                 <button class="timelapseButton" id="timelapseButton"></button>
                             </div>
+                        </div>
+                        <div class="fS8"></div>
+                            <div class="settingSameLine">
+                            <p>X: </p>
+                            <input type="range" id="maxIterations" style="width: 100%;" value="0" min="-360" max="360">
                         </div>
                     </div>
                 </div>

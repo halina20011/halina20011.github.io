@@ -96,12 +96,12 @@ function drawPixel(x, y, r, g, b, a){
     data[index + 3] = a;
 }
 
-function map(input, max, min, newMax, newMin){
+function map(input, min, max, newMin, newMax){
     // Get  calculate difference between max and min (400 - 0) and then devide it by input to get float between 0-1
-    let f = input / (max - min);
+    let m = input / (max - min);
     // Calculate difference between newMax and newMin (1 - (-1))
     // then multiply it with float and add newMin to it to get to correct range
-    let r =  (f * (newMin - newMax) + newMin);
+    let r = (m * (newMin - newMax) + newMin);
     return r;
 }
 

@@ -32,15 +32,13 @@ class BALL {
 
 function drawCircle(x, y, radius){
     var resoluton = 10;
-    var angle, x1, y1
     // for(var r = 10; r >= 0; r--){}
     for(i = 0; i < 360; i += resoluton){
-        angle = i;
-        x1 = radius * Math.cos(angle * Math.PI / 180);
-        y1 = radius * Math.sin(angle * Math.PI / 180);
+        let angle = i;
+        let x1 = radius * Math.cos(angle * Math.PI / 180);
+        let y1 = radius * Math.sin(angle * Math.PI / 180);
         drawPixel(x + x1, y + y1, {r:0, g:0, b:0, a:255});
     }
-    // swapBuffer();
 }
 
 function swapBuffer() {
@@ -122,16 +120,14 @@ ball2 = new BALL(50, 120, 50, 2, 1)
 // }
 
 function dist(x1, y1, x2, y2){
-    a = Math.pow(x2 - x1, 2)
-    b = Math.pow(y2 - y1, 2)
-    return Math.sqrt(a + b)
+    let a = Math.pow(x2 - x1, 2);
+    let b = Math.pow(y2 - y1, 2);
+    return Math.sqrt(a + b);
 }
 
-function map(min1, max1, min2, max2, number){
-    a = number / (max1 - min1)
-    // console.log((number / min1) * min2)
-    r = (a * (max2 - min2) + min2);
-    // console.log(r)
+function map(number, min1, max1, min2, max2){
+    let a = number / (max1 - min1);
+    let r = (a * (max2 - min2) + min2);
     return r;
 }
 
@@ -150,7 +146,7 @@ function drawC(){
     for(var x = 0; x < canvas.width; x++){
         for(var y = 0; y < canvas.height; y++){
             d = dist(x, y, canvas.width / 2, canvas.height / 2);
-            c = map(0, canvas.width / 2, 0, 255, d);
+            c = map(d, 0, canvas.width / 2, 0, 255);
             // console.log(d)
             drawPixel(x, y, {r: c, g: c, b: c, a: 255});
         }
@@ -180,7 +176,7 @@ function metaBalls(balls){
                 else{
                     d = dist(x, y, ball.x, ball.y -1);
                     // console.log(x, y, ball.x, ball.y -1)
-                    // c = map(0, canvas.width / 2, 0, 255, d);
+                    // c = map(d, 0, canvas.width / 2, 0, 255);
                     // c = ball.radius / d * 100;
                     sum += ball.radius / d * 100;
                 }
@@ -209,6 +205,3 @@ function main(){
 }
 
 main();
-// console.log(dist(10, 10, 12, 12));
-// map(0, 100, 0, 1, 100);
-// console.log(map(0, 10, 10, 100, 10));

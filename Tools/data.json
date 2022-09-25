@@ -131,24 +131,49 @@
             "className": "arduinoBlinkLedProject",
             "path": "/Arduino/ArduinoBlinkLed.html",
             "imgPath": "/Images/Miniature/led.png",
-            "name": "Arduino blink led",
+            "name": "Arduino blink LED",
             "projectTextInfo": [
                 "Learn Arduino", 
-                "In this lecture you are going to learn how to blink led with arduino."
+                "In this tutorial you can learn how to blink LED with Arduino."
             ],
             "addAdicionalThings": null,
             "addScript": null,
             "addCss": null
         },
-        
         "arduinoFadeLed": {
             "className": "arduinoFadeLedProject",
             "path": "/Arduino/ArduinoFadeLed.html",
             "imgPath": "/Images/Miniature/led.png",
-            "name": "Arduino fade led",
+            "name": "Arduino fade LED",
             "projectTextInfo": [
                 "Learn Arduino", 
-                "In this lecture you are going to learn how to fade led with arduino."
+                "In this tutorial you can learn how to fade LED with Arduino."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
+        "ArduinoHCSR04LCD1602I2C": {
+            "className": "ArduinoHC-SR04-LCD1602-I2CProject",
+            "path": "/Arduino/ArduinoHC-SR04-LCD1602-I2C.html",
+            "imgPath": "/Images/Miniature/HCSR04.png",
+            "name": "Arduino HC-SR04 LCD1602 I2C",
+            "projectTextInfo": [
+                "Learn Arduino", 
+                "In this tutorial you can learn how to use show distance from ultrasonic sensor HC-SR04 and print it on LCD I2C."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
+        "ArduinoThermometerDS18B20TM1637": {
+            "className": "ArduinoThermometerDS18B20TM1637Project",
+            "path": "/Arduino/ArduinoThermometer-DS18B20-TM1637.html",
+            "imgPath": "/Images/Miniature/transistor.png",
+            "name": "Arduino DS18B20 TM1637",
+            "projectTextInfo": [
+                "Learn Arduino", 
+                "In this tutorial you can learn how to programm Arduino to show temperature from digital thermometer DS18B20 on TM1637 4-digit 7-segment display."
             ],
             "addAdicionalThings": null,
             "addScript": null,

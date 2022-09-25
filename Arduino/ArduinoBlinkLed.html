@@ -3,7 +3,7 @@
 <head>
     <title>Arduino Blink Led</title>
     <meta charset="UTF-8">
-    <meta name="description" content="Free programming tutorials">
+    <meta name="description" content="Learn how to blink LED with Arduino.">
     <meta name="author" content="Mario Duraković">
     <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
     <meta name="keywords" content="Halina programming, Arduino learn, Arduino Blink Led, Blink Led">
@@ -38,7 +38,7 @@
                 <!--                     Parts or tools you will need                       -->
                 <!-- ###################################################################### -->
                 <jumpLink id="PartsOrToolsYouWillNeed"></jumpLink>
-                <h2>Parts or tools you will need:</h2>
+                <h2>Parts or tools you will need</h2>
                 <div class="paragraph" >
                     <p>Arduino Uno</p>
                     <p>Led (You can use any color)</p>
@@ -124,14 +124,14 @@
                 <div class="freeLine"></div>
                 
                 <!-- ###################################################################### -->
-                <!--                              Circuit                                   -->
+                <!--                          Circuit diagram                               -->
                 <!-- ###################################################################### -->
-                <jumpLink id="Circuit"></jumpLink>
-                <h2>Circuit</h2>
+                <jumpLink id="CircuitDiagram"></jumpLink>
+                <h2>Circuit diagram</h2>
                 <div class="paragraph">
                     <p>Now we can connect the circuit according to the following circuit:</p>
-                    <div class="circuit">
-                        <div class="circuitImage" style="background-image: url('/Images/Miniature/Led.svg');"></div>
+                    <div class="circuitDiagram">
+                        <img class="circuitImage" src="/Images/Schematics/Led.svg">
                     </div>
                     <p>To connect LED to the Arduino you can use any digital pin that is 
                         on the board (pin that has number from 0 to 13 on it).</p>
@@ -153,9 +153,7 @@
                 <!-- ###################################################################### -->
                 <jumpLink id="CodeExplanation"></jumpLink>
                 <h2>Code explanation</h2>
-                <div class="paragraph" >
-                    <div class="fS8"></div>
-                    
+                <div class="paragraph" >                    
                     <codeWindow data-src="innerText">
                         <p>int led = 11;</p>
                     </codeWindow>
@@ -180,21 +178,22 @@
                     <div class="fS8"></div>
                     <p>Write a HIGH or a LOW value to a digital pin. <a href="https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/">More info</a></p>
                     <div class="freeLine"></div>
-
+                    
                     <codeWindow data-src="innerText">
                         <p>delay(delayTime);</p>
                     </codeWindow>
                     <div class="fS8"></div>
                     <p>Pauses the program for the amount of time (in milliseconds) that we specified as parameter. <a href="https://www.arduino.cc/reference/en/language/functions/time/delay/">More info</a></p>
+                    <div class="freeLine"></div>
                 </div>
             </div>
             <div class="columnRight" id="columnRight">
                 <div class="table" id="table">
                     <p>Table of contents</p>
-                    <div class="content">
-                        <button onclick="document.location='#PartsOrToolsYouWillNeed'">Parts Or Tools You Will Need.</button>
+                    <div class="tableContent">
+                        <button onclick="document.location='#PartsOrToolsYouWillNeed'">Parts Or Tools You Will Need</button>
                         <button onclick="document.location='#HowToCalculateResistorValue'">How To Calculate Resistor Value</button>
-                        <button onclick="document.location='#Circuit'">Circuit</button>
+                        <button onclick="document.location='#CircuitDiagram'">Circuit diagram</button>
                         <button onclick="document.location='#Code'">Code</button>
                         <button onclick="document.location='#CodeExplanation'">CodeExplanation</button>
                     </div>

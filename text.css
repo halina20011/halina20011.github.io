@@ -16,10 +16,20 @@ a{
     font-family: 'Roboto', sans-serif;
 }
 
+title{
+    position: relative;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .paragraph{
     position: relative;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+a, a:visited{
+    color: black;
 }
 
 .ul{
@@ -40,8 +50,14 @@ bold{
     font-weight: bold;
 }
 
+:root{
+    --value-padding: 2px;
+}
+
 val{
-    padding: 0 4px;
-    border-radius: 4px;
+    position: relative;
+    line-height: calc(var(--value-padding) * 2 + 20px);
+    padding: 2px;
+    border-radius: 2px;
     background-color: rgba(0, 0, 0, 0.3);
 }

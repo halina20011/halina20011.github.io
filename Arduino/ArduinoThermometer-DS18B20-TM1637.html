@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Arduino digital thermometer DS18B20 and TM1637</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Free programming tutorials">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
+    <meta name="keywords" content="Halina programming, Arduino learn">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="/code.css">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="/Menu/dropDownMenu.css">
+    <link rel="stylesheet" type="text/css" href="Arduino.css">
+    <script type="module" src="/Tools/download.js"></script>
+    <script src="/Menu/dropDownMenu.js"></script>
+</head>
+<body>
+    <div class="columnUp" id="columnUp"></div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
+            <div class="columnLeft" id="columnLeft">
+            </div>
+            <div class="columnMiddle" id="columnMiddle">
+                <h1>Arduino DS18B20 TM1637</h1>
+                <div class="fS8"></div>
+                <div class="paragraph">
+                    <p>In this tutorial you can learn how to programm Arduino to show temperature from digital thermometer DS18B20 on TM1637 4-digit 7-segment display.</p>
+                </div>
+                <div class="freeLine"></div>
+                
+                <!-- ###################################################################### -->
+                <!--                     Parts or tools you will need                       -->
+                <!-- ###################################################################### -->
+                <jumpLink id="PartsOrToolsYouWillNeed"></jumpLink>
+                <h2>Parts or tools you will need</h2>
+                <div class="paragraph">
+                    <p>Arduino Uno</p>
+                    <p>DS18B20 digital thermometer</p>
+                    <p>4.7k Ohm resistor</p>
+                    <p>TM1637 4-digit 7-segment display module</p>
+                    <p>Some male and female wires</p>
+                </div>
+                <div class="freeLine"></div>
+                
+                <!-- ###################################################################### -->
+                <!--                              Libraries                                 -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Libraries"></jumpLink>
+                <h2>Libraries</h2>
+                <div class="paragraph">
+                    <div>OneWire: by default in Arduino IDE.</div>
+                    <div>TM1637Display: <a href="https://github.com/avishorp/TM1637">https://github.com/avishorp/TM1637</a></div>
+                    <div>DallasTemperature: <a href="https://github.com/milesburton/Arduino-Temperature-Control-Library">https://github.com/milesburton/Arduino-Temperature-Control-Library</a></div>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                    Digital thermometer DS18B20                         -->
+                <!-- ###################################################################### -->
+                <jumpLink id="DigitalThermometerDS18B20"></jumpLink>
+                <h2>Digital thermometer DS18B20</h2>
+                <div class="paragraph">
+                    <jumpLink id="DigitalThermometerDS18B20Advantages"></jumpLink>
+                    <div class="paragraph">
+                        <h3>Advantages</h3>
+                        <li>The DS18B20 digital thermometer provides 9-bit to 12-bit 
+                            Celsius temperature measurements</li>
+                        <li>Communicates over a 1-Wire bus.</li>
+                        <li>It can measures temperatures from -55°C to +125°C</li>
+                        <div class="fS4"></div>
+                        <a href="https://datasheets.maximintegrated.com/en/ds/DS18B20.pdf">Datasheet for more informations</a>
+                    </div>
+                    <div class="freeLine"></div>
+                    
+                    <jumpLink id="DigitalThermometerDS18B20CircuitDiagram"></jumpLink>
+                    <div class="paragraph">
+                        <h3>Circuit</h3>
+                        <bold style="color: rgb(122, 6, 6);">
+                            Ground (GND) connection of DS18B20 is on the left side when you look on side 
+                            that is flat and has text on it! Flipping vcc and gnd will damage the component.
+                        </bold>
+                        <div class="circuitDiagram">
+                            <img class="circuitImage" src="/Images/Schematics/DS18B20.svg">
+                        </div>
+                    </div>
+                    <div class="freeLine"></div>
+
+                    <jumpLink id="DigitalThermometerDS18B20Code"></jumpLink>
+                    <div class="paragraph">
+                        <h3>Code</h3>
+                        <codeWindow data-src="innerText">
+                            <p>//Include libraries</p>
+                            <p>#include &lt;OneWire.h&gt;</p>
+                            <p>#include &lt;DallasTemperature.h&gt;</p>
+                            <p></p>
+                            <p>//Make variable to store pin number</p>
+                            <p>const int oneWireBus = 4;</p>
+                            <p></p>
+                            <p>//Set up a OneWire instance to communicate with any OneWire device</p>
+                            <p>OneWire oneWire(oneWireBus);</p>
+                            <p>DallasTemperature sensors(&oneWire); //Reference to OneWire instance</p>
+                            <p></p>
+                            <p>void setup(){</p>
+                            <p>    Serial.begin(115200);</p>
+                            <p>    sensors.begin(); //Start up the DS18B20 sensor</p>
+                            <p>}</p>
+                            <p></p>
+                            <p>void loop(){</p>
+                            <p>    sensors.requestTemperatures(); //Request temperature on all devices on the bus</p>
+                            <p>    float temperatureC = sensors.getTempCByIndex(0); //Get only temperature from the first sensor</p>
+                            <p>    Serial.print(temperatureC);</p>
+                            <p>    Serial.println("ºC");</p>
+                            <p>    delay(10); //Wait 10 milliseconds</p>
+                            <p>}</p>
+                        </codeWindow>
+                    </div>
+                    <div class="freeLine"></div>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                    TM1637 4-digit 7-segment display                    -->
+                <!-- ###################################################################### -->
+                <jumpLink id="TM16374Digit7SegmentDisplay"></jumpLink>
+                <h2>TM1637 4-digit 7-segment display</h2>
+                <div class="paragraph">
+                    <jumpLink id="Diagram"></jumpLink>
+                    <div class="paragraph">
+                        <h3>Circuit</h3>
+                        <div class="circuitDiagram">
+                            <img class="circuitImage" src="/Images/Schematics/TM1637.svg">
+                        </div>
+                    </div>
+                    <div class="freeLine"></div>
+                    
+                    <jumpLink id="TM16374Digit7SegmentDisplayCode"></jumpLink>
+                    <div class="paragraph">
+                        <h3>Code</h3>
+                        <codeWindow data-src="innerText">
+                            <p>//Include library</p>
+                            <p>#include &lt;TM1637Display.h&gt;</p>
+                            <p></p>
+                            <p>//Make variable to store pin number</p>
+                            <p>const int CLK = 2;</p>
+                            <p>const int DIO = 3;</p>
+                            <p></p>
+                            <p>TM1637Display display = TM1637Display(CLK, DIO);</p>
+                            <p></p>
+                            <p>void setup(){</p>
+                            <p>    Serial.begin(115200);</p>
+                            <p>    display.clear();</p>
+                            <p>    display.setBrightness(7);</p>
+                            <p>}</p>
+                            <p></p>
+                            <p>void loop(){</p>
+                            <p>    for(int i = 0; i &lt;= 9999; i++){</p>
+                            <p>        display.showNumberDec(i);</p>
+                            <p>        delay(250);</p>
+                            <p>        display.clear(); //Clear the display</p>
+                            <p>    }</p>
+                            <p>}</p>
+                        </codeWindow>
+                    </div>
+                    <div class="freeLine"></div>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                          Circuit diagram                               -->
+                <!-- ###################################################################### -->
+                <jumpLink id="CircuitDiagram"></jumpLink>
+                <h2>Circuit diagram</h2>
+                <div class="paragraph">
+                    <div class="circuitDiagram">
+                        <img class="circuitImage" src="/Images/Schematics/DS18B20AndTM1637.svg">
+                    </div>
+                </div>
+                <div class="freeLine"></div>
+    
+                <!-- ###################################################################### -->
+                <!--                            Code Window                                 -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Code"></jumpLink>
+                <h2>Code</h2>
+                <div class="paragraph">
+                    <codeWindow data-src="URL"></codeWindow>
+                </div>
+                <div class="freeLine"></div>
+    
+                <!-- ###################################################################### -->
+                <!--                        Code explanation                                -->
+                <!-- ###################################################################### -->
+                <jumpLink id="CodeExplanation"></jumpLink>
+                <h2>Code explanation</h2>
+                <div class="paragraph" >
+                    <codeWindow data-src="innerText">
+                        <p>#include &lt;TM1637Display.h&gt;</p>
+                        <p>#include  &lt;OneWire.h&gt;</p>
+                        <p>#include &lt;DallasTemperature.h&gt;</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>Include libraries</p>
+                    <div class="freeLine"></div>
+
+                    <codeWindow data-src="innerText">
+                        <p>const int oneWireBus = 4;</p>
+                        <p>OneWire oneWire(oneWireBus);</p>
+                        <p>DallasTemperature sensors(&oneWire);</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>Make a OneWire instance and set up to communicate with device that is connected on pin 4 (DQ of DS18B20).</p>
+                    <p>DallasTemperature takes as an argument reference to OneWire instance.</p>
+                    <div class="freeLine"></div>
+
+                    <codeWindow data-src="innerText">
+                        <p>TM1637Display display = TM1637Display(CLK, DIO);</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>Make instance of TM1637Display library.</p>
+                    <div class="freeLine"></div>
+
+                    <codeWindow data-src="innerText">
+                        <p>const uint8_t celsiusSymbol[] = {</p>
+                        <p>    SEG_A | SEG_B | SEG_F | SEG_G,</p>
+                        <p>    SEG_A | SEG_D | SEG_E | SEG_F</p>
+                        <p>};</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>Make celsius symbol that will be later shown on display.</p>
+                    <div class="freeLine"></div>
+
+                    <codeWindow data-src="innerText">
+                        <p>void setup(){</p>
+                        <p>    Serial.begin(115200);</p>
+                        <p>    display.clear();</p>
+                        <p>    display.setBrightness(7);</p>
+                        <p>    sensors.begin(); //Start the DS18B20 sensor</p>
+                        <p>}</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>
+                        In setup function we first begin Serial communications at 115200 bits per second 
+                        so we could see measured temperature on serial monitor. Then we clear display and set its brightness (0 is minimum and 7 is maximum).
+                        At the end we just start up the DS18B20 sensor.
+                    </p>
+                    <div class="freeLine"></div>
+
+                    <codeWindow data-src="innerText">
+                        <p>void printTemperature(){</p>
+                        <p>    sensors.requestTemperatures(); </p>
+                        <p>    float measuredTemperature = sensors.getTempCByIndex(0);</p>
+                        <p>    Serial.println(String(measuredTemperature) + "°C");</p>
+                        <p>    display.showNumberDec(measuredTemperature , false, 2, 0);</p>
+                        <p>    display.setSegments(celsiusSymbol, 2, 2);</p>
+                        <p>}</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>
+                        For making this code more usable for other purpusies we will make function called <val>printTemperature</val> 
+                        that will first get temperature from digital thermometer DS18B20 and with celsius symbol it will show it on the display.
+                    </p>
+                    <div class="freeLine"></div>
+
+                    <codeWindow data-src="innerText">
+                        <p>void loop(){</p>
+                        <p>    printTemperature();</p>
+                        <p>    delay(200);</p>
+                        <p>}</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>
+                        In loop function we just call the created <val>printTemperature</val> function and add 200 milliseconds delay after it.
+                    </p>
+                    <div class="freeLine"></div>
+                </div>
+            </div>
+            <div class="columnRight" id="columnRight">
+                <div class="table" id="table">
+                    <p>Table of contents</p>
+                    <div class="tableContent">
+                        <button onclick="document.location='#PartsOrToolsYouWillNeed'">Parts Or Tools You Will Need</button>
+                        <button onclick="document.location='#Libraries'">Libraries</button>
+                        <button onclick="document.location='#DigitalThermometerDS18B20'">Digital thermometer DS18B20</button>
+                        <div class="paragraph">
+                            <button onclick="document.location='#DigitalThermometerDS18B20Advantages'">Advantages</button>
+                            <button onclick="document.location='#DigitalThermometerDS18B20CircuitDiagram'">Circuit diagram</button>
+                            <button onclick="document.location='#DigitalThermometerDS18B20Code'">Code</button>
+                        </div>
+                        <button onclick="document.location='#TM16374Digit7SegmentDisplay'">TM1637 4-digit 7-segment display</button>
+                        <div class="paragraph">
+                            <button onclick="document.location='#TM16374Digit7SegmentDisplayCircuitDiagram'">Circuit diagram</button>
+                            <button onclick="document.location='#TM16374Digit7SegmentDisplayCode'">Code</button>
+
+                        </div>
+                        <button onclick="document.location='#CircuitDiagram'">Circuit diagram</button>
+                        <button onclick="document.location='#Code'">Code</button>
+                        <button onclick="document.location='#CodeExplanation'">CodeExplanation</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="columnDown"></div>
+    <script type="module" src="/code.js"></script>
+    <script src="/sideNavigation.js"></script>
+    <script type="module" src="/Tools/importFile.js"></script>
+    <script type="module" src="/Tools/search.js"></script>
+    <script type="module" src="/Tools/import.js"></script>
+    <script src="/head.js"></script>
+</body>
+</html>

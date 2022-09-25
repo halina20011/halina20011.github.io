@@ -6,7 +6,7 @@
     <meta name="description" content="Free programming tutorials">
     <meta name="author" content="Mario Duraković">
     <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
-    <meta name="keywords" content="Halina programming, Arduino learn, Arduino Blink Led, Blink Led">
+    <meta name="keywords" content="Halina programming, Arduino learn">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,17 +20,16 @@
     <script src="/Menu/dropDownMenu.js"></script>
 </head>
 <body>
-    <div class="row">
-        <div class="columnUp" id="columnUp">
-        </div>
-        <div class="columnDisplay" id="columnDisplay">
+    <div class="columnUp" id="columnUp"></div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
             <div class="columnLeft" id="columnLeft">
             </div>
             <div class="columnMiddle" id="columnMiddle">
-                <h1>Arduino Blink Led</h1>
+                <h1>Arduino template</h1>
                 <div class="fS8"></div>
                 <div class="paragraph">
-                    <p>In this tutorial we will learn how...</p>
+                    <p>In this tutorial you can learn how...</p>
                 </div>
                 <div class="freeLine"></div>
                 
@@ -38,7 +37,7 @@
                 <!--                     Parts or tools you will need                       -->
                 <!-- ###################################################################### -->
                 <jumpLink id="PartsOrToolsYouWillNeed"></jumpLink>
-                <h2>Parts or tools you will need:</h2>
+                <h2>Parts or tools you will need</h2>
                 <div class="paragraph">
                     <p>Arduino Uno</p>
                     <p>LED (You can use any color)</p>
@@ -48,18 +47,28 @@
                 <div class="freeLine"></div>
 
                 <!-- ###################################################################### -->
-                <!--                              Circuit                                   -->
+                <!--                              Libraries                                 -->
                 <!-- ###################################################################### -->
-                <jumpLink id="Circuit"></jumpLink>
-                <h2>Circuit</h2>
+                <jumpLink id="Libraries"></jumpLink>
+                <h2>Libraries</h2>
                 <div class="paragraph">
-                    <p>Now we can connect the circuit according to the following circuit:</p>
-                    <div class="circuit">
-                        <div class="circuitImage" style="background-image: url('/Images/Miniature/Led.svg');"></div>
-                    </div>
+                    <div>Name: <a href="[link]">[link]</a></div>
                 </div>
                 <div class="freeLine"></div>
 
+                <!-- ###################################################################### -->
+                <!--                          Circuit diagram                               -->
+                <!-- ###################################################################### -->
+                <jumpLink id="CircuitDiagram"></jumpLink>
+                <h2>Circuit diagram</h2>
+                <div class="paragraph">
+                    <p>Now we can connect the circuit according to the following circuit:</p>
+                    <div class="circuitDiagram">
+                        <img class="circuitImage" src="/Images/Schematics/Led.svg">
+                    </div>
+                </div>
+                <div class="freeLine"></div>
+    
                 <!-- ###################################################################### -->
                 <!--                            Code Window                                 -->
                 <!-- ###################################################################### -->
@@ -69,39 +78,36 @@
                     <codeWindow data-src="URL"></codeWindow>
                 </div>
                 <div class="freeLine"></div>
-
+    
                 <!-- ###################################################################### -->
                 <!--                        Code explanation                                -->
                 <!-- ###################################################################### -->
                 <jumpLink id="CodeExplanation"></jumpLink>
                 <h2>Code explanation</h2>
-                <div class="paragraph" >
-                    <div class="fS8"></div>
-                    <p>Explanation</p>
-                    <div class="freeLine"></div>
-
+                <div class="paragraph" >    
                     <codeWindow data-src="innerText">  
                         <p>[code]</p>   
-                    </codeWindow>                      
-                    <div class="fS8"></div>            
-                    <p>[explanation]</p>                 
-                    <div class="freeLine"></div>       
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>[explanation]</p>
+                    <div class="freeLine"></div>
                 </div>
             </div>
             <div class="columnRight" id="columnRight">
                 <div class="table" id="table">
                     <p>Table of contents</p>
-                    <div class="content">
-                        <button onclick="document.location='#PartsOrToolsYouWillNeed'">Parts Or Tools You Will Need.</button>
-                        <button onclick="document.location='#Circuit'">Circuit</button>
+                    <div class="tableContent">
+                        <button onclick="document.location='#PartsOrToolsYouWillNeed'">Parts Or Tools You Will Need</button>
+                        <button onclick="document.location='#Libraries'">Libraries</button>
+                        <button onclick="document.location='#CircuitDiagram'">Circuit diagram</button>
                         <button onclick="document.location='#Code'">Code</button>
                         <button onclick="document.location='#CodeExplanation'">CodeExplanation</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="columnDown"></div>
     </div>
+    <div class="columnDown"></div>
     <script type="module" src="/code.js"></script>
     <script src="/sideNavigation.js"></script>
     <script type="module" src="/Tools/importFile.js"></script>

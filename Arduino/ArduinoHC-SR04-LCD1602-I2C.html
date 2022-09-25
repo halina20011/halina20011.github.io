@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Arduino HC-SR04 with LCD I2C</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Learn how to use Ultrasonic Sensor HC-SR04 and LCD I2C for Arduino.">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
+    <meta name="keywords" content="Halina programming, Arduino learn, Ultrasonic Sensor HC-SR04, LCD I2C">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="/code.css">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="/Menu/dropDownMenu.css">
+    <link rel="stylesheet" type="text/css" href="Arduino.css">
+    <script type="module" src="/Tools/download.js"></script>
+    <script src="/Menu/dropDownMenu.js"></script>
+</head>
+<body>
+    <div class="columnUp" id="columnUp"></div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
+            <div class="columnLeft" id="columnLeft"></div>
+            <div class="columnMiddle" id="columnMiddle">
+                <h1>Arduino HC-SR04 with LCD I2C.</h1>
+                <div class="paragraph">
+                    <p>In this tutorial we will learn how to use Ultrasonic Sensor HC-SR04 and LCD I2C.</p>
+                </div>
+                <div class="freeLine"></div>
+                
+                <!-- ###################################################################### -->
+                <!--                     Parts or tools you will need                       -->
+                <!-- ###################################################################### -->
+                <jumpLink id="PartsOrToolsYouWillNeed"></jumpLink>
+                <h2>Parts or tools you will need</h2>
+                <div class="paragraph">
+                    <p>Arduino Uno</p>
+                    <p>Ultrasonic Sensor HC-SR04</p>
+                    <p>LCD (Liquid Crystal Display) I2C 16x2</p>
+                    <p>Breadboard</p>
+                    <p>Some male and female wires.</p>
+                </div>
+                <div class="freeLine"></div>
+                
+                <!-- ###################################################################### -->
+                <!--                              Libraries                                 -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Libraries"></jumpLink>
+                <h2>Libraries</h2>
+                <div class="paragraph">
+                    <div>LiquidCrystal I2C: <a href="https://github.com/fmalpartida/New-LiquidCrystal">https://github.com/fmalpartida/New-LiquidCrystal</a></div>
+                    <div>HC-SR04: <a href="https://github.com/halina20011/HC-SR04-Library">https://github.com/halina20011/HC-SR04-Library</a></div>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                              LCD i2C                                   -->
+                <!-- ###################################################################### -->
+                <jumpLink id="LCDI2C"></jumpLink>
+                <h2>What is LCD I2C (Liquid Crystal Display with I2C Bus)</h2>
+                <div class="paragraph">
+                    <p>LCD I2C is quite a popular LCD module. The main reasons are: </p>
+                    <li>I2C interface uses only two wires "SCL (serial clock)" and "SDA (serial data)". This speeds up circuit connection time and also reduces circuit complexity.</li>
+                    <li>Connect up to 8 LCDs. Limit is given by number of address (0x20 to 0x27) on I2C adapter.</li>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                      Ultrasonic Sensor HC-SR0                          -->
+                <!-- ###################################################################### -->
+                <jumpLink id="UltrasonicSensorHC-SR04"></jumpLink>
+                <h2>How to use Ultrasonic Sensor HC-SR04</h2>
+                <div class="paragraph">
+                    <p>Connect HC-SR04 module:</p>
+                    <table>
+                        <tr>
+                            <th>HC-SR04 module</th>
+                            <th>Arduino Uno</th>
+                        </tr>
+                        <tr>
+                            <th>Vcc</th>
+                            <th>5V</th>
+                        </tr>
+                        <tr>
+                            <th>Trig</th>
+                            <th>Digital pin 3</th>
+                        </tr>
+                        <tr>
+                            <th>Echo</th>
+                            <th>Digital pin 2</th>
+                        </tr>
+                        <tr>
+                            <th>GND</th>
+                            <th>GND</th>
+                        </tr>
+                    </table>
+                    <div class="fS8"></div>
+                    
+                    <p>To initialize HC-SR04 module send 10µs signal to Trig pin and in same time start counting time.</p>
+                    <p>HC-SR04 module will make 8 pulse sound waves with frequency around 40MHz and send it with transmitter.</p>
+                    <p>As waves bounce back from object to the receiver it will turn on Echo pin. In the same time stop mesuring time.</p>
+                    <p>Now you can calculate distance with formula "d=(v * t/2)".</p>
+                    <li>d = distance</li>
+                    <li>v = speed of sound (343 m/s = 0.343 mm/s)</li>
+                    <li>t = measured time (it is devided by two because sound needed to go to tge object and then bounce back).</li>
+
+                    <jumpLink id="CodeultrasonicSensorHC-SR04"></jumpLink>
+                    <div class="paragraph">
+                        <h2>HC-SR04 Code</h2>
+                        <codeWindow data-src="innerText">
+                            <p>int echoPin = 2;</p>
+                            <p>int trigPin = 3;</p>
+                            <p></p>
+                            <p>float d;</p>
+                            <p>float t;</p>
+                            <p></p>
+                            <p>void setup(){</p>
+                            <p>    Serial.begin(115200);</p>
+                            <p>    pinMode(trigPin, OUTPUT);</p>
+                            <p>    pinMode(echoPin, INPUT);</p>
+                            <p>}</p>
+                            <p></p>
+                            <p>void loop(){</p>
+                            <p>    digitalWrite(trigPin, LOW);</p>
+                            <p>    delayMicroseconds(2);</p>
+                            <p>    digitalWrite(trigPin, HIGH);</p>
+                            <p>    delayMicroseconds(10);</p>
+                            <p>    digitalWrite(trigPin, LOW);</p>
+                            <p>    t = pulseIn(echoPin, HIGH);</p>
+                            <p>    d = t * 0.343 / 2;</p>
+                            <p>    Serial.print("Distance: ");</p>
+                            <p>    Serial.print(d);</p>
+                            <p>    Serial.println(" mm.");</p>
+                            <p>    delay(1000);</p>
+                            <p>}</p>
+                        </codeWindow>
+                    </div>
+                    <div class="freeLine"></div>
+
+                    <div class="paragraph">
+                        <h2>Pulseview</h2>
+                        <p>For better visualization, this is a screenshot of a digital pins with logic analyzer.</p>
+                        <img src="/Images/pulseview.png" alt="pulseview" style="width: 100%;">
+                        <li>Pulse is connected to HC-SR04 transmitter.</li>
+                    </div>
+                </div>
+                <div class="freeLine"></div>
+                
+                <!-- ###################################################################### -->
+                <!--                          Circuit diagram                               -->
+                <!-- ###################################################################### -->
+                <jumpLink id="CircuitDiagram"></jumpLink>
+                <h2>Circuit diagram</h2>
+                <div class="paragraph">
+                    <p>Now we can connect the circuit according to the following circuit:</p>
+                    <div class="circuitDiagram">
+                        <img class="circuitImage" src='/Images/Schematics/HC-SR04-LCD1602-I2C.svg'>
+                    </div>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                            Code Window                                 -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Code"></jumpLink>
+                <h2>Code</h2>
+                <div class="paragraph">
+                    <codeWindow data-src="URL"></codeWindow>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                        Code explanation                                -->
+                <!-- ###################################################################### -->
+                <jumpLink id="CodeExplanation"></jumpLink>
+                <h2>Code explanation</h2>
+                <div class="paragraph" >
+                    <codeWindow data-src="innerText">
+                        <p>#include &lt;HC-SR04.h&gt;</p>
+                        <p>#include &lt;Wire.h&gt;</p>
+                        <p>#include &lt;LiquidCrystal_I2C.h&gt;</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>So that you wouldn't write everything by yourself, you first need to import these libraries.</p>
+                    <div class="freeLine"></div>
+
+                    <codeWindow data-src="innerText">
+                        <p>#define echoPin 2</p>
+                        <p>#define trigPin 3</p>
+                        <p></p>
+                        <p>LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);</p>
+                        <p>HCSR04 hc(echoPin, trigPin);</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>In this section for convenients we define echoPin, trigPin. Even if these values are only used 
+                        once it is good practice to define them (Note that this we could use too: <val>int echoPin = 2; int trigPin = 3;</val>).
+                        After that we make instances of LiquidCrystal_I2C and HC-SR04 libraries.</p>
+                    <div class="freeLine"></div>
+
+                    <codeWindow data-src="innerText">
+                        <p>void setup(){</p>
+                        <p>    Serial.begin(115200);</p>
+                        <p>    lcd.begin(16,2);</p>
+                        <p>    lcd.backlight();</p>
+                        <p>    lcd.clear();</p>
+                        <p>}</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>
+                        In the setup function the first think that we do is begin Serial communications at 
+                        115200 bits per second. Then we begin lcd with number of rows and columns,
+                        turn on the backlight and clear the display.
+                    </p>
+                    <div class="freeLine"></div>
+                    
+                    <codeWindow data-src="innerText">
+                        <p>void loop(){</p>
+                        <p>    lcd.setCursor(0, 0);</p>
+                        <p>    lcd.print(hc.distance());</p>
+                        <p>    Serial.println(hc.distance());</p>
+                        <p>    lcd.setCursor(14, 0);</p>
+                        <p>    lcd.print("mm");</p>
+                        <p>    lcd.setCursor(0, 1);</p>
+                        <p>    lcd.print(hc.distanceInch());</p>
+                        <p>    lcd.setCursor(12, 1);</p>
+                        <p>    lcd.print("inch");</p>
+                        <p>    delay(200);</p>
+                        <p>}</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>
+                        In loop function you can find code that is responsible for showing the correct values on the display.
+                        To achieve this we need to use <val>lcd.setCursor()</val> to move cursor on 
+                        the correct place on the screen and <val>lcd.print()</val> to print text on display.
+                        To get distance in millimeters from HC-SR04 module use <val>hc.distance()</val>.
+                        If you want to get distance in inches use <val>hc.distanceInch()</val> function or multiply <val>hc.distance()</val> by <val>0.039</val>.
+                    </p>
+                    <div class="freeLine"></div>
+                </div>
+            </div>
+        
+            <div class="columnRight" id="columnRight">
+                <div class="table" id="table">
+                    <p>Table of contents</p>
+                    <div class="tableContent">
+                        <button onclick="document.location='#PartsOrToolsYouWillNeed'">Parts Or Tools You Will Need</button>
+                        <button onclick="document.location='#LCDI2C'">LCD I2C</button>
+                        <button onclick="document.location='#UltrasonicSensorHC-SR04'">Ultrasonic Sensor HC-SR04</button>
+                        <div class="paragraph">
+                            <button onclick="document.location='#CodeultrasonicSensorHC-SR04'">Code HC-SR04</button>
+                        </div>
+                        <button onclick="document.location='#CircuitDiagram'">Circuit diagram</button>
+                        <button onclick="document.location='#Libraries'">Libraries</button>
+                        <button onclick="document.location='#Code'">Code</button>
+                        <button onclick="document.location='#CodeExplanation'">CodeExplanation</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="columnDown"></div>
+    <script type="module" src="/code.js"></script>
+    <script src="/sideNavigation.js"></script>
+    <script type="module" src="/Tools/importFile.js"></script>
+    <script type="module" src="/Tools/search.js"></script>
+    <script type="module" src="/Tools/import.js"></script>
+    <script src="/head.js"></script>
+</body>
+</html>
