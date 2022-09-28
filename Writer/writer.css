@@ -1,14 +1,4 @@
-body{
-    overflow-y: hidden;
-}
-
-*{
-    margin: 0;
-    padding: 0;
-}
-
 #words{
-    white-space: pre;
     font-size: 30px;
 }
 
@@ -25,11 +15,9 @@ body{
     padding-top: 200px;
     padding-left: 30px;
     padding-right: 30px;
-    width: 70%;
     height: 300px;
     display: block;
     margin: auto;
-    /* background-color: white; */
 }
 
 /* Where is shows text */
@@ -179,5 +167,5 @@ body{
 }
 
 .keyBoardView:hover {background-color: #ddd;}
-  
+
 .show {display: block;}
