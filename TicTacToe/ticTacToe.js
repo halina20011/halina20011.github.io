@@ -281,3 +281,9 @@ function drawWin(){
         winIndicator.style.transform = "rotate(45deg)"
     }
 }
+
+function printMousePos(event) {
+    console.log(`X: ${event.clientX} Y: ${event.clientY}`);
+}
+
+document.addEventListener("click", printMousePos);

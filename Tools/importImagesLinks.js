@@ -1,13 +1,11 @@
 import {loadJSON} from "/Tools/import.js"
 
 const importSpot = document.getElementById("importSpot");
-
-var path = window.location.pathname;
-var pageName = path.split("/").pop();
-pageName = pageName.substring(0, pageName.length - 5); 
-if(!pageName){
-    pageName = "index";
-}
+let dataToImport = importSpot.dataset["src"].replace(/ /g, "")
+let makeTitle = importSpot.dataset["title"].replace(/ /g, "")
+dataToImport = dataToImport.split(",");
+makeTitle = makeTitle.split(",");
+console.log(dataToImport)
 
 var data = loadJSON('/Tools/data.json'); //Get file data.json
 // console.log(data);
@@ -17,9 +15,6 @@ sheet.rel = "stylesheet"
 sheet.type = "text/css"
 sheet.href = "/Tools/importImagesLinks.css"
 importSpot.appendChild(sheet);  //Import css style
-
-var pageData = data[pageName]; 
-var pageDataCount = Object.keys(pageData).length; //Get number of all window to add
 
 // Object.keys(nameOfObject)[index]; --> return name of key
 // nameOfObject[Object.keys(nameOfObject)[index]]; --> return dafa in key
@@ -50,23 +45,8 @@ function parseData(data){
     return [className, path, imgPath, name, projectTextInfo, addAdicionalThings, addScript, addCss]
 }
 
-function createScript(dataList){
-    const s = document.getElementsByClassName("documentScripts")[0]
-    var sript = document.createElement("script");
-    script.src = dataList[2][5];
-    s.appendChild(sr);
-}
-
-
-//Convert json to list of info
-var pageDataList = []
-for(var i = 0; i < pageDataCount; i++){
-    //append = push
-    pageDataList.push(parseData(getKey(pageData, i)));
-}
-
 //Make elements
-function generateElement(dataList){
+function createImageLink(parrent, dataList){
     if(dataList.length != 8){
         console.error("Data has wrong size. Size ", dataList.length)
     }
@@ -92,7 +72,7 @@ function generateElement(dataList){
         button.className = className;
         // console.log(path);
         button.setAttribute("onClick", 'location.href =\'' + path +'\';');
-        importSpot.appendChild(button);
+        parrent.appendChild(button);
 
         classBackgroundImg = document.createElement("div");
         classBackgroundImg.className = "backgroundImg";
@@ -101,17 +81,17 @@ function generateElement(dataList){
         var classProjectTextInfo = document.createElement("div");
         classProjectTextInfo.className = "projectTextInfo"
         classBackgroundImg.appendChild(classProjectTextInfo);
+
         for(var i = 0; i< projectTextInfo.length; i++){
             var text = document.createElement("p");
             text.innerHTML = projectTextInfo[i]
             classProjectTextInfo.appendChild(text);
         }
+
         // Set img background
         classImg = document.createElement("div");
         classImg.className = "img"
         classImg.style.backgroundImage = "url(" + imgPath + ")";
-        classImg.style.backgroundSize = "100%";
-        classImg.style.backgroundRepeat = "no-repeat"
         classBackgroundImg.appendChild(classImg);
 
         classInfoText = document.createElement("div");
@@ -128,10 +108,10 @@ function generateElement(dataList){
         if(addAdicionalThings.length > 0){
             // console.log(addAdicionalThings)
             //[["text", [["type", "value"]]]]
-            for(var i = 0; i< addAdicionalThings.length;i++){
-                var newElement = document.createElement(addAdicionalThings[i][0]);
-                var element = classBackgroundImg.appendChild(newElement)
-                for(var x = 0; x < addAdicionalThings[i][1].length; x++){
+            for(let i = 0; i< addAdicionalThings.length;i++){
+                let newElement = document.createElement(addAdicionalThings[i][0]);
+                let element = classBackgroundImg.appendChild(newElement)
+                for(let x = 0; x < addAdicionalThings[i][1].length; x++){
                     if(addAdicionalThings[i][1][x].length == 2 && addAdicionalThings[i][1][x][0] == "class"){
                         newElement.className = addAdicionalThings[i][1][x][1];
                     }
@@ -144,19 +124,19 @@ function generateElement(dataList){
     }
 
     if(addScript != null){
-        var script = document.createElement("script");
+        let script = document.createElement("script");
         script.src = addScript;
         classBackgroundImg.appendChild(script);
     }
 
     if(addCss != null){
-        console.log(addCss.length);
+        // console.log(addCss.length);
         if(addCss.length > 0){
-            var css = [];
-            var style = document.createElement('style');
+            let css = [];
+            let style = document.createElement('style');
             style.type = 'text/css';
             //[["text", [["type", "value"]]]]
-            for(var i = 0; i< addCss.length;i++){
+            for(let i = 0; i< addCss.length;i++){
                 console.log(addCss[i][1][0])
                 console.log(addCss[i][0])
                 if(addCss[i][0].indexOf("img") > -1 && addCss[i][0].indexOf(":") == -1){
@@ -166,7 +146,7 @@ function generateElement(dataList){
                     if(addCss[i][0].indexOf("hover") > -1){
                         console.log("HOVER")
                         console.log(addCss[i][1][0].length)
-                        for(var x = 0; x < addCss[i][1][0].length; x++){
+                        for(let x = 0; x < addCss[i][1][0].length; x++){
                             css.push(document.createTextNode(`${addCss[i][0]}{${addCss[i][1][0][x]}}`));
                             console.log(css)
                         }
@@ -190,6 +170,42 @@ function generateElement(dataList){
     }
 }
 
-for(var i = 0; i < pageDataList.length; i++){
-    generateElement(pageDataList[i]);
+function importImageLink(parent, name){
+    var pageData = data[name];
+    var pageDataCount = Object.keys(pageData).length; //Get number of all window to add
+
+    //Convert json to list of info
+    var pageDataList = []
+    for(var i = 0; i < pageDataCount; i++){
+        //append = push
+        pageDataList.push(parseData(getKey(pageData, i)));
+    }
+
+    console.log(pageDataList);
+    for(var i = 0; i < pageDataList.length; i++){
+        createImageLink(parent, pageDataList[i]);
+    }
 }
+
+function importAllImagesLinks(parent){
+    for(let i = 0; i < dataToImport.length; i++){
+        let name = dataToImport[i];
+
+        if(makeTitle[i] == "True"){
+            //Make title
+            let title = document.createElement("h2");
+            title.innerHTML = name;
+            parent.appendChild(title);
+        }
+        
+        let parentElement = document.createElement("div");
+        parentElement.className = "projects";
+        parent.appendChild(parentElement);
+        
+        console.log(name);
+        importImageLink(parentElement, name);
+
+    }
+}
+
+importAllImagesLinks(importSpot)

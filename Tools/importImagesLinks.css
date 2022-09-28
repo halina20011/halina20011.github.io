@@ -4,14 +4,16 @@
     --image-link-width2: calc(100% / 2.05 - 10px / 2);
 }
 
-.projects{
+.importSpot{
     padding-top: 10px;
 }
 
-.importSpot{
+.projects{
     display: grid;
     grid-template-columns: repeat(3, var(--image-link-width));
     gap: 10px;
+    box-sizing: border-box;
+    /* padding: 10px; */
 }
 
 [class*="Project"] > div :nth-child(1) {
@@ -44,7 +46,8 @@
     background-color: rgba(56, 56, 56, 0.5);
     display: block;
 }
-[class*="Project"]:hover > .backgroundImg > .infoText, [class*="Project"]:hover > .backgroundImg > .infoText{
+
+[class*="Project"]:hover > .backgroundImg > .infoText{
     display: none;
 }
 
@@ -78,12 +81,13 @@
 }
 
 .img{
-    transition: all 0.2s;
-    /* top: 7%; */
     position: absolute;
+    /* top: 7%; */
     width: 100%;
-    background-size: 100%;
     padding-bottom: 100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    transition: all 0.2s;
 }
 
 [class*="Project"] .backgroundImg .infoText{
@@ -104,7 +108,7 @@
 }
 
 @media only screen and (max-width: 900px) { 
-    .importSpot{
+    .projects{
         grid-template-columns: repeat(2, var(--image-link-width2));
     }
 }

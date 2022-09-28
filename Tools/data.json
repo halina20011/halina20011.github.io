@@ -1,5 +1,5 @@
 {
-    "index": {
+    "Index": {
         "MandelbrotSet": {
             "className": "MandelbrotSetProject",
             "path": "/Canvas/MandelbrotSet/mandelbrotSet.html",
@@ -126,7 +126,7 @@
             "addCss": null
         }
     },
-    "arduino": {
+    "Arduino": {
         "arduinoBlinkLed": {
             "className": "arduinoBlinkLedProject",
             "path": "/Arduino/ArduinoBlinkLed.html",
