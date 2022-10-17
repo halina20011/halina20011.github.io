@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hilbert curve</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Free web programming tutorials">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
+    <meta name="keywords" content="Halina programming, Arduino learn">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="/Canvas/canvas.css">
+    <link rel="stylesheet" type="text/css" href="/Menu/dropDownMenu.css">
+    <script src="/Menu/dropDownMenu.js"></script>
+</head>
+<body>
+    <div class="columnUp" id="columnUp">
+    </div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
+            <div class="columnLeft" id="columnLeft">
+            </div>
+            <div class="columnMiddle" id="columnMiddle">
+                <h1 style="text-align: center">Hilbert curve</h1>
+                <div class="fS8"></div>
+                <div div class="window">
+                    <canvas class="my-canvas" style="background-color:black;" id="my-canvas" width="400" height="400"></canvas>
+                    <div class="settings">
+                        <div class="canvasButtons" id="canvasButtons">
+                            <button class="downloadButton" id="downloadImage"></button>
+                            <button class="refreshButton" id="update"></button>
+                        </div>
+                        <div class="fS8"></div>
+                        <div class="paragraph">
+                            <div class="settingSameLine">
+                                <p>Level: </p>
+                                <input type="number" id="level" style="width: 100%;" value="2" min="1" max="100">
+                            </div>
+                            <div class="settingSameLine">
+                                <p>Show grid: </p>
+                                <input type="checkbox" id="showGrid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="columnRight" id="columnRight">
+            </div>
+        </div>
+        <div class="columnDown"></div>
+    </div>
+    <script type="module" src="hilbertCurve.js"></script>
+    <script type="module" src="/Canvas/download.js"></script>
+    <script src="/sideNavigation.js"></script>
+    <script type="module" src="/Tools/importFile.js"></script>
+    <script type="module" src="/Tools/search.js"></script> 
+    <script src="/head.js"></script>
+</body>
+</html>
