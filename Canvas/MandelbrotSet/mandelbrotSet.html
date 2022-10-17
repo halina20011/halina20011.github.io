@@ -32,14 +32,9 @@
                     <div div class="window">
                         <canvas class="my-canvas" style="background-color:black;" id="my-canvas" width="800" height="800"></canvas>
                         <div class="settings">
-                            <!-- Timelapse -->
-                            <div style="display:flex; justify-content: space-between;">
-                                <div></div>
-                                <div>
-                                    <button class="downloadButton" id="downloadImage"></button>
-                                    <button class="refreshButton" id="update"></button>
-                                    <button class="timelapseButton" id="timelapseButton"></button>
-                                </div>
+                            <div class="canvasButtons" id="canvasButtons">
+                                <button class="downloadButton" id="downloadImage"></button>
+                                <button class="refreshButton" id="update"></button>
                             </div>
                             <div class="fS8"></div>
                             <div class="paragraph">
@@ -67,20 +62,20 @@
             <div class="columnDown"></div>
         </div>
     </div>
-    <div class="timelapse" id="timelapse">
+    <!-- <div class="timelapse" id="timelapse">
         <div class="settingSameLine">
-        <p>Iterations: </p>
-        <input id="timelapseIterationsFrom"type="number" min="0" value="0"></input>
-        <input id="timelapseIterationsTo" type="number" min="1" value="1"></input>
+            <p>Iterations: </p>
+            <input id="timelapseIterationsFrom"type="number" min="0" value="0"></input>
+            <input id="timelapseIterationsTo" type="number" min="1" value="1"></input>
         </div>
-            <div style="display:flex; justify-content: space-between;">
+        <div class="timelapseButtons">
+            <div></div>
             <div>
-        </div>
-            <div>
-                <button class="nextButton" id="nextButton">next</button>
+                <button class="cancleTimelapse" id="cancleTimelapse">Cancle</button>
+                <button class="runTimelapse" id="runTimelapse">Run timelapse</button>
             </div>
         </div>
-    </div>
+    </div> -->
     <script type="module" src="mandelbrotSet.js"></script>
     <script type="module" src="/Canvas/download.js"></script>
     <script src="/sideNavigation.js"></script>

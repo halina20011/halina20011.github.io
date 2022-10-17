@@ -1,5 +1,18 @@
 {
     "Index": {
+        "HilbertCurve": {
+            "className": "HilbertCurveProject",
+            "path": "/Canvas/HilbertCurve/hilbertCurve.html",
+            "imgPath": "/Images/Miniature/hilbertCurve.jpeg",
+            "name": "Hilbert curve",
+            "projectTextInfo": [
+                "The Hilbert curve is a space filling fractal that you can play with."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss":  [
+                [".HilbertCurveProject:hover > .backgroundImg > .img",[["background-image: url('/Images/Miniature/hilbertCurve.gif')!important;"]]]]
+        },
         "MandelbrotSet": {
             "className": "MandelbrotSetProject",
             "path": "/Canvas/MandelbrotSet/mandelbrotSet.html",

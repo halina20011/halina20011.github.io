@@ -10,7 +10,8 @@
 button{
     border: none;
     background-color: white;
-    /* padding: 2px; */
+    padding: 2px;
+    border-radius: 2px;
 }
 
 body{
@@ -330,7 +331,6 @@ jumpLink{
     background-repeat: no-repeat;
     background-size: 80%;
     background-position: center center;
-    margin: 0px 0px 0px 5px;
 }
 
 .refreshButton  { background-image: url("/Images/Icons/refresh.png");  }

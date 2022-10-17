@@ -24,10 +24,27 @@ maxIterationsN.addEventListener("input", () => {
 let color = document.getElementById("color");
 color.addEventListener("input", () => { update(); }, false);
 
-let timelapseButton = document.getElementById("timelapseButton");
-timelapseButton.addEventListener("click", () => { timelapseEl.style.display = "block"}, false);
-
 let downloader = new DOWNLOADER(canvas);
+
+function timelapsee(from, to){
+    maxIterations = from;
+    console.log(`Iterations timelapse from: ${from}, to: ${to}.`);
+    for(let i = from; i < to - from; i++){
+        maxIterations++;
+        main();
+        downloader.addImage();
+        console.log(`Number of iterations currently running: ${maxIterations}.`)
+    }
+    downloader.downloadAll();
+}
+
+let timelapseInputData = {
+    "text": "Iterations: ",
+    "inputFrom":{"from": 0, "value": 0},
+    "inputTo": {"from": 1, "value": 1}
+}
+
+let timelapse = downloader.timelapse(timelapseInputData, timelapsee);
 
 let cenX = 0;
 let cenY = 0;
@@ -314,31 +331,3 @@ function main2(){
 
 main();
 swapBuffer();
-
-function timelapsee(from, to){
-    maxIterations = from;
-    console.log(`Iterations timelapse from: ${from}, to: ${to}.`);
-    for(let i = from; i < to - from; i++){
-        maxIterations++;
-        main();
-        downloader.addImage();
-        console.log(`Number of iterations currently running: ${maxIterations}.`)
-    }
-    downloader.downloadAll();
-}
-
-let timelapseEl = document.getElementById("timelapse");
-
-let next = document.getElementById("nextButton");
-let timelapseIterationsFrom = document.getElementById("timelapseIterationsFrom");
-let timelapseIterationsTo = document.getElementById("timelapseIterationsTo");
-
-next.addEventListener('click', () => {
-    timelapseEl.style.setProperty("display", "none");
-    let from = parseInt(timelapseIterationsFrom.value, 10);
-    let to = parseInt(timelapseIterationsTo.value, 10);
-    console.log(from, to);
-    if(from * 0 == 0 && to * 0 == 0){
-        timelapsee(from, to);
-    }
-}, false);

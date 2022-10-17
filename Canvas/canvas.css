@@ -16,7 +16,16 @@
     padding: 5px;
 }
 
-.sameLine { 
+.canvasButtons{
+    display: flex; 
+    justify-content: flex-end;
+}
+
+.canvasButtons > *{
+    margin-left: 5px;
+}
+
+.sameLine{ 
     display: flex;
     width: 100%;
 }
@@ -27,56 +36,12 @@
     width: 100%;
 }
 
-
-.settingSameLine * ,.sameLine * {
+.settingSameLine *, .sameLine * {
     margin: 0px 10px 0px 0px;
-}
-
-.settingSameLine *:last-child{
-    margin: 0px;
-    width: 100%;
 }
 
 .sameLine *:last-child{
     margin: 0px;
-}
-
-.sameLine3Elements{
-    display: flex;
-    flex-flow: row;
-}
-
-.sameLine3Elements > *{
-    margin: 4px;
-}
-
-.sameLine3Elements :nth-child(1){
-    width: 20%;
-}
-
-.sameLine3Elements :nth-child(2){
-    width: 20%;
-}
-
-.sameLine3Elements :nth-child(3){
-    width: 60%;
-}
-
-.sameLine3Elements :nth-child(4){
-    width: 20%;
-}
-
-/* .sameLine3Elements:nth-child(1) {
-    width: 100px;
-} */
-
-@media only screen and (max-width: 600px) {
-    .window{
-        display: inline-block;
-    }
-    .my-canvas, .settings {
-        width: 100%;
-    }
 }
 
 .timelapse{
@@ -91,5 +56,24 @@
     color:white;
     z-index: 2;
     padding: 10px;
-    border-radius:10px;
+    border-radius: 10px;
+}
+
+.timelapseButtons{
+    display: flex; 
+    justify-content: flex-end;
+    padding-top: 10px;
+}
+
+.timelapseButtons > *{
+    margin-left: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+    .window{
+        display: inline-block;
+    }
+    .my-canvas, .settings {
+        width: 100%;
+    }
 }

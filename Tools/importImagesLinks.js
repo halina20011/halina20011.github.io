@@ -17,7 +17,7 @@ sheet.href = "/Tools/importImagesLinks.css"
 importSpot.appendChild(sheet);  //Import css style
 
 // Object.keys(nameOfObject)[index]; --> return name of key
-// nameOfObject[Object.keys(nameOfObject)[index]]; --> return dafa in key
+// nameOfObject[Object.keys(nameOfObject)[index]]; --> return data in key
 function getKey(object, index){
     return object[Object.keys(object)[index]];
 }

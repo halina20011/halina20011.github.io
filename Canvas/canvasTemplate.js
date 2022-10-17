@@ -19,7 +19,7 @@ function map(input, min1, max1, min2, max2){
     input *= multiply;
     let m = input / (max1 - min1);
     let r = (m * (max2 - min2)) + min2 * multiply;
-    console.log("m", m, max2 - min2, r);
+    // console.log("m", m, max2 - min2, r);
     return r / multiply;
 }
 
@@ -100,8 +100,8 @@ function drawLine(x1, y1, x2, y2, rgba = [255, 255, 255, 255]){
     }
 }
 
-function grid(resolution){
-    let offset = 400 / (resolution + 1)
+function drawGrid(resolution){
+    let offset = canvas.width / (resolution + 1)
     for(let r = 0; r < resolution; r++){
         let x = offset + offset * r;
         drawLine(x, 0, x, canvas.height);
@@ -113,7 +113,7 @@ function grid(resolution){
 }
 
 function main(){
-    grid(1);
+    drawGrid(1);
     for(let X = 0; X < canvas.width; X++){
         let x = map(X, 0, canvas.width, from, to);
         let y = x;

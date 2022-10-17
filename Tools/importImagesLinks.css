@@ -1,7 +1,8 @@
 :root{
     /*                       calculate size of Project Window minus gap / 3 */
-    --image-link-width: calc(100% / 3.05 - 10px / 3);
+    --image-link-width3: calc(100% / 3.05 - 10px / 3);
     --image-link-width2: calc(100% / 2.05 - 10px / 2);
+    --image-link-width1: calc(100% / 1.05 - 10px);
 }
 
 .importSpot{
@@ -10,10 +11,14 @@
 
 .projects{
     display: grid;
-    grid-template-columns: repeat(3, var(--image-link-width));
+    grid-template-columns: repeat(3, var(--image-link-width3));
     gap: 10px;
     box-sizing: border-box;
     /* padding: 10px; */
+}
+
+.projects > button{
+    padding: 0px;
 }
 
 [class*="Project"] > div :nth-child(1) {
@@ -45,6 +50,7 @@
 [class*="Project"]:hover > .backgroundImg > .projectTextInfo, [class*="Project"]:hover > .backgroundImg > .projectTextInfo{
     background-color: rgba(56, 56, 56, 0.5);
     display: block;
+    overflow-y: hidden;
 }
 
 [class*="Project"]:hover > .backgroundImg > .infoText{
@@ -110,5 +116,11 @@
 @media only screen and (max-width: 900px) { 
     .projects{
         grid-template-columns: repeat(2, var(--image-link-width2));
+    }
+}
+
+@media only screen and (max-width: 600px) { 
+    .projects{
+        grid-template-columns: repeat(1, var(--image-link-width1));
     }
 }
