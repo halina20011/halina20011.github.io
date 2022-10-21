@@ -1,19 +1,14 @@
-function roll(dropDowncontent, plusIndex = 0) {
-    // var name = dropDowncontent.substring(dropDowncontent.length - 16)
-    // console.log(dropDowncontent)
-    var name = dropDowncontent.slice(0, -16 - plusIndex) + "ImgState";
-    // var name = dropDowncontent - "Dropdown-content"
-    // console.log(name)
-    // document.getElementById(dropdown).classList.toggle("show");//arduinoDropdown
-    document.getElementsByClassName(dropDowncontent)[0].classList.toggle("show");//arduinoDropdown
-    var arrow = document.getElementById(name);
-    if(document.getElementsByClassName(dropDowncontent)[0].classList.contains("show") == true){
-        arrow.style.borderTop = "none";
-        arrow.style.borderBottom = "12px solid rgb(0, 0, 0)";
+function roll(thisEl, dropDowncontentId, event = 'show'){
+    let div = document.getElementById(dropDowncontentId);
+    div.classList.toggle(event);
+
+    if(div.classList.contains(event) == true){
+        thisEl.classList.remove("opened");
+        thisEl.classList.add("closed");
     }
     else{
-        arrow.style.borderTop = "12px solid rgb(0, 0, 0)";
-        arrow.style.borderBottom = "none";
+        thisEl.classList.remove("closed");
+        thisEl.classList.add("opened");
     }
 }
 

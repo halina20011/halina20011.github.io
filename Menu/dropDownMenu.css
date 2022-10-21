@@ -1,46 +1,55 @@
-/* #arduinoI{ */
-[id*="ImgState"]{
-    pointer-events: all;
+[id*="DropdownButton"]{
+    display: inline-block;
     position: relative;
-    display: inline-block;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-top: 12px solid rgb(0, 0, 0);
-}
-
-/* Button class */
-[class*="Dropdown-button"]{
-    display: inline-block;
+    text-align: left;
+    font-size: 16px;
     width: 100%;
     height: 100%;
     border: none;
     pointer-events: all;
     padding: 5px;
-    text-align: left;
     background-color: rgb(85, 85, 85 );
 }
 
-/* Dropdown Content (Hidden by Default) */
-/* .arduinoDropdown-content, .htmlDropdown-content, .unityDropdown-content, .kaliLinuxDropdown-content{ */
-/* Help: https://www.w3schools.com/cssref/css_selectors.asp */
-[class*="Dropdown-content"]{
-    display: none;
-    /* position: absolute; */
-    background-color: rgb(63, 63, 63);
-    width: 100%;
-    min-width: 100%;
-    z-index: 1000;
+.closed::after, .opened::after{
+    content: '';
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
 }
 
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.closed::after{
+    border-top: 12px solid rgb(0, 0, 0);
+    border-bottom: none;
+}
+
+.opened::after{
+    border-bottom: 12px solid rgb(0, 0, 0);
+    border-top: none;
+}
+
+/* Help: https://www.w3schools.com/cssref/css_selectors.asp */
+[id*="socialDropdownContent"]{
+    width: 100%;
+    display: none;
+    background-color: rgb(63, 63, 63);
+    min-width: 100%;
+    z-index: 10;
+}
+
 .show { display: block; }
+.hide { display: none; }
 
 .links{
     max-width: 500px;
     padding: 0px 20px 0px 20px;
 }
 
-.dropDown-item:hover{
+.dropDownItem:hover{
     background-color: rgb(106, 106, 106);
 }
 
