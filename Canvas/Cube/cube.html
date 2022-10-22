@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Canvas</title>
+    <title>Cube</title>
     <meta charset="UTF-8">
     <meta name="description" content="Free web programming tutorials">
     <meta name="author" content="Mario Duraković">
@@ -26,30 +26,141 @@
             <div class="columnLeft" id="columnLeft">
             </div>
             <div class="columnMiddle" id="columnMiddle">
-                <h1 style="text-align: center">Canvas template</h1>
+                <h1 style="text-align: center">Cube</h1>
                 <div class="fS8"></div>
                 <div div class="window">
                     <canvas class="my-canvas" style="background-color:black;" id="my-canvas" width="400" height="400"></canvas>
                     <div class="settings">
-                        <div style="display:flex; justify-content: space-between;">
-                            <div></div>
-                            <div>
-                                <button class="downloadButton" id="downloadImage"></button>
-                                <button class="refreshButton" id="update"></button>
-                                <button class="timelapseButton" id="timelapseButton"></button>
-                            </div>
+                        <div class="canvasButtons" id="canvasButtons">
+                            <button class="downloadButton" id="downloadImage"></button>
+                            <button class="refreshButton" id="update"></button>
                         </div>
                         <div class="fS8"></div>
+                        <!-- Global settings -->
+                        <div class="settingSameLine">
+                            <p>Time delay [ms]</p>
+                            <input type="number" id="timeDelay" value="10" min="0" min="10000">
+                        </div>
+                        <div class="settingSameLine">
+                            <p>Perspective projection: </p>
+                            <input type="checkbox" id="perspectiveProjection" checked>
+                        </div>
+                        <div class="settingSameLine">
+                            <p>Aply animation: </p>
+                            <input type="checkbox" id="aplyAnimation">
+                        </div>
+
+                        <button id="DropdownButton" class="opened" onclick="roll(this, 'objectSettings', 'hide')">Object settings</button>
+                        <div class="paragraphL" id="objectSettings">
+                            <div class="settingSameLine" id="objectSettings">
+                                <p>Position</p>
+                                <div class="settingSameLine" style="display: block;">
+                                    <div class="settingSameLine">
+                                        <p>X: </p>
+                                        <input type="number" id="positionX" style="width: 100%;" value="0">
+                                    </div>
+                                    <div class="settingSameLine">
+                                        <p>Y: </p>
+                                        <input type="number" id="positionY" style="width: 100%;" value="0">
+                                    </div>
+                                    <div class="settingSameLine">
+                                        <p>Z: </p>
+                                        <input type="number" id="positionZ" style="width: 100%;" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fS4"></div>
                             <div class="settingSameLine">
-                            <p>X: </p>
-                            <input type="range" id="maxIterations" style="width: 100%;" value="0" min="-360" max="360">
+                                <p>Rotation</p>
+                                <div class="settingSameLine" style="display: block;">
+                                    <div class="settingSameLine">
+                                        <p>X: </p>
+                                        <input type="range" id="rotationX" style="width: 100%;" value="-30" min="-360" max="360">
+                                        <div id="objectRotationXText"><p id="invisible">-000</p><p>0</p></div>
+                                    </div>
+                                    <div class="settingSameLine">
+                                        <p>Y: </p>
+                                        <input type="range" id="rotationY" style="width: 100%;" value="35" min="-360" max="360">
+                                        <div id="objectRotationYText"><p id="invisible">-000</p><p>0</p></div>
+                                    </div>
+                                    <div class="settingSameLine">
+                                        <p>Z: </p>
+                                        <input type="range" id="rotationZ" style="width: 100%;" value="0" min="-360" max="360">
+                                        <div id="objectRotationZText"><p id="invisible">-000</p><p>0</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- CAMERA -->
+                        <button id="DropdownButton" class="opened" onclick="roll(this, 'cameraSettings', 'hide')">Camera settings</button>
+                        <div class="paragraphL" id="cameraSettings">
+                            <div class="settingSameLine">
+                                <p>Position</p>
+                                <div class="settingSameLine" style="display: block;">
+                                    <div class="settingSameLine">
+                                        <p>X: </p>
+                                        <input type="number" id="camPositionX" style="width: 100%;" value="0">
+                                    </div>
+                                    <div class="settingSameLine">
+                                        <p>Y: </p>
+                                        <input type="number" id="camPositionY" style="width: 100%;" value="0">
+                                    </div>
+                                    <div class="settingSameLine">
+                                        <p>Z: </p>
+                                        <input type="number" id="camPositionZ" style="width: 100%;" value="10">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fS4"></div>
+                            <div class="settingSameLine">
+                                <p>Rotation</p>
+                                <div class="settingSameLine" style="display: block;">
+                                    <div class="settingSameLine">
+                                        <p>X: </p>
+                                        <input type="range" id="camRotationX" style="width: 100%;" min="-360" max="360" value="0">
+                                        <div id="cameraRotationXText"><p id="invisible">-000</p><p>0</p></div>
+                                    </div>
+                                    <div class="settingSameLine">
+                                        <p>Y: </p>
+                                        <input type="range" id="camRotationY" style="width: 100%;" min="-360" max="360" value="0">
+                                        <div id="cameraRotationYText"><p id="invisible">-000</p><p>0</p></div>
+                                    </div>
+                                    <div class="settingSameLine">
+                                        <p>Z: </p>
+                                        <input type="range" id="camRotationZ" style="width: 100%;" min="-360" max="360" value="0">
+                                        <div id="cameraRotationZText"><p id="invisible">-000</p><p>0</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Animation -->
+                        <button id="DropdownButton" class="closed" onclick="roll(this, 'animationSettings', 'hide')">Animation settings</button>
+                        <div class="paragraphL hide" id="animationSettings">
+                            <div class="settingSameLine">
+                                <p>Rotation</p>
+                                <div class="settingSameLine" style="display: block;">
+                                    <div class="settingSameLine">
+                                        <p>X: </p>
+                                        <input type="number" id="animationRotationX" style="width: 100%;" min="-360" max="360" value="-1">
+                                    </div>
+                                    <div class="settingSameLine">
+                                        <p>Y: </p>
+                                        <input type="number" id="animationRotationY" style="width: 100%;" min="-360" max="360" value="1">
+                                    </div>
+                                    <div class="settingSameLine">
+                                        <p>Z: </p>
+                                        <input type="number" id="animationRotationZ" style="width: 100%;" min="-360" max="360" value="2">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
-            <div class="columnRight" id="columnRight">
-            </div>
+        </div>
+        <div class="columnRight" id="columnRight">
+        </div>
         </div>
         <div class="columnDown"></div>
     </div>

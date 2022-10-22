@@ -1,5 +1,18 @@
 {
     "Index": {
+        "CubeProject": {
+            "className": "CubeProject",
+            "path": "/Canvas/Cube/cube.html",
+            "imgPath": "/Images/Miniature/cube.jpeg",
+            "name": "Cube",
+            "projectTextInfo": [
+                "See how you can project a cube on 2d plane with math."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss":  [
+                [".CubeProject:hover > .backgroundImg > .img",[["background-image: url('/Images/Miniature/cube.gif')!important;"]]]]
+        },
         "HilbertCurve": {
             "className": "HilbertCurveProject",
             "path": "/Canvas/HilbertCurve/hilbertCurve.html",

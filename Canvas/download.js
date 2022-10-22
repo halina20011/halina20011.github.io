@@ -21,11 +21,11 @@ export class DOWNLOADER{
         //     "to": 1,
         //     "value": 0
         // }
-        console.log(data);
+        // console.log(data);
         let dataObj = Object.keys(data);
         let element;
         let type;
-        console.log(dataObj);
+        // console.log(dataObj);
         if(dataObj.indexOf("element") > -1){
             type = data['element'];
             element = document.createElement(type);
@@ -90,9 +90,9 @@ export class DOWNLOADER{
             timelapse.appendChild(setting);
 
             let elementToMake = Object.keys(__argument);
-            console.log(elementToMake);
+            // console.log(elementToMake);
             elementToMake.forEach(elementName => {
-                console.log(elementName);
+                // console.log(elementName);
                 let type, element;
                 [type, element] = this.makeElement(setting, __argument[elementName]);
                 if(type == "input"){
