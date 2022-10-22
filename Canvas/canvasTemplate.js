@@ -1,10 +1,18 @@
 import {DOWNLOADER} from "/Canvas/download.js";
 
-var canvas = document.getElementById("my-canvas");
-var context = canvas.getContext("2d");
+let canvas = document.getElementById("my-canvas");
+let context = canvas.getContext("2d");
 
-var image = context.createImageData(canvas.width, canvas.height);
-var data = image.data;
+let image = context.createImageData(canvas.width, canvas.height);
+let data = image.data;
+
+let downloader = new DOWNLOADER(canvas);
+
+let downloadImageButton = document.getElementById("downloadImage");
+downloadImageButton.addEventListener("click", function() { downloader.downloadImage(); }, false);
+
+let updateButton = document.getElementById("update");
+updateButton.addEventListener("click", function() { main(); }, false);
 
 function swapBuffer(){
     context.putImageData(image, 0, 0);
@@ -14,13 +22,8 @@ let cenX = 0;
 let cenY = 0;
 let scale = 1;
 
-function map(input, min1, max1, min2, max2){
-    let multiply = max1 > max2 ? max1 : max2;
-    input *= multiply;
-    let m = input / (max1 - min1);
-    let r = (m * (max2 - min2)) + min2 * multiply;
-    // console.log("m", m, max2 - min2, r);
-    return r / multiply;
+function map(x, inMin, inMax, outMin, outMax){
+    return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 }
 
 // console.log(map(100, 0, 400, -10, 10)); // = -0.5
@@ -34,6 +37,9 @@ function pixelToPoint(x, y, width, height){
 }
 
 function drawPixel(x, y, r = 255, g = 255, b = 255, a = 255){
+    if(x < 0 || canvas.width < x || y < 0 || canvas.height < y){
+        return;
+    }
     let roundedX = Math.round(x);
     let roundedY = Math.round(y);
 
@@ -96,6 +102,47 @@ function drawLine(x1, y1, x2, y2, rgba = [255, 255, 255, 255]){
         if (err < 0){
             y1 += ystep;
             err += dx;
+        }
+    }
+}
+
+function plotLineWidth(x1, y1, x2, y2, wd, rgba=[255, 255, 255, 255]){ 
+    // let dx = Math.abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
+    let dx = Math.abs(x2 - x1);
+    let sx = x1 < x2 ? 1 : -1;
+    let dy = Math.abs(y2 - y1);
+    let sy = y1 < y2 ? 1 : -1;
+    let err = dx - dy
+    let e2, eX, eY;
+    let ed = dx + dy == 0 ? 1 : Math.sqrt(dx * dx + dy * dy);
+    
+    for(wd = (wd+1)/2; ;){
+        // drawPixel(x1, y1, max(0,255*(Math.abs(err-dx+dy)/ed-wd+1)));
+        drawPixel(x1, y1, rgba[0], rgba[1], rgba[2], rgba[3]);
+        e2 = err; 
+        eX = x1;
+        if(2*e2 >= -dx){
+            for(e2 += dy, eY = y1; e2 < ed*wd && (y2 != eY || dx > dy); e2 += dx){
+                // drawPixel(x1, y2 += sy, max(0,255*(Math.abs(e2)/ed-wd+1)));
+                drawPixel(x1, eY += sy, rgba[0], rgba[1], rgba[2], rgba[3]);
+            }
+            if(x1 == x2){
+                break;
+            } 
+            e2 = err;
+            err -= dy;
+            x1 += sx;
+        } 
+        if(2 * e2 <= dy){
+            for (e2 = dx-e2; e2 < ed*wd && (x2 != eX || dx < dy); e2 += dy){
+                // drawPixel(x2 += sx, y1, max(0,255*(Math.abs(e2)/ed-wd+1)));
+                drawPixel(eX += sx, y1, rgba[0], rgba[1], rgba[2], rgba[3]);
+            }
+            if(y1 == y2){
+                break;
+            } 
+            err += dx; 
+            y1 += sy;
         }
     }
 }

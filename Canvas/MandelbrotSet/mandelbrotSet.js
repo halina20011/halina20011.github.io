@@ -16,9 +16,10 @@ let updateButton = document.getElementById("update");
 updateButton.addEventListener("click", function() { update(); }, false);
 
 let maxIterationsN = document.getElementById("maxIterations");
-maxIterationsN.addEventListener("input", () => { 
+maxIterationsN.addEventListener("change", () => { 
     maxIterations = maxIterationsN.value;
     console.log(`Max iterations: ${maxIterations}`);
+    main();
 }, false);
 
 let color = document.getElementById("color");
@@ -26,25 +27,32 @@ color.addEventListener("input", () => { update(); }, false);
 
 let downloader = new DOWNLOADER(canvas);
 
-function timelapsee(from, to){
-    maxIterations = from;
-    console.log(`Iterations timelapse from: ${from}, to: ${to}.`);
-    for(let i = from; i < to - from; i++){
-        maxIterations++;
-        main();
-        downloader.addImage();
-        console.log(`Number of iterations currently running: ${maxIterations}.`)
+function timelapsee(fArguments){
+    let from = parseInt(fArguments[0].value);
+    let to = parseInt(fArguments[1].value);
+    if(from * 0 == 0 && to * 0 == 0){
+        maxIterations = from;
+        console.log(`Iterations timelapse from: ${from}, to: ${to}.`);
+        for(let i = from; i < to - from; i++){
+            console.log(`Number of iteration is currently: ${maxIterations}.`)
+            main();
+            downloader.addImage();
+            maxIterations++;
+        }
+        downloader.downloadAll();
     }
-    downloader.downloadAll();
 }
 
 let timelapseInputData = {
-    "text": "Iterations: ",
-    "inputFrom":{"from": 0, "value": 0},
-    "inputTo": {"from": 1, "value": 1}
+    "function": timelapsee,
+    "arguments": [{
+            "text": {"element": "p", "innerHTML": "Iterations: "},
+            "inputFrom": {"element": "input", "type": "number", "from": 0, "value": 0},
+            "inputTo": {"element": "input", "type": "number", "from": 1, "value": 1}
+        }
+    ]
 }
-
-let timelapse = downloader.timelapse(timelapseInputData, timelapsee);
+let timelapse = downloader.timelapse(timelapseInputData);
 
 let cenX = 0;
 let cenY = 0;
@@ -211,8 +219,8 @@ function generateColor(mode, iterations, n, x, y) {
 }
 
 function main(){
-    for (let yPixel = 0; yPixel < canvas.height; yPixel++) {
-        for (let xPixel = 0; xPixel < canvas.width; xPixel++) {
+    for(let yPixel = 0; yPixel < canvas.height; yPixel++){
+        for(let xPixel = 0; xPixel < canvas.width; xPixel++){
             // let x = map(xPixel, 0, canvas.width, x1 + cenX, x2 + cenX);
             // let y = map(yPixel, 0, canvas.height, y1 + cenY, y2 + cenY);
             let point = pixelToPoint(xPixel, yPixel, canvas.width, canvas.height);
@@ -265,6 +273,7 @@ function main(){
             drawPixel(xPixel, yPixel, r, g, b, 255);
         }
     }
+    swapBuffer();
 }
 
 function distance(x1, y1, x2, y2){
@@ -330,4 +339,3 @@ function main2(){
 }
 
 main();
-swapBuffer();

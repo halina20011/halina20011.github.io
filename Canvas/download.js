@@ -7,43 +7,58 @@ export class DOWNLOADER{
         this.downloading = false;
     }
 
-    timelapse(timelapseInputData, f){
-        this.addTimelapseElement(timelapseInputData, f);
+    timelapse(timelapseInputData){
+        this.addTimelapseElement(timelapseInputData);
     }
 
-    makeInput(data){
+    makeElement(parent, data){
         // let j = {
+        //     "element": input
         //     "id": "id",
         //     'class': "class",
+        //     'type': number,
         //     "from": 0,
         //     "to": 1,
         //     "value": 0
         // }
-        let dataObj = Object.keys(data);
         console.log(data);
-        let input = document.createElement("input");
-        input.type = "number";
+        let dataObj = Object.keys(data);
+        let element;
+        let type;
+        console.log(dataObj);
+        if(dataObj.indexOf("element") > -1){
+            type = data['element'];
+            element = document.createElement(type);
+        }
+
+        if(dataObj.indexOf("type") > -1){
+            element.type = data["type"];
+        }
 
         if(dataObj.indexOf("id") > -1){
-            input.id = `${data['id']}`;
+            element.id = `${data['id']}`;
         }
         if(dataObj.indexOf("class") > -1){
-            input.className = `${data['class']}`;
+            element.className = `${data['class']}`;
+        }
+
+        if(dataObj.indexOf("innerHTML") > -1){
+            element.innerHTML = `${data['innerHTML']}`;
         }
         if(dataObj.indexOf("from") > -1){
-            input.min = `${data['from']}`;
+            element.min = `${data['from']}`;
         }
         if(dataObj.indexOf("to") > -1){
-            input.max = `${data['to']}`;
+            element.max = `${data['to']}`;
         }
         if(dataObj.indexOf("value") > -1){
-            input.value = `${data['value']}`;
+            element.value = `${data['value']}`;
         }
-
-        return input;
+        parent.appendChild(element);
+        return [type, element];
     }
 
-    addTimelapseElement(inputData, f){
+    addTimelapseElement(inputData){
         // <div class="timelapse" id="timelapse">
         //     <div class="settingSameLine">
         //         <p>Iterations: </p>
@@ -58,25 +73,33 @@ export class DOWNLOADER{
         //         </div>
         //     </div>
         // </div>
+        let f = inputData["function"];
+
         let timelapse = document.createElement("div");
         timelapse.className = "timelapse";
         timelapse.id = "timelapse";
-
+        
         document.body.appendChild(timelapse);
         
         // Setting
-        let setting = document.createElement("div");
-        setting.className = "settingSameLine";
+        let _arguments = inputData["arguments"];
+        let fArguments = [];
+        _arguments.forEach(__argument => {
+            let setting = document.createElement("div");
+            setting.className = "settingSameLine";
+            timelapse.appendChild(setting);
 
-        let text = document.createElement("p");
-        text.innerHTML = inputData["text"];
-        let from = this.makeInput(inputData["inputFrom"]);
-        let to = this.makeInput(inputData["inputTo"]);
-
-        timelapse.appendChild(setting);
-        setting.appendChild(text);
-        setting.appendChild(from);
-        setting.appendChild(to);
+            let elementToMake = Object.keys(__argument);
+            console.log(elementToMake);
+            elementToMake.forEach(elementName => {
+                console.log(elementName);
+                let type, element;
+                [type, element] = this.makeElement(setting, __argument[elementName]);
+                if(type == "input"){
+                    fArguments.push(element);
+                }
+            });
+        })
         
         // Buttons
         let timelapseButtons = document.createElement("div");
@@ -95,12 +118,7 @@ export class DOWNLOADER{
 
         runTimelapse.addEventListener("click", () => {
             timelapse.style.setProperty("display", "none");
-            let fromV = parseInt(from.value, 10);
-            let toV = parseInt(to.value, 10);
-            if(fromV * 0 == 0 && toV * 0 == 0){
-                // timelapsee(from, to);
-                f(fromV, toV);
-            }
+            f(fArguments);
         }, false);
 
         timelapse.appendChild(timelapseButtons);
@@ -112,7 +130,7 @@ export class DOWNLOADER{
         let timelapseButton = document.createElement("button");
         timelapseButton.className = "timelapseButton";
         timelapseButton.id = "timelapseButton";
-        timelapseButton.addEventListener("click", () => { timelapse.style.display = "block"; console.log("Clicked")}, false);
+        timelapseButton.addEventListener("click", () => { timelapse.style.display = "block"; console.log("Clicked");}, false);
         document.getElementById("canvasButtons").appendChild(timelapseButton);
     }
 

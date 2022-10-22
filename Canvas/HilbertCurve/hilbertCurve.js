@@ -25,25 +25,33 @@ downloadImageButton.addEventListener("click", function() { downloader.downloadIm
 let updateButton = document.getElementById("update");
 updateButton.addEventListener("click", function() { main(); }, false);
 
-function timelapsee(from, to){
-    level = from;
-    console.log(`Iterations timelapse from: ${from}, to: ${to}.`);
-    for(let i = from; i < to - from; i++){
-        level++;
-        main();
-        downloader.addImage();
-        console.log(`Number of levels currently running: ${level}.`)
+function timelapsee(fArguments){
+    let from = parseInt(fArguments[0].value);
+    let to = parseInt(fArguments[1].value);
+    if(from * 0 == 0 && to * 0 == 0){
+        level = from;
+        console.log(`Iterations timelapse from: ${from}, to: ${to}.`);
+        for(let i = from; i < to - from; i++){
+            level++;
+            main();
+            downloader.addImage();
+            console.log(`Number of levels currently running: ${level}.`)
+        }
+        downloader.downloadAll();
     }
-    downloader.downloadAll();
 }
 
 let timelapseInputData = {
-    "text": "Iterations: ",
-    "inputFrom":{"from": 0, "value": 0},
-    "inputTo": {"from": 1, "value": 1}
+    "function": timelapsee,
+    "arguments": [{
+            "text": {"element": "p", "innerHTML": "Iterations: "},
+            "inputFrom": {"element": "input", "type": "number", "from": 0, "value": 0},
+            "inputTo": {"element": "input", "type": "number", "from": 1, "value": 1}
+        }
+    ]
 }
 
-let timelapse = downloader.timelapse(timelapseInputData, timelapsee);
+let timelapse = downloader.timelapse(timelapseInputData);
 
 function swapBuffer(){
     context.putImageData(image, 0, 0);

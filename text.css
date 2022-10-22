@@ -28,6 +28,11 @@ title{
     padding-right: 10px;
 }
 
+.paragraphL{
+    position: relative;
+    padding-left: 10px;
+}
+
 a, a:visited{
     color: black;
 }
@@ -60,4 +65,9 @@ val{
     padding: 2px;
     border-radius: 2px;
     background-color: rgba(0, 0, 0, 0.3);
+}
+
+[class*="invisible"], [id*="invisible"]{
+    display: inline-block;
+    color:rgba(0, 0, 0, 0);
 }

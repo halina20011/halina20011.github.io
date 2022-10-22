@@ -6,8 +6,8 @@
     width: 100%;
     height: 100%;
     border: none;
+    padding: 0px;
     pointer-events: all;
-    padding: 5px;
     background-color: rgb(85, 85, 85 );
 }
 
@@ -54,6 +54,10 @@
 }
 
 /* .dropdown div a button,  */
+.headDropDown [id*="DropdownButton"]{
+    padding: 5px;
+}
+
 .headDropDown div div a{
     width: 100%;
     background-color: rgb(110, 110, 110);
