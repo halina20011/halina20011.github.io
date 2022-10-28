@@ -125,27 +125,36 @@
             "imgPath": "/Images/Miniature/Clock/ClockBackground.png",
             "name": "Clock",
             "projectTextInfo": [
-                "real time clock", 
+                "Real time clock", 
                 "Just a clock."
             ],
             "addAdicionalThings": [
                 ["div",[
-                    ["class", "clockArrow1"],
+                    ["class", "arrowHours"],
                     ["position: absolute"],
                     ["width: 100%"],
                     ["background-size: 100%"],
                     ["background-repeat: no-repeat"],
                     ["padding-bottom: 100%"],
-                    ["background-image: url(/Images/Miniature/Clock/ClockArrow1.png)"]]
+                    ["background-image: url(/Images/Miniature/Clock/arrowHours.png)"]]
                 ],
                 ["div", [
-                    ["class", "clockArrow2"],
+                    ["class", "arrowMinutes"],
                     ["position: absolute"],
                     ["width: 100%"],
                     ["background-size: 100%"],
                     ["background-repeat: no-repeat"],
                     ["padding-bottom: 100%"],
-                    ["background-image: url(/Images/Miniature/Clock/ClockArrow2.png)"]]
+                    ["background-image: url(/Images/Miniature/Clock/arrowMinutes.png)"]]
+                ],
+                ["div", [
+                    ["class", "arrowSeconds"],
+                    ["position: absolute"],
+                    ["width: 100%"],
+                    ["background-size: 100%"],
+                    ["background-repeat: no-repeat"],
+                    ["padding-bottom: 100%"],
+                    ["background-image: url(/Images/Miniature/Clock/arrowSeconds.png)"]]
                 ]
             ],
             "addScript": "/Clock/clockAnimation.js",

@@ -6,18 +6,24 @@
     <meta name="description" content="Free web programming tutorials">
     <meta name="author" content="Mario Duraković">
     <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
-    <meta name="keywords" content="Online TicTacToe game with minimax algorithm">
+    <meta name="keywords" content="Real Time Clock">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet"> 
-    <script src="clock.js"></script>
+    <script defer src="clock.js"></script>
     <link rel="stylesheet" href="clock.css">
 </head>
-<body onload="realTimeClock()">
-    <div class="main-container">
-        <h1>Real time Clock</h1>
-        <div id="clock"></div>
+<body>
+    <div class="container">
+        <div class="analog" id="analog">
+            <div class="arrowHours"></div>
+            <div class="arrowMinutes"></div>
+            <div class="arrowSeconds"></div>
+            <div class="clocks"></div>
+        </div>
+        <div class="digital hidden" id="digital">
+            <h1>Real time Clock</h1>
+            <div class="digitalClock" id="digitalClock"></div>
+        </div>
     </div>
 </body>
 </html>

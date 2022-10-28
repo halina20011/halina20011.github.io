@@ -1,21 +1,22 @@
-var arrow1 = document.getElementsByClassName("clockArrow1")[0]
-var arrow2 = document.getElementsByClassName("clockArrow2")[0]
+function analogClock(){
+    let arrowHours = document.getElementsByClassName("arrowHours")[0];
+    let arrowMinutes = document.getElementsByClassName("arrowMinutes")[0];
+    let arrowSeconds = document.getElementsByClassName("arrowSeconds")[0];
 
-getTime()
-function getTime(){
-    var rtClock = new Date();
-
-    var hours = rtClock.getHours();
-    var minutes = rtClock.getMinutes();
-    // var seconds = rtClock.getSeconds();
-
+    let rtClock = new Date();
+    
+    let hours = rtClock.getHours();
+    let minutes = rtClock.getMinutes();
+    let seconds = rtClock.getSeconds();
+    
     hours = (hours > 12) ? hours - 12 : hours;
-    rotationArrow_1 = minutes * 6
-    rotationArrow_2 = hours * 30
-    rotationArrow_2 += rotationArrow_1 * 0.06
-    setRotatins(rotationArrow_1, rotationArrow_2)
+    hoursArrowRotation = minutes * 6;
+    minutesArrowRotation = hours * 30 + hoursArrowRotation * 0.06;
+    secondsArrowRotation = seconds * 6;
+    
+    arrowHours.style.transform = "rotate(" + hoursArrowRotation +"deg)";
+    arrowMinutes.style.transform = "rotate(" + minutesArrowRotation +"deg)";
+    arrowSeconds.style.transform = "rotate(" + secondsArrowRotation +"deg)";
 }
-function setRotatins(rot1, rot2){
-    arrow1.style.transform = "rotate(" + rot1 +"deg)";
-    arrow2.style.transform = "rotate(" + rot2 +"deg)";
-}
+
+analogClock();
