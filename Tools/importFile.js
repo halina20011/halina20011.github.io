@@ -1,12 +1,12 @@
 import {getText} from "/Tools/import.js";
-import {createLink} from "/Tools/import.js";
 
-var text = getText("/Menu/dropDownMenu.html")
-var word = "<body>"
-var word2 = "<!-- Code injected by live-server -->"
-var word3 = "</body>"
-var output = text.match(word); 
-var output2 = text.match(word2);
+let text = getText("/Menu/dropDownMenu.html")
+let word = "<body>"
+let word2 = "<!-- Code injected by live-server -->"
+let word3 = "</body>"
+let output = text.match(word); 
+let output2 = text.match(word2);
+
 if(output2 != null){
     text = text.slice(output.index + 6, output2.index);
 }
@@ -15,30 +15,29 @@ else{
     text = text.slice(output.index + 6, output2.index);
 }
 
-var lines = text.split("\n");
+let lines = text.split("\n");
 
-for(var i = 0; i < lines.length; i++){
+for(let i = 0; i < lines.length; i++){
     lines[i] = lines[i].slice(8, -1);
 }
+
 // console.log(lines);
-for(var i = 0; i < lines.length; i++){
-    var copy = lines[i].replaceAll(" ", "");
+for(let i = 0; i < lines.length; i++){
+    let copy = lines[i].replaceAll(" ", "");
     if(copy == ""){
         // console.log(copy);
         lines.splice(i, 1);
     }
 }
+
 function listToString(list){
-    var st = "";
+    let st = "";
     for(let i = 0; i < list.length; i++){
         st = st + list[i];
     }
-    return st
+    return st;
 }
 
-var code = listToString(lines)
-var columnUp = document.getElementById('columnUp');
-createLink("/Menu/dropDownMenu.css", columnUp);
+let code = listToString(lines);
+let columnUp = document.getElementById('columnUp');
 columnUp.innerHTML += code;
-// resizeInfoText();
-// console.log("Complete")
