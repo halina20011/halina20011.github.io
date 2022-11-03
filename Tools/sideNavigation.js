@@ -1,17 +1,17 @@
 const sideNavigation = document.getElementsByClassName("dropdown");
 
-var open = false;
+var sideNavigationOpened = false;
 
 function nav(){
-    if(open == false){
-        console.log("Open " + open);
+    if(sideNavigationOpened == false){
+        console.log("Open " + sideNavigationOpened);
         openNav();
-        open = !open;
+        sideNavigationOpened = !sideNavigationOpened;
     }
-    else if(open == true){
-        console.log("Close " + open);
+    else if(sideNavigationOpened == true){
+        console.log("Close " + sideNavigationOpened);
         closeNav();
-        open = !open;
+        sideNavigationOpened = !sideNavigationOpened;
     }
 }
 
