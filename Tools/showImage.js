@@ -1,6 +1,10 @@
 window.onclick = function(event){
     let existingImageContainer = document.getElementsByClassName("imageContainer");
     if(event.target.tagName == "IMG" && existingImageContainer.length == 0){
+        if(event.target.dataset["href"]){
+            window.open(event.target.dataset["href"]);
+            return;
+        }
         let imageContainer = document.createElement("div");
         let image = document.createElement("img");
         imageContainer.className = "imageContainer";

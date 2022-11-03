@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Arduino Tic Tac Toe</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Free programming tutorials">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
+    <meta name="keywords" content="Halina programming, Arduino learn">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="/code.css">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <script type="module" src="/Tools/download.js"></script>
+    <script src="/Menu/dropDownMenu.js"></script>
+    <script src="/Tools/showImage.js"></script>
+</head>
+<body>
+    <div class="columnUp" id="columnUp"></div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
+            <div class="columnLeft" id="columnLeft">
+            </div>
+            <div class="columnMiddle" id="columnMiddle">
+                <h1>Arduino Tic Tac Toe</h1>
+                <div class="fS8"></div>
+                <div class="paragraph">
+                    <p>In this tutorial you can learn how to upload and run Tic Tac Toe game on Arduino Uno with 3.5" TFT Lcd touch screen.</p>
+                </div>
+                <div class="freeLine"></div>
+                
+                <!-- ###################################################################### -->
+                <!--                     Parts or tools you will need                       -->
+                <!-- ###################################################################### -->
+                <jumpLink id="PartsOrToolsYouWillNeed"></jumpLink>
+                <h2>Parts or tools you will need</h2>
+                <div class="paragraph">
+                    <p>Arduino Uno</p>
+                    <p>3.5" TFT Lcd touch screen shield</p>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                              Libraries                                 -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Libraries"></jumpLink>
+                <h2>Libraries</h2>
+                <div class="paragraph">
+                    <p>Download and put these libraries to Arduino libraries folder:</p>
+                    <div>TFTLCD Library: <a href="https://github.com/adafruit/TFTLCD-Library">https://github.com/adafruit/TFTLCD-Library</a></div>
+                    <div>GFX Library: <a href="https://github.com/adafruit/Adafruit-GFX-Library">https://github.com/adafruit/Adafruit-GFX-Library</a></div>
+                    <div>TouchScreen: <a href="https://github.com/adafruit/Adafruit_TouchScreen">https://github.com/adafruit/Adafruit_TouchScreen</a></div>
+
+                    <div class="freeLine"></div>
+                    <jumpLink id="FixingScreenSize"></jumpLink>
+                    <h3>Fixing screen size</h3>
+                    <div class="paragraph">
+                        <p>Because TFT lcd library by default is set to wrong screen size you will need to change it first.</p>
+                        <p>
+                            After downloading the library, go in it Arduino libraries folder and open file <val>Adafruit_TFT/Adafruit_TFTLCD.cpp</val>
+                            in our favourite text editor.
+                        </p>
+    
+                        <div class="freeLine"></div>
+                        <p>In file find lines that contains screen size and comment it. Alternatively you can just change the values.</p>
+                        <pre class="val">
+                            //#define TFTWIDTH 240 
+                            //#define TFTHEIGHT 320
+                        </pre>
+                        
+                        <div class="freeLine"></div>
+                        <p>Add these lines.</p>
+                        <pre class="val">
+                            #define TFTWIDTH  320 
+                            #define TFTHEIGHT  480
+                        </pre>
+                        
+                        <p>Save it end exit the text editor.</p>
+                    </div>
+                </div>
+                <div class="freeLine"></div>
+                
+                <!-- ###################################################################### -->
+                <!--                          Circuit diagram                               -->
+                <!-- ###################################################################### -->
+                <jumpLink id="CircuitDiagram"></jumpLink>
+                <h2>Circuit diagram</h2>
+                <div class="paragraph">
+                    <p>Just mount it on top of an Arduino board.</p>
+                </div>
+                <div class="freeLine"></div>
+    
+                <!-- ###################################################################### -->
+                <!--                  Installation and compiling code                       -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Code"></jumpLink>
+                <h2>Code</h2>
+                <p>Because code is quite big it is available on <a href="https://github.com/halina20011/Arduino-TicTacToe">Github</a>.</p>
+            
+                <p>Download code with git. Alternatively you can download code with browser, but after that you will need to unzip it.</p>
+                <val class="paragraph">git clone https://github.com/halina20011/Arduino-TicTacToe.git</val>
+                <p>Navigate to TicTacToe subfolder and open it in Arduino IDE:</p>
+                <val class="paragraph">cd Arduino-TicTacToe/TicTacToe/</val><br>
+                <val class="paragraph">arduino TicTacToe.ino</val>
+                <div class="freeLine"></div>
+                
+                <img class="image" src="/Images/downloadAndOpenArduinoTicTacToefile.png">
+                <div class="freeLine"></div>
+                
+                <p>In Arduino IDE select correct board and port and the press "upload button".</p>
+                <div class="freeLine"></div>
+                
+                <!-- ###################################################################### -->
+                <!--                               Images                                   -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Images"></jumpLink>
+                <h2>Images</h2>
+                <img class="image" src="/Images/arduinoTicTacToeImage1.jpg">
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                              Video                                     -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Video"></jumpLink>
+                <h2>Video tutorial</h2>
+                <p>You can find the whole instructions <a href="https://www.youtube.com/watch?v=QE2UWFv8szw">here</a>:</p>
+                <img class="image" src="https://img.youtube.com/vi/QE2UWFv8szw/maxresdefault.jpg" data-href="https://www.youtube.com/watch?v=QE2UWFv8szw">
+            </div>
+            <div class="columnRight" id="columnRight">
+                <div class="table" id="table">
+                    <p>Table of contents</p>
+                    <div class="tableContent">
+                        <button onclick="document.location='#PartsOrToolsYouWillNeed'">Parts Or Tools You Will Need</button>
+                        <button onclick="document.location='#Libraries'">Libraries</button>
+                        <div class="paragraph">
+                            <button onclick="document.location='#FixingScreenSize'">Fixing screen size</button>
+                        </div>
+                        <button onclick="document.location='#CircuitDiagram'">Circuit diagram</button>
+                        <button onclick="document.location='#Code'">Code</button>
+                        <button onclick="document.location='#Images'">Images</button>
+                        <button onclick="document.location='#Video'">Video</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="columnDown"></div>
+    <script type="module" src="/Tools/importFile.js"></script>
+    <script type="module" src="/Tools/search.js"></script>
+    <script type="module" src="/code.js"></script>
+    <script src="/head.js"></script>
+</body>
+</html>

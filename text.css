@@ -73,10 +73,11 @@ bold{
     --value-padding: 2px;
 }
 
-val{
+val, .val{
     position: relative;
     line-height: calc(var(--value-padding) * 2 + 20px);
     padding: 2px;
+    white-space: pre-line;
     border-radius: 2px;
     background-color: rgba(0, 0, 0, 0.3);
 }

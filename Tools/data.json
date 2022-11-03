@@ -99,7 +99,7 @@
             "imgPath": "/Images/Miniature/TicTacToe.png",
             "name": "Tic-tac-toe",
             "projectTextInfo": [
-                "Play Tic-tac-toe with AI.", 
+                "Play Tic Tac Toe with AI.", 
                 "This small project I made to learn minimax algorithm. Try to beat it."
             ],
             "addAdicionalThings": null,
@@ -209,6 +209,19 @@
             "projectTextInfo": [
                 "Learn Arduino", 
                 "In this tutorial you can learn how to programm Arduino to show temperature from digital thermometer DS18B20 on TM1637 4-digit 7-segment display."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
+        "ArduinoTicTacToe": {
+            "className": "ArduinoTicTacToeProject",
+            "path": "/Arduino/ArduinoTicTacToe.html",
+            "imgPath": "/Images/Miniature/arduinoTicTacToe.png",
+            "name": "Arduino Tic Tac Toe",
+            "projectTextInfo": [
+                "Learn Arduino", 
+                "Little tutorial on how to program Arduino Uno to play on it Tic Tac Toe with 3.5\" TFT Lcd touch screen."
             ],
             "addAdicionalThings": null,
             "addScript": null,
