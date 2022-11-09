@@ -17,6 +17,15 @@ removeButton.addEventListener("click", function() {remove();}, false);
 let downloadImageButton = document.getElementById("downloadImage");
 downloadImageButton.addEventListener("click", function() { downloader.downloadImage(); }, false);
 
+let waveType = document.getElementById("waveType");
+waveType.addEventListener("change", () => { updateTypeOfFunction(); }, false);
+
+let squareWave = document.getElementById("squareWave");
+let sawtoothWave = document.getElementById("sawtoothWave");
+
+let squareWaveMax = document.getElementById("squareWaveMax");
+let sawtoothWaveMax = document.getElementById("sawtoothWaveMax");
+
 function timelapsee(fArguments){
     let from = parseInt(fArguments[0].value);
     let to = parseInt(fArguments[1].value);
@@ -58,7 +67,7 @@ let timelapse = downloader.timelapse(timelapseInputData);
 
 let waveHolder = document.getElementById("waveHolder");
 
-let level = 1;
+let level = 5;
 let waveBuffer = [];
 
 function updateInfo(){
@@ -104,7 +113,7 @@ function updateInfo(){
         
         // Radius value
         let radius = document.createElement("div");
-        radius.innerHTML = 4 / (Math.PI * (2 * i + 1));
+        radius.innerHTML = Math.abs(waveFunction(i, angle)[2]).toFixed(4);
     
         // Append 
         radiusHolder.appendChild(radiusText);
@@ -112,8 +121,6 @@ function updateInfo(){
     
         waveHolder.appendChild(waveSettingsElement);    
     }
-
-    updatePosition();
 }
 
 function add(){
@@ -128,27 +135,18 @@ function remove(){
     }
 }
 
-function updatePosition(){
-    drawPoint = 0;
-    for(let i = 0; i < level; i++){
-        let _i = i * 2 + 1;
-        drawPoint += multiply * (4 / (Math.PI * _i));
-    }
-
-    drawPoint += 5;
-}
-
 let multiply = canvas.width / 10;
 let drawPoint = 0;
 
-let angle = Math.PI;
-let angleAdd = 0.025;
+let angle = 180;
+let angleAdd = 2;
 
 function swapBuffer(){
     context.putImageData(image, 0, 0);
 }
 
-let xOffset = 0; let yOffset = 0;
+let xOffset = 0; 
+let yOffset = 0;
 
 function drawPixel(x, y, r = 255, g = 255, b = 255, a = 255){
     let xRounded = Math.round(x + xOffset);
@@ -224,11 +222,80 @@ function translate(_xOffset, _yOffset){
 
 function clear(){
     translate(0, 0);
-    for (let x = 0; x < canvas.width; x++) {
-        for (let y = 0; y < canvas.height; y++) {
+    for(let x = 0; x < canvas.width; x++){
+        for(let y = 0; y < canvas.height; y++){
             drawPixel(x, y, 0, 0, 0, 0);
         }
     }
+}
+
+function sin(angle){
+    return Math.sin((angle * Math.PI) / 180);
+}
+
+function cos(angle){
+    return Math.cos((angle * Math.PI) / 180);
+}
+
+function SquareWave(i){
+    let _i = 2 * i + 1;
+    let r = multiply * (4 / (Math.PI * _i));
+
+    let x = r * cos(angle * _i);
+    let y = r * sin(angle * _i);
+
+    return [x, y, r];
+}
+
+function SawtoothWave(i, angle){
+    i += 1;
+    let r = multiply * Math.pow(-1, i) * (4 / (i * Math.PI));
+    
+    let x = r * cos(angle * i);
+    let y = r * sin(angle * i);
+
+    return [x, y, r];
+}
+
+let waveFunctions = [SquareWave, SawtoothWave];
+let equations = [squareWave, sawtoothWave];
+let maxSum = [squareWaveMax, sawtoothWaveMax];
+
+let waveFunction;
+
+function showEquation(index){
+    for(let i = 0; i < equations.length; i++){
+        if(i == index){
+            if(equations[i].classList.contains("hidden") == true){
+                equations[i].classList.remove("hidden");
+            }
+            maxSum[index].innerHTML = level;
+        }
+        else if(equations[i].classList.contains("hidden") != true && i != index){
+            equations[i].classList.add("hidden");
+        }
+    }
+}
+
+function updatePosition(){
+    drawPoint = 0;
+    let x, y, r;
+    for(let i = 0; i < level; i++){
+        [x, y, r] = waveFunction(i, angle);
+        drawPoint += Math.abs(r);
+    }
+
+    drawPoint += 5;
+}
+
+function updateTypeOfFunction(){
+    waveBuffer = [];
+
+    let index = parseInt(waveType.value);
+    waveFunction = waveFunctions[index];
+    
+    showEquation(index);
+    updatePosition();
 }
 
 function main(){
@@ -236,34 +303,35 @@ function main(){
     let prevX = 0;
     let prevY = 0;
 
-    let x = 0;
-    let y = 0;
-
+    let X = 0;
+    let Y = 0;
+    
     translate(canvas.width / 4, canvas.height / 2);
 
     for(let i = 0; i < level; i++){
-        let _i = i * 2 + 1;
-        let r = multiply * (4 / (Math.PI * _i));
+        let r = 0;
+        let x, y;
+        [x, y, r] = waveFunction(i, angle);
 
-        drawCircle(prevX, prevY, r);
+        X += x;
+        Y += y;
         
-        x += r * Math.cos(angle * _i);
-        y += r * Math.sin(angle * _i);
-        drawLine(prevX, prevY, x, y);
+        drawCircle(prevX, prevY, r);
+        drawLine(prevX, prevY, X, Y);
 
         // Draw Point that is on the circle
         let pointR = 4;
         // if it is last circle then drow a point
         if(i == level - 1){
             for(let i = 1; i < pointR; i++){
-                drawCircle(x, y, i);
+                drawCircle(X, Y, i);
             }
-            drawLine(x, y, drawPoint, y);
-            waveBuffer.unshift(y);
+            drawLine(X, Y, drawPoint, Y);
+            waveBuffer.unshift(Y);
         }
-
-        prevX = x;
-        prevY = y;
+ 
+        prevX = X;
+        prevY = Y;
     }
     if(waveBuffer.length > canvas.width){
         waveBuffer.pop();
@@ -272,8 +340,10 @@ function main(){
         drawLine(i + drawPoint, waveBuffer[i], i + drawPoint + 1, waveBuffer[i + 1]);
     }
     swapBuffer();
+    // console.log(angle);
 }
 
+updateTypeOfFunction();
 updateInfo();
 
 setInterval(() => {

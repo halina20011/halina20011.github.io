@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
     <link rel="stylesheet" type="text/css" href="/Canvas/canvas.css">
     <link rel="stylesheet" type="text/css" href="fourierSeries.css">
+    <link rel="stylesheet" type="text/css" href="/Tools/math.css">
     <script src="/Menu/dropDownMenu.js"></script>
 </head>
 <body>
@@ -34,9 +35,38 @@
                                 <button class="addButton" id="addButton"></button>
                                 <button class="downloadButton" id="downloadImage"></button>
                             </div>
-                            <div style="padding: 5px; display:flex; justify-content: space-between;">
-                                <p>Size multiple:</p>
-                                <p id="sizeMultiple">40</p>
+                            <div class="fS8"></div>
+                            <div class="settingSameLine">
+                                <p>Type of wave:</p>
+                                <select id="waveType">
+                                    <option value="0" selected="selected">Square wave</option>
+                                    <option value="1">Sawtooth wave</option>
+                                </select>
+                            </div>
+                            <div class="fS8"></div>
+                            <div class="mathEquatoin" id="squareWave">
+                                <div class="sigma">
+                                    <div class="mathSymbolUp" id="squareWaveMax">∞</div>
+                                    <div class="mathSymbol">Σ</div>
+                                    <div class="mathSymbolDown" id="sigmaFrom">n=0</div>
+                                </div>
+                                <div class="fraction">
+                                    <div class="fractionUp">4sin((2n+1)x)</div>
+                                    <div class="fractionLine"></div>
+                                    <div class="fractionDown">(2n+1)π</div>
+                                </div>
+                            </div>
+                            <div class="mathEquatoin" id="sawtoothWave">
+                                <div class="sigma">
+                                    <div class="mathSymbolUp" id="sawtoothWaveMax">∞</div>
+                                    <div class="mathSymbol">Σ</div>
+                                    <div class="mathSymbolDown" id="sigmaFrom">n=1</div>
+                                </div>
+                                <div class="fraction">
+                                    <div class="fractionUp">2sin(nx)</div>
+                                    <div class="fractionLine"></div>
+                                    <div class="fractionDown">(-1)<sup>n</sup>π</div>
+                                </div>
                             </div>
                             <div class="waveHolder" id="waveHolder">
                             </div>
