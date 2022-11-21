@@ -43,12 +43,11 @@ function getListOfLines(filePath){
     return listOfLines
 }
 
-function getMultitplyOfTen(number, current = 1){
-    var answer = number / Math.pow(10, current);
-    if(answer < 1) { 
-        return current; 
+function getMultitplyOfTen(number){
+    if(number == 0){
+        return 1;
     }
-    return getMultitplyOfTen(number, current += 1);
+    return Math.floor(Math.log10(number) + 1);
 }
 
 function calculateNumberOfSpaces(number, max){
