@@ -97,7 +97,7 @@ body{
     background-color: rgb(92, 92, 92);
 }
 
-.pageContent > button{
+.pageContent button{
     width: 100%;
     background-color: rgb(92, 92, 92);
     text-align: left;
@@ -105,7 +105,7 @@ body{
     padding: 5px;
 }
 
-.pageContent > button:hover{
+.pageContent button:hover{
     background-color: rgb(104, 104, 104);
 }
 
