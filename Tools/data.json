@@ -216,7 +216,7 @@
         },
         "ArduinoTicTacToe": {
             "className": "ArduinoTicTacToeProject",
-            "path": "/Arduino/ArduinoTicTacToe.html",
+            "path": "/Arduino/arduinoTicTacToe.html",
             "imgPath": "/Images/Miniature/arduinoTicTacToe.png",
             "name": "Arduino Tic Tac Toe",
             "projectTextInfo": [
