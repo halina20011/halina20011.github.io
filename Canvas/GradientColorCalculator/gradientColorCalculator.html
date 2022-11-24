@@ -15,37 +15,35 @@
     <link rel="stylesheet" type="text/css" href="/Menu/dropDownMenu.js">
 </head>
 <body>
-    <div class="row">
-        <div class="columnUp" id="columnUp">
-        </div>
-        <div class="columnDisplay" id="columnDisplay">
-            <div class="contentContainer">
-                <div class="columnLeft" id="columnLeft">
-                </div>
-                <div class="columnMiddle" id="columnMiddle">
-                    <h1 style="text-align: center">Manderbrot set</h1>
-                    <div class="fS8"></div>
-                    <div div class="window">
-                        <canvas class="my-canvas" style="background-color:black;" id="my-canvas" width="800" height="800"></canvas>
-                        <div class="settings">
-                            <button class="downloadButton" id="downloadImage"></button>
-                            <button class="update" id="update">Update Image</button>
+    <div class="columnUp" id="columnUp">
+    </div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
+            <div class="columnLeft" id="columnLeft">
+            </div>
+            <div class="columnMiddle" id="columnMiddle">
+                <h1 style="text-align: center">Manderbrot set</h1>
+                <div class="fS8"></div>
+                <div div class="window">
+                    <canvas class="my-canvas" style="background-color:black;" id="my-canvas" width="800" height="800"></canvas>
+                    <div class="settings">
+                        <button class="downloadButton" id="downloadImage"></button>
+                        <button class="update" id="update">Update Image</button>
+                        <div class="fS8"></div>
+                        <div class="paragraph">
+                            <p>Settings</p>
                             <div class="fS8"></div>
                             <div class="paragraph">
-                                <p>Settings</p>
-                                <div class="fS8"></div>
-                                <div class="paragraph">
-                                    <div class="colorHolder" id="colorHolder"></div>
-                                </div>
+                                <div class="colorHolder" id="colorHolder"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="columnRight" id="columnRight">
-                </div>
             </div>
-            <div class="columnDown"></div>
+            <div class="columnRight" id="columnRight">
+            </div>
         </div>
+        <div class="columnDown"></div>
     </div>
     <script src="gradientColorCalculator.js"></script>
     <script type="module" src="/Tools/importFile.js"></script>
