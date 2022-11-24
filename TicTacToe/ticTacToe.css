@@ -1,7 +1,11 @@
+:root{
+    --bar-size: 3%;
+    --character-size: calc((100% - var(--bar-size) * 2) / 3);
+}
+
 .settings{
     position: relative;
     box-sizing: border-box;
-    /* background-color:aqua; */
 }
 
 .selectSize{
@@ -19,9 +23,7 @@
 .gameWindow{
     width: 30vw;
     height: 30vw;
-    /* aspect-ratio: 1 / 1; */
     border: solid 5vw rgba(0,0,0,0);
-    /* border-top: solid 0vw rgba(0,0,0,0); */
     box-sizing: border-box;
 }
 
@@ -43,16 +45,11 @@
 .winIndicator{
     position: absolute;
     width: 100%;
-    background-image: url("/Images/WinIndicator.png");
+    background-image: url("/Images/winIndicator.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     padding-bottom: 100%;
     z-index: 1;
-}
-
-:root{
-    --bar-size: 3%;
-    --character-size: calc((100% - var(--bar-size) * 2) / 3);
 }
 
 .gameWindow3x3{
@@ -72,13 +69,6 @@
     height: 92%;
     padding: 4%;
 }
-
-/* .chracterButton1{
-    background-image: url("/Images/x.png");
-    background-repeat:no-repeat;
-    background-size: 100% 100%;
-    padding-bottom: 100%;
-} */
 
 [id*="characterSpot"]{
     position: relative;
