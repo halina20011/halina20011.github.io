@@ -126,7 +126,7 @@
     width: 100%;
     height: 100%;
     border-radius: 4px;
-    background-image: url("/Images/Settings.png");
+    background-image: url("/Images/Icons/settings.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
