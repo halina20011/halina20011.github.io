@@ -11,15 +11,15 @@ let listOfHighlightedWords = [variables, logicalOperators, functions, other];
 let listOfHighlightedWordsClassName = ["variables", "logicalOperators", "functions", "other"];
 
 // Get filename
-var Url = window.location.href;
-var urls = Url.split("/");
-for(var i = 0; i < urls.length; i++){
+let Url = window.location.href;
+let urls = Url.split("/");
+for(let i = 0; i < urls.length; i++){
     if(urls[i] == ''){
         urls.splice(i, 1);
     }
 }
 
-var htmlName = urls[urls.length - 1];
+let htmlName = urls[urls.length - 1];
 htmlName = htmlName.split("#")[0];
 htmlName = htmlName.replace(".html", "");
 
@@ -34,10 +34,10 @@ function listOfLinesToText(listOfLines){
 }
 
 function getListOfLines(filePath){
-    var textFromFile = getText(filePath);
-    var listOfLines = textFromFile.split("\n"); // Get text from file in format "one line one index of array"
+    let textFromFile = getText(filePath);
+    let listOfLines = textFromFile.split("\n"); // Get text from file in format "one line one index of array"
 
-    for (var i = 0; i < listOfLines.length; i++){
+    for (let i = 0; i < listOfLines.length; i++){
         listOfLines[i] = listOfLines[i].replace("\r", "");
     }
     return listOfLines
@@ -91,11 +91,11 @@ function makeCodeWindow(parentWindow){
     // </div>
 
     // Make list of code lines
-    var listOfLines = [];
+    let listOfLines = [];
     let rawText = "";
     let name = "";
     let src = parentWindow.dataset["src"];
-    console.log(src);
+    // console.log(src);
 
     if(src == "URL"){
         listOfLines = getListOfLines(codeUrl);
@@ -115,7 +115,8 @@ function makeCodeWindow(parentWindow){
 
     rawText = listOfLinesToText(listOfLines);
     
-    var copyText = document.createElement("div");
+    // Copy text message
+    let copyText = document.createElement("p");
     copyText.className = "copyText";
     copyText.id = "copyText";
     copyText.innerHTML = "The text has been copied.";
@@ -123,8 +124,8 @@ function makeCodeWindow(parentWindow){
     codeScrollWindow.appendChild(copyText);
     
     // CODE SETTINGS
-    var emptyNumber = document.createElement("div");
-    var codeSettings = document.createElement("div");
+    let emptyNumber = document.createElement("div");
+    let codeSettings = document.createElement("div");
     codeSettings.className = "codeSettings"
     codeScrollWindow.appendChild(emptyNumber);
     codeScrollWindow.appendChild(codeSettings);
@@ -133,18 +134,17 @@ function makeCodeWindow(parentWindow){
     let copyButton = document.createElement("button");
     copyButton.className = "copyCodeWindowButton1";
     copyButton.id =        "copyCodeWindowButton1";
-    // copyButton.setAttribute("onclick", `copyTextToClipboard(${htmlName})`);
     copyButton.addEventListener('click', function() {copyTextToClipboard(rawText, copyText);}, false);
     codeSettings.appendChild(copyButton);
     
-    // DONWLOAD BUTTON
+    // DOWNLOAD BUTTON
     let downloadButton = document.createElement("button");
     downloadButton.className = "downloadCodeWindowButton1";
     downloadButton.id =        "downloadCodeWindowButton1";
     downloadButton.addEventListener('click', function() {downloadText(name, rawText);}, false);
     codeSettings.appendChild(downloadButton);
     
-    for(var i = 0; i < listOfLines.length; i++){
+    for(let i = 0; i < listOfLines.length; i++){
         let text = listOfLines[i];
         // <div class="number"><div>0</div>1</div>
         // <div class="code">text</div>
@@ -155,12 +155,11 @@ function makeCodeWindow(parentWindow){
         let number = document.createElement("div");
 
         // Make invisible numbers
-        var stringLength = calculateNumberOfSpaces(i + 1, listOfLines.length);
-        var spaces = "0".repeat(stringLength);
+        let stringLength = calculateNumberOfSpaces(i + 1, listOfLines.length);
+        let spaces = "0".repeat(stringLength);
 
         let spaceElement = document.createElement("div");
         spaceElement.innerHTML = spaces;
-        // spaceElement.style.display = "inline-block";
         spaceElement.style.color = "rgba(0, 0, 0, 0)";
 
         lineNumber.appendChild(spaceElement);
@@ -169,12 +168,12 @@ function makeCodeWindow(parentWindow){
 
         codeScrollWindow.appendChild(lineNumber);
         
-        var codeText = document.createElement("div"); //Make <code>
+        let codeText = document.createElement("div"); //Make <code>
         codeText.className = "code";
         codeScrollWindow.appendChild(codeText);
 
         // 1 is added to i, because there is allready "codeSettings" with evenBackgroundColor
-        if((i + 1)% 2 == 0){
+        if((i + 1) % 2 == 0){
             lineNumber.style.backgroundColor = "var(--evenBackgroundColor)";
             codeText.style.backgroundColor = "var(--evenBackgroundColor)";
         }
@@ -189,17 +188,17 @@ function makeCodeWindow(parentWindow){
 }
 
 function split(text){
-    return [...text]; //Or text.split('')
+    return [...text]; // Or text.split('')
 }
 
 function stringToList(text){
     text = text.replace(/    /g, "TAB ");
-    var listOfCharacters = split(text); //Get Strign split by ""
-    listOfCharacters.push(" "); //Add " " to end
-    var listOfWords = []; //Make list
-    var words = ""; //Make value to hold current word
+    let listOfCharacters = split(text); // Get Strign split by ""
+    listOfCharacters.push(" "); // Add " " to end
+    let listOfWords = []; // Make list
+    let words = ""; // Make value to hold current word
     for (let i = 0; i < listOfCharacters.length; i++) {
-        var letter = listOfCharacters[i];
+        let letter = listOfCharacters[i];
         if(letter == "/" && listOfCharacters.length != i + 1 && listOfCharacters[i + 1] == "/"){
             if(words != ""){
                 listOfWords.push(words);
@@ -236,26 +235,29 @@ function stringToList(text){
 
 function changeTextColor(text){
     let newElements = "";
-    var syntaxList = stringToList(text); //Convert String to List
-    for(var i = 0; i < syntaxList.length; i++){
-        var word = syntaxList[i];
+    let syntaxList = stringToList(text); // Convert String to List
+    for(let i = 0; i < syntaxList.length; i++){
+        let word = syntaxList[i];
         let checked = false;
+
         // Check if syntax is comment
         if(word.length > 2 && word.substring(0, 2) == "//"){
             newElements += `<div class="comment">${escapeHtmlFromUnsafe(word)}</div>`;
             continue;
         }
+
         // Go through the list with all highlighted words
         for(let _i = 0; _i < listOfHighlightedWords.length; _i++){
             for(let _x = 0; _x < listOfHighlightedWords[_i].length; _x++){
                 if(word == listOfHighlightedWords[_i][_x]){
                     // Change color
-                    newElements += `<div class="${listOfHighlightedWordsClassName[_i]}">${escapeHtmlFromUnsafe(word)}</div>`;
+                    newElements += `<span class="${listOfHighlightedWordsClassName[_i]}">${escapeHtmlFromUnsafe(word)}</span>`;
                     checked = true;
                     break;
                 }
             }
         }
+
         if(syntaxList[i] == "TAB"){
             newElements += "    ";
         }
@@ -263,7 +265,9 @@ function changeTextColor(text){
             newElements += escapeHtmlFromUnsafe(syntaxList[i]);
         }
     }
-    console.log(newElements);
+
+    // console.log(newElements);
+
     return newElements;
 }
 
@@ -275,7 +279,7 @@ function downloadText(name, text){
     }
     textFileUrl = window.URL.createObjectURL(fileData);
 
-    var a = document.createElement('a');
+    let a = document.createElement('a');
     a.href = textFileUrl;
     a.download = name;
     document.body.appendChild(a);
@@ -297,7 +301,8 @@ function showCopyText(copyTextElement){
 
 function makeAllCodeWindows(){
     let codeWindows = document.querySelectorAll("codeWindow");
-    console.log(codeWindows);
+    // console.log(codeWindows);
+
     codeWindows.forEach(element => {
         makeCodeWindow(element);
     });
