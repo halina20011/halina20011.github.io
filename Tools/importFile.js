@@ -1,6 +1,6 @@
 import {getText} from "/Tools/import.js";
 
-let text = getText("/Menu/dropDownMenu.html")
+let text = getText("/Menu/head.html")
 let word = "<body>"
 let word2 = "<!-- Code injected by live-server -->"
 let word3 = "</body>"
