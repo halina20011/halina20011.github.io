@@ -2,7 +2,7 @@
     /*                       calculate size of Project Window minus gap / 3 */
     --image-link-width3: calc(100% / 3.05 - 10px / 3);
     --image-link-width2: calc(100% / 2.05 - 10px / 2);
-    --image-link-width1: calc(100% / 1.05 - 10px);
+    --image-link-width1: 100%;
 }
 
 .importSpot{
@@ -11,25 +11,24 @@
 
 .projects{
     display: grid;
-    grid-template-columns: repeat(3, var(--image-link-width3));
-    gap: 10px;
     box-sizing: border-box;
-    /* padding: 10px; */
+    gap: 10px;
+    grid-template-columns: repeat(3, var(--image-link-width3));
 }
 
 .projects > button{
     padding: 0px;
 }
 
-[class*="Project"] > div :nth-child(1) {
+[class*="Project"] > div :nth-child(1){
     order: 1;
 }
 
-[class*="Project"] > div :nth-child(2) {
+[class*="Project"] > div :nth-child(2){
     order: 2;
 }
 
-[class*="Project"] > div :nth-child(3) {
+[class*="Project"] > div :nth-child(3){
     order: 3;
 }
 
@@ -57,7 +56,7 @@
     display: none;
 }
 
-[class*="Project"] .backgroundImg .projectTextInfo{
+[class*="Project"] > .backgroundImg > .projectTextInfo{
     position: absolute;
     display: none;
     z-index: 2;
@@ -68,7 +67,7 @@
     overflow-y: scroll;
 }
 
-[class*="Project"] .backgroundImg .projectTextInfo p{
+[class*="Project"] > .backgroundImg > .projectTextInfo p{
     color: white;
     margin: 8px;
     overflow-wrap: break-word;
@@ -76,7 +75,7 @@
     box-sizing: border-box;
 }
 
-[class*="Project"] .backgroundImg{
+[class*="Project"] > .backgroundImg{
     position: relative;
     width: 100%;
     background-size: 100%;
@@ -96,7 +95,7 @@
     transition: all 0.2s;
 }
 
-[class*="Project"] .backgroundImg .infoText{
+[class*="Project"] > .backgroundImg > .infoText{
     width: 94%;
     position: absolute;
     /* position: relative; */
@@ -106,20 +105,20 @@
     background-color: rgba(255,255,255, 0.5)
 }
 
-[class*="Project"] .backgroundImg .infoText p{
+[class*="Project"] > .backgroundImg > .infoText p{
     position: relative;
     width: 100%;
     left: 0;
     text-align: center;
 }
 
-@media only screen and (max-width: 900px) { 
+@media only screen and (max-width: 900px){ 
     .projects{
         grid-template-columns: repeat(2, var(--image-link-width2));
     }
 }
 
-@media only screen and (max-width: 600px) { 
+@media only screen and (max-width: 600px){ 
     .projects{
         grid-template-columns: repeat(1, var(--image-link-width1));
     }
