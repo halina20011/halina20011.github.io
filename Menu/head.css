@@ -38,7 +38,7 @@
     display: flex;
     float: right;
     height: 100%;
-    width: 25vw;
+    width: 400px;
     box-sizing: border-box;
     pointer-events: all;
     border-radius: 5px;
@@ -78,22 +78,6 @@
     height: 100%;
 }
 
-.extend-reduceButton{
-    position: relative;
-    float: left;
-    width: 2vw;
-    height: 2vw;
-    min-width: 2vw;
-    padding: 10px;
-    border: none;
-    background-color: rgb(224, 0, 0);
-}
-
-.extend-reduceButton > img{
-    width: 100%;
-    height: 100%;
-}
-
 .secondRow > div > a{
     position: relative;
     height: 100%;
@@ -106,4 +90,16 @@
     height: 100%;
     display: flex;
     align-items: center;
+}
+
+@media only screen and (max-width: 1200px){
+    .search{
+        width: 250px;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .search{
+        width: 100%;
+    }
 }

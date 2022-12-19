@@ -65,6 +65,7 @@ body{
     background-color: rgb(63, 63, 63);
     width: 60%;
     position: sticky;
+    box-sizing: border-box;
     top: var(--column-height);
 }
 
@@ -86,6 +87,12 @@ body{
 
 .pageContent button:hover{
     background-color: rgb(104, 104, 104);
+}
+
+@media only screen and (max-width: 1400px){
+    .pageContentContainer{
+        width: 100%;
+    }
 }
 
 /* ############################################################################### */
@@ -186,7 +193,7 @@ body{
     width: 70%;
 }
 
-@media only screen and (max-width: 600px) { 
+@media only screen and (max-width: 600px){ 
     .contentContainer{
         grid-template-columns: 0% 100% 0%;
     }
