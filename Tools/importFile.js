@@ -1,4 +1,4 @@
-import {getText} from "/Tools/import.js";
+import {getText, createScript} from "/Tools/import.js";
 
 let text = getText("/Menu/head.html")
 let word = "<body>"
@@ -41,3 +41,5 @@ function listToString(list){
 let code = listToString(lines);
 let columnUp = document.getElementById('columnUp');
 columnUp.innerHTML += code;
+
+createScript("/Tools/codeLink.js", columnUp);

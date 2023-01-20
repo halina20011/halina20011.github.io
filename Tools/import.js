@@ -26,7 +26,14 @@ export function createLink(path, parent){
     sheet.rel = "stylesheet";
     sheet.type = "text/css";
     sheet.href = path;
-    parent.appendChild(sheet)
+    parent.appendChild(sheet);
+}
+
+export function createScript(path, parent){
+    let script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = path;
+    parent.appendChild(script);
 }
 
 export function loadJSON(url) {
