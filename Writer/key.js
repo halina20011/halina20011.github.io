@@ -60,7 +60,7 @@ const space = document.getElementById('Space'); //Space
 // const space = document.getElementById('Space'); //Alt
 const ctrl2 = document.getElementById('Ctrl2'); //Ctrl2
 
-var borderValue = "2.5px solid rgb(0, 0, 255)";
+let borderValue = "2.5px solid rgb(0, 0, 255)";
 
 // a96.addEventListener("click", onClickBorder(a96));
 a96.addEventListener("click", function() {onClickBorder(a96);} , false);
@@ -76,9 +76,9 @@ a9.addEventListener("click", function() {onClickBorder(a9);} , false);
 a0.addEventListener("click", function() {onClickBorder(a0);} , false);
 a45.addEventListener("click", function() {onClickBorder(a45);} , false);
 a61.addEventListener("click", function() {onClickBorder(a61);} , false);
-backspace.addEventListener("click", function() {onClickBorder(backspace);} , false);
+// backspace.addEventListener("click", function() {onClickBorder(backspace);} , false);
 
-tab.addEventListener("click", function() {onClickBorder(tab);} , false);
+// tab.addEventListener("click", function() {onClickBorder(tab);} , false);
 q.addEventListener("click", function() {onClickBorder(q);} , false);
 w.addEventListener("click", function() {onClickBorder(w);} , false);
 e.addEventListener("click", function() {onClickBorder(e);} , false);
@@ -93,7 +93,7 @@ a91.addEventListener("click", function() {onClickBorder(a91);} , false);
 a93.addEventListener("click", function() {onClickBorder(a93);} , false);
 a92.addEventListener("click", function() {onClickBorder(a92);} , false);
 
-capsLock.addEventListener("click", function() {onClickBorder(capsLock);} , false);
+// capsLock.addEventListener("click", function() {onClickBorder(capsLock);} , false);
 a.addEventListener("click", function() {onClickBorder(a);}, false);
 s.addEventListener("click", function() {onClickBorder(s);} , false);
 d.addEventListener("click", function() {onClickBorder(d);} , false);
@@ -105,9 +105,9 @@ k.addEventListener("click", function() {onClickBorder(k);} , false);
 l.addEventListener("click", function() {onClickBorder(l);} , false);
 a59.addEventListener("click", function() {onClickBorder(a59);} , false);
 a39.addEventListener("click", function() {onClickBorder(a39);} , false);
-enter.addEventListener("click", function() {onClickBorder(enter);}, false);
+// enter.addEventListener("click", function() {onClickBorder(enter);}, false);
 
-shift.addEventListener("click", function() {onClickBorder(shift);}, false);
+// shift.addEventListener("click", function() {onClickBorder(shift);}, false);
 z.addEventListener("click", function() {onClickBorder(z);}, false);
 x.addEventListener("click", function() {onClickBorder(x);}, false);
 c.addEventListener("click", function() {onClickBorder(c);}, false);
@@ -118,44 +118,61 @@ m.addEventListener("click", function() {onClickBorder(m);}, false);
 a44.addEventListener("click", function() {onClickBorder(a44);}, false);
 a46.addEventListener("click", function() {onClickBorder(a46);}, false);
 a47.addEventListener("click", function() {onClickBorder(a47);}, false);
-shift2.addEventListener("click", function() {onClickBorder(shift2);}, false);
+// shift2.addEventListener("click", function() {onClickBorder(shift2);}, false);
 
-space.addEventListener("click", function() {onClickBorder(space);}, false);
+// space.addEventListener("click", function() {onClickBorder(space);}, false);
 
-var list = [a96, a1, a2, a3, a4, a5, a6, a7, a8, a9, a0, a45, a61, backspace,
+let list = [a96, a1, a2, a3, a4, a5, a6, a7, a8, a9, a0, a45, a61, backspace,
             tab, q, w, e, r, t, y, u, i, o, p, a91, a93, a92,
             capsLock, a, s, d, f, g, h, j, k, l, a59, a39, enter,
             shift, z, x, c, v, b, n, m, a44, a46, a47, shift2, 
             space];
 
-var listLetters = ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace", 
+let listLetters = ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace", 
                 "Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\",
                 "Caps Lock", "A", "S", "D", "F", "G", "H","J", "K", "L", ":", "'" , "Enter", 
                 "Shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "Shift",
                 " "];
 
+let firstLine = [q, w, e, r, t, y, u, i, o, p];
+let secondLine = [a, s, d, f, g, h, j, k, l];
+let thirdLine = [z, x, c, v, b, n, m];
 
 export default function getLetters(text) {
-    var re = [];
-    for(var int = 0; int < list.length; int++){
+    let re = [];
+    for(let int = 0; int < list.length; int++){
         if(list[int].style.border == borderValue){
             re.push(listLetters[int].toLocaleLowerCase());
         }
     }
-    // console.log(re)
+    console.log(re)
+
     return re;
 }
 
 export function setText(List){
-    for(var nu = 0; nu < List.length; nu++){
-        var key = List[nu]; //Get
-        for(var int = 0; int < listLetters.length; int++){
+    for(let nu = 0; nu < List.length; nu++){
+        let key = List[nu]; // Get
+        for(let int = 0; int < listLetters.length; int++){
             if(key == listLetters[int].toLocaleLowerCase()){
-                border(list[int])
+                border(list[int]);
             }
         }
     }
     // return 0;
+}
+
+export function toggleLine(what){
+    // 1 2 3
+    if(0 < what && what < 4){
+        let indexLine = [firstLine, secondLine, thirdLine];
+        let line = indexLine[what - 1];
+        console.log(line);
+        for(let i = 0; i < line.length; i++){
+            let element = line[i];
+            border(element);
+        }
+    }
 }
 
 function onClickBorder(object){

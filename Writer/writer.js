@@ -1,15 +1,18 @@
 // import {printText, setText} from '/Writer/key.js'
 import getLetters from '/Writer/key.js'
-import {setText} from '/Writer/key.js'
+import {toggleLine} from '/Writer/key.js'
 
-// var keys = ["a", "s", "d", "f", "g", "h", "j", "k", "l", "t", "y", " "];
-var keys = ["a", "s", " "];
-var listOfLetters = [];
-var listOfWords = [];
-var listOfWordsStartEnd = [];
+let keys = [];
+let listOfLetters = [];
+let listOfWords = [];
+let listOfWordsStartEnd = [];
 
-var order = 0;
-var makedMistakes = 0;
+// toggleLine(1);
+toggleLine(2);
+// toggleLine(3);
+
+let order = 0;
+let mistakesMade = 0;
 
 const input = document.getElementById("input");
 input.addEventListener("input", function() {onChnageInput(input.value)}, false);
@@ -22,6 +25,8 @@ const randomizeCheckbox = document.getElementById('checkbox');
 
 const words = document.getElementById('words');
 const refresh = document.getElementById('restart'); //refreshButton
+refresh.addEventListener('click', function() { setUp(); }, false);
+
 const wordsInput = document.getElementById("wordsInput"); 
 
 const wordsInputClass = document.getElementsByClassName("wordsInput"); 
@@ -30,28 +35,33 @@ const endScreen = document.getElementById("endScreen")
 const timerText = document.getElementById("timerText");
 const mistakesText = document.getElementById("mistakesText");
 
-randomizeCheckbox.addEventListener('change', function() {checkeMode(randomizeCheckbox.checked)});
-checkeMode(randomizeCheckbox.checked);
+randomizeCheckbox.addEventListener('change', function() {checkMode(randomizeCheckbox.checked)});
 
-function setUp(){
-    listOfLetters = [];
-    listOfWords = [];
-    listOfWordsStartEnd = [];
-    order = 0;
+function checkMode(value){
+    if(value){
+        // console.log("Randomize Checkbox is checked..");
+        displayNone(wordsInputClass, 'block');
+        displayNone(numberOfLettersClass, 'none')
+    } 
+    else{
+        // console.log("Randomize Checkbox is not checked..");
+        displayNone(wordsInputClass, 'none');
+        displayNone(numberOfLettersClass, 'block')
+    }
+}
 
-    endScreen.style.display = "none";
-    makedMistakes = 0;
-    currentRound = 0;
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+};
 
-    clearInput(); //Clear word nput
-    generateList(); //Generate list of letter
-    words.innerHTML = listToString(listOfLetters); //Show all letters (in String not list)
-    showWorld();
-    // showKey(listOfLetters, order); //Show first letter
-    
-    // wordsInput.style.visibility = "hidden" //Hide text input forn non random text.
-    
-    // displayNone(wordsInput, 'none');
+function listToString(list){
+    let st = "";
+
+    for(let i = 0; i < list.length; i++){
+        st += list[i];
+    }
+
+    return st;
 }
 
 function clearInput(){
@@ -67,24 +77,24 @@ function showWorld(){
     }
 }
 
-setText(keys); //Set begiginning letter to be at start choose.
-setUp();
 
 function onChnageInput(_value){
     // Compare
     // console.log(_value.substring(0, _value.length - 1), listOfWords[order].substring(0, _value.length - 1))
     // If strings are same
-    var answer = listOfWords[order];
-    var mistakesCount = 0;
+    let answer = listOfWords[order];
+    let mistakesCount = 0;
 
-    for(var i = 0; i < _value.length; i++){
+    for(let i = 0; i < _value.length; i++){
         if(_value.length == answer.length + 1 && _value.substring(_value.length - 1, _value.length) == " "){
-            if(_value[i] != answer[i] && answer[i] != undefined) {
+            if(_value[i] != answer[i] && answer[i] != undefined){
                 mistakesCount++
+                mistakesMade += 1;
             }
         }
-        else if(_value[i] != answer[i]) {
+        else if(_value[i] != answer[i]){
             mistakesCount++
+            mistakesMade += 1;
         }
     }
 
@@ -98,7 +108,9 @@ function onChnageInput(_value){
     if(_value.length == answer.length && mistakesCount == 0){
         console.log("Word is correct.");
     }
+
     console.log(_value.length, answer.length + 1);
+
     if(_value.length == answer.length + 1 && mistakesCount == 0){
         console.log("Word is correct and has space on end.");
         order++;
@@ -107,9 +119,11 @@ function onChnageInput(_value){
     }
 
     console.log("Mistakes: " + mistakesCount);
+    
+    mistakes.innerHTML = "Mistake: " + mistakesMade;
 
     // if(_value != listOfWords[wordOrder][indexOfLetter]){
-    //     makedMistakes = makedMistakes + 1;
+    //     mistakesMade = makedMistakes + 1;
     //     if(makedMistakes < 2){
     //         mistakes.innerHTML = "Mistake: " + makedMistakes;
     //     }
@@ -121,46 +135,42 @@ function onChnageInput(_value){
 
 // randomizeCheckbox.addEventListener("mousemove", function() {re();}, false);
 function convertTime(time){
-    var _numberOfLetters = "0:00"
-    var minutes = Math.floor(time / 60);
-    var seconds = time - minutes * 60;
-    var minutesText = minutes
-    var secondsText = seconds < 10 ? "0" + seconds : seconds;
+    let _numberOfLetters = "0:00"
+    let minutes = Math.floor(time / 60);
+    let seconds = time - minutes * 60;
+    let minutesText = minutes
+    let secondsText = seconds < 10 ? "0" + seconds : seconds;
     _numberOfLetters = minutesText + ":" + secondsText;
     return _numberOfLetters;
 }
 
-//Timer
+// Timer
 const currentRoundText = document.getElementsByClassName("timer")[0];
-var counting = false;
-var currentRound = 0;
+let counting = false;
+let currentRound = 0;
 
-var interval = 1000;
-var expected = Date.now() + interval;
+let interval = 1000;
+let expected = Date.now() + interval;
 // setTimeout(timer, interval);
+
 function timer() {
     if(counting == true){
-        var dt = Date.now() - expected; // the drift (positive for overshooting)
-        if (dt > interval) {
+        let dt = Date.now() - expected; // the drift (positive for overshooting)
+        if(dt > interval){
+            // Something really bad happened. Maybe the browser (tab) was inactive?
             console.error("Time");
-        //     something really bad happened. Maybe the browser (tab) was inactive?
-        //     possibly special handling to avoid futile "catch up" run
         }
         // console.log(currentRound);
         currentRound += 1;
         expected += interval;
         currentRoundText.innerHTML = convertTime(currentRound);
     }
-    setTimeout(timer, Math.max(0, interval - dt)); // take into account drift
+
+    setTimeout(timer, Math.max(0, interval - dt)); // Take into account drift
 }
 
-refresh.addEventListener('click', function() {
-    keys = getLetters();
-    restart();
-}, false);
-
 function displayNone(Class, state){
-    for(var i = 0; i < Class.length; i++){
+    for(let i = 0; i < Class.length; i++){
         // console.log(Class.childElementCount);
         Class[i].style.display = state;
     }
@@ -170,13 +180,13 @@ function end(){
     words.innerHTML = "End"; 
     endScreen.style.display = "block";
     timerText.innerHTML = convertTime(currentRound);
-    mistakesText.innerHTML = makedMistakes +" mistakes";
+    mistakesText.innerHTML = mistakesMade +" mistakes";
     counting = false;
 }
 
 function highlightWord(textBox, _class, text, from, to) {
-    var indexOf = text.length;
-    if (from < to) { 
+    let indexOf = text.length;
+    if(from < to){ 
         text = text.substring(0, from) + '<span class=\"' + _class + '\">' + text.substring(from, to) + "</span>" + text.substring(to, indexOf);
         // console.log(text);
         textBox.innerHTML = text;
@@ -185,23 +195,25 @@ function highlightWord(textBox, _class, text, from, to) {
 
 function lettersToWords(){
     let word = "";
-    var list = [];
-    for(var i = 0; i < listOfLetters.length; i++){
+    let list = [];
+    for(let i = 0; i < listOfLetters.length; i++){
         if(word == ""){ //If word is empty add to list first
             list.push(i);
         }
+
         if(listOfLetters[i] == " " || i == listOfLetters.length - 1){
-            var index = i;
+            let index = i;
             if(i == listOfLetters.length - 1){
                 console.log(i, listOfLetters.length - 1);
                 word += listOfLetters[i];
                 index++;
             }
+
             list.push(index);
             listOfWordsStartEnd.push(list);
             listOfWords.push(word);
             word = "";
-            list = []
+            list = [];
         }
         else{
             word += listOfLetters[i];
@@ -209,102 +221,81 @@ function lettersToWords(){
     }
 }
 
+//                               1, 2, 3, 4, 5, 6, 7, 8, 9
+let wordLengthProbabability =   [0, 2, 3, 7, 9, 2, 1, 0, 0];
+
 function generateList(){
     if(randomizeCheckbox.checked == false){
-        var numberOfWords = numberOfLetters.value; //Get how many letters to add.
-        var maxWordIndex = keys.length; //Get lenght of keys to know what is top number for Random.
-        var lastLetter = ""
-        
-        for(var i = 0; i < numberOfWords; i++){
-            var lastLetterIndex = numberOfWords - 1 //Make variable to store index of last letter (-1 is becauseloop start on 0)
-            var random = getRandomInt(maxWordIndex); //Generate random number
-            var key = keys[random]; //Get key with random index
-            // console.log(key);
-            // console.log(i, lastLetterIndex)
-            if(key == " " && (i == 0 || i == lastLetterIndex || lastLetter == " ")){ //Add space if
-                // console.log(`Space added "a"`);
-                listOfLetters.push(keys[0]);
-            }
-            else{
-                listOfLetters.push(key); //Add generatet number to list
-            }
-            lastLetter = key;
+        let maxTextLength = numberOfLetters.value;
+        let maxWordIndex = keys.length; // Get lenght of keys to know what is top number for Random.
+
+        // Calculate max range for word length probabability
+        let maxRange = 0;
+        for(let i = 0; i < wordLengthProbabability.length; i++){
+            maxRange += wordLengthProbabability[i];
         }
-        lettersToWords();
+        console.log(`Max range: ${maxRange}`);
+
+        // Generate wordLengthProbababilityList
+        let wordLengthProbababilityList = [];
+        for(let i = 0; i < wordLengthProbabability.length; i++){
+            let wordLengthProb = wordLengthProbabability[i];
+            for(let x = 0; x < wordLengthProb; x++){
+                wordLengthProbababilityList.push(i + 1);
+            }
+        }
+        console.log(`Word length probabability list:`, wordLengthProbababilityList);
+        
+        let listOfLettersIndex = 0;
+        while(listOfLetters.length < maxTextLength){
+            // Generate length of word
+            let maxWLength = maxTextLength - listOfLetters.length;
+            let wordLength = wordLengthProbababilityList[getRandomInt(maxRange)];
+            console.log(`Word length: ${wordLength}`);
+
+            // Generate random words
+            wordLength = (wordLength <= maxWLength) ? wordLength: maxWLength;
+            for(let i = 0; i < wordLength; i++){
+                let random = getRandomInt(maxWordIndex); // Generate random number
+                let key = keys[random]; // Get key with random index
+                listOfLetters.push(key);
+            }
+
+            // Add space
+            if(listOfLetters.length < maxTextLength){
+                listOfLetters.push(" ");
+            }
+            //listOfLetters.push(" ");
+        }
     }
     else{
-        for(var i = 0; i < wordsInput.value.length; i++){
+        for(let i = 0; i < wordsInput.value.length; i++){
             listOfLetters.push(wordsInput.value[i]);
         }
-        lettersToWords();
     }
+
+    console.log(listOfLetters);
+    lettersToWords();
 }
 
-function checkeMode(value){
-    if (value) {
-        // console.log("Randomize Checkbox is checked..");
-        displayNone(wordsInputClass, 'block');
-        displayNone(numberOfLettersClass, 'none')
-    } else {
-        // console.log("Randomize Checkbox is not checked..");
-        displayNone(wordsInputClass, 'none');
-        displayNone(numberOfLettersClass, 'block')
-    }
+function setUp(){
+    listOfLetters = [];
+    listOfWords = [];
+    listOfWordsStartEnd = [];
+    order = 0;
+
+    endScreen.style.display = "none";
+    mistakesMade = 0;
+    currentRound = 0;
+
+    // Get list of selected letters that can be used
+    keys = getLetters();
+
+    clearInput();                                   // Clear word input
+    generateList();                                 // Generate list of letter
+    words.innerHTML = listToString(listOfLetters);  // Show all letters (in String not list)
+    showWorld();
 }
 
-// window.addEventListener('keyup', (event) => {
-//     if(counting == false){
-//         counting = true;
-//     }
-//     if(event.key == showedKey){
-//         order = order + 1;
-//         showKey(listOfLetters, order);
-//     }
-//     else if(event.key == "Space" && showKey == " "){
-//         order = order + 1;
-//         showKey(text, order);
-//     }
-//     else if(event.key == "CapsLock" && showKey == " "){
-//         order = order + 1;
-//         showKey(text, order);
-//     }
-//     else if(event.key == "F12" || event.key == "F11" || event.key == "Alt" || event.key == "Control"){
-//         return;
-//     }
-//     else{
-//         makedMistakes = makedMistakes + 1;
-//         if(makedMistakes < 2){
-//             mistakes.innerHTML = "Mistake: " + makedMistakes;
-//         }
-//         else if(makedMistakes > 1){
-//             mistakes.innerHTML = "Mistakes: " + makedMistakes;
-//         }
-//         // console.log(event.key);
-//     }
-// });
-
-numberOfLetters.addEventListener('change', function() {
-    // console.log(numberOfLetters.value);
-    if(numberOfLetters.value > 100){
-        numberOfLetters.value = 100;
-    }
-    if(numberOfLetters.value < 10){
-        numberOfLetters.value = 10;
-    }
-});
-
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-};
-
-function listToString(list){
-    var st = "";
-    for(let i = 0; i < list.length; i++){
-        st = st + list[i];
-    }
-    return st
-}
-
-function restart(){
-    setUp();
-}
+checkMode(randomizeCheckbox.checked);
+setUp();
