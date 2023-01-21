@@ -1,5 +1,18 @@
 {
     "Index": {
+        "BezierCurveProject": {
+            "className": "BezierCurveProject",
+            "path": "/Canvas/BezierCurve/bezierCurve.html",
+            "imgPath": "/Images/Miniature/bezierCurve.jpeg",
+            "name": "Bezier curve",
+            "projectTextInfo": [
+               "Explore beautiful math that is behind Bezier curves."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss":  [
+                [".BezierCurveProject:hover > .backgroundImg > .img",[["background-image: url('/Images/Miniature/bezierCurve.gif')!important;"]]]]
+        },
         "CubeProject": {
             "className": "CubeProject",
             "path": "/Canvas/Cube/cube.html",

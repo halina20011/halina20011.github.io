@@ -3,3 +3,4 @@
 3) Improvement: Add history of editing.
 4) Add: Add random button.
 5) Add: Add possibility to project any object on 2D plane.
+6) Improvement: Adding more control in bezier curves.
