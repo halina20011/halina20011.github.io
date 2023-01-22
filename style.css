@@ -239,7 +239,7 @@ jumpLink{
     --button-size: 30px;
 }
 
-.refreshButton, .addButton, .removeButton, .downloadButton,
+.refreshButton, .addButton, .removeButton, .okButton, .downloadButton,
 .downloadAllButton, .playButton, .pauseButton, .timelapseButton{
     width: var(--button-size);
     height: var(--button-size);
@@ -254,6 +254,7 @@ jumpLink{
 .refreshButton  { background-image: url("/Images/Icons/refresh.png");  }
 .addButton      { background-image: url("/Images/Icons/plus.png");     }
 .removeButton   { background-image: url("/Images/Icons/minus.png");    }
+.okButton   { background-image: url("/Images/Icons/minus.png");    }
 
 .downloadButton  { background-image: url("/Images/Icons/download.png"); }
 .downloadAllButton  { background-image: url("/Images/Icons/download.png"); background-color: rgb(48, 48, 48); }

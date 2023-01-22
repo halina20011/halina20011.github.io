@@ -8,6 +8,14 @@ let data = image.data;
 
 let downloader = new DOWNLOADER(canvas);
 
+let addButton = document.getElementById("addButton");
+addButton.addEventListener("click", function() { 
+    new CURVESETTING();
+    main();
+}, false);
+
+let bezierCurveSettingsContainer = document.getElementById("bezierCurveSettingsContainer");
+
 function timelapsee(fArguments){
     let howMenySteps = parseInt(fArguments[0].value);
     let timelapseTValue = parseFloat(fArguments[1].value) / 100;
@@ -38,10 +46,9 @@ let timelapseInputData = {
             "tValueMax": {"element": "input", "type": "number", "value": 100},
         },
     ]
-}
+};
 
 let timelapse = downloader.timelapse(timelapseInputData);
-
 
 let downloadImageButton = document.getElementById("downloadImage");
 downloadImageButton.addEventListener("click", function() { downloader.downloadImage(); }, false);
@@ -61,9 +68,6 @@ t.addEventListener("input", () => {
 }, false);
 
 let tText = document.getElementById("tText");
-
-function updateFloatNum(value, numberEl){
-}
 
 function getMultitplyOfTen(number){
     if(number == 0){
@@ -104,7 +108,6 @@ function clear(){
         }
     }
 }
-
 
 let cenX = 0;
 let cenY = 0;
@@ -300,7 +303,8 @@ function drawBezierCurve(t, points, boolDrawLines = false){
 
     if(boolDrawLines == true){
         //console.log(points);
-        drawLines(points, colors[points.length - 2]);
+        let colorIndex = (points.length - 2) % colors.length;
+        drawLines(points, colors[colorIndex]);
     }
 
     let newPoints = [];
@@ -315,15 +319,109 @@ function drawBezierCurve(t, points, boolDrawLines = false){
     return drawBezierCurve(t, newPoints, boolDrawLines);
 }
 
-let points = [[50, 300], [100, 100], [200, 100], [300, 100], [350, 300]];
+
+class CURVESETTING{
+    constructor(x = (canvas.width / 2), y = (canvas.height / 2)){
+        this.bezierCurveSetting = null;
+        this.input = [];
+
+        this.xValue;
+        this.yValue;
+
+        this.draw(x, y);
+    }
+
+    draw(x = 0, y = 0){
+        this.bezierCurveSetting = document.createElement("div");
+        this.bezierCurveSetting.className = "bezierCurveSetting";
+
+        let settingSameLine = document.createElement("div");
+        settingSameLine.className = "settingSameLine";
+        
+        for(let i = 0; i < 2; i++){
+            let text = (i == 0) ? "X: " : "Y: ";
+            let textEl = document.createElement("p");
+            textEl.innerHTML = text;
+
+            let input = document.createElement("input");
+            input.type = "number";
+            input.min = "0";
+            input.max = `${(i == 0) ? canvas.width : canvas.height}`;
+            input.value = (i == 0) ? x : y;
+
+            this.input.push(input);     
+            input.addEventListener("input", () => { 
+                this.xValue = parseInt(this.input[0].value);
+                this.yValue = parseInt(this.input[1].value);
+                // console.log(this.xValue, this.yValue);
+                main();
+            });
+
+            settingSameLine.appendChild(textEl);
+            settingSameLine.appendChild(input);
+
+        }
+
+        let buttonsSettingSameLine = document.createElement("div");
+        buttonsSettingSameLine.className = "settingSameLine";
+        buttonsSettingSameLine.style.display = "flex";
+        buttonsSettingSameLine.style.justifyContent = "flex-end";
+
+        let removeButton = document.createElement("button");
+        removeButton.className = "removeButton";
+        removeButton.addEventListener("click", () => { 
+            bezierCurveSettingsContainer.removeChild(this.bezierCurveSetting); 
+            main();
+        });
+ 
+        // let okButton = document.createElement("button");
+        // okButton.className = "okButton";
+        // okButton.addEventListener("click", () => { 
+        //     this.xValue = parseInt(this.input[0].value);
+        //     this.yValue = parseInt(this.input[1].value);
+        //     // console.log(this.xValue, this.yValue);
+        //     main();
+        // });
+        
+        let freeLine = document.createElement("div");
+        freeLine.className = "fS8";
+
+        // buttonsSettingSameLine.appendChild(okButton);
+        buttonsSettingSameLine.appendChild(removeButton);
+
+        this.bezierCurveSetting.appendChild(settingSameLine);
+        this.bezierCurveSetting.appendChild(freeLine);
+        this.bezierCurveSetting.appendChild(buttonsSettingSameLine);
+
+        bezierCurveSettingsContainer.appendChild(this.bezierCurveSetting);
+    }
+}
+
+function getBezierCurveSettings(){
+    let points = [];
+    let bezierCurveSettings = document.getElementsByClassName("bezierCurveSetting");
+
+    for(let i = 0; i < bezierCurveSettings.length; i++){
+        let x = parseInt(bezierCurveSettings[i].children[0].children[1].value);
+        let y = parseInt(bezierCurveSettings[i].children[0].children[3].value);
+        points.push([x, y]);
+    }
+
+    return points;
+}
 
 function main(){
     clear();
-    
+
+    let points = getBezierCurveSettings(); 
+    // console.log(points);
+
     let curvePoints = [];
+
     for(let _t = 0; _t < tValue; _t += 0.1){
         curvePoints.push(drawBezierCurve(_t, points));
     }
+
     let lastPoint = drawBezierCurve(tValue, points, true);
     curvePoints.push(lastPoint);
     drawPoint(lastPoint[0], lastPoint[1], [255, 0, 0, 255]);
@@ -333,5 +431,18 @@ function main(){
 
     swapBuffer();
 }
+
+// new CURVESETTING(50, 300);
+// new CURVESETTING(100, 100);
+// new CURVESETTING(200, 100);
+// new CURVESETTING(300, 100);
+// new CURVESETTING(350, 300);
+
+new CURVESETTING(50, 300);
+new CURVESETTING(125, 50);
+new CURVESETTING(175, 250);
+new CURVESETTING(300, 150);
+new CURVESETTING(350, 200);
+new CURVESETTING(300, 250);
 
 main();
