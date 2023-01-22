@@ -1,11 +1,12 @@
+import {CANVAS} from "/Canvas/canvas.js";
 import {DOWNLOADER} from "/Canvas/download.js";
 
-let canvas = document.getElementById("my-canvas");
-let context = canvas.getContext("2d");
+let canvasEl = document.getElementById("my-canvas");
+// let context = canvas.getContext("2d");
+// let image = context.createImageData(canvas.width, canvas.height);
+// let data = image.data;
 
-let image = context.createImageData(canvas.width, canvas.height);
-let data = image.data;
-
+let canvas = new CANVAS(canvasEl);
 let downloader = new DOWNLOADER(canvas);
 
 function timelapsee(fArguments){
@@ -259,8 +260,6 @@ class CAMERA{
     }
 }
 
-let camera = new CAMERA([0, 0, -10], [0, 0, 0]);
-
 class OBJECT{
     constructor(faces, position = [0, 0, 0], rotation = [0, 0, 0], scale = [1, 1, 1]){
         this.position = position;
@@ -360,149 +359,8 @@ class OBJECT{
     }
 }
 
-let cube = new OBJECT(
-    // Faces
-    [
-        // First face
-        [
-            [ 1, -1,  1],
-            [-1, -1,  1],
-            [-1, -1, -1],
-            [ 1, -1, -1]
-        ],
-        // Second face
-        [
-            [ 1, -1,  1],
-            [ 1,  1,  1],
-            [-1,  1,  1],
-            [-1, -1,  1]
-        ],
-        // Third face
-        [
-            [ 1, 1,  1],
-            [-1, 1,  1],
-            [-1, 1, -1],
-            [ 1, 1, -1]
-        ],
-        // Thought face
-        [
-            [ 1, -1, -1],
-            [ 1,  1, -1],
-            [-1,  1, -1],
-            [-1, -1, -1]
-        ],
-        // Fifth face
-        [
-            [ 1, -1,  1],
-            [ 1,  1,  1],
-            [ 1,  1, -1],
-            [ 1, -1, -1],
-        ],
-        // Sixth
-        [
-            [-1, -1,  1],
-            [-1,  1,  1],
-            [-1,  1, -1],
-            [-1, -1, -1],
-        ]
-
-    ],
-    [0, 0, 0], // Global position
-    [0, 0, 0], // Rotation
-    [10, 10, 10]  // Scale
-)
-cube.update();
-
-function swapBuffer(){
-    context.putImageData(image, 0, 0);
-}
-
-function clear(){
-    for(let y = 0; y < canvas.height; y++){
-        for(let x = 0; x < canvas.width; x++){
-            drawPixel(x, y, 0, 0, 0, 0);
-        }
-    }
-}
-
 function map(x, inMin, inMax, outMin, outMax){
     return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
-}
-
-function drawPixel(x, y, r = 255, g = 255, b = 255, a = 255){
-    if(x < 0 || canvas.width < x || y < 0 || canvas.height < y){
-        return;
-    }
-    let roundedX = Math.round(x);
-    let roundedY = Math.round(y);
-    let index = 4 * (canvas.width * roundedY + roundedX);
-    data[index + 0] = r;
-    data[index + 1] = g;
-    data[index + 2] = b;
-    data[index + 3] = a;
-}
-
-function drawCircle(x, y, radius){
-    let resoluton = 10;
-    for(let i = 0; i < 360; i += resoluton){
-        let angle = i;
-        let x1 = radius * Math.cos(angle * Math.PI / 180);
-        let y1 = radius * Math.sin(angle * Math.PI / 180);
-        drawPixel(x + x1, y + y1, {r:0, g:0, b:0, a:255});
-    }
-}
-
-function swap(i1, i2){
-    return [i2, i1];
-}
-
-function drawLine(x1, y1, x2, y2, rgba = [255, 255, 255, 255]){
-    if(Math.abs(y2 - y1) == Infinity || Math.abs(x2 - x1) == Infinity){
-        return;
-    }
-    let steep = Math.abs(y2 - y1) > Math.abs(x2 - x1);
-    if (steep == true){
-        [x1, y1] = swap(x1, y1);
-        [x2, y2] = swap(x2, y2);
-    }
-    if(x1 > x2){
-        [x1, x2] = swap(x1, x2);
-        [y1, y2] = swap(y1, y2);
-    }
-
-    let dx, dy;
-    dx = x2 - x1;
-    dy = Math.abs(y2 - y1);
-
-    let err = dx / 2;
-    let ystep;
-
-    if (y1 < y2){
-        ystep = 1;
-    }
-    else{
-        ystep = -1;
-    }
-    for (let a = 0; x1 <= x2; x1++){
-        if (steep == true){
-            drawPixel(y1, x1, rgba[0], rgba[1], rgba[2], rgba[3]);
-        }
-        else {
-            drawPixel(x1, y1, rgba[0], rgba[1], rgba[2], rgba[3]);
-        }
-        err -= dy;
-        if (err < 0){
-            y1 += ystep;
-            err += dx;
-        }
-    }
-}
-
-function drawPoint(x, y){
-    let radius = 5;
-    for(let r = 0; r < radius; r++){
-        drawCircle(x, y, r);
-    }
 }
 
 function degreeToRadian(r){
@@ -512,11 +370,13 @@ function degreeToRadian(r){
 function pointToPixel(x, y){
     x = map(x, -screenX, screenX, 0, canvas.width);
     y = map(y, screenY, -screenY, 0, canvas.height);
+
     return [x, y];
 }
 
 function printMatrix(matrix){
     let strMatrix = JSON.stringify(matrix);
+
     if(matrix[0].length > 1){
         strMatrix = strMatrix.slice(1, strMatrix.length - 1);
         console.log(strMatrix);
@@ -528,12 +388,14 @@ function printMatrix(matrix){
 
 function multiplyMatrix(a, b){
     let result = [];
+
     if(a[0].length != b.length){
         console.error("Wrong size");
         console.log(a[0].length, b.length);
         printMatrix(a, b);
         return b;
     }
+    
     a.forEach(row => {
         let r = 0;
         for(let i = 0; i < row.length; i++){
@@ -541,20 +403,24 @@ function multiplyMatrix(a, b){
         }
         result.push(r);
     });
+
     return result;
 }
 
 function addPosints(a, b){
     let result = [];
+
     if(a.length != b.length){
         console.error("Wrong size");
         console.log(a.length, b.length);
         printMatrix(a, b);
         return b;
     }
+
     for(let i = 0; i < a.length; i++){
         result.push(a[i] + b[i]);
     }
+
     return result;
 }
 
@@ -638,7 +504,7 @@ function projectPoints(points, position, rotation, scale, perspectiveProjection)
 }
 
 function main(){
-    clear();
+    canvas.clear();
     let points = [];
     cube.faces.forEach(face => {
         face.forEach(point => {
@@ -653,16 +519,14 @@ function main(){
         });
         for(let pointI = 0; pointI < points.length; pointI++){ 
             let nexPointI = (pointI + 1) % points.length;
-            drawLine(points[nexPointI][0], points[nexPointI][1], points[pointI][0], points[pointI][1]);
-            drawPoint(points[pointI][0], points[pointI][1]);
+            canvas.drawLine(points[nexPointI][0], points[nexPointI][1], points[pointI][0], points[pointI][1]);
+            canvas.drawPoint(points[pointI][0], points[pointI][1]);
         }
         points = [];
     });
-    swapBuffer();
-}
 
-main();
-let timeout = parseInt(timeDelay.value);
+    canvas.swapBuffer();
+}
 
 let loop = () => {
     if(aplyAnimationCheckbox.checked == true){
@@ -678,5 +542,64 @@ let loop = () => {
     main();
     setTimeout(loop, timeout);
 }
+
+let camera = new CAMERA([0, 0, -10], [0, 0, 0]);
+
+let cube = new OBJECT(
+    // Faces
+    [
+        // First face
+        [
+            [ 1, -1,  1],
+            [-1, -1,  1],
+            [-1, -1, -1],
+            [ 1, -1, -1]
+        ],
+        // Second face
+        [
+            [ 1, -1,  1],
+            [ 1,  1,  1],
+            [-1,  1,  1],
+            [-1, -1,  1]
+        ],
+        // Third face
+        [
+            [ 1, 1,  1],
+            [-1, 1,  1],
+            [-1, 1, -1],
+            [ 1, 1, -1]
+        ],
+        // Thought face
+        [
+            [ 1, -1, -1],
+            [ 1,  1, -1],
+            [-1,  1, -1],
+            [-1, -1, -1]
+        ],
+        // Fifth face
+        [
+            [ 1, -1,  1],
+            [ 1,  1,  1],
+            [ 1,  1, -1],
+            [ 1, -1, -1],
+        ],
+        // Sixth
+        [
+            [-1, -1,  1],
+            [-1,  1,  1],
+            [-1,  1, -1],
+            [-1, -1, -1],
+        ]
+
+    ],
+    [0, 0, 0], // Global position
+    [0, 0, 0], // Rotation
+    [10, 10, 10]  // Scale
+)
+
+cube.update();
+
+main();
+let timeout = parseInt(timeDelay.value);
 
 setTimeout(loop, timeout);
