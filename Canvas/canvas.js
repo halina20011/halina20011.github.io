@@ -15,7 +15,6 @@ export class CANVAS{
         this.cenX = 0;
         this.cenY = 0;
         this.scale = 1;
-
     }
 
     swapBuffer(){
@@ -23,8 +22,8 @@ export class CANVAS{
     }
 
     pixelToPoint(x, y, width, height){
-        let px = (x - width / 2.0) * (4.0 / width) * (1.0 / scale) + cenX;
-        let py = (y - height / 2.0) * (4.0 / height) * (1.0 / scale) + cenY;
+        let px = (x - width / 2.0) * (4.0 / width) * (1.0 / this.scale) + this.cenX;
+        let py = (y - height / 2.0) * (4.0 / height) * (1.0 / this.scale) + this.cenY;
 
         return [px, py]
     }

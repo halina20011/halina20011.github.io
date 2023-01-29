@@ -1,10 +1,10 @@
+import {CANVAS} from "/Canvas/canvas.js";
 import {DOWNLOADER} from "/Canvas/download.js";
 
-let canvas = document.getElementById("my-canvas");
-let context = canvas.getContext("2d");
+let canvasEl = document.getElementById("my-canvas");
 
-let image = context.createImageData(canvas.width, canvas.height);
-let data = image.data;
+let canvas = new CANVAS(canvasEl);
+let downloader = new DOWNLOADER(canvasEl);
 
 let levelNumber = document.getElementById("level");
 levelNumber.addEventListener("input", () => {
@@ -16,8 +16,6 @@ let showGrid = document.getElementById("showGrid");
 showGrid.addEventListener("input", () => {
     main();
 }, false);
-
-let downloader = new DOWNLOADER(canvas);
 
 let downloadImageButton = document.getElementById("downloadImage");
 downloadImageButton.addEventListener("click", function() { downloader.downloadImage(); }, false);
@@ -53,124 +51,9 @@ let timelapseInputData = {
 
 let timelapse = downloader.timelapse(timelapseInputData);
 
-function swapBuffer(){
-    context.putImageData(image, 0, 0);
-}
-
-function drawPixel(x, y, r = 255, g = 255, b = 255, a = 255){
-    let roundedX = Math.round(x);
-    let roundedY = Math.round(y);
-
-    let index = 4 * (canvas.width * roundedY + roundedX);
-    data[index + 0] = r;
-    data[index + 1] = g;
-    data[index + 2] = b;
-    data[index + 3] = a;
-}
-
-function swap(i1, i2){
-    return [i2, i1];
-}
-
-function clear(){
-    for(let y = 0; y < canvas.height; y++){
-        for(let x = 0; x < canvas.width; x++){
-            drawPixel(x, y, 0, 0, 0, 0);
-        }
-    }
-}
-
-function drawLine(x1, y1, x2, y2, rgba = [255, 255, 255, 255]){
-    let steep = Math.abs(y2 - y1) > Math.abs(x2 - x1);
-    if (steep == true){
-        [x1, y1] = swap(x1, y1);
-        [x2, y2] = swap(x2, y2);
-    }
-    if(x1 > x2){
-        [x1, x2] = swap(x1, x2);
-        [y1, y2] = swap(y1, y2);
-    }
-
-    let dx, dy;
-    dx = x2 - x1;
-    dy = Math.abs(y2 - y1);
-
-    let err = dx / 2;
-    let ystep;
-
-    if (y1 < y2){
-        ystep = 1;
-    }
-    else{
-        ystep = -1;
-    }
-    for (let a = 0; x1 <= x2; x1++){
-        if(steep == true){
-            drawPixel(y1, x1, rgba[0], rgba[1], rgba[2], rgba[3]);
-        }
-        else{
-            drawPixel(x1, y1, rgba[0], rgba[1], rgba[2], rgba[3]);
-        }
-        err -= dy;
-        if (err < 0){
-            y1 += ystep;
-            err += dx;
-        }
-    }
-}
-
-function plotLineWidth(x1, y1, x2, y2, wd, rgba=[255, 255, 255, 255]){ 
-//    let dx = Math.abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
-    let dx = Math.abs(x2 - x1);
-    let sx = x1 < x2 ? 1 : -1;
-    let dy = Math.abs(y2 - y1);
-    let sy = y1 < y2 ? 1 : -1;
-    let err = dx - dy
-    let e2, eX, eY;
-    let ed = dx + dy == 0 ? 1 : Math.sqrt(dx * dx + dy * dy);
-    
-    for(wd = (wd+1)/2; ;){
-        // drawPixel(x1, y1, max(0,255*(Math.abs(err-dx+dy)/ed-wd+1)));
-        drawPixel(x1, y1, rgba[0], rgba[1], rgba[2], rgba[3]);
-        e2 = err; 
-        eX = x1;
-        if(2*e2 >= -dx){
-            for(e2 += dy, eY = y1; e2 < ed*wd && (y2 != eY || dx > dy); e2 += dx){
-                // drawPixel(x1, y2 += sy, max(0,255*(Math.abs(e2)/ed-wd+1)));
-                drawPixel(x1, eY += sy, rgba[0], rgba[1], rgba[2], rgba[3]);
-            }
-            if(x1 == x2){
-                break;
-            } 
-            e2 = err;
-            err -= dy;
-            x1 += sx;
-        } 
-        if(2*e2 <= dy){
-            for (e2 = dx-e2; e2 < ed*wd && (x2 != eX || dx < dy); e2 += dy){
-                // drawPixel(x2 += sx, y1, max(0,255*(Math.abs(e2)/ed-wd+1)));
-                drawPixel(eX += sx, y1, rgba[0], rgba[1], rgba[2], rgba[3]);
-            }
-            if(y1 == y2){
-                break;
-            } 
-            err += dx; 
-            y1 += sy;
-        }
-    }
-}
-
-function drawGrid(resolution){
-    let offset = canvas.width / resolution;
-    for(let r = 0; r < resolution - 1; r++){
-        let position = offset + offset * r;
-        drawLine(position, 0, position, canvas.height);
-        drawLine(0, position, canvas.width, position);
-    }
-}
-
 function rotatePoint(matrix, rotation){
     let newMatrix = generateArray(matrix.length);
+
     for(let y = 0; y < matrix.length; y++){
         for(let x = 0; x < matrix[y].length; x++){
             // console.log(newMatrix[y][x]);
@@ -218,7 +101,9 @@ function rotateArray(matrix, rotation){
     if(matrix.length != matrix[0].length){
         return matrix;
     }
+
     let newMatrix = generateArray(matrix.length);
+
     if(rotation == 90){
         for(let y = 0; y < matrix.length; y++){
             let layer = matrix[y];
@@ -235,6 +120,7 @@ function rotateArray(matrix, rotation){
             }
         }
     }
+
     // console.log(JSON.stringify(matrix), JSON.stringify(newMatrix));
     // console.log(matrix, newMatrix);
     return rotatePoint(newMatrix, rotation);
@@ -246,6 +132,7 @@ function addArrayes(main, toAdd, offsetX = 0, offsetY = 0){
             main[y + offsetY][x + offsetX] = copyArray(toAdd[y][x]);
         }
     }
+
     return main;
 }
 
@@ -257,6 +144,7 @@ function drawCurve(grid, gridNumber){
     let YOffset = canvas.height / gridNumber;
     let xOffset = XOffset / 2;
     let yOffset = YOffset / 2;
+
     for(let y = 0; y < grid.length; y++){
         let positionY = yOffset + YOffset * y;
         for(let x = 0; x < grid[y].length; x++){
@@ -264,16 +152,16 @@ function drawCurve(grid, gridNumber){
             grid[y][x].forEach(point => {
                 if(point == 0){
                     // plotLineWidth(positionX, positionY - yOffset, positionX, positionY, wd, curveColor);
-                    drawLine(positionX, positionY - yOffset, positionX, positionY, curveColor);
+                    canvas.drawLine(positionX, positionY - yOffset, positionX, positionY, curveColor);
                 }
                 if(point == 1){
-                    drawLine(positionX + xOffset, positionY, positionX, positionY, curveColor);
+                    canvas.drawLine(positionX + xOffset, positionY, positionX, positionY, curveColor);
                 }
                 if(point== 2){
-                    drawLine(positionX, positionY + yOffset, positionX, positionY, curveColor);
+                    canvas.drawLine(positionX, positionY + yOffset, positionX, positionY, curveColor);
                 }
                 if(point == 3){
-                    drawLine(positionX - xOffset, positionY, positionX, positionY, curveColor);
+                    canvas.drawLine(positionX - xOffset, positionY, positionX, positionY, curveColor);
                 }
             });
         }
@@ -332,16 +220,18 @@ const gridFirstLevel = [[[1, 2], [2, 3]], [[0], [0]]];
 // console.log(rotateArray(gridFirstLevel, 90))
 
 function main(){
-    clear();
+    canvas.clear();
     let gridNumber = Math.pow(2, level);
     let curveLength = Math.pow(2, level) - 1 / Math.pow(2, level);
+
     if(showGrid.checked == true){
-        drawGrid(gridNumber);
+        canvas.drawGrid(gridNumber);
     }
+
     let hilbertCurve = generateCurve(level);
     // console.log(gridNumber);
     drawCurve(hilbertCurve, gridNumber);
-    swapBuffer();
+    canvas.swapBuffer();
 }
 
 main();

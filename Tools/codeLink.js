@@ -30,7 +30,7 @@ function getCodeLink(){
             }
         }
 
-        console.log(`Path ${absPath} ${htmlFileName}`);
+        // console.log(`Path ${absPath} ${htmlFileName}`);
         // console.log(htmlFileName);
 
         fileName = htmlFileName.split(".")[0];

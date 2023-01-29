@@ -1,60 +1,63 @@
 export function getText(url){
-    var xmlhttp;
-    var send = false;
-    if (window.XMLHttpRequest) {
+    let xmlhttp;
+    let send = false;
+
+    if(window.XMLHttpRequest){
         xmlhttp = new XMLHttpRequest();
-    } else {
+    } 
+    else{
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
     
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
             send = true;
         }
     }
     
     xmlhttp.open("GET", url, false);
     xmlhttp.send();
-    var t = xmlhttp.responseText;
+    let t = xmlhttp.responseText;
     if(send == true){
         return t;
     }
 }
 
 export function createLink(path, parent){
-    var sheet = document.createElement("link");
+    let sheet = document.createElement("link");
     sheet.rel = "stylesheet";
     sheet.type = "text/css";
     sheet.href = path;
     parent.appendChild(sheet);
 }
 
-export function createScript(path, parent){
+export function createScript(path, parent, mode = null){
     let script = document.createElement("script");
-    script.type = "text/javascript";
+    script.type = (mode != null) ? mode : "text/javascript";
     script.src = path;
     parent.appendChild(script);
 }
 
-export function loadJSON(url) {
-    var xmlhttp;
-    var send = false;
+export function loadJSON(url){
+    let xmlhttp;
+    let send = false;
 
-    if (window.XMLHttpRequest) {
+    if(window.XMLHttpRequest){
         xmlhttp = new XMLHttpRequest();
-    } else {
+    } 
+    else{
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
 
     xmlhttp.onreadystatechange = function(){
-        if (xmlhttp.readyState == 4 && xmlhttp.status === 200) {
+        if(xmlhttp.readyState == 4 && xmlhttp.status === 200){
             send = true;
         }
     };
 
     xmlhttp.open("GET", url, false);
     xmlhttp.send();
-    var t = JSON.parse(xmlhttp.responseText);
+    let t = JSON.parse(xmlhttp.responseText);
     if(send == true){
         return t;
     }

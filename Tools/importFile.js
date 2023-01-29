@@ -42,4 +42,5 @@ let code = listToString(lines);
 let columnUp = document.getElementById('columnUp');
 columnUp.innerHTML += code;
 
+createScript("/Tools/search.js", columnUp, "module");
 createScript("/Tools/codeLink.js", columnUp);
