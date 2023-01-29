@@ -7,7 +7,7 @@ let canvasEl = document.getElementById("my-canvas");
 // let data = image.data;
 
 let canvas = new CANVAS(canvasEl);
-let downloader = new DOWNLOADER(canvas);
+let downloader = new DOWNLOADER(canvasEl);
 
 function timelapsee(fArguments){
     let howMenySteps = parseInt(fArguments[0].value);

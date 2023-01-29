@@ -4,7 +4,7 @@ import {DOWNLOADER} from "/Canvas/download.js";
 let canvasEl = document.getElementById("my-canvas");
 
 let canvas = new CANVAS(canvasEl);
-let downloader = new DOWNLOADER(canvas);
+let downloader = new DOWNLOADER(canvasEl);
 
 let downloadImageButton = document.getElementById("downloadImage");
 downloadImageButton.addEventListener("click", function() { downloader.downloadImage(); }, false);
