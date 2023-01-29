@@ -6,6 +6,9 @@ export class CANVAS{
         this.width = canvas.width;
         this.height = canvas.height;
 
+        this.xOffset = 0; 
+        this.yOffset = 0;
+
         this.image = this.context.createImageData(this.width, this.height);
         this.data = this.image.data;
 
@@ -26,6 +29,10 @@ export class CANVAS{
         return [px, py]
     }
 
+    translate(_xOffset, _yOffset){
+        this.xOffset = _xOffset
+        this.yOffset = _yOffset
+    }
 
     // clear(){
     //     this.context.clearRect(0, 0, this.width, this.height);
@@ -34,13 +41,20 @@ export class CANVAS{
     clear(){
         for(let y = 0; y < this.height; y++){
             for(let x = 0; x < this.width; x++){
-                this.drawPixel(x, y, 0, 0, 0, 0);
+                let index = 4 * (this.width * y + x);
+
+                this.data[index + 0] = 0;
+                this.data[index + 1] = 0;
+                this.data[index + 2] = 0;
+                this.data[index + 3] = 0;
             }
         }
     }
 
 
     drawPixel(x, y, r = 255, g = 255, b = 255, a = 255){
+        x += this.xOffset;
+        y += this.yOffset;
         if(x < 0 || this.width <= x || y < 0 || this.height <= y){
             return;
         }
@@ -157,14 +171,18 @@ export class CANVAS{
             this.drawLine(0, y, this.width, y, rgba);
         }
     }
+    
+    calculateResolution(radius){
+        return 360 / (2 * Math.abs(radius) * Math.PI);
+    }
 
-    drawCircle(x, y, radius){
-        let resoluton = 10;
-        for(let i = 0; i < 360; i += resoluton){
+    drawCircle(x, y, radius, resolution = 10){
+        resolution = this.calculateResolution(radius);
+        for(let i = 0; i < 360; i += resolution){
             let angle = i;
             let x1 = radius * Math.cos(angle * Math.PI / 180);
             let y1 = radius * Math.sin(angle * Math.PI / 180);
-            this.drawPixel(x + x1, y + y1, {r:0, g:0, b:0, a:255});
+            this.drawPixel(x + x1, y + y1);
         }
     }
 }

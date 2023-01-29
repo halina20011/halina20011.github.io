@@ -40,32 +40,69 @@
                                 <p>Type of wave:</p>
                                 <select id="waveType">
                                     <option value="0" selected="selected">Square wave</option>
-                                    <option value="1">Sawtooth wave</option>
+                                    <option value="1">Half sawtooth wave increasing</option>
+                                    <option value="2">Half sawtooth wave decreasing</option>
+                                    <option value="3">Sinh Wave</option>
                                 </select>
                             </div>
                             <div class="fS8"></div>
                             <div class="mathEquatoin" id="squareWave">
+                                <div class="fraction">
+                                    <div class="fractionUp">4</div>
+                                    <div class="fractionLine"></div>
+                                    <div class="fractionDown">π</div>
+                                </div>
                                 <div class="sigma">
                                     <div class="mathSymbolUp" id="squareWaveMax">∞</div>
                                     <div class="mathSymbol">Σ</div>
                                     <div class="mathSymbolDown" id="sigmaFrom">n=0</div>
                                 </div>
                                 <div class="fraction">
-                                    <div class="fractionUp">4sin((2n+1)x)</div>
+                                    <div class="fractionUp">sin((2n+1)θ)</div>
                                     <div class="fractionLine"></div>
-                                    <div class="fractionDown">(2n+1)π</div>
+                                    <div class="fractionDown">2n+1</div>
                                 </div>
                             </div>
-                            <div class="mathEquatoin" id="sawtoothWave">
+                            <div class="mathEquatoin" id="halfSawtoothWaveIncreasing">
                                 <div class="sigma">
-                                    <div class="mathSymbolUp" id="sawtoothWaveMax">∞</div>
+                                    <div class="mathSymbolUp" id="halfSawtoothWaveIncreasingMax">∞</div>
                                     <div class="mathSymbol">Σ</div>
                                     <div class="mathSymbolDown" id="sigmaFrom">n=1</div>
                                 </div>
                                 <div class="fraction">
-                                    <div class="fractionUp">2sin(nx)</div>
+                                    <div class="fractionUp">(-1)<sup>n+1</sup>sin(nθ)</div>
                                     <div class="fractionLine"></div>
-                                    <div class="fractionDown">(-1)<sup>n</sup>π</div>
+                                    <div class="fractionDown">n</div>
+                                </div>
+                            </div>
+                            <div class="mathEquatoin" id="halfSawtoothWaveDecreasing">
+                                <div class="sigma">
+                                    <div class="mathSymbolUp" id="halfSawtoothWaveDecreasingMax">∞</div>
+                                    <div class="mathSymbol">Σ</div>
+                                    <div class="mathSymbolDown" id="sigmaFrom">n=1</div>
+                                </div>
+                                <div class="fraction">
+                                    <div class="fractionUp">sin(nθ)</div>
+                                    <div class="fractionLine"></div>
+                                    <div class="fractionDown">n</div>
+                                </div>
+                            </div>
+                            <div class="mathEquatoin" id="sinhWave">
+                                <div class="fraction">
+                                    <div class="fractionUp">2*sinh(pi)</div>
+                                    <div class="fractionLine"></div>
+                                    <div class="fractionDown">π</div>
+                                </div>
+
+                                <div class="sigma">
+                                    <div class="mathSymbolUp" id="sinhWaveMax">∞</div>
+                                    <div class="mathSymbol">Σ</div>
+                                    <div class="mathSymbolDown" id="sigmaFrom">n=1</div>
+                                </div>
+                                <div class="fraction">
+                                    <div class="fractionUp">(-1)<sup>n+1</sup>n</div>
+                                    <div class="fractionLine"></div>
+                                    <div class="fractionDown">n<sup>2</sup>+1</div>
                                 </div>
                             </div>
                             <div class="waveHolder" id="waveHolder">
@@ -80,9 +117,9 @@
             <div class="columnDown"></div>
         </div>
     </body>
+    <script type="module" src="/Canvas/canvas.js"></script>
     <script type="module" src="fourierSeries.js"></script>
     <script type="module" src="/Tools/importFile.js"></script>
-    <script type="module" src="/Tools/search.js"></script> 
     <script type="module" src="/Canvas/download.js"></script>
     <script src="/head.js"></script>
 </body>

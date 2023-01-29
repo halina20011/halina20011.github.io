@@ -1,9 +1,9 @@
-var filename = "imagesBase64.json"
+let filename = "imagesBase64.json"
 
 export class DOWNLOADER{
     constructor(canvas){
         this.canvas = canvas;
-        this.imagesFile = {images: []}
+        this.imagesFile = {images: []};
         this.downloading = false;
     }
 
