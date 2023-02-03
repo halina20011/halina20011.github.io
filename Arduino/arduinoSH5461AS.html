@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Arduino SH5461AS</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Free programming tutorials">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
+    <meta name="keywords" content="Halina programming, Arduino learn">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="/code.css">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <script src="/Menu/dropDownMenu.js"></script>
+    <script type="module" src="/Tools/download.js"></script>
+    <script src="/Tools/showImage.js"></script>
+</head>
+<body>
+    <div class="columnUp" id="columnUp"></div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
+            <div class="columnLeft" id="columnLeft">
+            </div>
+            <div class="columnMiddle" id="columnMiddle">
+                <h1>Arduino SH5461AS</h1>
+                <div class="fS8"></div>
+                <div class="paragraph">
+                    <p>In this tutorial you can learn how use 4 digit 7 segments display.</p>
+                </div>
+                <div class="freeLine"></div>
+                
+                <!-- ###################################################################### -->
+                <!--                     Parts or tools you will need                       -->
+                <!-- ###################################################################### -->
+                <jumpLink id="PartsOrToolsYouWillNeed"></jumpLink>
+                <h2>Parts or tools you will need</h2>
+                <div class="paragraph">
+                    <p>Arduino Uno</p>
+                    <p>4 digit 7 segment led display</p>
+                    <p>Some male and female wires.</p>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                              Libraries                                 -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Libraries"></jumpLink>
+                <h2>Libraries</h2>
+                <div class="paragraph">
+                    <div>SegmentDisplay: <a href="https://github.com/halina20011/SegmentDisplay">https://github.com/halina20011/SegmentDisplay</a></div>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                          Circuit diagram                               -->
+                <!-- ###################################################################### -->
+                <jumpLink id="CircuitDiagram"></jumpLink>
+                <h2>Circuit diagram</h2>
+                <div class="paragraph">
+                    <p>Now we can connect the circuit according to the following circuit:</p>
+                    <div class="circuitDiagram">
+                        <img class="circuitImage" src="/Images/Schematics/segmentDisplayShematics.svg">
+                    </div>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                          How does it work                              -->
+                <!-- ###################################################################### -->
+                <jumpLink id="HowDoesItWork"></jumpLink>
+                <h2>How does it work</h2>
+                <div class="paragraph">
+                    <p>We can control 7 segments and one decimal point by fast switching between different didgets.</p>
+                </div>
+                <div class="freeLine"></div>
+    
+                <!-- ###################################################################### -->
+                <!--                            Code Window                                 -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Code"></jumpLink>
+                <h2>Code</h2>
+                <div class="paragraph">
+                    <codeWindow data-src="URL"></codeWindow>
+                </div>
+                <div class="freeLine"></div>
+    
+                <!-- ###################################################################### -->
+                <!--                        Code explanation                                -->
+                <!-- ###################################################################### -->
+                <jumpLink id="CodeExplanation"></jumpLink>
+                <h2>Code explanation</h2>
+                <div class="paragraph">
+                    <codeWindow data-src="innerText">
+                        <p>#include "SegmentDisplay.h"</p>
+                        <p></p>
+                        <p>int digit1 = 6;</p>
+                        <p>int digit2 = 9;</p>
+                        <p>int digit3 = 10;</p>
+                        <p>int digit4 = 11;</p>
+                        <p></p>
+                        <p>int segA = 2;</p>
+                        <p>int segB = 3;</p>
+                        <p>int segC = 4;</p>
+                        <p>int segD = 5;</p>
+                        <p>int segE = A0;</p>
+                        <p>int segF = 7;</p>
+                        <p>int segG = 8;</p>
+                        <p>int dp = 12;</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>First we include library that we have downloaded and declare pins that are connected to the display.</p>
+                    <div class="freeLine"></div>
+                </div>
+                <div class="paragraph">
+                    <codeWindow data-src="innerText">
+                        <p>SEGMENT segment = SEGMENT(segA, segB, segC, segD, segE, segF, segG, dp);</p>
+                        <p>SEGMENTDISPLAY sh = SEGMENTDISPLAY(4, segment, 0, digit1, digit2, digit3, digit4);</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>Now we initialize one SEGMENT which takes 8 int arguments, thats are pins that are connected to segment diplay.</p>
+                    <p>After thet we initialize SEGMENTDISPLAY. First argument is for setting size of display. Second argument is our created SEGMENT. Third argument is for setting correct display common polarity.</p>
+                    <p>If argument is 0 then disply is set to control display with common cathode, if it's 1 then is set to control display with common anode.</p>
+                    <div class="freeLine"></div>
+                </div>
+                <div class="paragraph">
+                    <codeWindow data-src="innerText">
+                        <p>unsigned long currentMillis = 0;</p>
+                        <p>unsigned long lastChange = 0;</p>
+                        <p>const long interval = 1000;</p>
+
+                        <p>int i = 0;</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>Because we can't use <val>delay()</val> function in this code, we will make custom counter that will every interval increment value on the display.</p>
+                    <div class="freeLine"></div>
+                </div>
+                <div class="paragraph">
+                    <codeWindow data-src="innerText">
+                        <p>void setup(){</p>
+                        <p>}</p>
+                        <p></p>
+                        <p>void loop(){</p>
+                        <p>    sh.showInt(i);</p>
+                        <p>    currentMillis = millis();</p>
+                        <p>    </p>
+                        <p>    if(interval &lt;= currentMillis - previousMillis){</p>
+                        <p>        previousMillis = currentMillis;</p>
+                        <p>        i++;</p>
+                        <p>    }</p>
+                        <p>}</p>
+                    </codeWindow>
+                    <div class="fS8"></div>
+                    <p>In loop function every time we show number stored in <val>i</val> variable with <val>sh.showInt()</val> function. Then we save current number of milliseconds that have passed since Arduino board began running to variable called <val>currentMillis</val>.</p>
+                    <p>After that we check difference between currentMillis and lastChange. If it's bigger than <val>interval</val>, then we increase number that is being shown on display and save <val>currentMillis</val> to <val>previousMillis</val>.</p>
+                    <div class="freeLine"></div>
+                </div>
+                <div class="paragraph">
+                    <h2>Other functions</h2>
+                    <p>This library has also ability to show float numbers with <val>sh.showFloat(float number)</val> function or you can show custom characters with function called <val>sh.showCharacter(CHARACTER character, int index)</val>.</p>
+                    <p>For more information, you can look at README.md in library folder or at README.md in libary repository.</p>
+                    <div class="freeLine"></div>
+                </div>
+                <p>I hope this helped you or that you learned something!</p>
+                <p>Thank you that you took your time and read this :3.</p>
+            </div>
+            <div class="columnRight" id="columnRight">
+                <div class="pageContentContainer" id="pageContentContainer">
+                    <p>Table of contents</p>
+                    <div class="pageContent">
+                        <button onclick="document.location='#PartsOrToolsYouWillNeed'">Parts Or Tools You Will Need</button>
+                        <button onclick="document.location='#Libraries'">Libraries</button>
+                        <button onclick="document.location='#CircuitDiagram'">Circuit diagram</button>
+                        <button onclick="document.location='#HowDoesItWork'">How does it work</button>
+                        <button onclick="document.location='#Code'">Code</button>
+                        <button onclick="document.location='#CodeExplanation'">Code explanation</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="columnDown"></div>
+    <script type="module" src="/Tools/importFile.js"></script>
+    <script type="module" src="/Tools/search.js"></script>
+    <script type="module" src="/code.js"></script>
+    <script src="/head.js"></script>
+</body>
+</html>

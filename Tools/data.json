@@ -239,6 +239,19 @@
             "addAdicionalThings": null,
             "addScript": null,
             "addCss": null
+        },
+        "ArduinoSH5461AS": {
+            "className": "ArduinoSH5461ASProject",
+            "path": "/Arduino/arduinoSH5461AS.html",
+            "imgPath": "/Images/Miniature/sh5461as.png",
+            "name": "Arduino SH5461AS (4 digit 7 segment led display)",
+            "projectTextInfo": [
+                "Learn Arduino", 
+                "In this tutorial you can learn how use 4 digit 7 segments display."
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
         }
     }
 }
