@@ -252,6 +252,19 @@
             "addAdicionalThings": null,
             "addScript": null,
             "addCss": null
+        },
+        "ArduinoDisplayGame": {
+            "className": "ArduinoDisplayGameProject",
+            "path": "/Arduino/arduinoLcdI2CGame.html",
+            "imgPath": "/Images/Miniature/arduinoDisplayGame.png",
+            "name": "Simple game for Arduino",
+            "projectTextInfo": [
+                "Learn Arduino", 
+                "Simple game for Arduino with LCD I2C display"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
         }
     }
 }

@@ -2,7 +2,7 @@ import {getText} from "/Tools/import.js";
 
 const codeExplain = document.getElementsByClassName("codeExplain");
 
-const variables = ["void", "OUTPUT", "INPUT", "HIGH", "LOW", "int", "char", "String", "float", "const", "long"];
+const variables = ["void", "OUTPUT", "INPUT", "HIGH", "LOW", "int", "char", "String", "float", "const", "long", "INPUT_PULLUP"];
 const logicalOperators = ["#include", "#define", "while", "loop", "setup", "if", "else"];
 const functions = ["Serial", "begin", "print", "println", "pinMode", "digitalWrite", "delayMicroseconds", "analogWrite", "delay", "pulseIn", "available", "readString", "toInt", "millis"];
 const other = ["for"];

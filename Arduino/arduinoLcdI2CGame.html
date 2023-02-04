@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Arduino Blink Led</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Free programming tutorials">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
+    <meta name="keywords" content="Halina programming, Arduino learn">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="/code.css">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <script src="/Menu/dropDownMenu.js"></script>
+    <script type="module" src="/Tools/download.js"></script>
+    <script src="/Tools/showImage.js"></script>
+</head>
+<body>
+    <div class="columnUp" id="columnUp"></div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
+            <div class="columnLeft" id="columnLeft">
+            </div>
+            <div class="columnMiddle" id="columnMiddle">
+                <h1>Arduino I2C Lcd display game</h1>
+                <div class="fS8"></div>
+                <div class="paragraph">
+                    <p>I would like to share a little game that I made.</p>
+                    <p>Game is about a character that is trying not to smash into a any obstacles, which are approaching towards him.</p>
+                    <p>Character position is toggled with button and when characted smashed the obsicle, gama is over and can be restarted with a press of a button.</p>
+                    <p>To make the game less simple, it speed accelerates up to a certain speed.</p>
+                </div>
+                <div class="freeLine"></div>
+                 
+                <!-- ###################################################################### -->
+                <!--                     Parts or tools you will need                       -->
+                <!-- ###################################################################### -->
+                <jumpLink id="PartsOrToolsYouWillNeed"></jumpLink>
+                <h2>Parts or tools you will need</h2>
+                <div class="paragraph">
+                    <p>Arduino Uno</p>
+                    <p>Button</p>
+                    <p>Lcd I2C display</p>
+                    <p>Some male and female wires.</p>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                              Libraries                                 -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Libraries"></jumpLink>
+                <h2>Libraries</h2>
+                <p>You will only need one aditional library for controlling I2C display</p>
+                <div class="paragraph">
+                    <div>Name: <a href="https://github.com/fmalpartida/New-LiquidCrystal">https://github.com/fmalpartida/New-LiquidCrystal</a></div>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                          Circuit diagram                               -->
+                <!-- ###################################################################### -->
+                <jumpLink id="CircuitDiagram"></jumpLink>
+                <h2>Circuit diagram</h2>
+                <div class="paragraph">
+                    <p>Circuit is simple. You only needed to connect display and button to Arduino. One side of button is connect to pin 7 other side is connected to GND (I am using <val>INPUT_PULLUP</val> in code, so there is no need for resistor). And display is connected as follows:</p>
+                    <table>
+                        <tr>
+                            <th>Lcd</th>
+                            <th>Arduino Uno</th>
+                        </tr>
+                        <tr>
+                            <th>GND</th>
+                            <th>GND</th>
+                        </tr>
+                        <tr>
+                            <th>Vcc</th>
+                            <th>5V</th>
+                        </tr>
+                        <tr>
+                            <th>SDA</th>
+                            <th>A4</th>
+                        </tr>
+                        <tr>
+                            <th>SCL</th>
+                            <th>A5</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                               Images                                   -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Images"></jumpLink>
+                <h2>Images</h2>
+                <div class="paragraph">
+                    <img class="image" src="/Images/ContentImages/ArduinoDisplayGame/preview.jpg">
+                    <img class="image" src="/Images/ContentImages/ArduinoDisplayGame/previewEnd.jpg">
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                            Code Window                                 -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Code"></jumpLink>
+                <h2>Code</h2>
+                <div class="paragraph">
+                    <codeWindow data-src="URL"></codeWindow>
+                </div>
+                <div class="freeLine"></div>
+    
+                <!-- ###################################################################### -->
+                <!--                        Code explanation                                -->
+                <!-- ###################################################################### -->
+                <jumpLink id="CodeExplanation"></jumpLink>
+                <h2>Code explanation</h2>
+                <div class="paragraph">
+                    <div class="fS8"></div>
+                    <p>Sode is somehow messy and I would like to imporve it in future but it follows this flow:</p>
+                    <div class="paragraph">
+                        <p>Move character if button is pressed.</p>
+                        <p>If some amount of time has pased it moves all blocks towards him and generate new block at the and.</p>
+                        <p>It checks if character has smashed into a obstacle if yes the game ends.</p>
+                        <p>Speeds up</p>
+                    </div>
+                    <p>There is a lot of things that you can change in code to make it more interesting for example if you want you can change a character symbol. For x it would be: </p>
+                    <codeWindow data-src="innerText">
+                        <p>byte characterSymbol[8] = {</p>
+                        <p>    0b00000,</p>
+                        <p>    0b11011,</p>
+                        <p>    0b01110,</p>
+                        <p>    0b00100,</p>
+                        <p>    0b01110,</p>
+                        <p>    0b11011,</p>
+                        <p>    0b00000</p>
+                        <p>};</p>
+                    </codeWindow>
+                    <div class="freeLine"></div>
+                </div>
+            </div>
+            <div class="columnRight" id="columnRight">
+                <div class="pageContentContainer" id="pageContentContainer">
+                    <p>Table of contents</p>
+                    <div class="pageContent">
+                        <button onclick="document.location='#PartsOrToolsYouWillNeed'">Parts Or Tools You Will Need</button>
+                        <button onclick="document.location='#Libraries'">Libraries</button>
+                        <button onclick="document.location='#CircuitDiagram'">Circuit diagram</button>
+                        <button onclick="document.location='#Images'">Images</button>
+                        <button onclick="document.location='#Code'">Code</button>
+                        <button onclick="document.location='#CodeExplanation'">Code explanation</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="columnDown"></div>
+    <script type="module" src="/Tools/importFile.js"></script>
+    <script type="module" src="/Tools/search.js"></script>
+    <script type="module" src="/code.js"></script>
+    <script src="/head.js"></script>
+</body>
+</html>
