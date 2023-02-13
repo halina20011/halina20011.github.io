@@ -15,6 +15,10 @@ export class CANVAS{
         this.cenX = 0;
         this.cenY = 0;
         this.scale = 1;
+
+
+        this.screenX = 20;
+        this.screenY = 20;
     }
 
     swapBuffer(){
@@ -25,7 +29,14 @@ export class CANVAS{
         let px = (x - width / 2.0) * (4.0 / width) * (1.0 / this.scale) + this.cenX;
         let py = (y - height / 2.0) * (4.0 / height) * (1.0 / this.scale) + this.cenY;
 
-        return [px, py]
+        return [px, py];
+    }
+
+    pointToPixel(x, y){
+        x = map(x, -this.screenX, this.screenX, 0, this.width);
+        y = map(y, this.screenY, -this.screenY, 0, this.height);
+
+        return [x, y];
     }
 
     translate(_xOffset, _yOffset){
@@ -186,6 +197,9 @@ export class CANVAS{
     }
 }
 
+function map(x, inMin, inMax, outMin, outMax){
+    return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+}
 
 function swap(i1, i2){
     return [i2, i1];
