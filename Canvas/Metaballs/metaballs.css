@@ -15,9 +15,9 @@
     background-color: rgb(172, 172, 172);
 }
 
-.saveSettings:hover{background-color: rgb(155, 155, 155);}
+.saveSettings:hover{ background-color: rgb(155, 155, 155); }
 
-.saveSettings:active{background-color: rgb(118, 118, 118);}
+.saveSettings:active{ background-color: rgb(118, 118, 118); }
 
 /* Set to normally colorRed, colorGreen, colorBlue to be hidden*/
 .checkboxCustomColors ~ div{

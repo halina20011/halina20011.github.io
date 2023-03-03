@@ -15,6 +15,14 @@ function roll(thisEl, dropdowncontentId, event = 'show'){
     }
 }
 
-function rollDiv(dropDowncontent) {
+function rollDiv(dropDowncontent){
     document.getElementsByClassName(dropDowncontent)[0].classList.toggle("show"); //arduinoDropdown
+}
+
+function toggleVisibility(thisEl, dropdowncontentId, event = "show"){
+    let state = thisEl.checked;
+
+    let item = document.getElementById(dropdowncontentId);
+
+    (!state) ? item.classList.add(event) : item.classList.remove(event);
 }

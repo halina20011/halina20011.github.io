@@ -11,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" type="text/css" href="/text.css">
     <link rel="stylesheet" type="text/css" href="/style.css">
-    <link rel="stylesheet" type="text/css" href="metaballs.css">
     <link rel="stylesheet" type="text/css" href="/Canvas/canvas.css">
     <script src="/Menu/dropDownMenu.js"></script>
 </head>
@@ -29,51 +28,50 @@
                     <div class="window">
                         <canvas class="my-canvas" id="my-canvas" width="400" height="400"></canvas>
                         <div class="settings">
-                            <p>Settings</p>
+                            <div class="canvasButtons" id="canvasButtons">
+                                <button class="downloadButton" id="downloadImage"></button>
+                                <button class="pauseButton" id="pauseButton"></button>
+                            </div>
+                            <div class="fS8"></div>
+
                             <div class="info">
                                 <p>If you want to set other color of viewport, first enable it with "cusom colors" checkbox.</p>
                                 <div class="fS4"></div>
                                 <p>Then check checkbox with specific color that you want to change and move slider. After thet you need to save settings with button "Save settings".</p>
                                 <div class="fS4"></div>
                                 <p>If you change all colors, it won't work!!!</p>
-                                <div class="fS4"></div>
                             </div>
+                            <div class="fS8"></div>
+
                             <div class="customColors">
                                 <div class="settingSameLine">
                                     <p>Custom colors: </p>
-                                    <input class="checkboxCustomColors" id="checkboxCustomColors" type="checkbox">
+                                    <input class="checkboxCustomColors" id="checkboxCustomColors" type="checkbox" onchange="toggleVisibility(this, 'colors', 'hide')">
                                 </div>
-                                <div class="setting">
-                                    <input class="checkboxRed" id="checkboxRed" type="checkbox">
-                                    <div class="slider">
+
+                                <div class="paragraph hide" id="colors">
+                                    <div class="settingSameLine">
+                                        <input class="checkboxRed" id="checkboxRed" type="checkbox">
                                         <input class="sliderRed" id="sliderRed" type="range" min="0" max="255" step="1" value="0">
-                                        <div class="redSliderVal" id="redSliderVal"></div>
+                                        <div id="sliderRedVal"><p id="invisible">00</p><p>0</p></div>
                                     </div>
-                                </div>
-                                <div class="setting">
-                                    <input class="checkboxGreen" id="checkboxGreen" type="checkbox">
-                                    <div class="slider">
+                                    <div class="settingSameLine">
+                                        <input class="checkboxGreen" id="checkboxGreen" type="checkbox">
                                         <input class="sliderGreen" id="sliderGreen" type="range" min="0" max="255" step="1" value="0">
-                                        <div class="greenSliderVal" id="greenSliderVal"></div>
+                                        <div id="sliderGreenVal"><p id="invisible">00</p><p>0</p></div>
                                     </div>
-                                </div>
-                                <div class="setting">
-                                    <input class="checkboxBlue" id="checkboxBlue" type="checkbox">
-                                    <div class="slider">
+                                    <div class="settingSameLine">
+                                        <input class="checkboxBlue" id="checkboxBlue" type="checkbox">
+                                    <div class="settingSameLine">
                                         <input class="sliderBlue" id="sliderBlue" type="range" min="0" max="255" step="1" value="0">
-                                        <div class="blueSliderVal" id="blueSliderVal"></div>
+                                        <div id="sliderBlueVal"><p id="invisible">00</p><p>0</p></div>
                                     </div>
+                                    </div>
+
                                 </div>
-                                <div class="saveSettingsDiv">
-                                    <button class="saveSettings" id="saveSettings">Save settings</button>
-                                </div>
-                            </div>
-                            <div class="videoSettings">
-                                <button class="button-StartStop" id="button-StartStop"></button>
-                                <!-- <button class="button-Download" id="button-Download"></button>
-                                <button class="button-DownloadStart" id="button-DownloadStart"></button>
-                                <button class="button-DownloadStop" id="button-DownloadStop"></button>
-                                <button class="button-DownloadAll" id="button-DownloadAll"></button> -->
+                                <div class="fS8"></div>
+
+                                <button class="saveSettings" id="saveSettings">Save settings</button>
                             </div>
                         </div>
                     </div>
@@ -84,7 +82,9 @@
             <div class="columnDown"></div>
         </div>
     </div>
-    <script src="metaballs.js"></script>
+    <script type="module" src="/Canvas/canvas.js"></script>
+    <script type="module" src="/Canvas/download.js"></script>
+    <script type="module" src="metaballs.js"></script>
     <script type="module" src="/Tools/importFile.js"></script>
     <script src="/head.js"></script>
 </body>
