@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Halina's Home</title>
+    <title>Template</title>
     <meta charset="UTF-8">
     <meta name="description" content="Free web programming tutorials">
     <meta name="author" content="Mario Duraković">
     <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
     <meta name="keywords" content="Halina programming, Arduino learn">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" type="text/css" href="/text.css">
     <link rel="stylesheet" type="text/css" href="/style.css">
     <script src="/Menu/dropDownMenu.js"></script>
@@ -21,9 +20,43 @@
             <div class="columnLeft" id="columnLeft">
             </div>
             <div class="columnMiddle" id="columnMiddle">
-                <p>Some Text</p>
+                <h1>[Template]</h1>
+                <div class="fS8"></div>
+                <div class="paragraph">
+                    <p>[paragraph]</p>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                                 Text                                   -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Text"></jumpLink>
+                <h2>[Text]</h2>
+                <div class="paragraph">
+                    <p>[Some text]</p>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                               Images                                   -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Images"></jumpLink>
+                <h2>Images</h2>
+                <div class="paragraph">
+                    <p>Images</p>
+                    <img class="image" src="/Images/Schematics/Led.svg">
+                    <p>[Description]</p>
+                </div>
+                <div class="freeLine"></div>
             </div>
             <div class="columnRight" id="columnRight">
+                <div class="pageContentContainer" id="pageContentContainer">
+                    <p>Table of contents</p>
+                    <div class="pageContent">
+                        <button onclick="document.location='#Text'">Text</button>
+                        <button onclick="document.location='#Images'">Images</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
