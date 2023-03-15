@@ -203,6 +203,12 @@ body{
 /* ############################    Style for text    ############################# */
 /* ############################################################################### */
 
+.center{
+    display: flex;
+    justify-content: center; /* X axis */
+    align-items: center; /* Y axis */
+}
+
 /* Free space 4px*/
 .fS4{
     min-width: 100%;
