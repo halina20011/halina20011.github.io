@@ -106,14 +106,14 @@
             "addCss":  [
                 [".MetaballsProject:hover > .backgroundImg > .img",[["background-image: url('/Images/Miniature/metaballs.gif')!important;"]]]]
         },
-        "Tic-tac-toe": {
+        "TicTacToe": {
             "className": "TicTacToeProject",
-            "path": "/TicTacToe/ticTacToe.html",
+            "path": "/Other/TicTacToe/ticTacToe.html",
             "imgPath": "/Images/Miniature/TicTacToe.png",
-            "name": "Tic-tac-toe",
+            "name": "Tic Tac Toe",
             "projectTextInfo": [
                 "Play Tic Tac Toe with AI.", 
-                "This small project I made to learn minimax algorithm. Try to beat it."
+                "This small project I made to learn Minimax algorithm. Try to beat it."
             ],
             "addAdicionalThings": null,
             "addScript": null,

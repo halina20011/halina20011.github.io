@@ -3,7 +3,7 @@ function analogClock(){
     let arrowMinutes = document.getElementsByClassName("arrowMinutes")[0];
     let arrowSeconds = document.getElementsByClassName("arrowSeconds")[0];
 
-    let data = new Date();
+    let date = new Date();
     
     let hours = date.getHours();
     let minutes = date.getMinutes();
