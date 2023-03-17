@@ -121,7 +121,7 @@
         },
         "Test typing": {
             "className": "WriterProject",
-            "path": "/Writer/writer.html",
+            "path": "/Other/Writer/writer.html",
             "imgPath": "/Images/Miniature/w.png",
             "name": "Test typing",
             "projectTextInfo": [

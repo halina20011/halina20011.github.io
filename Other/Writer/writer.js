@@ -1,6 +1,4 @@
-// import {printText, setText} from '/Writer/key.js'
-import getLetters from '/Writer/key.js'
-import {toggleLine} from '/Writer/key.js'
+import {getLetters, toggleLine} from '/Other/Writer/key.js'
 
 let keys = [];
 let listOfLetters = [];
@@ -14,17 +12,20 @@ toggleLine(2);
 let order = 0;
 let mistakesMade = 0;
 
+let timeStarted = undefined;
+
+const timer = document.getElementById("timer");
+const mistakes = document.getElementById("mistakes");
 const input = document.getElementById("input");
 input.addEventListener("input", function() {onChnageInput(input.value)}, false);
 
-const mistakes = document.getElementById('mistakes');
 const numberOfLetters = document.getElementById('numberOfLetters');
 const numberOfLettersClass = document.getElementsByClassName('numberOfLetters');
 
 const randomizeCheckbox = document.getElementById('checkbox');
 
 const words = document.getElementById('words');
-const refresh = document.getElementById('restart'); //refreshButton
+const refresh = document.getElementById('restart'); // Refresh button
 refresh.addEventListener('click', function() { setUp(); }, false);
 
 const wordsInput = document.getElementById("wordsInput"); 
@@ -32,8 +33,8 @@ const wordsInput = document.getElementById("wordsInput");
 const wordsInputClass = document.getElementsByClassName("wordsInput"); 
 
 const endScreen = document.getElementById("endScreen")
-const timerText = document.getElementById("timerText");
-const mistakesText = document.getElementById("mistakesText");
+const timerEnd = document.getElementById("timerEnd");
+const mistakesEnd = document.getElementById("mistakesEnd");
 
 randomizeCheckbox.addEventListener('change', function() {checkMode(randomizeCheckbox.checked)});
 
@@ -77,8 +78,11 @@ function showWorld(){
     }
 }
 
-
 function onChnageInput(_value){
+    if(timeStarted == undefined){
+        timeStarted = Date.now();
+    }
+
     // Compare
     // console.log(_value.substring(0, _value.length - 1), listOfWords[order].substring(0, _value.length - 1))
     // If strings are same
@@ -134,6 +138,14 @@ function onChnageInput(_value){
 }
 
 // randomizeCheckbox.addEventListener("mousemove", function() {re();}, false);
+
+function displayNone(Class, state){
+    for(let i = 0; i < Class.length; i++){
+        // console.log(Class.childElementCount);
+        Class[i].style.display = state;
+    }
+}
+
 function convertTime(time){
     let _numberOfLetters = "0:00"
     let minutes = Math.floor(time / 60);
@@ -144,44 +156,19 @@ function convertTime(time){
     return _numberOfLetters;
 }
 
-// Timer
-const currentRoundText = document.getElementsByClassName("timer")[0];
-let counting = false;
-let currentRound = 0;
-
-let interval = 1000;
-let expected = Date.now() + interval;
-// setTimeout(timer, interval);
-
-function timer() {
-    if(counting == true){
-        let dt = Date.now() - expected; // the drift (positive for overshooting)
-        if(dt > interval){
-            // Something really bad happened. Maybe the browser (tab) was inactive?
-            console.error("Time");
-        }
-        // console.log(currentRound);
-        currentRound += 1;
-        expected += interval;
-        currentRoundText.innerHTML = convertTime(currentRound);
-    }
-
-    setTimeout(timer, Math.max(0, interval - dt)); // Take into account drift
-}
-
-function displayNone(Class, state){
-    for(let i = 0; i < Class.length; i++){
-        // console.log(Class.childElementCount);
-        Class[i].style.display = state;
-    }
+let timerDuration = () => {
+    let duration = Math.ceil((Date.now() - timeStarted) / 1000);
+    console.log(`Duration ${duration}`);
+    return convertTime(duration);
 }
 
 function end(){
     words.innerHTML = "End"; 
-    endScreen.style.display = "block";
-    timerText.innerHTML = convertTime(currentRound);
-    mistakesText.innerHTML = mistakesMade +" mistakes";
-    counting = false;
+    endScreen.style.display = "flex";
+    mistakesEnd.innerHTML = `${mistakesMade} mistakes`;
+    
+    timerEnd.innerHTML = timerDuration();
+    timeStarted = undefined;
 }
 
 function highlightWord(textBox, _class, text, from, to) {
@@ -246,26 +233,27 @@ function generateList(){
         }
         console.log(`Word length probabability list:`, wordLengthProbababilityList);
         
-        let listOfLettersIndex = 0;
         while(listOfLetters.length < maxTextLength){
-            // Generate length of word
+            // Generate next length of the word
             let maxWLength = maxTextLength - listOfLetters.length;
             let wordLength = wordLengthProbababilityList[getRandomInt(maxRange)];
-            console.log(`Word length: ${wordLength}`);
+            // console.log(`Word length: ${wordLength}`);
 
-            // Generate random words
-            wordLength = (wordLength <= maxWLength) ? wordLength: maxWLength;
+            // Check if the word length would overflow
+            wordLength = (wordLength <= maxWLength) ? wordLength : maxWLength;
             for(let i = 0; i < wordLength; i++){
-                let random = getRandomInt(maxWordIndex); // Generate random number
-                let key = keys[random]; // Get key with random index
+                let random = getRandomInt(maxWordIndex);    // Generate random number
+                let key = keys[random];                     // Get key with random index
                 listOfLetters.push(key);
             }
 
             // Add space
-            if(listOfLetters.length < maxTextLength){
+            if(listOfLetters.length + 1 < maxTextLength){
                 listOfLetters.push(" ");
             }
-            //listOfLetters.push(" ");
+            else if(listOfLetters.length + 1 == maxTextLength){
+                listOfLetters.push(keys[0]);
+            }
         }
     }
     else{
@@ -286,7 +274,8 @@ function setUp(){
 
     endScreen.style.display = "none";
     mistakesMade = 0;
-    currentRound = 0;
+    timeStarted = undefined;
+    timer.innerHTML = "0:00";
 
     // Get list of selected letters that can be used
     keys = getLetters();
@@ -299,3 +288,10 @@ function setUp(){
 
 checkMode(randomizeCheckbox.checked);
 setUp();
+
+// Update
+setInterval(() => {
+    if(timeStarted != undefined){
+        timer.innerHTML = timerDuration();
+    }
+}, 500);

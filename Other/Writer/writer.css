@@ -38,17 +38,12 @@
     display: none;
 }
 
-.timerText{
+.endScreen > div{
+    position: relative;
     width: 50%;
-    float: left;
     text-align: center;
 }
 
-.mistakesText{
-    width: 50%;
-    float: right;
-    text-align: center;
-}
 .screen{
     position: relative;
     width: 100%;

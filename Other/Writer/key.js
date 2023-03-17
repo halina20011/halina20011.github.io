@@ -138,24 +138,25 @@ let firstLine = [q, w, e, r, t, y, u, i, o, p];
 let secondLine = [a, s, d, f, g, h, j, k, l];
 let thirdLine = [z, x, c, v, b, n, m];
 
-export default function getLetters(text) {
+export function getLetters(text) {
     let re = [];
-    for(let int = 0; int < list.length; int++){
-        if(list[int].style.border == borderValue){
-            re.push(listLetters[int].toLocaleLowerCase());
+
+    for(let _j = 0; _j < list.length; _j++){
+        if(list[_j].style.border == borderValue){
+            re.push(listLetters[_j].toLocaleLowerCase());
         }
     }
-    console.log(re)
+    // console.log(re)
 
     return re;
 }
 
 export function setText(List){
-    for(let nu = 0; nu < List.length; nu++){
-        let key = List[nu]; // Get
-        for(let int = 0; int < listLetters.length; int++){
-            if(key == listLetters[int].toLocaleLowerCase()){
-                border(list[int]);
+    for(let _i = 0; _i < List.length; _i++){
+        let key = List[_i]; // Get
+        for(let _j = 0; _j < listLetters.length; _j++){
+            if(key == listLetters[_j].toLocaleLowerCase()){
+                border(list[_j]);
             }
         }
     }
@@ -168,8 +169,9 @@ export function toggleLine(what){
         let indexLine = [firstLine, secondLine, thirdLine];
         let line = indexLine[what - 1];
         console.log(line);
-        for(let i = 0; i < line.length; i++){
-            let element = line[i];
+
+        for(let _i = 0; _i < line.length; _i++){
+            let element = line[_i];
             border(element);
         }
     }
