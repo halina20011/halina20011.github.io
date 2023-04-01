@@ -22,7 +22,7 @@ input.addEventListener("input", function() {onChnageInput(input.value)}, false);
 const numberOfLetters = document.getElementById('numberOfLetters');
 const numberOfLettersClass = document.getElementsByClassName('numberOfLetters');
 
-const randomizeCheckbox = document.getElementById('checkbox');
+const randomizeCheckbox = document.getElementById('randomizeText');
 
 const words = document.getElementById('words');
 const refresh = document.getElementById('restart'); // Refresh button

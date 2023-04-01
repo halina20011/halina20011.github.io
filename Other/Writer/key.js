@@ -1,3 +1,5 @@
+const borderValue = "2.5px solid rgb(0, 0, 255)";
+
 const a96 = document.getElementById('a96'); //`
 const a1 = document.getElementById('a1'); //1
 const a2 = document.getElementById('a2'); //2
@@ -59,8 +61,6 @@ const ctrl = document.getElementById('Ctrl'); //Ctrl
 const space = document.getElementById('Space'); //Space
 // const space = document.getElementById('Space'); //Alt
 const ctrl2 = document.getElementById('Ctrl2'); //Ctrl2
-
-let borderValue = "2.5px solid rgb(0, 0, 255)";
 
 // a96.addEventListener("click", onClickBorder(a96));
 a96.addEventListener("click", function() {onClickBorder(a96);} , false);
