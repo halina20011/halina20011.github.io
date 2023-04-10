@@ -1,4 +1,4 @@
-import {getText} from "/Tools/import.js";
+import {getText, createScript} from "/Tools/import.js";
 
 const codeExplain = document.getElementsByClassName("codeExplain");
 
@@ -137,6 +137,9 @@ function makeCodeWindow(parentWindow){
     copyButton.addEventListener('click', function() {copyTextToClipboard(rawText, copyText);}, false);
     codeSettings.appendChild(copyButton);
     
+    // Add download script
+    createScript("/Tools/download.js", codeSettings);
+
     // DOWNLOAD BUTTON
     let downloadButton = document.createElement("button");
     downloadButton.className = "downloadCodeWindowButton1";

@@ -1,4 +1,4 @@
-{
+export let imagesLinksData = {
     "Index": {
         "BezierCurveProject": {
             "className": "BezierCurveProject",
