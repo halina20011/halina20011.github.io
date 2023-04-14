@@ -22,8 +22,54 @@ maxIterationsN.addEventListener("change", () => {
     main();
 }, false);
 
+
+let grayscaleColorFunc = (x, y, iterations) => {
+    let val = (useSmoothColors == true) ? smoothColor(iterations, x, y) : iterations;
+    let g = (val / maxIterations) * 255;
+    return [g, g, g];
+}
+
+let oragneColorFunc = (x, y, iterations) => {
+    let val = (useSmoothColors == true) ? smoothColor(iterations, x, y) : iterations;
+    let f = val / maxIterations;
+    let c = hsvToRgb(360.0 * f, 1.0, 10.0 * f);
+    return c;
+}
+
+let blueColorFunc = (x, y, iterations) => {
+    let val = (useSmoothColors == true) ? smoothColor(iterations, x, y) : iterations;
+    let f = val / maxIterations;
+    let c = hsvToRgb(360.0 * f, 1.0, 10.0 * f);
+    // Swap red and blue values
+    [c[0], c[2]] = [c[2], c[0]];
+    return c;
+}
+
+let colorFunction = blueColorFunc;
 let color = document.getElementById("color");
-color.addEventListener("input", () => { main(); }, false);
+color.value = "Blue";
+color.addEventListener("input", () => { 
+    let mode = color.value;
+
+    if(mode == "Grayscale"){
+        colorFunction = grayscaleColorFunc;
+    }
+    else if(mode == "Orange"){
+        colorFunction = oragneColorFunc;
+    }
+    else if(mode == "Blue"){
+        colorFunction = blueColorFunc;
+    }
+    else{
+        colorFunction = blueColorFunc;
+    }
+
+    main();
+}, false);
+
+let useSmoothColors = true;
+let enableSmoothColors = document.getElementById("enableSmoothColors");
+enableSmoothColors.addEventListener("input", () => { useSmoothColors = enableSmoothColors.checked; main(); }, false);
 
 function timelapsee(fArguments){
     let from = parseInt(fArguments[0].value);
@@ -102,7 +148,7 @@ let maxIterations = 100;
 let bounds = 2.0;
 
 function hsvToRgb(h, s, v){
-    if(v > 1.0){
+    if(1.0 < v){
         v = 1.0;
     } 
         
@@ -131,92 +177,28 @@ function hsvToRgb(h, s, v){
     }
 
     let m = v - c;
-    rgb[0] += m;
-    rgb[1] += m;
-    rgb[2] += m;
 
-    rgb[0] *= 255;
-    rgb[1] *= 255;
-    rgb[2] *= 255;
+    rgb[0] = (rgb[0] + m) * 255;
+    rgb[1] = (rgb[1] + m) * 255;
+    rgb[2] = (rgb[2] + m) * 255;
+
     return rgb;
 }
 
-let logBase = 1.0 / Math.log(2.0);
-let logHalfBase = Math.log(0.5) * logBase;
+// let logBase = 1.0 / Math.log(2.0);
+// let logHalfBase = Math.log(0.5) * logBase;
 
-function smoothColor(n, x, y){
-    // return 5 + n - logHalfBase - Math.log(Math.log(Tr + Ti)) * logBase;
-    return 1 + n - Math.log(Math.log(Math.sqrt(x * x + y * y)))/Math.log(2.0)
-}
-
-function generateColor(mode, iterations, n, x, y) {
-    if(n == iterations){
-        return [0, 0, 0, 255];
-    }
-
-    let v = smoothColor(n, x, y);
-
-    if(mode == "Grayscale"){
-        let g = n / iterations * 255;
-        return [g, g, g];
-    }
-    else if(mode == "Orange"){
-        let c = hsvToRgb(360.0* v / iterations, 1.0, 1.0);
-        return c;
-    }
-    else if(mode == "Blue"){
-        let c = hsvToRgb(360.0 * v / iterations, 1.0, 10.0 * v / iterations);
-
-        // swap red and blue
-        [c[0], c[2]] = [c[2], c[0]];
-
-        return c;
-    }
-}
-
-function distance(x1, y1, x2, y2){
-    let x = x2 - x1;
-    let y = y2 - y1;
-
-    return Math.sqrt(x * x + y * y);
-}
-
-function calculatePoint(cx, cy){
-    let zx = 0;
-    let zy = 0;
-
-    let i = 0;
-
-    let bounds = 2.0;
-    let isIn = 1;
-
-    while(i < 50 && isIn == 1){
-        let x = zx * zx - zy * zy + cx;
-        let y = 2 * zx * zy + cy;
-
-        zx = x;
-        zy = y;
-        i++;
-        let d = distance(0.0, 0.0, zx, zy);
-        if(d > bounds){
-            isIn = 0;
-        }
-    }
-
-    return [i, isIn];
+function smoothColor(iterations, x, y){
+    // return 5 + iterations - logHalfBase - Math.log(Math.log(x + y)) * logBase;
+    return 1 + iterations - Math.log(Math.log(Math.sqrt(x * x + y * y))) / Math.log(2.0)
 }
 
 function main(){
     for(let yPixel = 0; yPixel < canvas.height; yPixel++){
         for(let xPixel = 0; xPixel < canvas.width; xPixel++){
-            // let x = map(xPixel, 0, canvas.width, x1 + cenX, x2 + cenX);
-            // let y = map(yPixel, 0, canvas.height, y1 + cenY, y2 + cenY);
-
             let point = canvas.pixelToPoint(xPixel, yPixel, canvas.width, canvas.height);
             let x = point[0];
             let y = point[1];
-            // let x = (xPixel - canvas.width / 2.0) * (4.0 / canvas.width) * (1.0 / scale) + cenX;
-            // let y = (yPixel - canvas.height / 2.0) * (4.0 / canvas.height) * (1.0 / scale) + cenY;
 
             // f(z0) = 0 + c;
             // f(z1) = f(z0) * f(z0) + c;
@@ -234,34 +216,35 @@ function main(){
             let ca = x;
             let cb = y;
 
-            let n = 0;
+            let iterations = 0;
             let isIn = true;
 
             x = 0;
             y = 0;
 
-            for(n = 0; n < maxIterations; n++){
+            while(iterations < maxIterations){
                 let zSquare = x * x - y * y + ca; // Real component
                 let c = 2 * x * y + cb;  // Imaginary/Complex component
 
                 x = zSquare;
                 y = c;
 
-                let d = distance(0.0, 0.0, x, y);
+                let d = Math.hypot(x, y);
                 
-                if(d > bounds){
+                iterations++;
+                if(bounds < d){
                     isIn = false;
-                    n++;
                     break;
                 }
             }
 
             let r, g, b;
-            [r, g, b] = generateColor(color.value, maxIterations, n, x, y);
+            [r, g, b] = colorFunction(x, y, iterations);
             
             canvas.drawPixel(xPixel, yPixel, r, g, b, 255);
         }
     }
+
     canvas.swapBuffer();
 }
 
