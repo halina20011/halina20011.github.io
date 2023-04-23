@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Marshall Bluetooth Update</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Free web programming tutorials">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
+    <meta name="keywords" content="Halina programming, Arduino learn">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <script defer type="module" src="/Tools/importFile.js"></script>
+    <script defer type="module" src="/Tools/showImage.js"></script>
+</head>
+<head>
+    <div class="columnUp" id="columnUp">
+    </div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
+            <div class="columnLeft" id="columnLeft">
+            </div>
+            <div class="columnMiddle" id="columnMiddle">
+                <h1>Marshall Bluetooth Update</h1>
+                <div class="fS8"></div>
+                <div class="paragraph">
+                    <p>So I have the Marshall Major III headphones the version without the bluetooth. I would like them to sometimes be more laud (so I could enjoy the music more and so I couldn't be forsed to hear anybody/anything) and without the cable, don't get me wrong I love them and the cable too, but sometime I would like to use them without a cable. For example if I am doing something with solder station I would like to take my incompetence out of the equation. There is a very high possibility that I will somehow destory the cable and I would like to avoid it.</p>
+                    <p>It looks sketchy, but that's the nice part about it.</p>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                                Parts                                   -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Parts"></jumpLink>
+                <h2>Parts</h2>
+                <div class="paragraph">
+                    <p>There are not many thins you will need, but there are some:</p>
+                    <div class="paragraph">
+                        <p>MH-M28</p>
+                        <p>Battery 3.7V</p>
+                        <p>Aux cable</p>
+                    </div>
+                    <p>MH-M28 is a Bluetooth 4.2 Stereo Audio Receiver it costs under 10 Euros and it has 3.5mm Jack. The older brother MH-M38 has an amplifier. The younger brother MM-M18 has some an interface so this could be better for next time. Battery will power up the module and notice that I haven't added any additional battery protection so you should add some...</p>
+                    <p>Aux cable is optional. You could just solder the 3.5mm jack and that would be better.</p>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                                Tools                                   -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Design"></jumpLink>
+                <h2>Tools</h2>
+                <div class="paragraph">
+                    <p>Solder iron</p>
+                    <p>3D printer</p>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                               Design                                   -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Design"></jumpLink>
+                <h2>Design</h2>
+                <div class="paragraph">
+                    <p>As you have probably noticed the part that connects the headphones frame and the MH-M28 is 3D printed. I have designed the part in FreeCad. The convertion to gcode happened in Cura and it was printed on a Ender 3 with black PLA.</p>
+                    <p>Print Settings</p>
+                    <div class="fS8"></div>
+                    <div class="paragraph">
+                        <p>Layer Height: 0.12mm</p>
+                        <p>Infill: 20.0%</p>
+                        <p>Suport: Yes</p>
+                        <p>Build Plate Adhesion Type: Brim</p>
+                    </div>
+                    <div class="fS8"></div>
+                    <img class="image" src="/Images/ContentImages/marshallBluetoothUpdateDesign.png">
+                    <img class="image" src="/Images/ContentImages/marshallBluetoothUpdateCura.png">
+                </div>
+                <div class="freeLine"></div>
+
+
+                <!-- ###################################################################### -->
+                <!--                               Design                                   -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Design"></jumpLink>
+                <h2>Design</h2>
+                <div class="paragraph">
+                    <p>You can download the model <a href="https://www.thingiverse.com/thing:5987280">here</a></p>
+                    <div class="center" style="margin: auto; width:100%;">
+                        <img style="width: 50%;" src="/Images/ContentImages/marshallBluetoothUpdatePart.png">
+                    </div>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                               Images                                   -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Images"></jumpLink>
+                <h2>Images</h2>
+                <div class="paragraph">
+                    <img class="image" src="/Images/ContentImages/marshallBluetoothUpdateView.png">
+                </div>
+                <div class="freeLine"></div>
+            </div>
+            <div class="columnRight" id="columnRight">
+                <div class="pageContentContainer" id="pageContentContainer">
+                    <p>Table of contents</p>
+                    <div class="pageContent">
+                        <button onclick="document.location='#Parts'">Parts</button>
+                        <button onclick="document.location='#Tools'">Tools</button>
+                        <button onclick="document.location='#Design'">Design</button>
+                        <button onclick="document.location='#Images'">Images</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="columnDown"></div>
+</body>
+</html>

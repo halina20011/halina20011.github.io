@@ -265,6 +265,30 @@ export let imagesLinksData = {
             "addAdicionalThings": null,
             "addScript": null,
             "addCss": null
+        },
+        "PilotPenHolder": {
+            "className": "PilotPenHolderProject",
+            "path": "/Other/PilotPenHolder/pilotPenHolder.html",
+            "imgPath": "/Images/Miniature/pilotPenHolder.png",
+            "name": "Pilot Pen Holder for Ender 3",
+            "projectTextInfo": [
+                "Pilot Pen Holder for Ender 3"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
+        "marshallBluetoothUpdate": {
+            "className": "marshallBluetoothUpdateProject",
+            "path": "/Other/marshallBluetoothUpdate.html",
+            "imgPath": "/Images/Miniature/marshallBluetoothUpdate.png",
+            "name": "Marshall Bluetooth Update",
+            "projectTextInfo": [
+                "Simple way how to add Bluetooth to your headphones"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
         }
     }
 }
