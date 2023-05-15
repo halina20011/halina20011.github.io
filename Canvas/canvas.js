@@ -128,6 +128,13 @@ export class CANVAS{
             }
         }
     }
+    
+    drawLines(points, rgba){
+        for(let i = 0; i < points.length - 1; i++){
+            this.drawLine(points[i][0], points[i][1], points[i + 1][0], points[i + 1][1], rgba);
+        }
+    }
+
 
     plotLineWidth(x1, y1, x2, y2, wd, rgba=[255, 255, 255, 255]){ 
         // let dx = Math.abs(x2 - x1), sx = x1 < x2 ? 1 : -1;

@@ -34,6 +34,7 @@
 .settingSameLine > *{
     display: flex;
     margin: 0px 10px 0px 0px;
+    /* width: 100%; */
 }
 
 .settingSameLine > input[type=number], .settingSameLine > input[type=range]{

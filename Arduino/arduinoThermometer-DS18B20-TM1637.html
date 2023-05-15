@@ -90,28 +90,28 @@
                     <div class="paragraph">
                         <h3>Code</h3>
                         <codeWindow data-src="innerText">
-                            <p>//Include libraries</p>
+                            <p>// Include libraries</p>
                             <p>#include &lt;OneWire.h&gt;</p>
                             <p>#include &lt;DallasTemperature.h&gt;</p>
                             <p></p>
-                            <p>//Make variable to store pin number</p>
+                            <p>// Make variable to store pin number</p>
                             <p>const int oneWireBus = 4;</p>
                             <p></p>
-                            <p>//Set up a OneWire instance to communicate with any OneWire device</p>
+                            <p>// Set up a OneWire instance to communicate with any OneWire device</p>
                             <p>OneWire oneWire(oneWireBus);</p>
-                            <p>DallasTemperature sensors(&oneWire); //Reference to OneWire instance</p>
+                            <p>DallasTemperature sensors(&amp;oneWire); // Reference to OneWire instance</p>
                             <p></p>
                             <p>void setup(){</p>
                             <p>    Serial.begin(115200);</p>
-                            <p>    sensors.begin(); //Start up the DS18B20 sensor</p>
+                            <p>    sensors.begin(); // Start up the DS18B20 sensor</p>
                             <p>}</p>
                             <p></p>
                             <p>void loop(){</p>
-                            <p>    sensors.requestTemperatures(); //Request temperature on all devices on the bus</p>
-                            <p>    float temperatureC = sensors.getTempCByIndex(0); //Get only temperature from the first sensor</p>
+                            <p>    sensors.requestTemperatures(); // Request temperature on all devices on the bus</p>
+                            <p>    float temperatureC = sensors.getTempCByIndex(0); // Get only temperature from the first sensor</p>
                             <p>    Serial.print(temperatureC);</p>
                             <p>    Serial.println("ºC");</p>
-                            <p>    delay(10); //Wait 10 milliseconds</p>
+                            <p>    delay(10); // Wait 10 milliseconds</p>
                             <p>}</p>
                         </codeWindow>
                     </div>

@@ -83,44 +83,22 @@ function updateInfo(){
         waveHolder.children[0].remove();
     }
 
-    for(let i = 0; i < level; i++){
-        // console.log(`Adding: ${i}.`);
-    
+    for(let i = 1; i <= level; i++){
+        let r = Math.abs(calculateDistance(i)).toFixed(4);
         let waveSettingsElement = document.createElement("div");
         waveSettingsElement.className = "waveInfo";
         waveSettingsElement.id = "waveSettings1"
-    
-        let row1 = document.createElement("div");
-        row1.className = "row1"
-        let row2 = document.createElement("div");
-        row2.className = "row2"
-        let row3 = document.createElement("div");
-        row3.className = "row3"
-    
-        waveSettingsElement.appendChild(row1);
-        waveSettingsElement.appendChild(row2);
-        waveSettingsElement.appendChild(row3);
-    
-        let indexName = document.createElement("p");
-        indexName.innerHTML = `Circle: ${i}`;
-        row1.appendChild(indexName);
-    
-        // Radius
-        let radiusHolder = document.createElement("div");
-        radiusHolder.className = "radiusHolder";
-        row2.appendChild(radiusHolder);
-        
-        // Radius Text
-        let radiusText = document.createElement("div");
-        radiusText.innerHTML = "Radius: "
-        
-        // Radius value
-        let radius = document.createElement("div");
-        radius.innerHTML = Math.abs(calculateDistance(i)).toFixed(4);
-    
-        // Append 
-        radiusHolder.appendChild(radiusText);
-        radiusHolder.appendChild(radius);
+        waveSettingsElement.innerHTML = `
+            <div class="row1">
+                <p>Circle: ${i}</p>
+            </div>
+            <div class="row2">
+                <div class="radiusHolder">
+                    <div>Radius: </div>
+                    <div>${r}</div>
+                </div>
+            </div>
+        `;
     
         waveHolder.appendChild(waveSettingsElement);    
     }
@@ -143,10 +121,6 @@ let drawPoint = 0;
 
 let angle = 180;
 let angleAdd = 2;
-
-function swapBuffer(){
-    context.putImageData(image, 0, 0);
-}
 
 function sin(angle){
     return Math.sin((angle * Math.PI) / 180);
@@ -283,7 +257,7 @@ function calculateDistance(level){
     let d = 0;
     let x, y, r;
 
-    for(let i = 0; i < level; i++){
+    for(let i = 1; i <= level; i++){
         [x, y, r] = waveFunction(i);
         d += Math.abs(r);
     }
@@ -296,7 +270,7 @@ function updateTypeOfFunction(){
 
     let index = parseInt(waveType.value);
     waveFunction = waveFunctions[index];
-    console.log(`Slected index: ${index}`); 
+    // console.log(`Slected index: ${index}`); 
     showEquation(index);
     drawPoint = calculateDistance(level);
 }

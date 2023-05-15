@@ -16,3 +16,8 @@
 .bezierCurveSetting > div > input{
     width: 50%;
 }
+
+.bezierCurveSetting > div > button{
+    height: 20px;
+    width: 20px;
+}

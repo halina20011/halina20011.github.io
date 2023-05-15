@@ -1,9 +1,18 @@
-function downloadFile(name){
-    getFullFileUrl(name);
+export function showCopyText(copyTextElement){
+    copyTextElement.style.display = 'block';
+    copyTextElement.style.animation = 'showAnimation 2s linear'
+    setTimeout(() => {
+        copyTextElement.style.display = 'none';
+    }, 2000)
 }
 
-function download(link){
-    var element = document.createElement('a');
+export function copyTextToClipboard(text, copyTextElement){
+    navigator.clipboard.writeText(text);
+    showCopyText(copyTextElement);
+}
+
+export function download(link){
+    let element = document.createElement('a');
     element.setAttribute('href', link);
 
     element.style.display = 'none';
@@ -13,17 +22,17 @@ function download(link){
     document.body.removeChild(element);
 }
 
-function copyTextFromFile(name){
-    var textFromFile = getText(getFullFileUrl(""));
-    console.log("l[kpjiohfy")
-    showCopyText();
-}
+export function downloadText(name, text){
+    let textFileUrl = null;
+    let fileData = new Blob([text], {type: 'text/plain'});
+    if(textFileUrl !== null){
+        window.URL.revokeObjectURL(textFile);
+    }
+    textFileUrl = window.URL.createObjectURL(fileData);
 
-function showCopyText(){
-    var parent = document.getElementById('copyText');
-    parent.style.display = 'block';
-    parent.style.animation = 'showAnimation 2s linear'
-    setTimeout(function() {
-        parent.style.display = 'none';
-    }, 2000)
+    let a = document.createElement('a');
+    a.href = textFileUrl;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
 }

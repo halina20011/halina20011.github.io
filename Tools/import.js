@@ -1,3 +1,32 @@
+export function importFile(url, fallback){
+    console.log(url);
+    if(window.fetch){
+        fetch(url)
+            .then(response => response.text())
+            .then(data => { fallback(data); });
+    }
+    else{
+        let xhr = new XMLHttpRequest();
+        
+        xhr.open("GET", url, true);
+
+        xhr.onload = () => {
+            if(xhr.status == 200){
+                fallback(xhr.responseText);
+            }
+            else{
+                console.error(`Request to ${url} failed with status ${xhr.status}`);
+            }
+        }
+
+        xhr.onerror = () => {
+            console.error("Request to ${url} failed");
+        }
+
+        xhr.send();
+    }
+}
+
 export function getText(url){
     let xmlhttp;
     let send = false;

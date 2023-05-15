@@ -1,4 +1,6 @@
-import {getText, createScript} from "/Tools/import.js";
+import {calculateNumberOfSpaces, split, getCurrentHtmlFileName} from "/Tools/func.js";
+import {importFile, getText, createScript} from "/Tools/import.js";
+import {downloadText, copyTextToClipboard} from "/Tools/download.js";
 
 const codeExplain = document.getElementsByClassName("codeExplain");
 
@@ -9,54 +11,6 @@ const other = ["for"];
 
 let listOfHighlightedWords = [variables, logicalOperators, functions, other];
 let listOfHighlightedWordsClassName = ["variables", "logicalOperators", "functions", "other"];
-
-// Get filename
-let Url = window.location.href;
-let urls = Url.split("/");
-for(let i = 0; i < urls.length; i++){
-    if(urls[i] == ''){
-        urls.splice(i, 1);
-    }
-}
-
-let htmlName = urls[urls.length - 1];
-htmlName = htmlName.split("#")[0];
-htmlName = htmlName.replace(".html", "");
-
-let codeUrl = "/Codes/" + htmlName + ".ino";
-
-function listOfLinesToText(listOfLines){
-    let returnText = "";
-    listOfLines.forEach(line =>{
-        returnText += line + "\n";
-    })
-    return returnText;
-}
-
-function getListOfLines(filePath){
-    let textFromFile = getText(filePath);
-    let listOfLines = textFromFile.split("\n"); // Get text from file in format "one line one index of array"
-
-    for (let i = 0; i < listOfLines.length; i++){
-        listOfLines[i] = listOfLines[i].replace("\r", "");
-    }
-    return listOfLines
-}
-
-function getMultitplyOfTen(number){
-    if(number == 0){
-        return 1;
-    }
-    return Math.floor(Math.log10(number) + 1);
-}
-
-function calculateNumberOfSpaces(number, max){
-    let spacesToAdd = 0;
-    let numberPower = getMultitplyOfTen(number, 1);
-    let numberMaxPower = getMultitplyOfTen(max, 1);
-    spacesToAdd = numberMaxPower - numberPower;
-    return spacesToAdd;
-}
 
 function escapeHtmlFromUnsafe(unsafe){
     return unsafe
@@ -74,124 +28,6 @@ function escapeHtmlFromSafe(unsafe) {
         .replace(/&gt;/g, ">")
         .replace(/&quot;/g, "\"")
         .replace(/&#039;/g, "'");
-}
-
-function makeCodeWindow(parentWindow){
-    // <div class="codeScrollWindow">
-    //     <div class="copyText" id="copyText">The text has been copied.</div>
-    //     <div></div>
-    //     <div class="codeSettings">
-    //         <button class="copyCodeWindowButton1" id="copyCodeWindowButton1"></button>
-    //         <button class="downloadCodeWindowButton1" id="downloadCodeWindowButton1"></button>
-    //     </div>
-    //     <div class="number"><div>0</div>1</div>
-    //     <div class="code">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-    //     <div class="number"><div>0</div>2</div>
-    //     <div class="code">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-    // </div>
-
-    // Make list of code lines
-    let listOfLines = [];
-    let rawText = "";
-    let name = "";
-    let src = parentWindow.dataset["src"];
-    // console.log(src);
-
-    if(src == "URL"){
-        listOfLines = getListOfLines(codeUrl);
-        name = `${htmlName}.ino`;
-    }
-    else if(src == "innerText"){
-        for(let i = 0; i < parentWindow.childElementCount; i++){
-            listOfLines.push(escapeHtmlFromSafe(parentWindow.children[i].innerHTML));
-        }
-        name = "codeExplanation.ino";
-        parentWindow.innerText = "";
-    }
-
-    let codeScrollWindow = document.createElement("div");
-    codeScrollWindow.className = "codeScrollWindow";
-    parentWindow.appendChild(codeScrollWindow);
-
-    rawText = listOfLinesToText(listOfLines);
-    
-    // Copy text message
-    let copyText = document.createElement("p");
-    copyText.className = "copyText";
-    copyText.id = "copyText";
-    copyText.innerHTML = "The text has been copied.";
-    
-    codeScrollWindow.appendChild(copyText);
-    
-    // CODE SETTINGS
-    let emptyNumber = document.createElement("div");
-    let codeSettings = document.createElement("div");
-    codeSettings.className = "codeSettings"
-    codeScrollWindow.appendChild(emptyNumber);
-    codeScrollWindow.appendChild(codeSettings);
-    
-    // COPY BUTTON
-    let copyButton = document.createElement("button");
-    copyButton.className = "copyCodeWindowButton1";
-    copyButton.id =        "copyCodeWindowButton1";
-    copyButton.addEventListener('click', function() {copyTextToClipboard(rawText, copyText);}, false);
-    codeSettings.appendChild(copyButton);
-    
-    // Add download script
-    createScript("/Tools/download.js", codeSettings);
-
-    // DOWNLOAD BUTTON
-    let downloadButton = document.createElement("button");
-    downloadButton.className = "downloadCodeWindowButton1";
-    downloadButton.id =        "downloadCodeWindowButton1";
-    downloadButton.addEventListener('click', function() {downloadText(name, rawText);}, false);
-    codeSettings.appendChild(downloadButton);
-    
-    for(let i = 0; i < listOfLines.length; i++){
-        let text = listOfLines[i];
-        // <div class="number"><div>0</div>1</div>
-        // <div class="code">text</div>
-     
-        let lineNumber = document.createElement("div");
-        lineNumber.className = "number"; //Asing Id
-
-        let number = document.createElement("div");
-
-        // Make invisible numbers
-        let stringLength = calculateNumberOfSpaces(i + 1, listOfLines.length);
-        let spaces = "0".repeat(stringLength);
-
-        let spaceElement = document.createElement("div");
-        spaceElement.innerHTML = spaces;
-        spaceElement.style.color = "rgba(0, 0, 0, 0)";
-
-        lineNumber.appendChild(spaceElement);
-        number.innerHTML = i + 1;        
-        lineNumber.appendChild(number);
-
-        codeScrollWindow.appendChild(lineNumber);
-        
-        let codeText = document.createElement("div"); //Make <code>
-        codeText.className = "code";
-        codeScrollWindow.appendChild(codeText);
-
-        // 1 is added to i, because there is allready "codeSettings" with evenBackgroundColor
-        if((i + 1) % 2 == 0){
-            lineNumber.style.backgroundColor = "var(--evenBackgroundColor)";
-            codeText.style.backgroundColor = "var(--evenBackgroundColor)";
-        }
-        else{
-            lineNumber.style.backgroundColor = "var(--oddBackgroundColor)";
-            codeText.style.backgroundColor = "var(--oddBackgroundColor)";
-        }
-        
-        let chnagedT = changeTextColor(text);
-        codeText.innerHTML = chnagedT;
-    }
-}
-
-function split(text){
-    return [...text]; // Or text.split('')
 }
 
 function stringToList(text){
@@ -269,45 +105,129 @@ function changeTextColor(text){
         }
     }
 
-    // console.log(newElements);
-
     return newElements;
 }
 
-function downloadText(name, text){
-    let textFileUrl = null;
-    let fileData = new Blob([text], {type: 'text/plain'});
-    if(textFileUrl !== null){
-        window.URL.revokeObjectURL(textFile);
+// <div class="codeScrollWindow">
+//     <div class="copyText" id="copyText">The text has been copied.</div>
+//     <div></div>
+//     <div class="codeSettings">
+//         <button class="copyCodeWindowButton1" id="copyCodeWindowButton1"></button>
+//         <button class="downloadCodeWindowButton1" id="downloadCodeWindowButton1"></button>
+//     </div>
+//     <div class="number"><div>0</div>1</div>
+//     <div class="code">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+//     <div class="number"><div>0</div>2</div>
+//     <div class="code">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+// </div>
+function makeCodeWindow(parentWindow, rawCode, fileName){
+    let listOfLines = rawCode.split("\n");
+
+    let codeScrollWindow = document.createElement("div");
+    codeScrollWindow.className = "codeScrollWindow";
+    parentWindow.appendChild(codeScrollWindow);
+    
+    // Copy text message
+    let copyText = document.createElement("p");
+    copyText.className = "copyText";
+    copyText.id = "copyText";
+    copyText.innerHTML = "The text has been copied.";
+    
+    codeScrollWindow.appendChild(copyText);
+    
+    // CODE SETTINGS
+    let emptyNumber = document.createElement("div");
+    let codeSettings = document.createElement("div");
+    codeSettings.className = "codeSettings";
+    codeScrollWindow.appendChild(emptyNumber);
+    codeScrollWindow.appendChild(codeSettings);
+    
+    // COPY BUTTON
+    let copyButton = document.createElement("button");
+    copyButton.className = "copyCodeWindowButton1";
+    copyButton.id =        "copyCodeWindowButton1";
+    copyButton.addEventListener('click', () => { copyTextToClipboard(rawCode, copyText); }, false);
+    codeSettings.appendChild(copyButton);
+
+    // DOWNLOAD BUTTON
+    let downloadButton = document.createElement("button");
+    downloadButton.className = "downloadCodeWindowButton1";
+    downloadButton.id =        "downloadCodeWindowButton1";
+    downloadButton.addEventListener('click', () => { downloadText(fileName, rawCode); }, false);
+    codeSettings.appendChild(downloadButton);
+    
+    for(let i = 0; i < listOfLines.length; i++){
+        let text = listOfLines[i];
+        // <div class="number"><div>0</div>1</div>
+        // <div class="code">text</div>
+     
+        let lineNumber = document.createElement("div");
+        lineNumber.className = "number";
+
+        let number = document.createElement("div");
+
+        // Make invisible numbers
+        let stringLength = calculateNumberOfSpaces(i + 1, listOfLines.length);
+        let spaces = "0".repeat(stringLength);
+
+        let spaceElement = document.createElement("div");
+        spaceElement.innerHTML = spaces;
+        spaceElement.style.color = "rgba(0, 0, 0, 0)";
+
+        lineNumber.appendChild(spaceElement);
+        number.innerHTML = i + 1;
+        lineNumber.appendChild(number);
+
+        codeScrollWindow.appendChild(lineNumber);
+        
+        let codeText = document.createElement("div"); //Make <code>
+        codeText.className = "code";
+        codeScrollWindow.appendChild(codeText);
+
+        // 1 is added to i, because there is allready "codeSettings" with evenBackgroundColor
+        if((i + 1) % 2 == 0){
+            lineNumber.style.backgroundColor = "var(--evenBackgroundColor)";
+            codeText.style.backgroundColor = "var(--evenBackgroundColor)";
+        }
+        else{
+            lineNumber.style.backgroundColor = "var(--oddBackgroundColor)";
+            codeText.style.backgroundColor = "var(--oddBackgroundColor)";
+        }
+        
+        // let chnagedT = changeTextColor(text);
+        // codeText.innerHTML = chnagedT;
+        codeText.innerHTML = text;
     }
-    textFileUrl = window.URL.createObjectURL(fileData);
-
-    let a = document.createElement('a');
-    a.href = textFileUrl;
-    a.download = name;
-    document.body.appendChild(a);
-    a.click();
-}
-
-function copyTextToClipboard(text, copyTextElement){
-    navigator.clipboard.writeText(text);
-    showCopyText(copyTextElement);
-}
-
-function showCopyText(copyTextElement){
-    copyTextElement.style.display = 'block';
-    copyTextElement.style.animation = 'showAnimation 2s linear'
-    setTimeout(function() {
-        copyTextElement.style.display = 'none';
-    }, 2000)
 }
 
 function makeAllCodeWindows(){
     let codeWindows = document.querySelectorAll("codeWindow");
-    // console.log(codeWindows);
 
-    codeWindows.forEach(element => {
-        makeCodeWindow(element);
+    codeWindows.forEach(codeWindow => {
+        let src = codeWindow.dataset["src"];
+        let fileName = codeWindow.dataset["fileName"];
+
+        if(src == "innerText"){
+            let rawCode = "";
+            let linesOfCode = [];
+            for(let i = 0; i < codeWindow.childElementCount; i++){
+                linesOfCode.push(escapeHtmlFromSafe(codeWindow.children[i].innerHTML));
+            }
+            // console.log(linesOfCode);
+
+            rawCode = linesOfCode.join("\n");
+            fileName = (fileName == undefined) ? "codeExplanation.ino" : fileName;
+            codeWindow.innerText = "";
+
+            makeCodeWindow(codeWindow, rawCode, fileName);
+        }
+        else{
+            src = (src == "URL") ? `/Codes/${getCurrentHtmlFileName(window)}.ino` : src;
+            let fallback = (rawCode) => {
+                makeCodeWindow(codeWindow, rawCode, fileName);
+            }
+            importFile(src, fallback);
+        }
     });
 }
 
