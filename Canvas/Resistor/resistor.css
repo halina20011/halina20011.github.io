@@ -1,0 +1,100 @@
+.info > div{
+    display: flex;
+    gap: 10px;
+}
+
+.info > div > *:nth-child(2){
+    flex: 1;
+    width: 100%;
+}
+
+.calculatedValues{
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    gap: 5px;
+    justify-content: space-between;
+}
+
+.calculatedValues > div{
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+.calculatedValues > div > *:nth-child(2), .calculatedValues > div > *:nth-child(3){
+    float: left;
+}
+
+.resistorsHolder{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.resistorWindow{
+    display: flex;
+    flex-direction: column;
+    margin: 0px 0px 5px 0px;
+    background-color: rgb(49, 49, 49);
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.sameLine{
+    display: flex;
+    justify-content: space-between;
+    height: 20px;
+}
+
+.buttons{
+    display: flex;
+    gap: 5px;
+}
+
+.resistorHolder{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-left: 20%;
+    width: 80%;
+    padding: 4px 0px;
+}
+
+.resistor{
+    height: 15px;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.resistor > input{
+    width: calc(100% - 30px);
+}
+
+.resistor > .removeButton{
+    height: 15px;
+    width: 15px;
+    box-sizing: border-box;
+}
+
+.values > .valueName{
+    display: flex;
+    gap: 2px;
+}
+
+.calculatedResistorValues{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.calculatedResistorValues > div{
+    display: flex;
+}
+
+.calculatedResistorValues > div > p{
+    white-space: pre;
+}

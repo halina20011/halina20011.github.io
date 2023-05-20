@@ -92,7 +92,7 @@ export class CANVAS{
             return;
         }
         let steep = Math.abs(y2 - y1) > Math.abs(x2 - x1);
-        if (steep == true){
+        if(steep == true){
             [x1, y1] = swap(x1, y1);
             [x2, y2] = swap(x2, y2);
         }
@@ -108,21 +108,21 @@ export class CANVAS{
         let err = dx / 2;
         let ystep;
 
-        if (y1 < y2){
+        if(y1 < y2){
             ystep = 1;
         }
         else{
             ystep = -1;
         }
         for (let a = 0; x1 <= x2; x1++){
-            if (steep == true){
+            if(steep == true){
                 this.drawPixel(y1, x1, rgba[0], rgba[1], rgba[2], rgba[3]);
             }
             else {
                 this.drawPixel(x1, y1, rgba[0], rgba[1], rgba[2], rgba[3]);
             }
             err -= dy;
-            if (err < 0){
+            if(err < 0){
                 y1 += ystep;
                 err += dx;
             }
@@ -147,14 +147,14 @@ export class CANVAS{
         let ed = dx + dy == 0 ? 1 : Math.sqrt(dx * dx + dy * dy);
         
         for(wd = (wd+1)/2; ;){
-            // drawPixel(x1, y1, max(0,255*(Math.abs(err-dx+dy)/ed-wd+1)));
-            drawPixel(x1, y1, rgba[0], rgba[1], rgba[2], rgba[3]);
+            // this.drawPixel(x1, y1, max(0,255*(Math.abs(err-dx+dy)/ed-wd+1)));
+            this.drawPixel(x1, y1, rgba[0], rgba[1], rgba[2], rgba[3]);
             e2 = err; 
             eX = x1;
             if(2*e2 >= -dx){
                 for(e2 += dy, eY = y1; e2 < ed*wd && (y2 != eY || dx > dy); e2 += dx){
-                    // drawPixel(x1, y2 += sy, max(0,255*(Math.abs(e2)/ed-wd+1)));
-                    drawPixel(x1, eY += sy, rgba[0], rgba[1], rgba[2], rgba[3]);
+                    // this.drawPixel(x1, y2 += sy, max(0,255*(Math.abs(e2)/ed-wd+1)));
+                    this.drawPixel(x1, eY += sy, rgba[0], rgba[1], rgba[2], rgba[3]);
                 }
                 if(x1 == x2){
                     break;
@@ -164,9 +164,9 @@ export class CANVAS{
                 x1 += sx;
             } 
             if(2 * e2 <= dy){
-                for (e2 = dx-e2; e2 < ed*wd && (x2 != eX || dx < dy); e2 += dy){
-                    // drawPixel(x2 += sx, y1, max(0,255*(Math.abs(e2)/ed-wd+1)));
-                    drawPixel(eX += sx, y1, rgba[0], rgba[1], rgba[2], rgba[3]);
+                for(e2 = dx-e2; e2 < ed*wd && (x2 != eX || dx < dy); e2 += dy){
+                    // this.drawPixel(x2 += sx, y1, max(0,255*(Math.abs(e2)/ed-wd+1)));
+                    this.drawPixel(eX += sx, y1, rgba[0], rgba[1], rgba[2], rgba[3]);
                 }
                 if(y1 == y2){
                     break;

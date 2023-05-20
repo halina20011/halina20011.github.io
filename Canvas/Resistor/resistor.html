@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Resistor</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Free web programming tutorials">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
+    <meta name="keywords" content="Halina programming, Arduino learn">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="/Canvas/canvas.css">
+    <link rel="stylesheet" type="text/css" href="resistor.css">
+    <script defer type="module" src="/Tools/importFile.js"></script>
+    <script defer type="module" src="/Canvas/canvas.js"></script>
+    <script defer type="module" src="resistor.js"></script>
+</head>
+<body>
+    <div class="columnUp" id="columnUp">
+    </div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
+            <div class="columnLeft" id="columnLeft">
+            </div>
+            <div class="columnMiddle" id="columnMiddle">
+                <h1 style="text-align: center">Resistor</h1>
+                <div class="fS8"></div>
+                <div class="window">
+                    <canvas class="my-canvas" style="background-color:black;" id="my-canvas" width="400" height="400"></canvas>
+                    <div class="settings">
+                        <div class="canvasButtons" id="canvasButtons">
+                            <button class="addButton" id="addButton"></button>
+                            <button class="downloadButton" id="downloadImage"></button>
+                            <button class="refreshButton" id="update"></button>
+                        </div>
+                        <div class="fS8"></div>
+                        <div class="info">
+                            <div class="sameLine">
+                                <p>What value to set </p>
+                                <select id="valueToUse">
+                                    <option>voltage</option>
+                                    <option>current</option>
+                                </select>
+                            </div>
+                            <div class="sameLine" id="voltageInput">
+                                <p>V[V] = </p>
+                                <input class="hideInputArrows" type="number" value="5" min="0">
+                            </div>
+                            <div class="sameLine" id="currentInput">
+                                <p>I[A] = </p>
+                                <input class="hideInputArrows" type="number" value="1" min="0">
+                            </div>
+                        </div>
+                        <div class="fS8"></div>
+                        <div class="calculatedValues" id="calculatedValues">
+                            <div><p>Resistance</p><p>50</p><p>Ω</p></div>
+                            <div><p>Voltage</p><p>0</p><p>V</p></div>
+                            <div><p>Current</p><p>1</p><p>A</p></div>
+                        </div>
+                        <div class="fS8"></div>
+                        <div class="resistorsHolder" id="resistorsHolder">
+                        </div>
+                    </div>
+                </div>
+                <div class="fS8"></div>
+                <!-- <div> -->
+                <!--     <h2>Theory</h2> -->
+                <!--     <p>For calculating </p> -->
+                <!-- </div> -->
+            </div>
+            </div>
+            <div class="columnRight" id="columnRight">
+            </div>
+        </div>
+        <div class="columnDown"></div>
+    </div>
+</body>
+</html>

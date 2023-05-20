@@ -243,6 +243,8 @@ jumpLink{
 
 :root{
     --button-size: 30px;
+    --button-size-medium: 20px;
+    --button-size-small: 12px;
 }
 
 .refreshButton, .addButton, .removeButton, .okButton, .downloadButton,
@@ -257,6 +259,16 @@ jumpLink{
     background-position: center center;
 }
 
+.buttonMedium{
+    width: var(--button-size-medium);
+    height: var(--button-size-medium);
+}
+
+.buttonSmall{
+    width: var(--button-size-small);
+    height: var(--button-size-small);
+}
+
 .refreshButton  { background-image: url("/Images/Icons/refresh.png");  }
 .addButton      { background-image: url("/Images/Icons/plus.png");     }
 .removeButton   { background-image: url("/Images/Icons/minus.png");    }
@@ -269,3 +281,7 @@ jumpLink{
 .pauseButton     { background-image: url("/Images/Icons/pause.png");  }
 
 .timelapseButton     { background-image: url("/Images/Icons/timelapse.png");  }
+
+.hideInputArrows, .hideInputArrows::-webkit-inner-spin-button{
+    appearance: textfield;
+}
