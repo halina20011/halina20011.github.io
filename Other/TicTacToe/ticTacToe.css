@@ -1,8 +1,3 @@
-:root{
-    --bar-size: 3%;
-    --character-size: calc((100% - var(--bar-size) * 2) / 3);
-}
-
 .settings{
     position: relative;
     box-sizing: border-box;
@@ -17,61 +12,65 @@
     position: absolute;
     display: inline-block;
     right: 0px;
-    padding:5px;
+    padding: 5px;
 }
 
 .gameWindow{
-    width: 30vw;
-    height: 30vw;
-    border: solid 5vw rgba(0,0,0,0);
-    box-sizing: border-box;
+    position: relative;
+    width: calc(100% - 10vw);
+    background-color: black;
+    margin: 2.5vw;
+    border: solid 2.5vw rgba(0, 0, 0, 0);
+    aspect-ratio: 1/1;
 }
 
-.window3x3{
-    width: 100%;
-    height: 100%;
-}
-
-.barImage{
+.gameWindow > .gameBoard{
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: #000000;
-    background-image: url("/Images/bar.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-}
+    background-color: black;
 
-.winIndicator{
-    position: absolute;
-    width: 100%;
-    background-image: url("/Images/winIndicator.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    padding-bottom: 100%;
-    z-index: 1;
-}
-
-.gameWindow3x3{
-    width: 86%;
-    height: 86%;
-    padding: 7%;
     display: grid;
-    grid-template-columns: repeat(3, var(--character-size));
-    grid-template-rows: repeat(3, var(--character-size));
-    gap: var(--bar-size);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
 }
 
-[class*="chracterButton"]{
+.gameWindow > .gameBoard > button{
     background-color: rgba(0,0,0,0);
-    border: none;
-    width: 92%;
-    height: 92%;
     padding: 4%;
+    border-radius: 0;
 }
 
-[id*="characterSpot"]{
-    position: relative;
+.gameWindow > .winnnerIndicator{
     width: 100%;
-    height: 100%;
+    position: absolute;
+    /* top: calc(100% * (1/6)); */
+    top: calc(100% * (3/6));
+    /* top: calc(100% * (5/6)); */
+    /* left: calc(100% / 3); */
+    left: 0%;
+    transform: rotate(90deg);
+    background-color: rgb(100, 100, 100);
+    height: 10px;
+    border-radius: 5px;
+}
+
+:root{
+    --borderSize: 2px;
+}
+
+.borderTop{
+    border-top: var(--borderSize) solid white;
+
+}
+.borderRight{
+    border-right: var(--borderSize) solid white;
+}
+
+.borderDown{
+    border-bottom: var(--borderSize) solid white;
+}
+
+.borderLeft{
+    border-left: var(--borderSize) solid white;
 }

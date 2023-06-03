@@ -1,289 +1,232 @@
-var x = "/Images/x.png";
-var o = "/Images/o.png";
+const gameBoard = document.getElementById("gameBoard");
 
-var currentTurn = "X";
+const images = {
+    "X": "/Images/x.png",
+    "O": "/Images/o.png"
+};
 
-var human = "X";
-var ai = "O";
+const EMPTY = -1;
 
-let board = [
-    ['', '', ''],
-    ['', '', ''],
-    ['', '', '']
-];
+const ONGOING = -1;
+const TIE = 2;
 
-const chracterButton1 = document.getElementById('chracterButton1')
-const characterSpot1 = document.getElementById('characterSpot1');
+let currentTurn = 0;
+let charTable = ["X", "O"];
 
-const chracterButton2 = document.getElementById('chracterButton2')
-const characterSpot2 = document.getElementById('characterSpot2');
+let board = null;
+let size = null;
+let characterButtons = null;
 
-const chracterButton3 = document.getElementById('chracterButton3')
-const characterSpot3 = document.getElementById('characterSpot3');
-
-const chracterButton4 = document.getElementById('chracterButton4')
-const characterSpot4 = document.getElementById('characterSpot4');
-
-const chracterButton5 = document.getElementById('chracterButton5')
-const characterSpot5 = document.getElementById('characterSpot5');
-
-const chracterButton6 = document.getElementById('chracterButton6')
-const characterSpot6 = document.getElementById('characterSpot6');
-
-const chracterButton7 = document.getElementById('chracterButton7')
-const characterSpot7 = document.getElementById('characterSpot7');
-
-const chracterButton8 = document.getElementById('chracterButton8')
-const characterSpot8 = document.getElementById('characterSpot8');
-
-const chracterButton9 = document.getElementById('chracterButton9')
-const characterSpot9 = document.getElementById('characterSpot9');
-
-const winIndicator = document.getElementsByClassName("winIndicator")[0]
 const refreshButton = document.getElementById("refreshButton");
 
-chracterButton1.addEventListener('click', function() {move(0,0);}, false)
-chracterButton2.addEventListener('click', function() {move(0,1);}, false)
-chracterButton3.addEventListener('click', function() {move(0,2);}, false)
-chracterButton4.addEventListener('click', function() {move(1,0);}, false)
-chracterButton5.addEventListener('click', function() {move(1,1);}, false)
-chracterButton6.addEventListener('click', function() {move(1,2);}, false)
-chracterButton7.addEventListener('click', function() {move(2,0);}, false)
-chracterButton8.addEventListener('click', function() {move(2,1);}, false)
-chracterButton9.addEventListener('click', function() {move(2,2);}, false)
+refreshButton.addEventListener('click', () => { 
+    setUp();
+}, false);
 
-refreshButton.addEventListener('click', function() {location.reload();}, false)
-// var images = [
-//     [characterSpot1, characterSpot2, characterSpot3],
-//     [characterSpot4, characterSpot5, characterSpot6],
-//     [characterSpot7, characterSpot8, characterSpot9]
-// ];
+const winIndicator = document.getElementById("winnnerIndicator");
 
-// console.log(winIndicator.style.display)
-winIndicator.style.display = "none"
+function setUp(){
+    characterButtons = gameBoard.children;
+    size = Math.sqrt(gameBoard.children.length);
+    board = new Array(size);
 
-var buttons = [
-    [chracterButton1, chracterButton2, chracterButton3],
-    [chracterButton4, chracterButton5, chracterButton6],
-    [chracterButton7, chracterButton8, chracterButton9]
-]
-
-var spots = [
-    [characterSpot1, characterSpot2, characterSpot3],
-    [characterSpot4, characterSpot5, characterSpot6],
-    [characterSpot7, characterSpot8, characterSpot9]
-];
-
-drawCharacter();
-
-function turn(s = false){
-    if(s == true){
-        return currentTurn == "X" ? ai : human;
-    }
-    return currentTurn == "X" ? x : o;
-}
-
-function moveAi(){
-    // var bestScore = -Infinity;
-    var bestScore = Infinity;
-    var move = [0, 0];
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            if(board[i][j] == ''){
-                board[i][j] = ai;
-                var score = getBestMove(board, 10, true);
-                board[i][j] = '';
-                if(score < bestScore){
-                    bestScore = score;
-                    move = {i, j};
-                }
+    for(let y = 0; y < size; y++){
+        board[y] = new Array(size);
+        for(let x = 0; x < size; x++){
+            let index = y * size + x;
+            characterButtons[index].addEventListener('click', () => { move(y, x); }, false);
+            board[y][x] = EMPTY;
+            // dont add top border on y first line
+            if(y != 0){
+                characterButtons[index].classList.add("borderTop");
+            }
+            if(y != size - 1){
+                characterButtons[index].classList.add("borderDown");
+            }
+            if(x != 0){
+                characterButtons[index].classList.add("borderLeft");
+            }
+            if(x != size - 1){
+                characterButtons[index].classList.add("borderRight");
             }
         }
     }
-    if(getFreeSpots() != 0){
-        board[move.i][move.j] = ai;
-        currentTurn = turn(true);
+
+    drawCharacter();
+}
+
+function moveAi(){
+    let bestPosition;
+    let currentTurnIn = ((currentTurn) ? 0 : 1);
+    bestPosition = (getBestMove(board, 10, currentTurnIn, currentTurn, true))[1];
+    if(0 < getFreeSpots()){
+        // console.log("moved to", bestPosition);
+        board[bestPosition[0]][bestPosition[1]] = currentTurn;
+        switchTurn();
         drawCharacter();
     }
 }
 
-var scores = {
-    X: 10,
-    O: -10,
-    tie: 0
-};
+function getBestMove(board, depth, minPlayer, maxPlayer, maximizing){
+    let result = checkIftheGameIsOver();
+    if(result != ONGOING || depth <= 0){
+        let score = (result == maxPlayer) ? 10 :
+            ((result == minPlayer) ? -10 : 0);
 
-function getBestMove(board, depth, maxmizingPlayer){
-    var resurlt = checkIftheGameIsOver();
-    if(resurlt != null){
-        // console.log(score("x"), score[O], score[tie]);
-        // console.log(scores[resurlt]);
-        return scores[resurlt] * depth;
+        return [depth * score, null];
     }
-    
-    if(maxmizingPlayer){
-        var bestScore = -Infinity;
-        for(var i = 0; i < 3; i++){
-            for(var j = 0; j < 3; j++){
-                if(board[i][j] == ''){
-                    // board[i][j] = ai;
-                    board[i][j] = human;
-                    var score = getBestMove(board, depth - 1, false);
-                    board[i][j] = '';
-                    // bestScore = max(score, bestScore);
-                    if(score > bestScore){
+
+    let bestScore = (maximizing) ? -Infinity : Infinity;
+    let bestPosition = [0, 0];
+
+    for(let y = 0; y < size; y++){
+        for(let x = 0; x < size; x++){
+            if(board[y][x] == EMPTY){
+                board[y][x] = (maximizing) ? maxPlayer : minPlayer;
+                let score = (getBestMove(board, depth - 1, minPlayer, maxPlayer, !maximizing))[0];
+                board[y][x] = EMPTY;
+                if(maximizing){
+                    if(bestScore < score){
                         bestScore = score;
+                        bestPosition = [y, x];
                     }
                 }
-            }
-        }
-        return bestScore;
-    }
-    else{
-        var bestScore = +Infinity;
-        for(var i = 0; i < 3; i++){
-            for(var j = 0; j < 3; j++){
-                if(board[i][j] == ''){
-                    // board[i][j] = human;
-                    board[i][j] = ai;
-                    var score = getBestMove(board, depth - 1, true);
-                    board[i][j] = '';
+                else{
                     if(score < bestScore){
-                        bestScore = score;
+                        bestScore = score
+                        bestPosition = [y, x];
                     }
                 }
             }
         }
-        return bestScore;
     }
+
+    return [bestScore, bestPosition];
 }
 
-function move(line, column){
-    if(checkIftheGameIsOver() != null){
-        drawWin()
-        console.log(checkIftheGameIsOver());
+function switchTurn(){
+    currentTurn = (currentTurn) ? 0 : 1;
+}
+
+function move(y, x){
+    if(checkIftheGameIsOver() != ONGOING){
+        drawWin();
         return;
     }
-    if(board[line][column] != ''){
+
+    if(board[y][x] != EMPTY){
         return;
     }
-    board[line][column] = currentTurn;
-    currentTurn = turn(true);
+    
+    board[y][x] = currentTurn;
+    switchTurn();
     drawCharacter();
     moveAi();
-    drawWin()
+    drawCharacter();
 }
 
 function drawCharacter(){
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            if(board[i][j] == "X"){
-                buttons[i][j].style.backgroundImage = `url( ${x} )`;
-                buttons[i][j].style.backgroundRepeat = "no-repeat";
-                buttons[i][j].style.backgroundSize = "100% 100%";
+    for(let y = 0; y < size; y++){
+        for(let x = 0; x < size; x++){
+            // ["", 0, 1] => ["O", "X"][0] => images["0"]
+            let index = y * size + x;
+            let charIndex = board[y][x];
+            if(charIndex !== EMPTY){
+                let charName = charTable[charIndex];
+                characterButtons[index].style.backgroundImage = `url(${images[charName]})`;
+                characterButtons[index].style.backgroundRepeat = "no-repeat";
+                characterButtons[index].style.backgroundSize = "100% 100%";
             }
-            else if(board[i][j] == "O"){
-                buttons[i][j].style.backgroundImage = `url( ${o} )`;
-                buttons[i][j].style.backgroundRepeat = "no-repeat";
-                buttons[i][j].style.backgroundSize = "100% 100%";
+            else{
+                characterButtons[index].style.backgroundImage = "none";
             }
-            // else{
-            //     spots[i][j].src = "/Images/none.png";
-            // }
         }
     }
+
+    drawWin();
 }
 
 function isEquals(a, b, c){
-    return a == b && b == c && a != '';
+    return a == b && b == c && a !== EMPTY;
 }
 
 function getFreeSpots(){
-    var freeSpots = 0;
-    for(var i = 0; i < 3; i++){
-        for (let j = 0; j < 3; j++) {
-            if(board[i][j] == ''){
+    let freeSpots = 0;
+    for(let y = 0; y < size; y++){
+        for(let x = 0; x < size; x++){
+            if(board[y][x] === EMPTY){
                 freeSpots++;
             }
         }
     }
+
     return freeSpots;
 }
 
-function checkIftheGameIsOver(){
-    let winner = null;
-    var position = [[null][null],[null][null],[null][null]]
-    for (let i = 0; i < 3; i++) {
-        if(isEquals(board[i][0], board[i][1], board[i][2])){
-            winner = board[i][0];
+function getWinner(){
+    for(let y = 0; y < size; y++){
+        if(isEquals(board[y][0], board[y][1], board[y][2])){
+            return [[0, y], [2, y]];
         }
-    }
-    
-    for (let i = 0; i < 3; i++) {
-        if(isEquals(board[0][i], board[1][i], board[2][i])){
-            winner = board[0][i];
-            position = [i, 1, 2]
+
+        if(isEquals(board[0][y], board[1][y], board[2][y])){
+            return [[y, 0], [y, 2]];
         }
     }
     
     if(isEquals(board[0][0], board[1][1], board[2][2])){
-        winner = board[0][0];
+        return [[0, 0], [2, 2]];
     }
+
     if(isEquals(board[2][0], board[1][1], board[0][2])){
-        winner = board[2][0];
+        return [[0, 2], [2, 0]];
     }
     
-    var freeSpots = 0;
-    for(var i = 0; i < 3; i++){ //Make for loop to check all positions
-        for (let j = 0; j < 3; j++) {
-            if(board[i][j] == ''){
-                freeSpots++;
-            }
-        }
+    return undefined;
+}
+
+function checkIftheGameIsOver(){
+    const winner = getWinner();
+    if(winner != undefined){
+        return board[winner[0][1]][winner[0][0]];
     }
-    
-    if(winner == null && freeSpots == 0){
-        return "tie";
-    }
-    else{
-        return winner;
-    }
+
+    return (0 < getFreeSpots()) ? ONGOING : TIE;
 }
 
 function drawWin(){
-    let winner = null;
-    var position = []
-    xPositions = [-30, 0, 30]
-    yPositions = [-30, 0, 30]
-    for (let i = 0; i < 3; i++) {
-        if(isEquals(board[i][0], board[i][1], board[i][2])){
-            winIndicator.style.display = "block"
-            winIndicator.style.transform = "rotate(90deg)"
-            pos = xPositions[i]
-            winIndicator.style.top = pos+"%"
-        }
-    }
+    let positions = getWinner();
+    // positions = [[2, 0], [0, 2]];
     
-    for (let i = 0; i < 3; i++) {
-        if(isEquals(board[0][i], board[1][i], board[2][i])){
-            winIndicator.style.display = "block"
-            pos = yPositions[i]
-            winIndicator.style.left = pos+"%"
-        }
+    if(positions == undefined){
+        winIndicator.style.display = "none";
+        return;
     }
+    // console.log(positions);
+
+    const tableY = ["calc(100% * (1/6) - 5px)", "calc(50% - 5px)", "calc(100% * (5/6) - 5px)"];
+    const tableX = ["calc(100% / -3)", "0", "calc(100% / 3)"];
+
+    winIndicator.style.display = "block";
+
+    winIndicator.style.left = tableX[1];
+    winIndicator.style.top = tableY[1];
     
-    if(isEquals(board[0][0], board[1][1], board[2][2])){
-        winIndicator.style.display = "block"
-        winIndicator.style.transform = "rotate(135deg)"
+    if(positions[0][1] == positions[1][1]){
+        winIndicator.style.transform = "rotate(0deg)";
+        winIndicator.style.top = tableY[positions[0][1]];
     }
-    if(isEquals(board[2][0], board[1][1], board[0][2])){
-        winIndicator.style.display = "block"
-        winIndicator.style.transform = "rotate(45deg)"
+    else if(positions[0][0] == positions[1][0]){
+        winIndicator.style.transform = "rotate(-90deg)";
+        winIndicator.style.left = tableX[positions[1][0]];
+
+    }
+    else if(positions[0][1] == 0){
+        winIndicator.style.transform = "rotate(45deg)";
+    }
+    else{
+        winIndicator.style.transform = "rotate(-45deg)";
     }
 }
 
-function printMousePos(event) {
-    console.log(`X: ${event.clientX} Y: ${event.clientY}`);
-}
-
-document.addEventListener("click", printMousePos);
+setUp();
