@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pi digits</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
+    <meta name="keywords" content="Halina programming, Arduino learn">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="pi.css">
+    <script defer type="module" src="/Tools/importFile.js"></script>
+    <script defer type="module" src="piDigits.js"></script>
+    <script defer type="module" src="pi.js"></script>
+</head>
+<head>
+    <div class="columnUp" id="columnUp">
+    </div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
+            <div class="columnLeft" id="columnLeft">
+            </div>
+            <div class="columnMiddle" id="columnMiddle">
+                <h1>Pi digits</h1>
+                <div class="settings">
+                    <button id="showDigit">show digit</button>
+                    <div class="hints">
+                        <p>hint level: 0</p>
+                        <input type="range" id="hintLevel" min="0" max="9">
+                        <p>9</p>
+                    </div>
+                    <button class="help">
+                        <div>
+                            <p>select current digit of pi by clicking on it or by pressing the correct value on your keyboard</p>
+                            <p>you can set hint level which when se to n, it will hide n digits that are not the correct digit of pi</p>
+                            <p>if you are stuck you can use "show digit" or just set hint level to max</p>
+                        </div>
+                    </button>
+                </div>
+                <div id="answeredDigits"></div>
+                <div class="cardsHolder" id="cardsHolder"></div>
+            </div>
+            <div class="columnRight" id="columnRight">
+            </div>
+        </div>
+    </div>
+    <div class="columnDown"></div>
+</body>
+</html>

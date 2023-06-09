@@ -1,5 +1,17 @@
 export let imagesLinksData = {
     "Index": {
+        "PiDigitsProject": {
+            "className": "PiDigitsProject",
+            "path": "/Other/Pi/pi.html",
+            "imgPath": "/Images/Miniature/pi.png",
+            "name": "Pi digits",
+            "projectTextInfo": [
+               "Who wouldn't want to learn some digits of pi?"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
         "BezierCurveProject": {
             "className": "BezierCurveProject",
             "path": "/Canvas/BezierCurve/bezierCurve.html",

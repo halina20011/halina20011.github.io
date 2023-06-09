@@ -1,0 +1,57 @@
+.settings{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 22px;
+    gap: 10px;
+    /* margin: right; */
+}
+
+.settings > *:first-child{
+    margin-right: auto;
+}
+
+.hints{
+    display: flex;
+    gap: 5px;
+}
+
+#answeredDigits{
+    position: relative;
+    word-break: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 10px 0px;
+    white-space: none;
+    text-align: center;
+}
+
+#answeredDigits > *{
+    display: inline;
+    white-space: normal;
+}
+
+.correct{ background-color: green;  }
+.wrong  { background-color: red;    }
+.shown  { background-color: orange; }
+
+.cardsHolder{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.cardsHolder > div{
+    display: flex;
+    width: calc(20% - 5px);
+    background-color: #444444;
+    border: solid 3px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin: 2.5px;
+    aspect-ratio: 1/1.2;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
