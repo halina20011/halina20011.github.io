@@ -142,17 +142,6 @@ body{
     border-radius: 5px;
 }
 
-.projectTextInfo{
-    position: relative;
-    height: 100%;
-    overflow: hidden;
-    padding-left: 5px;
-}
-
-.projectTextInfo p:nth-child(1){
-    font-size: 1.2rem;
-}
-
 /* ############################################################################### */
 /* ###########################    Media and images    ############################ */
 /* ############################################################################### */

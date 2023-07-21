@@ -27,7 +27,7 @@ function parseData(data){
     let path = getKey(data, 1);
     let imgPath = getKey(data, 2);
     let name = getKey(data, 3);
-    let projectTextInfo = getKey(data, 4);
+    let projectTextInfoHolder = getKey(data, 4);
     let addAdicionalThings = getKey(data, 5);
     // console.log(addAdicionalThings);
     let addScript = getKey(data, 6);
@@ -37,11 +37,11 @@ function parseData(data){
     // console.log(path);
     // console.log(imgPath);
     // console.log(name);
-    // console.log(projectTextInfo);
+    // console.log(projectTextInfoHolder);
     // console.log(addAdicionalThings);
     // console.log(addScript);
     // date []
-    return [className, path, imgPath, name, projectTextInfo, addAdicionalThings, addScript, addCss];
+    return [className, path, imgPath, name, projectTextInfoHolder, addAdicionalThings, addScript, addCss];
 }
 
 //Make elements
@@ -54,12 +54,13 @@ function createImageLink(parrent, dataList){
     let path = dataList[1];
     let imgPath = dataList[2];
     let name = dataList[3];
-    let projectTextInfo = dataList[4];
+    let projectTextInfoHolder = dataList[4];
     let addAdicionalThings = dataList[5];
     let addScript = dataList[6];
     let addCss = dataList[7];
     
     let classBackgroundImg;
+    let classProjectTextInfoHolder;
     let classProjectTextInfo;
     let classImg;
     let classInfoText;
@@ -67,24 +68,28 @@ function createImageLink(parrent, dataList){
 
     let button;
 
-    if(className != null && path != null && imgPath != null && name != null && projectTextInfo != null){
+    if(className != null && path != null && imgPath != null && name != null && projectTextInfoHolder != null){
         button = document.createElement("button"); //Create button
         button.className = className;
         // console.log(path);
-        button.setAttribute("onClick", 'location.href =\'' + path +'\';');
+        button.setAttribute("onClick", `location.href = "${path}";`);
         parrent.appendChild(button);
 
         classBackgroundImg = document.createElement("div");
         classBackgroundImg.className = "backgroundImg";
         button.appendChild(classBackgroundImg);
 
-        let classProjectTextInfo = document.createElement("div");
-        classProjectTextInfo.className = "projectTextInfo"
-        classBackgroundImg.appendChild(classProjectTextInfo);
+        classProjectTextInfoHolder = document.createElement("div");
+        classProjectTextInfoHolder.className = "projectTextInfoHolder";
+        classBackgroundImg.appendChild(classProjectTextInfoHolder);
 
-        for(let i = 0; i< projectTextInfo.length; i++){
-            let text = document.createElement("p");
-            text.innerHTML = projectTextInfo[i];
+        classProjectTextInfo = document.createElement("div");
+        classProjectTextInfo.className = "projectTextInfo";
+        classProjectTextInfoHolder.appendChild(classProjectTextInfo);
+
+        for(let i = 0; i< projectTextInfoHolder.length; i++){
+            const text = document.createElement("p");
+            text.innerHTML = projectTextInfoHolder[i];
             classProjectTextInfo.appendChild(text);
         }
 
@@ -104,76 +109,32 @@ function createImageLink(parrent, dataList){
     }
 
     if(addAdicionalThings != null){
-        // console.log(addAdicionalThings);
-        if(addAdicionalThings.length > 0){
-            // console.log(addAdicionalThings)
-            //[["text", [["type", "value"]]]]
-            for(let i = 0; i< addAdicionalThings.length;i++){
-                let newElement = document.createElement(addAdicionalThings[i][0]);
-                let element = classBackgroundImg.appendChild(newElement);
-                for(let x = 0; x < addAdicionalThings[i][1].length; x++){
-                    if(addAdicionalThings[i][1][x].length == 2 && addAdicionalThings[i][1][x][0] == "class"){
-                        newElement.className = addAdicionalThings[i][1][x][1];
-                    }
-                    else{
-                        element.style.cssText += addAdicionalThings[i][1][x][0];
-                    }
-                }
-            }
-        }
+        const newElement = document.createElement("div");
+        newElement.innerHTML = addAdicionalThings;
+        classBackgroundImg.appendChild(newElement);
     }
 
     if(addScript != null){
-        let script = document.createElement("script");
+        const script = document.createElement("script");
         script.src = addScript;
         classBackgroundImg.appendChild(script);
     }
 
     if(addCss != null){
-        if(addCss.length > 0){
-            let css = [];
-            let style = document.createElement('style');
-            style.type = 'text/css';
-            //[["text", [["type", "value"]]]]
-            for(let i = 0; i< addCss.length; i++){
-                // console.log(addCss[i][1][0]);
-                // console.log(addCss[i][0]);
-                if(addCss[i][0].indexOf("img") > -1 && addCss[i][0].indexOf(":") == -1){
-                    classImg.style.cssText += addCss[i][1];
-                }
-                else if(addCss[i][0].indexOf(classImg.className) > -1){
-                    if(addCss[i][0].indexOf("hover") > -1){
-                        // console.log("HOVER");
-                        // console.log(addCss[i][1][0].length);
-                        for(let x = 0; x < addCss[i][1][0].length; x++){
-                            css.push(document.createTextNode(`${addCss[i][0]}{${addCss[i][1][0][x]}}`));
-                            // console.log(css);
-                        }
-                    }
-                }
-            }
-            if(style.styleSheet){
-                style.styleSheet.cssText = declarations.nodeValue;
-            } 
-            else{
-                // console.log(css.length);
-                for(let i = 0; i < css.length; i++){
-                    style.appendChild(css[i]);
-                }
-            }
+        const style = document.createElement('style');
+        style.innerHTML = addCss;
 
-            document.getElementsByTagName('head')[0].appendChild(style);
-        }
+        document.getElementsByTagName('head')[0].appendChild(style);
     }
 }
 
 function importImageLink(parent, name){
-    let pageData = data[name];
+    const pageData = data[name];
     // Get number of all window to add
-    let pageDataCount = Object.keys(pageData).length;
+    const pageDataCount = Object.keys(pageData).length;
 
     // Convert json to list of info
-    let pageDataList = [];
+    const pageDataList = [];
     for(let i = 0; i < pageDataCount; i++){
         pageDataList.push(parseData(getKey(pageData, i)));
     }
@@ -186,16 +147,16 @@ function importImageLink(parent, name){
 
 function importAllImagesLinks(parent){
     for(let i = 0; i < dataToImport.length; i++){
-        let name = dataToImport[i];
+        const name = dataToImport[i];
 
         if(makeTitle[i] == "True"){
             // Make title
-            let title = document.createElement("h2");
+            const title = document.createElement("h2");
             title.innerHTML = name;
             parent.appendChild(title);
         }
         
-        let parentElement = document.createElement("div");
+        const parentElement = document.createElement("div");
         parentElement.className = "projects";
         parent.appendChild(parentElement);
         

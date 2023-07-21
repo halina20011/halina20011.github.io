@@ -1,5 +1,17 @@
-export let imagesLinksData = {
+export const imagesLinksData = {
     "Index": {
+        "NotesProject": {
+            "className": "NotesProject",
+            "path": "/Other/Notes/notes.html",
+            "imgPath": "/Images/Miniature/notes.svg",
+            "name": "Notes",
+            "projectTextInfo": [
+                "practice names of notes"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
         "PiDigitsProject": {
             "className": "PiDigitsProject",
             "path": "/Other/Pi/pi.html",
@@ -18,12 +30,15 @@ export let imagesLinksData = {
             "imgPath": "/Images/Miniature/bezierCurve.jpeg",
             "name": "Bezier curve",
             "projectTextInfo": [
-               "Explore beautiful math that is behind Bezier curves."
+               "Explore beautiful math that is behind Bezier curves"
             ],
             "addAdicionalThings": null,
             "addScript": null,
-            "addCss":  [
-                [".BezierCurveProject:hover > .backgroundImg > .img",[["background-image: url('/Images/Miniature/bezierCurve.gif')!important;"]]]]
+            "addCss": `
+                .BezierCurveProject:hover > .backgroundImg > .img{
+                    background-image: url('/Images/Miniature/bezierCurve.gif')!important;
+                }
+            `
         },
         "CubeProject": {
             "className": "CubeProject",
@@ -31,12 +46,15 @@ export let imagesLinksData = {
             "imgPath": "/Images/Miniature/cube.jpeg",
             "name": "Cube",
             "projectTextInfo": [
-                "See how you can project a cube on 2d plane with math."
+                "See how you can project a cube on 2d plane with math"
             ],
             "addAdicionalThings": null,
             "addScript": null,
-            "addCss":  [
-                [".CubeProject:hover > .backgroundImg > .img",[["background-image: url('/Images/Miniature/cube.gif')!important;"]]]]
+            "addCss": `
+                .CubeProject:hover > .backgroundImg > .img{
+                    background-image: url('/Images/Miniature/cube.gif')!important;
+                }
+            `
         },
         "HilbertCurve": {
             "className": "HilbertCurveProject",
@@ -44,12 +62,15 @@ export let imagesLinksData = {
             "imgPath": "/Images/Miniature/hilbertCurve.jpeg",
             "name": "Hilbert curve",
             "projectTextInfo": [
-                "The Hilbert curve is a space filling fractal that you can play with."
+                "The Hilbert curve is a space filling fractal that you can play with"
             ],
             "addAdicionalThings": null,
             "addScript": null,
-            "addCss":  [
-                [".HilbertCurveProject:hover > .backgroundImg > .img",[["background-image: url('/Images/Miniature/hilbertCurve.gif')!important;"]]]]
+            "addCss": `
+                .HilbertCurveProject:hover > .backgroundImg > .img{
+                    background-image: url('/Images/Miniature/hilbertCurve.gif')!important;
+                }
+            `
         },
         "MandelbrotSet": {
             "className": "MandelbrotSetProject",
@@ -57,12 +78,15 @@ export let imagesLinksData = {
             "imgPath": "/Images/Miniature/mandelbrotSet.jpeg",
             "name": "Mandelbrot set",
             "projectTextInfo": [
-                "Explore what is Mandelbrot set."
+                "Explore what is Mandelbrot set"
             ],
             "addAdicionalThings": null,
             "addScript": null,
-            "addCss":  [
-                [".MandelbrotSetProject:hover > .backgroundImg > .img",[["background-image: url('/Images/Miniature/mandelbrotSet.gif')!important;"]]]]
+            "addCss": `
+                .MandelbrotSetProject:hover > .backgroundImg > .img{
+                    background-image: url('/Images/Miniature/mandelbrotSet.gif')!important;
+                }
+            `
         },
         "FourierSeries": {
             "className": "FourierSeriesProject",
@@ -70,12 +94,15 @@ export let imagesLinksData = {
             "imgPath": "/Images/Miniature/fourierSeries.jpeg",
             "name": "Fourier Series",
             "projectTextInfo": [
-                "Explore what is Fourier series."
+                "Explore what is Fourier series"
             ],
             "addAdicionalThings": null,
             "addScript": null,
-            "addCss":  [
-                [".FourierSeriesProject:hover > .backgroundImg > .img",[["background-image: url('/Images/Miniature/fourierSeries.gif')!important;"]]]]
+            "addCss": `
+                .FourierSeriesProject:hover > .backgroundImg > .img{
+                    background-image: url('/Images/Miniature/fourierSeries.gif')!important;
+                }
+            `
         },
         "ASCIIGenerator": {
             "className": "AsciiGeneratorProject",
@@ -83,15 +110,15 @@ export let imagesLinksData = {
             "imgPath": "/Images/Miniature/asciiGenerator.png",
             "name": "ASCII Generator",
             "projectTextInfo": [
-                "Convert image to ASCII text."
+                "Convert image to ASCII text"
             ],
             "addAdicionalThings": null,
             "addScript": null,
-            "addCss":  [
-                [".AsciiGeneratorProject > .backgroundImg > .img",
-                    [["background-color: rgb(0, 0, 0, 1);"]]
-                ]
-                ]
+            "addCss": `
+                .AsciiGeneratorProject > .backgroundImg > .img{
+                    background-color: rgb(0, 0, 0, 1);
+                }
+            `
         },
         "MarchingSquares": {
             "className": "MarchingSquaresProject",
@@ -99,7 +126,7 @@ export let imagesLinksData = {
             "imgPath": "/Images/Miniature/marchingSquares.jpg",
             "name": "Marching Squares",
             "projectTextInfo": [
-                "Play with algorithm called Marching Squares."
+                "Play with algorithm called Marching Squares"
             ],
             "addAdicionalThings": null,
             "addScript": null,
@@ -111,12 +138,15 @@ export let imagesLinksData = {
             "imgPath": "/Images/Miniature/metaballs.jpeg",
             "name": "Metaballs",
             "projectTextInfo": [
-                "Play with metaballs."
+                "Play with metaballs"
             ],
             "addAdicionalThings": null,
             "addScript": null,
-            "addCss":  [
-                [".MetaballsProject:hover > .backgroundImg > .img",[["background-image: url('/Images/Miniature/metaballs.gif')!important;"]]]]
+            "addCss": `
+                .MetaballsProject:hover > .backgroundImg > .img{
+                    background-image: url('/Images/Miniature/metaballs.gif')!important;
+                }
+            `
         },
         "TicTacToe": {
             "className": "TicTacToeProject",
@@ -124,8 +154,8 @@ export let imagesLinksData = {
             "imgPath": "/Images/Miniature/TicTacToe.png",
             "name": "Tic Tac Toe",
             "projectTextInfo": [
-                "Play Tic Tac Toe with AI.", 
-                "This small project I made to learn Minimax algorithm. Try to beat it."
+                "Play Tic Tac Toe with AI", 
+                "This usses Minimax algorithm, try to beat it"
             ],
             "addAdicionalThings": null,
             "addScript": null,
@@ -137,8 +167,7 @@ export let imagesLinksData = {
             "imgPath": "/Images/Miniature/w.png",
             "name": "Test typing",
             "projectTextInfo": [
-                "Do you want to practice typing on the keyboard?", 
-                "You can choose which letters you want to practice or upload the file or text you want to try to write"
+                "Do you want to practice typing on the keyboard?"
             ],
             "addAdicionalThings": null,
             "addScript": null,
@@ -151,37 +180,34 @@ export let imagesLinksData = {
             "name": "Clock",
             "projectTextInfo": [
                 "Real time clock", 
-                "Just a clock."
+                "Just a clock..."
             ],
-            "addAdicionalThings": [
-                ["div",[
-                    ["class", "arrowHours"],
-                    ["position: absolute"],
-                    ["width: 100%"],
-                    ["background-size: 100%"],
-                    ["background-repeat: no-repeat"],
-                    ["padding-bottom: 100%"],
-                    ["background-image: url(/Images/Miniature/Clock/arrowHours.png)"]]
-                ],
-                ["div", [
-                    ["class", "arrowMinutes"],
-                    ["position: absolute"],
-                    ["width: 100%"],
-                    ["background-size: 100%"],
-                    ["background-repeat: no-repeat"],
-                    ["padding-bottom: 100%"],
-                    ["background-image: url(/Images/Miniature/Clock/arrowMinutes.png)"]]
-                ],
-                ["div", [
-                    ["class", "arrowSeconds"],
-                    ["position: absolute"],
-                    ["width: 100%"],
-                    ["background-size: 100%"],
-                    ["background-repeat: no-repeat"],
-                    ["padding-bottom: 100%"],
-                    ["background-image: url(/Images/Miniature/Clock/arrowSeconds.png)"]]
-                ]
-            ],
+            "addAdicionalThings": `
+                <div class=arrowHours style="
+                    position: absolute;
+                    width: 100%;
+                    background-size: 100%;
+                    background-repeat: no-repeat;
+                    padding-bottom: 100%;
+                    background-image: url(/Images/Miniature/Clock/arrowHours.png)";
+                ></div>
+                <div class="arrowMinutes" style="
+                    position: absolute;
+                    width: 100%;
+                    background-size: 100%;
+                    background-repeat: no-repeat;
+                    padding-bottom: 100%;
+                    background-image: url(/Images/Miniature/Clock/arrowMinutes.png)";
+                ></div>
+                <div class="arrowSeconds" style="
+                    position: absolute;
+                    width: 100%;
+                    background-size: 100%;
+                    background-repeat: no-repeat;
+                    padding-bottom: 100%;
+                    background-image: url(/Images/Miniature/Clock/arrowSeconds.png)";
+                ></div>
+            `,
             "addScript": "/Clock/clockAnimation.js",
             "addCss": null
         }
@@ -194,7 +220,7 @@ export let imagesLinksData = {
             "name": "Arduino blink LED",
             "projectTextInfo": [
                 "Learn Arduino", 
-                "In this tutorial you can learn how to blink LED with Arduino."
+                "In this tutorial you can learn how to blink LED with Arduino"
             ],
             "addAdicionalThings": null,
             "addScript": null,
@@ -207,7 +233,7 @@ export let imagesLinksData = {
             "name": "Arduino fade LED",
             "projectTextInfo": [
                 "Learn Arduino", 
-                "In this tutorial you can learn how to fade LED with Arduino."
+                "In this tutorial you can learn how to fade LED with Arduino"
             ],
             "addAdicionalThings": null,
             "addScript": null,
@@ -220,7 +246,7 @@ export let imagesLinksData = {
             "name": "Arduino HC-SR04 LCD1602 I2C",
             "projectTextInfo": [
                 "Learn Arduino", 
-                "In this tutorial you can learn how to use show distance from ultrasonic sensor HC-SR04 and print it on LCD I2C."
+                "In this tutorial you can learn how to use show distance from ultrasonic sensor HC-SR04 and print it on LCD I2C"
             ],
             "addAdicionalThings": null,
             "addScript": null,
@@ -233,7 +259,7 @@ export let imagesLinksData = {
             "name": "Arduino DS18B20 TM1637",
             "projectTextInfo": [
                 "Learn Arduino", 
-                "In this tutorial you can learn how to programm Arduino to show temperature from digital thermometer DS18B20 on TM1637 4-digit 7-segment display."
+                "In this tutorial you can learn how to programm Arduino to show temperature from digital thermometer DS18B20 on TM1637 4-digit 7-segment display"
             ],
             "addAdicionalThings": null,
             "addScript": null,
@@ -246,7 +272,7 @@ export let imagesLinksData = {
             "name": "Arduino Tic Tac Toe",
             "projectTextInfo": [
                 "Learn Arduino", 
-                "Little tutorial on how to program Arduino Uno to play on it Tic Tac Toe with 3.5\" TFT Lcd touch screen."
+                "Little tutorial on how to program Arduino Uno to play on it Tic Tac Toe with 3.5\" TFT Lcd touch screen"
             ],
             "addAdicionalThings": null,
             "addScript": null,
@@ -259,7 +285,7 @@ export let imagesLinksData = {
             "name": "Arduino SH5461AS (4 digit 7 segment led display)",
             "projectTextInfo": [
                 "Learn Arduino", 
-                "In this tutorial you can learn how use 4 digit 7 segments display."
+                "In this tutorial you can learn how use 4 digit 7 segments display"
             ],
             "addAdicionalThings": null,
             "addScript": null,

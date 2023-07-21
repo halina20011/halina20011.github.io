@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Notes</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Free web programming tutorials">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
+    <meta name="keywords" content="Halina programming, Arduino learn">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="notes.css">
+    <script defer type="module" src="/Tools/importFile.js"></script>
+    <script defer src="notes.js"></script>
+</head>
+<head>
+    <div class="columnUp" id="columnUp">
+    </div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
+            <div class="columnLeft" id="columnLeft">
+            </div>
+            <div class="columnMiddle" id="columnMiddle">
+                <h1>Notes</h1>
+                <div class="fS8"></div>
+                <div class="settings">
+                    <div class="oneLine">
+                        <p>glef</p>
+                        <select class="clefMode">
+                            <option value="0">F clef</option>
+                            <option value="1" selected>G clef</option>
+                        </select>
+                    </div>
+                    <div class="octaveSelector oneLine">
+                        <div class="oneLine">
+                            <p>C1: </p>
+                            <input type="checkbox" class="octave1">
+                        </div>
+                        <div class="oneLine">
+                            <p>C2: </p>
+                            <input type="checkbox" class="octave2">
+                        </div>
+                        <div class="oneLine">
+                            <p>C3: </p>
+                            <input type="checkbox" class="octave3">
+                        </div>
+                        <div class="oneLine">
+                            <p>C4: </p>
+                            <input type="checkbox" class="octave4">
+                        </div>
+                        <div class="oneLine">
+                            <p>C5: </p>
+                            <input type="checkbox" class="octave5">
+                        </div>
+                        <div class="oneLine">
+                            <p>C6: </p>
+                            <input type="checkbox" class="octave6">
+                        </div>
+                    </div>
+                    <!-- <p class="correctNotes">0</p> -->
+                    <button class="help">
+                        <div>
+                            <p>you can enable which octaves you would like to practise</p>
+                        </div>
+                    </button>
+                </div>
+                <div class="noteHolder">
+                    <img class="fClef" src="Images/fClef.svg" alt="background">
+                    <img class="gClef" src="Images/gClef.svg" alt="background">
+                </div>
+                <input type="text" class="inputText">
+            </div>
+            <div class="columnRight" id="columnRight">
+            </div>
+        </div>
+    </div>
+    <div class="columnDown"></div>
+</body>
+</html>

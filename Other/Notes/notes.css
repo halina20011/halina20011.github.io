@@ -1,0 +1,35 @@
+.settings{
+    display: flex;
+    gap: 10px;
+    height: 22px;
+}
+
+.oneLine{
+    display: flex;
+    gap: 10px;
+}
+
+.noteHolder{
+    padding: 10px;
+    position: relative;
+    /* width: 10%; */
+    display: flex;
+    justify-content: center;
+}
+
+.noteImage{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.inputText{
+    width: 100%;
+}
+
+@media only screen and (max-width: 850px){
+    .octaveSelector{
+        display: none;
+    }
+}
