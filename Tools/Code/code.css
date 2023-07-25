@@ -7,28 +7,37 @@
 
 codeWindow{
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    background-color:rgb(66, 66, 66);
-    padding: 10px 10px 10px 10px;
+    background-color: rgb(66, 66, 66);
+    padding: 10px;
     box-sizing: border-box;
     overflow-y: scroll;
 }
 
 .codeScrollWindow{
+    display: flex;
+    flex-direction: column;
+}
+
+.copyText{
+    background-color: black;
+}
+
+.codeLine{
     display: grid;
     grid-template-columns: min-content auto;
 }
 
-.number, .number > *, .code, .code > *{
+.codeLine *{
     position: relative;
     white-space: pre;
     display: inline-block;
     font-family: 'Roboto Mono', monospace;
     height: var(--height);
     vertical-align: top;
-    /* line-break: none; */
-    line-break:strict;
+    line-break: strict;
 }
 
 .number{ 
@@ -47,29 +56,22 @@ codeWindow{
     display: inline-block;
 }
 
-.number:after{
+.number::after{
     content: "";
     position: relative;
     display: inline-block;
     width: 2px;
     height: var(--height);
-    margin-right: 4px;
-    margin-left: 4px;
+    margin: 0 4px;
     background-color: rgb(54, 54, 54);
 }
 
-.codeSettings button:hover{
-    background-color: rgba(0, 0, 0, 30%);
+.codeSettings > button:hover{
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
-.codeScrollWindow > div:nth-child(2), .codeScrollWindow > div:nth-child(3){
-    height: var(--firstLineheight);
-    padding: 2px;
-    background-color: var(--evenBackgroundColor)
-}
-
-/* Add padding to last line */
-.codeScrollWindow > div:nth-last-child(-n+2){
+/* add padding to last line */
+.codeScrollWindow > div:nth-last-child(-n+1){
     padding-bottom: 10px;
 }
 
@@ -77,19 +79,28 @@ codeWindow{
     width: var(--firstLineheight);
     height: var(--firstLineheight);
     float: right;
-    margin-left: 2px;
+    margin-left: 4px;
+    padding: 0px;
     border-radius: 2px;
     background-size: 100%;
     background-repeat: no-repeat;
     background-color: rgba(0,0,0,0);
 }
 
-[class*="copyCodeWindowButton"]{
+.copyCodeWindowButton{
     background-image: url('/Images/Icons/copy.png');
 }
 
-[class*="downloadCodeWindowButton"]{
+.downloadCodeWindowButton{
     background-image: url('/Images/Icons/download.png');
+}
+
+.codeScrollWindow > .codeLine:nth-child(2n), .codeSettings{
+    background-color: var(--evenBackgroundColor);
+}
+
+.codeScrollWindow > .codeLine:nth-child(2n - 1){
+    background-color: var(--oddBackgroundColor);
 }
 
 .copyText{
@@ -99,7 +110,7 @@ codeWindow{
     transform: translate(-50%, -50%);
     padding: 10px;
     border-radius: 10px;
-    background-color: rgb(22, 22, 22);
+    background-color: rgb(22, 22, 22)!important;
     text-align: center;
     color: white;
     display: none;

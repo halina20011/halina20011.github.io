@@ -1,9 +1,8 @@
-import {createScript} from "/Tools/import.js";
+import {createScript} from "./import.js";
+import {headHtml} from "../Menu/head.js";
 
-let columnUp = document.getElementById("columnUp");
+const columnUp = document.getElementById("columnUp");
 // createScript("/Menu/head.js", columnUp, "module");
-
-import {headHtml} from "/Menu/head.js";
 
 columnUp.innerHTML += headHtml;
 

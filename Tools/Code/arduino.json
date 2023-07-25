@@ -1,0 +1,18 @@
+{
+    "variables":{
+        "color": "rgb(0, 151, 156)",
+        "keywords": ["void", "OUTPUT", "INPUT", "HIGH", "LOW", "int", "char", "String", "float", "const", "long", "INPUT_PULLUP"]
+    },
+    "logicalOperators":{
+        "color": "rgb(94, 109, 3)",
+        "keywords": ["#include", "#define", "while", "loop", "setup", "if", "else"]
+    },
+    "functions":{
+        "color": "rgb(167, 67, 0)",
+        "keywords": ["Serial", "begin", "print", "println", "pinMode", "digitalWrite", "delayMicroseconds", "analogWrite", "delay", "pulseIn", "available", "readString", "toInt", "millis"]
+    },
+    "other":{
+        "color": "rgb(141, 99, 138)",
+        "keywords": ["for"]
+    }
+}

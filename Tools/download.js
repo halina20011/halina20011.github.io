@@ -1,9 +1,9 @@
 export function showCopyText(copyTextElement){
-    copyTextElement.style.display = 'block';
-    copyTextElement.style.animation = 'showAnimation 2s linear'
+    copyTextElement.style.display = "block";
+    copyTextElement.style.animation = "showAnimation 2s linear";
     setTimeout(() => {
-        copyTextElement.style.display = 'none';
-    }, 2000)
+        copyTextElement.style.display = "none";
+    }, 2000);
 }
 
 export function copyTextToClipboard(text, copyTextElement){
@@ -12,10 +12,10 @@ export function copyTextToClipboard(text, copyTextElement){
 }
 
 export function download(link){
-    let element = document.createElement('a');
-    element.setAttribute('href', link);
+    const element = document.createElement("a");
+    element.setAttribute("href", link);
 
-    element.style.display = 'none';
+    element.style.display = "none";
     document.body.appendChild(element);
 
     element.click();
@@ -24,15 +24,19 @@ export function download(link){
 
 export function downloadText(name, text){
     let textFileUrl = null;
-    let fileData = new Blob([text], {type: 'text/plain'});
+    const fileData = new Blob([text], {type: "text/plain"});
     if(textFileUrl !== null){
         window.URL.revokeObjectURL(textFile);
     }
     textFileUrl = window.URL.createObjectURL(fileData);
 
-    let a = document.createElement('a');
-    a.href = textFileUrl;
-    a.download = name;
-    document.body.appendChild(a);
-    a.click();
+    const temp = document.createElement("a");
+
+    temp.href = textFileUrl;
+    temp.download = name;
+    document.body.appendChild(temp);
+
+    temp.click();
+
+    temp.remove();
 }
