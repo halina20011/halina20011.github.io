@@ -1,4 +1,23 @@
 class Func{
+    tryJsonParse(data){
+        try{
+            return JSON.parse(data);
+        }
+        catch(_error){
+            return undefined;
+        }
+    }
+
+    textSize(text){
+        const t = document.createElement("div");
+        t.innerHTML = text
+        t.style.width = "fit-content";
+        textCanvas.appendChild(t);
+        const tSize = t.getBoundingClientRect();
+        t.remove();
+        return [tSize.width, tSize.height];
+    }
+
     getUrl(window){
         const currentUrl = window.location.href;
         const url = currentUrl.split("/");

@@ -1,5 +1,17 @@
 export const imagesLinksData = {
     "Index": {
+        "BinaryTreeProject": {
+            "className": "BinaryTreeProject",
+            "path": "/Other/Tools/binaryTree.html",
+            "imgPath": "/Images/Miniature/binaryTree.png",
+            "name": "binary tree",
+            "projectTextInfo": [
+                "tool that lets you view, create and modify binary trees"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
         "NotesProject": {
             "className": "NotesProject",
             "path": "/Other/Notes/notes.html",

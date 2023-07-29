@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Binary tree</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Free web programming tutorials">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
+    <meta name="keywords" content="Halina programming, Arduino learn">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="binaryTree.css">
+    <script defer type="module" src="/Tools/importFile.js"></script>
+    <script type="modele" src="./Shaders/vertexShader.js"></script>
+    <script type="module" src="./Shaders/fragmentShader.js"></script>
+    <script type="module" src="binaryTree.js" defer></script>
+</head>
+<head>
+    <div class="columnUp" id="columnUp">
+    </div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
+            <div class="columnLeft" id="columnLeft">
+            </div>
+            <div class="columnMiddle" id="columnMiddle">
+                <h1>Binary tree</h1>
+                <div class="fS8"></div>
+                <textarea class="binaryTreeInput">[1,2,3,4,5]</textarea>
+                <div class="freeLine"></div>
+                <div class="buttons">
+                    <button class="parse">parse</button>
+                    <button class="home refreshButton"></button>
+                    <button class="zoomIn addButton"></button>
+                    <button class="zoomOut removeButton"></button>
+                </div>
+                <div class="canvases">
+                    <canvas class="glCanvas" width="640" height="480"></canvas>
+                    <div class="textCanvas"></div>
+                </div>
+            </div>
+            <div class="columnRight" id="columnRight">
+            </div>
+        </div>
+    </div>
+    <div class="columnDown"></div>
+</body>
+</html>

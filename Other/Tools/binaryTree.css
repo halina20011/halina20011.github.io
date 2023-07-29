@@ -1,0 +1,59 @@
+.buttons{
+    display: flex;
+    gap: 5px;
+}
+
+.home, .zoomIn, .zoomOut{
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+
+.home{
+    margin-left:auto;
+}
+
+.canvases{
+    position: relative;
+    width: 100%;
+}
+
+.glCanvas{
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+
+.textCanvas{
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    aspect-ratio: 16/9;
+    border-left: inherit;
+    overflow: hidden;
+}
+
+.binaryTreeInput{
+    max-width: 100%;
+}
+
+.input{
+    position: absolute;
+    transform: translate(-50%,-50%);
+    background-color: transparent;
+    border: none;
+    border-radius: 100%;
+    text-align: center;
+}
+
+.input:focus{
+    outline: none;
+}
+
+.invalid{
+    background-color: red;
+}
+
+.addNodeButton{
+    position: absolute;
+    transform: translate(-50%, 0%);
+    background-color: transparent;
+}
