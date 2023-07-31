@@ -1,7 +1,30 @@
+import func from "../../Tools/func.js"
+
 const noteHolder = document.querySelector(".noteHolder");
 const input = document.querySelector(".inputText");
 
 const clefMode = document.querySelector(".clefMode");
+
+const analysisHolder = document.querySelector(".analysisHolder");
+
+const showAnalysis = document.querySelector(".showAnalysis");
+showAnalysis.oninput = () => {
+    analysisHolder.classList.toggle("hidden");
+}
+if(showAnalysis.checked){
+    analysisHolder.classList.remove("hidden");
+}
+else{
+    analysisHolder.classList.add("hidden");
+}
+
+const analysisHeight = document.querySelector(".analysisHeight");
+const analysis = document.querySelector(".analysis");
+
+const chooseInOrder = document.querySelector(".chooseInOrder");
+
+const notesAnalysis = {};
+let maxNoteSize = 0;
 
 // let noteCounter = 0;
 // const correctNotes = document.querySelector(".correctNotes");
@@ -20,7 +43,6 @@ const octavesSelectorsElements = octavesSelectors.map(c => c.parentElement);
 
 Array.from(octavesSelectors).forEach(el => {
     el.addEventListener("change", () => { prep() }, false);
-    el.checked = true;
 });
 
 const clefs = [
@@ -90,11 +112,14 @@ async function getNotes(){
 }
 
 const sequenceChars = "cdefgah".split("");
-function sequence(from, length){
+function sequence(fromNote, fromOctave, length){
     const res = [];
-    const start = sequenceChars.indexOf(from);
+    const start = sequenceChars.indexOf(fromNote);
     for(let i = 0; i < length; i++){
-        res.push(sequenceChars[(i + start) % sequenceChars.length]);
+        const noteName = sequenceChars[(i + start) % sequenceChars.length];
+        const noteOctave = Math.floor((i + start) / sequenceChars.length) + fromOctave;
+        const note = `${noteName}${noteOctave}`;
+        res.push(note);
     }
 
     return res;
@@ -118,9 +143,13 @@ function prep(){
     clefs[selectedClef].classList.remove("hidden");
     clefs[selectedClef.negative()].classList.add("hidden");
     
-    const start = (selectedClef === 0) ? "f" : "d";
-    const n = sequence(start, 25);
+    const [startNote, startOctave] = (selectedClef === 0) ? ["f", 1] : ["d", 3];
+    const n = sequence(startNote, startOctave, 25);
     notes = n.map((noteName, i) => [noteName, notesImages[i]]);
+
+    Array.from(notesImages).forEach(n => {
+        n.classList.add("hidden");
+    });
 
     availableNotes = [];
     if(selectedClef == 0){
@@ -166,9 +195,23 @@ function prep(){
         }
     }
 
-    Array.from(notesImages).forEach(n => {
-        n.classList.add("hidden");
+    if(availableNotes.length == 0){
+        return;
+    }
+
+    maxNoteSize = 0;
+
+    Object.keys(notesAnalysis).forEach(noteName => {
+        notesAnalysis[noteName].remove(); 
+        delete(notesAnalysis[noteName]);
     });
+    analysisHeight.className = "analysisHeight";
+    availableNotes.forEach(note => { 
+        notesAnalysis[note[0]] = new Note(note[1], note[0]);
+    });
+
+    Array.from(analysisHeight.children).forEach(line => line.remove());
+
     Array.from(availableNotes).forEach(([_, note]) => {note.classList.remove("hidden")});
     newNote();
 }
@@ -189,22 +232,125 @@ getNotes().then(notes => {
     prep();
 });
 
-input.addEventListener("input", () => {
-    if(input.value.toLowerCase() == note.toLowerCase()[0]){
-        input.value = "";
-        newNote();
-        // correctNotes.innerHTML = ++noteCounter;
+class Note{
+    constructor(noteImage, name){
+        this.name = name;
+        this.noteImage = noteImage;
+        this.correct = 0;
+        this.incorrect = 0;
+        this.elemen = document.createElement("div");
+        this.correctElement = func.createElement(`<div class="correct"></div>`);
+        this.incorrectElement = func.createElement(`<div class="incorrect"></div>`);
+        this.nameElement = func.createElement(`<div class="name">${this.name}</div>`);
+        this.count = func.createElement(`<p class="count"></p>`);
+        this.elemen.appendChild(this.count);
+        this.correctElement.appendChild(this.incorrectElement);
+        this.elemen.appendAllChildren([this.correctElement, this.nameElement]);
+        analysis.appendChild(this.elemen);
     }
-}, false);
+
+    updateValue(good, wrong){
+        this.correct += good;
+        this.incorrect += wrong;
+        this.count.innerHTML = this.correct;
+        if(maxNoteSize < this.correct){
+            maxNoteSize = this.correct;
+            if(maxNoteSize == 1){
+                analysisHeight.appendChild(func.createElement("<div></div>"));
+            }
+            analysisHeight.appendChild(func.createElement("<div></div>"));
+        }
+        if(maxNoteSize == 10){
+            analysisHeight.classList.add("hideEverySecond");
+        }
+        maxNoteSize = Math.max(this.correct, maxNoteSize);
+    }
+
+    update(){
+        if(maxNoteSize == 0){
+            return;
+        }
+        const heightCorrect = this.correct/maxNoteSize * 100;
+        const heightIncorrect = Math.min(100, this.incorrect/this.correct * 100);
+        if(!isNaN(heightIncorrect)){
+            this.correctElement.style.height = `${heightCorrect}%`;
+        }
+        if(!isNaN(heightIncorrect)){
+            this.incorrectElement.style.height = `${heightIncorrect}%`;
+        }
+    }
+    
+    remove(){
+        this.elemen.remove();
+    }
+}
+
+function find(array, firstValue){
+    let left = 0, right = array.length - 1;
+    while(left < right){
+        const m = left + Math.floor((right - left) / 2);
+        if(array[m] < firstValue){
+            left = m + 1;
+        }
+        else{
+            right = m;
+        }
+    }
+
+    if(array[left] != firstValue){
+        return -1;
+    }
+
+    return left;
+}
 
 function newNote(){
     Array.from(availableNotes).forEach(([_, note]) => {note.classList.add("hidden")});
-    const noteIndex = Math.floor(Math.random() * availableNotes.length);
-    const _note = availableNotes[noteIndex][0];
-    if(_note == note){
-        newNote();
-        return;
+    if(chooseInOrder.checked){
+        // convert and sort the array so the notes with less correct number will be first
+        // => [[0, "c4", img], [0, "d4", img], [1, "h3", img], ...]
+        const notesAnalysisArray = Object.keys(notesAnalysis)
+            .map(key => {return [notesAnalysis[key].correct, notesAnalysis[key].name, notesAnalysis[key].noteImage]})
+            .sort((a, b) => a[0] - b[0]);
+        // console.log(notesAnalysisArray);
+        // find first occurrence that has bigger correct value then the first item
+        const end = find(notesAnalysisArray.map(_note => _note[0]), notesAnalysisArray[0][0] + 1);
+        let _note = notesAnalysisArray[0];
+        if(end != -1){
+            const noteIndex = Math.floor(Math.random() * end);
+            _note = notesAnalysisArray[noteIndex];
+        }
+        else{
+            const noteIndex = Math.floor(Math.random() * notesAnalysisArray.length);
+            _note = notesAnalysisArray[noteIndex];
+        }
+        _note[2].classList.remove("hidden");
+        note = _note[1];
     }
-    note = _note;
-    availableNotes[noteIndex][1].classList.remove("hidden");
+    else{
+        const noteIndex = Math.floor(Math.random() * availableNotes.length);
+        const _note = availableNotes[noteIndex];
+        if(_note[0] == note){
+            newNote();
+            return;
+        }
+        _note[1].classList.remove("hidden");
+        note = _note[0];
+    }
 }
+
+let prevInput = "";
+
+input.addEventListener("input", () => {
+    const thisInput = input.value.toLowerCase();
+    input.value = "";
+    if(thisInput == note.toLowerCase()[0]){
+        notesAnalysis[note].updateValue(1, 0);
+        newNote();
+    }
+    else if(prevInput.length < thisInput.length){
+        notesAnalysis[note].updateValue(0, 1);
+    }
+    Object.keys(notesAnalysis).forEach(key => notesAnalysis[key].update());
+    prevInput = (input.value == "") ? "" : thisInput;
+}, false);

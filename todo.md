@@ -6,4 +6,3 @@
 6) improvement: adding more control in bezier curves.
 7) add different languages
 8) make more efficient metaballs
-9) add analysis tool to notes

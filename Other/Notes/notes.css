@@ -28,6 +28,96 @@
     width: 100%;
 }
 
+.analysisHolder{
+    width: 100%;
+    aspect-ratio: 3/1;
+    display: flex;
+    position: relative;
+    border: solid 5px transparent;
+    box-sizing: border-box;
+}
+
+.analysisHeight{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.analysisHeight > div{
+    width: 100%;
+    height: 2px;
+    box-sizing: border-box;
+    background-image: linear-gradient(to right, transparent 25%, black 25%, black 75%, transparent 75%);
+    background-size: 10px 3px;
+    background-repeat: repeat;
+}
+
+.analysisHeight > div:nth-child(1){
+    height: 0px;
+}
+
+.analysisHeight > div:nth-last-child(1){
+    height: 0px;
+}
+
+.analysis{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.analysis > div{
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    height: 100%;
+    background-color: transparent;
+    flex: 1;
+    overflow: hidden;
+}
+
+.name, .count{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.count{
+    top: 0px;
+    z-index: 1;
+}
+
+.correct{
+    position: relative;
+    background-color: green;
+}
+
+.incorrect{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    background-color: red;
+}
+
+.hideEverySecond > div:nth-child(2n + 1){
+    visibility: hidden;
+}
+
+@media only screen and (max-width: 1150px){
+    .showAnalysisHolder{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1000px){
+    .chooseInOrderHolder{
+        display: none;
+    }
+}
+
 @media only screen and (max-width: 850px){
     .octaveSelector{
         display: none;

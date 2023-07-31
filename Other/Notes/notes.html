@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
     <link rel="stylesheet" type="text/css" href="notes.css">
     <script defer type="module" src="/Tools/importFile.js"></script>
-    <script defer src="notes.js"></script>
+    <script defer type="module" src="notes.js"></script>
 </head>
 <head>
     <div class="columnUp" id="columnUp">
@@ -32,30 +32,38 @@
                             <option value="1" selected>G clef</option>
                         </select>
                     </div>
+                    <div class="showAnalysisHolder oneLine">
+                        <p>analysis: </p>
+                        <input type="checkbox" class="showAnalysis" checked>
+                    </div>
+                    <div class="chooseInOrderHolder oneLine">
+                        <p>in order: </p>
+                        <input type="checkbox" class="chooseInOrder" checked>
+                    </div>
                     <div class="octaveSelector oneLine">
                         <div class="oneLine">
                             <p>C1: </p>
-                            <input type="checkbox" class="octave1">
+                            <input type="checkbox" class="octave1" checked>
                         </div>
                         <div class="oneLine">
                             <p>C2: </p>
-                            <input type="checkbox" class="octave2">
+                            <input type="checkbox" class="octave2" checked>
                         </div>
                         <div class="oneLine">
                             <p>C3: </p>
-                            <input type="checkbox" class="octave3">
+                            <input type="checkbox" class="octave3" checked>
                         </div>
                         <div class="oneLine">
                             <p>C4: </p>
-                            <input type="checkbox" class="octave4">
+                            <input type="checkbox" class="octave4" checked>
                         </div>
                         <div class="oneLine">
                             <p>C5: </p>
-                            <input type="checkbox" class="octave5">
+                            <input type="checkbox" class="octave5" checked>
                         </div>
                         <div class="oneLine">
                             <p>C6: </p>
-                            <input type="checkbox" class="octave6">
+                            <input type="checkbox" class="octave6" checked>
                         </div>
                     </div>
                     <!-- <p class="correctNotes">0</p> -->
@@ -70,6 +78,11 @@
                     <img class="gClef" src="Images/gClef.svg" alt="background">
                 </div>
                 <input type="text" class="inputText">
+                <div class="fS8"></div>
+                <div class="analysisHolder">
+                    <div class="analysis"></div>
+                    <div class="analysisHeight"></div>
+                </div>
             </div>
             <div class="columnRight" id="columnRight">
             </div>
