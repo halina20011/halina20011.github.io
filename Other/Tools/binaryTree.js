@@ -18,6 +18,11 @@ document.querySelector(".home").addEventListener("click", () => {position = [0, 
 document.querySelector(".zoomIn").addEventListener("click", () => { scale++; showBinaryTree(); }, false);
 document.querySelector(".zoomOut").addEventListener("click", () => { scale--; showBinaryTree(); }, false);
 
+const parsingMode = document.querySelector(".parsingMode");
+parsingMode.addEventListener("input", () => {
+    showBinaryTree();
+}, false);
+
 let colorLocation, resolutionUniformLocation, translationUniformLocation, scaleUniformLocation;
 
 let holding = false;
@@ -26,7 +31,7 @@ let shift = false;
 
 let position = [0,0];
 let scale = 0;
-let calcScale = () => {
+const calcScale = () => {
     return (scale < 0) ? 1/-scale : scale + 1;
 }
 
@@ -49,18 +54,18 @@ function overElement(e, element){
     return xAxis && yAxis;
 }
 
-window.addEventListener("mouseup", () => {holding = false; prevMove = null}, false);
-window.addEventListener("mousedown", (e) => { 
+document.addEventListener("mouseup", () => {holding = false; prevMove = null}, false);
+document.addEventListener("mousedown", (e) => { 
     if(overElement(e, canvas)){
         holding = true; 
     }
 }, false);
-window.addEventListener("mousemove", (e) => {moveCanvas(e);}, false);
+document.addEventListener("mousemove", (e) => {moveCanvas(e);}, false);
 
-window.addEventListener("keydown", (e)=>{checkShift(e, true)}, false);
-window.addEventListener("keyup", (e)=>{checkShift(e, false)}, false);
+document.addEventListener("keydown", (e)=>{checkShift(e, true)}, false);
+document.addEventListener("keyup", (e)=>{checkShift(e, false)}, false);
 
-window.addEventListener("wheel", (e) => {
+document.addEventListener("wheel", (e) => {
     if(shift){
         scale += (0 < e.deltaY) ? -1 : 1;
         showBinaryTree();
@@ -99,26 +104,77 @@ class Node{
 }
 
 let tree, width, height, depth, size;
-function build(array, size, index){
+function buildFull(array, size, index){
     if(size <= index || array[index] == null){
         return null;
     }
 
     const node = new Node(array[index]);
-    node.left = build(array, size, 2 * index + 1);
-    node.right = build(array, size, 2 * index + 2);
+    node.left = buildFull(array, size, 2 * index + 1);
+    node.right = buildFull(array, size, 2 * index + 2);
 
     return node;
 }
 
-function createTreeArray(tree, array = [], index = 0){
+function buildShort(array){
+    const stack = [];
+    const tree = new Node(array[0]);
+    stack.push(tree);
+    let index = 1;
+    while(stack.length && index < array.length){
+        let levelSize = stack.length;
+        while(levelSize--){
+            const parent = stack.shift();
+            if(array[index] != null && !isNaN(array[index])){
+                const left = new Node(array[index]);
+                parent.left = left;
+                stack.push(left);
+            }
+            index++;
+            if(array[index] != null && !isNaN(array[index])){
+                const right = new Node(array[index]);
+                parent.right = right;
+                stack.push(right);
+            }
+            index++;
+        }
+    }
+
+    return tree;
+}
+
+function createTreeArrayFull(tree, array = [], index = 0){
     if(tree == null){
         return array;
     }
 
     array[index] = (isNaN(tree.data)) ? 0 : tree.data;
-    array = createTreeArray(tree.left, array, 2 * index + 1);
-    array = createTreeArray(tree.right, array, 2 * index + 2);
+    array = createTreeArrayFull(tree.left, array, 2 * index + 1);
+    array = createTreeArrayFull(tree.right, array, 2 * index + 2);
+
+    return array;
+}
+
+function createTreeArrayShort(tree){
+    const stack = [];
+    const array = [];
+    stack.push(tree);
+    let continueToNextLevel = true;
+    while(stack.length && continueToNextLevel == true){
+        let levelSize = stack.length;
+        continueToNextLevel = false;
+        while(levelSize--){
+            const tr = stack.shift();
+            array.push(((tr == null) ? null : tr.data));
+            if(tr != null){
+                if(tr.left != undefined || tr.right != undefined){
+                    continueToNextLevel = true;
+                }
+                stack.push(tr.left);
+                stack.push(tr.right);
+            }
+        }
+    }
 
     return array;
 }
@@ -146,7 +202,7 @@ function createTree(){
         return (!isNaN(parsedValue)) ? parsedValue : null;
     });
 
-    tree = build(treeArray, treeArray.length, 0);
+    tree = (parsingMode.value == "full") ? buildFull(treeArray, treeArray.length, 0) : buildShort(treeArray);
     showBinaryTree(tree);
 }
 
@@ -185,8 +241,7 @@ const addNodeButton = (createFunc, xPos, yPos, side) => {
 
     button.onclick = () => {
         createFunc();
-        const treeArray = createTreeArray(tree);
-        binaryTreeInput.value = JSON.stringify(treeArray);
+        updateInput(tree);
         showBinaryTree();
     }
     
@@ -240,20 +295,24 @@ function showNode(node, index){
     input.style.width = `${inputWidth}%`;
     input.style.height = `${inputHeight}%`;
     input.value = node.data;
-    const updateInput = () => {
+    const updateNodeValue = () => {
         node.data = parseInt(input.value);
-        const treeArray = createTreeArray(tree);
-        binaryTreeInput.value = JSON.stringify(treeArray);
+        updateInput(tree);
     }
 
     input.style.fontSize = `${inputHeight}px`;
-    input.oninput = updateInput;
+    input.oninput = updateNodeValue;
     textCanvas.appendChild(input);
 
     gl.uniform4f(colorLocation, 0, 0, 0, 1);
     drawCircle(gl, xPos, yPos, size, 40);
     gl.uniform4f(colorLocation, 0, 0, 0, 0);
     drawCircle(gl, xPos, yPos, size * 9/10, 40);
+}
+
+function updateInput(tree){
+    const treeArray = (parsingMode.value == "full") ? createTreeArrayFull(tree) : createTreeArrayShort(tree);
+    binaryTreeInput.value = JSON.stringify(treeArray);
 }
 
 function showBinaryTree(){
@@ -320,11 +379,11 @@ function main(){
 
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
-    var size = 2;
-    var type = gl.FLOAT;
-    var normalize = false;
-    var stride = 0;
-    var offset = 0;
+    const size = 2;
+    const type = gl.FLOAT;
+    const normalize = false;
+    const stride = 0;
+    const offset = 0;
     gl.vertexAttribPointer(positionAttribureLocation, size, type, normalize, stride, offset);
 
     gl.uniform4f(colorLocation, 0.5, 0.5, 0.8, 1);
