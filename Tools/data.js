@@ -1,5 +1,17 @@
 export const imagesLinksData = {
     "Index": {
+        "SudokuProject": {
+            "className": "SudokuProject",
+            "path": "/Other/Sudoku/sudoku.html",
+            "imgPath": "/Images/Miniature/sudoku.png",
+            "name": "sudoku solver",
+            "projectTextInfo": [
+                "simple sudoku solver using backtracking algorithm"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
         "BinaryTreeProject": {
             "className": "BinaryTreeProject",
             "path": "/Other/Tools/binaryTree.html",

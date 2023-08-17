@@ -1,0 +1,64 @@
+.settings{
+    display: flex;
+    height: 22px;
+    gap: 5px;
+}
+
+.clear{
+    margin-right: auto;
+}
+
+.sudoku{
+    display: grid;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    aspect-ratio: 1/1;
+    grid-template-rows: repeat(9, 1fr);
+    grid-template-columns: repeat(9, 1fr);
+    padding: 5px;
+    box-sizing: border-box;
+    margin: auto;
+}
+
+.sudoku > *{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    border: solid black 1px;
+}
+
+.sudoku > *:nth-child(-n+9){
+    border-top: none;
+}
+
+.sudoku > *:nth-child(9n+1){
+    border-left: none;
+}
+
+.sudoku > *:nth-child(9n){
+    border-right: none;
+}
+
+.sudoku > *:nth-last-child(-n+9){
+    border-bottom: none;
+}
+
+.sudoku > *:nth-child(3n){
+    border-right-width: 2px;
+}
+
+.borderDown{
+    border-bottom-width: 2px;
+}
+
+.invalid{
+    background-color: red;
+}
+
+.dontClear{
+    background-color: #333333;
+}

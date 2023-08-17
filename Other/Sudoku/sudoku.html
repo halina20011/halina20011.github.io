@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Sudoku</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="sudoku solver">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
+    <meta name="keywords" content="sudoku solver">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="./sudoku.css">
+    <script defer type="module" src="/Tools/importFile.js"></script>
+    <script defer type="module" src="./sudoku.js"></script>
+</head>
+<head>
+    <div class="columnUp" id="columnUp">
+    </div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
+            <div class="columnLeft" id="columnLeft">
+            </div>
+            <div class="columnMiddle" id="columnMiddle">
+                <h1>Sudoku</h1>
+                <div class="settings">
+                    <button class="solve">solve</button>
+                    <button class="clear">clear</button>
+                    <button class="help byHeight">
+                        <div>
+                            <p>if it looks like it's frozen after a while, it's because you have provited valid but unsolvable sudoku board</p>
+                        </div>
+                    </button>
+                </div>
+                <div class="fS8"></div>
+                <div class="sudoku"></div>
+            </div>
+            <div class="columnRight" id="columnRight">
+            </div>
+        </div>
+    </div>
+    <div class="columnDown"></div>
+</body>
+</html>
