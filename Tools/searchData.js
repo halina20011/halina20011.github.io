@@ -1,4 +1,4 @@
-{
+export const data = {
     "index":{
         "name": "Home",
         "about": "Home page",

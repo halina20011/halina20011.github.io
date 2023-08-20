@@ -1,41 +1,43 @@
-import {CANVAS} from "/Canvas/canvas.js";
-import {DOWNLOADER} from "/Canvas/download.js";
+import {CANVAS} from "../../Canvas/canvas.js";
+import {DOWNLOADER} from "../../Canvas/download.js";
 
-let canvasEl = document.getElementById("my-canvas");
+import {} from "../Tools/glFunc.js";
 
-let canvas = new CANVAS(canvasEl);
-let downloader = new DOWNLOADER(canvasEl);
+const  canvasEl = document.getElementById("my-canvas");
 
-let downloadImageButton = document.getElementById("downloadImage");
+const canvas = new CANVAS(canvasEl);
+const downloader = new DOWNLOADER(canvasEl);
+
+const downloadImageButton = document.getElementById("downloadImage");
 downloadImageButton.addEventListener("click", function() { downloader.downloadImage(); }, false);
 
-let updateButton = document.getElementById("update");
+const updateButton = document.getElementById("update");
 updateButton.addEventListener("click", () => { main(); }, false);
 
-let addButton = document.getElementById("addButton");
+const addButton = document.getElementById("addButton");
 addButton.addEventListener("click", () => { createResistorsWindow(); }, false);
 
-let voltageInput = document.getElementById("voltageInput");
-let currentInput = document.getElementById("currentInput");
+const voltageInput = document.getElementById("voltageInput");
+const currentInput = document.getElementById("currentInput");
 
-let calculatedValues = document.getElementById("calculatedValues");
-let calculatedResistance = calculatedValues.children[0].children[1];
-let calculatedVoltage = calculatedValues.children[1].children[1];
-let calculatedCurrent = calculatedValues.children[2].children[1];
+const calculatedValues = document.getElementById("calculatedValues");
+const calculatedResistance = calculatedValues.children[0].children[1];
+const calculatedVoltage = calculatedValues.children[1].children[1];
+const calculatedCurrent = calculatedValues.children[2].children[1];
 
-let valueToUse = document.getElementById("valueToUse");
+const valueToUse = document.getElementById("valueToUse");
 valueToUse.addEventListener("change", () => {
     updateValueToUse();
 }, false);
 
-let resistorsHolder = document.getElementById("resistorsHolder");
+const resistorsHolder = document.getElementById("resistorsHolder");
 
 function inputValue(input){
     return input.options[input.selectedIndex].value;
 }
 
-let updateValueToUse = () => {
-    let value = inputValue(valueToUse);
+const updateValueToUse = () => {
+    const value = inputValue(valueToUse);
     if(value == "current"){
         currentInput.classList.remove("hidden");
         voltageInput.classList.add("hidden");
@@ -49,7 +51,7 @@ let updateValueToUse = () => {
 HTMLCollection.prototype.forEach = Array.prototype.forEach;
 
 function string2Element(string){
-    let temp = document.createElement("div");
+    const temp = document.createElement("div");
     temp.innerHTML = string;
     return temp.firstChild;
 }
@@ -74,7 +76,7 @@ function removeResistor(resistorHolder, remove){
 }
 
 function createResistorsWindow(){
-    let resistorWindow = document.createElement("div");
+    const resistorWindow = document.createElement("div");
     resistorWindow.className = "resistorWindow";
 
     resistorWindow.innerHTML = `
@@ -98,25 +100,28 @@ function createResistorsWindow(){
     // <div><p>V = </p><p>0</p><p>V</p></div>
     // <div><p>I = </p><p>1</p><p>A</p></div>
 
-    let resistorType            = resistorWindow.children[0].children[0];
-    let buttons                 = resistorWindow.children[0].children[1];
-    let addResistorButton       = buttons.children[0];
-    let removeResistorsButton   = buttons.children[1];
-    let resistorHolder          = resistorWindow.children[2];
+    const resistorType            = resistorWindow.children[0].children[0];
+    const buttons                 = resistorWindow.children[0].children[1];
+    const addResistorButton       = buttons.children[0];
+    const removeResistorsButton   = buttons.children[1];
+    const resistorHolder          = resistorWindow.children[2];
 
-    let createResistor = () => {
-        let resistor = document.createElement("div");
+    const createResistor = () => {
+        const resistor = document.createElement("div");
         resistor.className = "resistor";
         
         // let resistorValues = string2Element(
 
-        let resistorValue = string2Element(`<input class="hideInputArrows" type="number" min="1" value="1000">`);
-
-        let removeResistorButton = document.createElement("button");
+        const resistorValue = string2Element(`<input class="hideInputArrows" type="number" min="1" value="1000">`);
+        resistorValue.oninput = () => {
+            console.log(resistorValue.value);
+            main();
+        }
+        const removeResistorButton = document.createElement("button");
         removeResistorButton.className = "removeButton";
         removeResistorButton.addEventListener("click", () => {
-            let type = resistorType.options[resistorType.selectedIndex].value;
-            let min = (type == "series") ? 1 : 2;
+            const type = resistorType.options[resistorType.selectedIndex].value;
+            const min = (type == "series") ? 1 : 2;
             if(min < resistorHolder.children.length){
                 removeResistor(resistorHolder, resistor);
             }
@@ -128,8 +133,8 @@ function createResistorsWindow(){
         addResistor(resistorHolder, resistor);
     };
 
-    let correctResistors = () => {
-        let type = resistorType.options[resistorType.selectedIndex].value;
+    const correctResistors = () => {
+        const type = resistorType.options[resistorType.selectedIndex].value;
         if(type == "series"){
             buttons.children[0].classList.add("hidden");
             while(resistorHolder.children.length < 1){
@@ -180,19 +185,18 @@ function updateResistorNumbers(){
 }
 
 function getResistorList(){
-    let resistorList = [];
-    let ch = resistorsHolder.children;
+    const resistorList = [];
+    const ch = resistorsHolder.children;
     // TODO: add number to a resistor
     // let resistorNumber = 1;
     ch.forEach((resistorWindow) => {
-        let resistor = {};
-        let calculatedResistorValues = resistorWindow.children[1];
+        const calculatedResistorValues = resistorWindow.children[1];
         // console.log(calculatedResistorValues);
-        let resistorType = resistorWindow.children[0].children[0];
+        const resistorType = resistorWindow.children[0].children[0];
 
-        let resistorsValues = Array.from(resistorWindow.children[2].children).map((resistorHolder) => {
-            let parsedInputValue = parseInt(resistorHolder.children[0].value);
-            let parsedValue = (parsedInputValue == NaN || parsedInputValue < 1) ? 1 : parsedInputValue;
+        const resistorsValues = Array.from(resistorWindow.children[2].children).map((resistorHolder) => {
+            const parsedInputValue = parseInt(resistorHolder.children[0].value);
+            const parsedValue = (isNaN(parsedInputValue) || parsedInputValue < 1) ? 1 : parsedInputValue;
             resistorHolder.children[0].value = parsedValue;
             return parsedValue;
         });
@@ -230,12 +234,12 @@ function calcResistance(type, values){
 
 function main(){
     let R = 0;
-    let resistors = getResistorList();
+    const resistors = getResistorList();
 
     for(let i = 0; i < resistors.length; i++){
-        let resistor = resistors[i];
+        const resistor = resistors[i];
 
-        let resistance = calcResistance(resistor.type, resistor.values);
+        const resistance = calcResistance(resistor.type, resistor.values);
         R += resistance;
 
         // Resistors share same current when they are connected in series
@@ -243,12 +247,12 @@ function main(){
     }
 
     if(inputValue(valueToUse) == "current"){
-        let I = parseInt(currentInput.children[1].value);
+        const I = parseInt(currentInput.children[1].value);
         calculatedCurrent.innerHTML = I.toFixed(2);
         calculatedVoltage.innerHTML = (R * I).toFixed(2);
     }
     else{
-        let V = parseInt(voltageInput.children[1].value);
+        const V = parseInt(voltageInput.children[1].value);
         calculatedVoltage.innerHTML = V.toFixed(2);
         calculatedCurrent.innerHTML = (V / R).toFixed(2);
     }
@@ -258,17 +262,15 @@ function main(){
 }
 
 function drawPart(x, y, w, powerSymbol){
-    let h = w * powerSymbol.height;
-    let w2 = w / 2;
-    let h2 = h / 2;
-    let [x1, x2] = [x - w2, x + w2];
-    let [y1, y2] = [y - h2, y + h2];
+    const h = w * powerSymbol.height;
+    const w2 = w / 2;
+    const h2 = h / 2;
     for(let i = 0; i < powerSymbol.lines.length; i++){
-        let line = powerSymbol.lines[i];
-        let x1 = line[0] * w - w2 + x;
-        let x2 = line[2] * w - w2 + x;
-        let y1 = line[1] * h - h2 + y;
-        let y2 = line[3] * h - h2 + y;
+        const line = powerSymbol.lines[i];
+        const x1 = line[0] * w - w2 + x;
+        const x2 = line[2] * w - w2 + x;
+        const y1 = line[1] * h - h2 + y;
+        const y2 = line[3] * h - h2 + y;
         canvas.drawLine(x1, y1, x2, y2);
     }
 }
@@ -278,23 +280,23 @@ function map(x, inMin, inMax, outMin, outMax){
 }
 
 function drawSchema(resistors){
-    let length = resistors.length;
+    const length = resistors.length;
     if(!length){
         return;
     }
 
     canvas.clear();
-    let partWidth = canvas.width / resistors.length / 2;
-    let partWidth2 = partWidth / 2;
+    const partWidth = canvas.width / resistors.length / 2;
+    const partWidth2 = partWidth / 2;
 
     // Draw power source
-    let powerSymbol = {
+    const powerSymbol = {
         'lines': [[0, 0.5, 0.45, 0.5], [0.45, 0.2, 0.45, 0.8], [0.55, 0.3, 0.55, 0.7], [0.55, 0.5, 1, 0.5]],
         'lineWidth': 3,
         'width': 1,
         'height': 0.5,
     };
-    let resistorSymbol = {
+    const resistorSymbol = {
         'lines': [[0, 0.5, 0.2, 0.5], [0.8, 0.5, 1, 0.5], [0.2, 0, 0.2, 1], [0.8, 0, 0.8, 1], [0.2, 0, 0.8, 0], [0.2, 1, 0.8, 1]],
         'lineWidth': 3,
         'width': 1,
@@ -308,15 +310,15 @@ function drawSchema(resistors){
     
     let x = 0;
     for(let r = 0; r < resistors.length; r++){
-        let resistor = resistors[r];
-        let newX = canvas.width/(length+1) * (r + 1);
+        const resistor = resistors[r];
+        const newX = canvas.width/(length+1) * (r + 1);
         if(resistor.type == "parallel"){
-            let l = resistor.values.length;
-            let w = (powerSymbol.height * partWidth * l) / 2;
+            const l = resistor.values.length;
+            const w = (powerSymbol.height * partWidth * l) / 2;
             let y = 0;
             for(let i = 0; i < l; i++){
                 // TODO: add a circle to indicate that the wires are connected
-                let newY = 100 + map(i, 0, l-1, -w, w);
+                const newY = 100 + map(i, 0, l-1, -w, w);
                 drawPart(newX, newY, partWidth, resistorSymbol);
                 if(0 < i){
                     canvas.drawLine(newX - partWidth2, y, newX - partWidth2, newY);

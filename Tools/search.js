@@ -1,32 +1,31 @@
-import {loadJSON} from "/Tools/import.js"
+import {data} from "./searchData.js";
 
 const textInput = document.getElementById("search");
 const searchDropDownItems = document.getElementsByClassName("searchDropDownItems")[0];
 
-var data = loadJSON('/Tools/search.json');
-var searchOptions = []
+const searchOptions = []
 getSearchOptions()
 
 textInput.addEventListener("input", function(event){updateSearch(event);}, false)
 
 function getSearchOptions(){
-    var dataLength = Object.keys(data).length;
-    for(var i = 0; i < dataLength; i++){
-        var objData = data[Object.keys(data)[i]];
-        var name = objData[Object.keys(objData)[0]];
-        var about = objData[Object.keys(objData)[1]];
-        var img = objData[Object.keys(objData)[2]];
-        var path = objData[Object.keys(objData)[3]];
+    const dataLength = Object.keys(data).length;
+    for(let i = 0; i < dataLength; i++){
+        const objData = data[Object.keys(data)[i]];
+        const name = objData[Object.keys(objData)[0]];
+        const about = objData[Object.keys(objData)[1]];
+        const img = objData[Object.keys(objData)[2]];
+        const path = objData[Object.keys(objData)[3]];
         
         searchOptions.push([name, about, img, path]);
     }
 }
 
 function removeResult(list){
-    var name = list[0];
-    for(var x = 0; x < searchDropDownItems.childElementCount; x++){
+    const name = list[0];
+    for(let x = 0; x < searchDropDownItems.childElementCount; x++){
         if(searchDropDownItems.children[x].className == name){
-            var div = document.getElementsByClassName(name)[0];
+            const div = document.getElementsByClassName(name)[0];
             if(div != null){
                 searchDropDownItems.removeChild(div);
             }
@@ -35,63 +34,63 @@ function removeResult(list){
 }
 
 function createResult(list){
-    var name = list[0];
-    var about = list[1];
-    var imgPath = list[2];
-    for(var x = 0; x < searchDropDownItems.childElementCount; x++){
+    const name = list[0];
+    const about = list[1];
+    const imgPath = list[2];
+    for(let x = 0; x < searchDropDownItems.childElementCount; x++){
         if(searchDropDownItems.children[x].className == name){
             // console.log(searchDropDownItems.children[x].className);
             return;
         }
     }
 
-    var div = document.createElement("div");
+    const div = document.createElement("div");
     div.className = list[0];
     div.setAttribute("onClick", 'location.href =\'' + list[3] +'\';');
     
     searchDropDownItems.appendChild(div);
 
-    var imageIcon = document.createElement("div");
+    const imageIcon = document.createElement("div");
     imageIcon.className = "imageIcon";
     imageIcon.style.backgroundImage = "url(" + imgPath + ")";
     div.appendChild(imageIcon);
 
-    var projectTextInfo = document.createElement("div");
+    const projectTextInfo = document.createElement("div");
     projectTextInfo.className = "projectTextInfo";
     div.appendChild(projectTextInfo);
 
-    var nameText = document.createElement("p");
+    const nameText = document.createElement("p");
     nameText.innerHTML = name;
     projectTextInfo.appendChild(nameText);
     
-    var aboutText = document.createElement("p");
+    const aboutText = document.createElement("p");
     aboutText.innerHTML = about;
     projectTextInfo.appendChild(aboutText);
 
-    // var textName = document.createElement("p");
+    // let textName = document.createElement("p");
     // textName.innerHTML = name;
     // div.appendChild(textName);
 
-    // var textAbout = document.createElement("p");
+    // let textAbout = document.createElement("p");
     // textAbout.innerHTML = about;
     // div.appendChild(textAbout);
 }
 
-function updateSearch(event){
-    var filterVal = textInput.value.toLowerCase();
-    var resultsToAdd = []
-    var resultsToRemove = []
+function updateSearch(){
+    const filterVal = textInput.value.toLowerCase();
+    const resultsToAdd = []
+    const resultsToRemove = []
     if(filterVal == ""){
-        for(var i = 0; i < searchOptions.length; i++){
+        for(let i = 0; i < searchOptions.length; i++){
             resultsToRemove.push(searchOptions[i]);
             // console.log(resultsToRemove)
         }
     }
     else{
-        for(var i = 0; i < searchOptions.length; i++){
-            for(var x = 0; x < searchOptions[i].length; x++){
+        for(let i = 0; i < searchOptions.length; i++){
+            for(let x = 0; x < searchOptions[i].length; x++){
                 if(x != 2){
-                    var textValue = searchOptions[i][0] + " " + searchOptions[i][1];
+                    const textValue = searchOptions[i][0] + " " + searchOptions[i][1];
                     if(textValue.toLowerCase().indexOf(filterVal) > -1){
                         resultsToAdd.push(searchOptions[i]);
                     }
@@ -103,17 +102,17 @@ function updateSearch(event){
         }
     }
     
-    for(var i = 0; i < resultsToAdd.length; i++){
+    for(let i = 0; i < resultsToAdd.length; i++){
         createResult(resultsToAdd[i]);
     }
-    for(var i = 0; i < resultsToRemove.length; i++){
+    for(let i = 0; i < resultsToRemove.length; i++){
         removeResult(resultsToRemove[i]);
     }
 }
 
 // window.onclick = function(event) {
 //     console.log(event.target);
-//     var search = document.getElementsByClassName("search")[0]
+//     let search = document.getElementsByClassName("search")[0]
 //     if(event.target.matches("#search")){
 //         search.classList.add("searchHover");
 //     }

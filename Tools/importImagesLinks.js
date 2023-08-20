@@ -1,5 +1,4 @@
-import {createLink} from "/Tools/import.js";
-import {imagesLinksData} from "/Tools/data.js";
+import {imagesLinksData} from "./data.js";
 
 const importSpot = document.getElementById("importSpot");
 
@@ -10,7 +9,7 @@ dataToImport = dataToImport.split(",");
 makeTitle = makeTitle.split(",");
 // console.log(dataToImport);
 
-let data = imagesLinksData;
+const data = imagesLinksData;
 // console.log(data);
 
 createLink("/Tools/importImagesLinks.css", importSpot);
@@ -21,17 +20,25 @@ function getKey(object, index){
     return object[Object.keys(object)[index]];
 }
 
+function createLink(path, parent){
+    const sheet = document.createElement("link");
+    sheet.rel = "stylesheet";
+    sheet.type = "text/css";
+    sheet.href = path;
+    parent.appendChild(sheet);
+}
+
 function parseData(data){
     // console.log(data);
-    let className = getKey(data, 0);
-    let path = getKey(data, 1);
-    let imgPath = getKey(data, 2);
-    let name = getKey(data, 3);
-    let projectTextInfoHolder = getKey(data, 4);
-    let addAdicionalThings = getKey(data, 5);
+    const className = getKey(data, 0);
+    const path = getKey(data, 1);
+    const imgPath = getKey(data, 2);
+    const name = getKey(data, 3);
+    const projectTextInfoHolder = getKey(data, 4);
+    const addAdicionalThings = getKey(data, 5);
     // console.log(addAdicionalThings);
-    let addScript = getKey(data, 6);
-    let addCss = getKey(data, 7);
+    const addScript = getKey(data, 6);
+    const addCss = getKey(data, 7);
     
     // console.log(className);
     // console.log(path);
@@ -50,14 +57,14 @@ function createImageLink(parrent, dataList){
         console.error("Data has wrong size. Size ", dataList.length);
     }
 
-    let className = dataList[0];
-    let path = dataList[1];
-    let imgPath = dataList[2];
-    let name = dataList[3];
-    let projectTextInfoHolder = dataList[4];
-    let addAdicionalThings = dataList[5];
-    let addScript = dataList[6];
-    let addCss = dataList[7];
+    const className = dataList[0];
+    const path = dataList[1];
+    const imgPath = dataList[2];
+    const name = dataList[3];
+    const projectTextInfoHolder = dataList[4];
+    const addAdicionalThings = dataList[5];
+    const addScript = dataList[6];
+    const addCss = dataList[7];
     
     let classBackgroundImg;
     let classProjectTextInfoHolder;
@@ -66,18 +73,17 @@ function createImageLink(parrent, dataList){
     let classInfoText;
     let projectName;
 
-    let button;
+    let link;
 
     if(className != null && path != null && imgPath != null && name != null && projectTextInfoHolder != null){
-        button = document.createElement("button"); //Create button
-        button.className = className;
-        // console.log(path);
-        button.setAttribute("onClick", `location.href = "${path}";`);
-        parrent.appendChild(button);
+        link = document.createElement("a");
+        link.className = className;
+        link.href = path;
+        parrent.appendChild(link);
 
         classBackgroundImg = document.createElement("div");
         classBackgroundImg.className = "backgroundImg";
-        button.appendChild(classBackgroundImg);
+        link.appendChild(classBackgroundImg);
 
         classProjectTextInfoHolder = document.createElement("div");
         classProjectTextInfoHolder.className = "projectTextInfoHolder";
@@ -93,7 +99,7 @@ function createImageLink(parrent, dataList){
             classProjectTextInfo.appendChild(text);
         }
 
-        // Set img background
+        // set img background
         classImg = document.createElement("div");
         classImg.className = "img";
         classImg.style.backgroundImage = "url(" + imgPath + ")";
@@ -130,10 +136,10 @@ function createImageLink(parrent, dataList){
 
 function importImageLink(parent, name){
     const pageData = data[name];
-    // Get number of all window to add
+    // get number of all window to add
     const pageDataCount = Object.keys(pageData).length;
 
-    // Convert json to list of info
+    // convert json to list of info
     const pageDataList = [];
     for(let i = 0; i < pageDataCount; i++){
         pageDataList.push(parseData(getKey(pageData, i)));
@@ -150,7 +156,7 @@ function importAllImagesLinks(parent){
         const name = dataToImport[i];
 
         if(makeTitle[i] == "True"){
-            // Make title
+            // make title
             const title = document.createElement("h2");
             title.innerHTML = name;
             parent.appendChild(title);

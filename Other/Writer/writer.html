@@ -5,14 +5,16 @@
     <meta charset="UTF-8">
     <meta name="description" content="Free web programming tutorials">
     <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
-    <meta name="keywords" content="Kyeaboard, write 10 fingers, how to write with 10 fingers">
+    <meta name="keywords" content="Keyboard, write with 10 fingers, how to write with 10 fingers">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/text.css">
     <link rel="stylesheet" type="text/css" href="/tooltip.css">
     <link rel="stylesheet" type="text/css" href="/style.css"> 
     <link rel="stylesheet" type="text/css" href="writer.css">
-    <link rel="stylesheet" type="text/css" href="keyBoard.css">
+    <link rel="stylesheet" type="text/css" href="keyboard.css">
     <script defer type="module" src="/Tools/importFile.js"></script>
+    <script defer type="module" src="writer.js"></script>
+    <script defer type="module" src="toolTip.js"></script>
 </head>
 <body>
     <div class="columnUp" id="columnUp"></div>
@@ -20,365 +22,48 @@
         <div class="contentContainer">
             <div class="columnLeft" id="columnLeft"></div>
             <div class="columnMiddle" id="columnMiddle">
-                <div class="writerWindow" id="js-container">
-                    <div class="settings">
-                        <p class="mistakes" id="mistakes">Mistake: 0</p>
+                <div class="writerWindow">
+                    <div class="topSettings">
+                        <p class="mistakes" id="mistakes">0</p>
                         <p id="timer">0:00</p>
-                        <input type="checkbox" id="randomizeText" onclick="roll(this, 'wordsInput', 'hidden'); roll(this, 'numberOfLetters', 'hidden');">
-                        <input type="text" id="wordsInput" class="hidden" autocomplete="off" placeholder="Text" value="text">
+                        <input type="checkbox" id="randomizeText" onclick="roll(this, 'customText', 'hidden'); roll(this, 'numberOfLetters', 'hidden');" checked>
                         <input type="number" value="10" min="10" max="100" id="numberOfLetters">
-                        <button class="restart" id="restart">Restart</button>
-                        <input type="checkbox" onclick="roll(this, 'keyboard', 'hide')">
+                        <button class="restart refreshButton byHeight" id="restart"></button>
+                        <button class="moreSettings settingsButton byHeight"></button>
                     </div>
                     <div class="keyBoardWindow">
                         <div class="screen">
-                            <div class="endScreen" id="endScreen">
-                                <div class="timerEnd">
-                                    <p id="timerEnd"></p>
-                                </div>
-                                <div class="mistakesEnd">
-                                    <p id="mistakesEnd"></p>
-                                </div>
+                            <div class="endScreen">
+                                <p class="timerEnd">0</p>
+                                <p class="mistakesEnd">0</p>
                             </div>
                             <div class="playScreen">
-                                <p id="words"></p>
-                                <script type="module" defer src="writer.js"></script>
-                                <script type="module" defer src="toolTip.js"></script>
+                                    <span class="before"></span><span class="selected"></span><span class="after"></span>
                             </div>
                         </div>
                         <input class="input" id="input">
                     </div>
-                    <div class="keyboard" id="keyboard">
-                        <div class="first-row">
-                            <div class="Key1" id="L5">
-                                <button type="button" id="a96">
-                                    <p id="letter">`</p>
-                                </button>
+                    <div class="fS8"></div> 
+                    <div class="settings">
+                        <div>
+                            <div>
+                                <p>letters</p>
+                                <button class="toggleAllLetters">all</button>
+                                <button class="toggleLine1">line 1</button>
+                                <button class="toggleLine2">line 2</button>
+                                <button class="toggleLine3">line 3</button>
                             </div>
-                            <div class="Key1" id="L5">
-                                <button type="button" id="a1">
-                                    <p id="letter">1</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L5">
-                                <button type="button" id="a2">
-                                    <p id="letter">2</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L4">
-                                <button type="button" id="a3">
-                                    <p id="letter">3</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L3">
-                                <button type="button" id="a4">
-                                    <p id="letter">4</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L2">
-                                <button type="button" id="a5">
-                                    <p id="letter">5</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L2">
-                                <button type="button" id="a6">
-                                    <p id="letter">6</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R2">
-                                <button type="button" id="a7">
-                                    <p id="letter">7</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R2">
-                                <button type="button" id="a8">
-                                    <p id="letter">8</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R3">
-                                <button type="button" id="a9">
-                                    <p id="letter">9</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R4">
-                                <button type="button" id="a0">
-                                    <p id="letter">0</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R5">
-                                <button type="button" id="a45">
-                                    <p id="letter">-</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R5">
-                                <button type="button" id="a61">
-                                    <p id="letter">=</p>
-                                </button>
-                            </div>
-                            <div class="Key6" id="R5">
-                                <button type="button" id="Backspace">
-                                    <p id="letter">Back</p>
-                                </button>
+                            <div>
+                                <p>other</p>
+                                <button class="toggleNumbers">numbers</button>
+                                <button class="toggleAlphanumeric">alphanumeric</button>
                             </div>
                         </div>
-                        <div class="second-row">
-                            <div class="Key2" id="L5">
-                                <button type="button" id="Tab">
-                                    <p id="letter">Tab</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L5">
-                                <button type="button" id="Q">
-                                    <p id="letter">Q</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L4">
-                                <button type="button" id="W">
-                                    <p id="letter">W</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L3">
-                                <button type="button" id="E">
-                                    <p id="letter">E</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L2">
-                                <button type="button" id="R">
-                                    <p id="letter">R</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L2">
-                                <button type="button" id="T">
-                                    <p id="letter">T</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R2">
-                                <button type="button" id="Y">
-                                    <p id="letter">Y</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R2">
-                                <button type="button" id="U">
-                                    <p id="letter">U</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R3">
-                                <button type="button" id="I">
-                                    <p id="letter">I</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R4">
-                                <button type="button" id="O">
-                                    <p id="letter">O</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R5">
-                                <button type="button" id="P">
-                                    <p id="letter">P</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R5">
-                                <button type="button" id="a91">
-                                    <p id="letter">[</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R5">
-                                <button type="button" id="a93">
-                                    <p id="letter">]</p>
-                                </button>
-                            </div>
-                            <div class="Key3" id="R5">
-                                <button type="button" id="a92">
-                                    <p id="letter">\</p>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="third-row">
-                            <div class="Key9" id="L5">
-                                <button type="button" id="capsLock">
-                                    <p id="letter"></p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L5">
-                                <button type="button" id="A">
-                                    <p id="letter">A</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L4">
-                                <button type="button" id="S">
-                                    <p id="letter">S</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L3">
-                                <button type="button" id="D">
-                                    <p id="letter">D</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L2">
-                                <button type="button" id="F">
-                                    <p id="letter">F</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L2">
-                                <button type="button" id="G">
-                                    <p id="letter">G</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R2">
-                                <button type="button" id="H">
-                                    <p id="letter">H</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R2">
-                                <button type="button" id="J">
-                                    <p id="letter">J</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R3">
-                                <button type="button" id="K">
-                                    <p id="letter">K</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R4">
-                                <button type="button" id="L">
-                                    <p id="letter">L</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R5">
-                                <button type="button" id="a59">
-                                    <p id="letter">;</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R5">
-                                <button type="button" id="a39">
-                                    <p id="letter">'</p>
-                                </button>
-                            </div>
-                            <div class="Key7" id="R5">
-                                <button type="button" id="Enter">
-                                    <p id="letter">Enter</p>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="fourth-row">
-                            <div class="Key10" id="L5">  
-                                <button type="button" id="Shift">
-                                    <p id="letter">Shift</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L5">
-                                <button type="button" id="Z">
-                                    <p id="letter">Z</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L4">
-                                <button type="button" id="X">
-                                    <p id="letter">X</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L3">
-                                <button type="button" id="C">
-                                    <p id="letter">C</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L2">
-                                <button type="button" id="V">
-                                    <p id="letter">V</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="L2">
-                                <button type="button" id="B">
-                                    <p id="letter">B</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R2">
-                                <button type="button" id="N">
-                                    <p id="letter">N</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R2">  
-                                <button type="button" id="M">
-                                    <p id="letter">M</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R3">  
-                                <button type="button" id="a44">
-                                    <p id="letter">,</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R4">  
-                                <button type="button" id="a46">
-                                    <p id="letter">.</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R5">  
-                                <button type="button" id="a47">
-                                    <p id="letter">/</p>
-                                </button>
-                            </div>
-                            <div class="Key8" id="R5">  
-                                <button type="button" id="Shift2">
-                                    <p id="letter">Shift</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="Out">  
-                                <button type="button" id="Up">
-                                    <p id="letter"></p>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="fifth-row">
-                            <div class="Key2" id="L5">
-                                <button type="button" id="Ctrl">
-                                    <p id="letter">Ctrl</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="Out">
-                                <button type="button" id="Fn">
-                                    <p id="letter">Fn</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="Out">
-                                <button type="button" id="Win">
-                                    <p id="letter"></p>
-                                </button>
-                            </div>
-                            <div class="Key4" id="L5">
-                                <button type="button" id="Alt">
-                                    <p id="letter">Alt</p>
-                                </button>
-                            </div>
-                            <div class="Key5" id="L1">
-                                <button type="button" id="Space">
-                                    <p id="letter"></p>
-                                </button>
-                            </div>
-                            <div class="Key4" id="R5">
-                                <button type="button" id="Alt">
-                                    <p id="letter">Alt</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="R5">
-                                <button type="button" id="Alt">
-                                    <p id="letter">Alt</p>
-                                </button>
-                            </div>
-                            <div class="Key2" id="R5">
-                                <button type="button" id="Ctrl2">
-                                    <p id="letter">Ctrl</p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="Out">
-                                <button type="button" id="Panel">
-                                    <p id="letter"></p>
-                                </button>
-                            </div>
-                            <div class="Key1" id="Out">
-                                <button type="button" id="Left">
-                                    <p id="letter"></p>
-                                </button>
-                            </div>
-                        </div>
+                        <div class="keyboard" id="keyboard"></div>
+                    </div>
+                    <div id="customText" class="hidden">
+                        <p>custom text</p>
+                        <textarea type="text" id="wordsInput" placeholder="Text" style="max-width: 100%">text</textarea>
                     </div>
                 </div>
             </div>

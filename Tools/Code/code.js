@@ -1,6 +1,5 @@
 // import {calculateNumberOfSpaces, split, getCurrentHtmlFileName, createElement} from "/Tools/func.js";
 import func from "../func.js";
-import {importFile} from "../import.js";
 import {downloadText, copyTextToClipboard} from "../download.js";
 import {Trie} from "../trie.js"
 
@@ -175,7 +174,7 @@ function createCodeWindow(codeWindow, languageTrie){
         const callback = (rawCode) => {
             makeCodeWindow(codeWindow, rawCode, fileName, languageTrie);
         }
-        importFile(src, callback);
+        func.importFile(src, callback);
     }
 }
 

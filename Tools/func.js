@@ -8,6 +8,12 @@ class Func{
         }
     }
 
+    importFile(url, fallback){
+        fetch(url)
+            .then(response => response.text())
+            .then(data => { fallback(data); });
+    }
+
     textSize(text){
         const t = document.createElement("div");
         t.innerHTML = text
@@ -40,17 +46,6 @@ class Func{
         return htmlName;
     }
 
-    getListOfLines(filePath){
-        const textFromFile = getText(filePath);
-        const listOfLines = textFromFile.split("\n");
-
-        for(let i = 0; i < listOfLines.length; i++){
-            listOfLines[i] = listOfLines[i].replace("\r", "");
-        }
-
-        return listOfLines
-    }
-
     createElement(html){
         const temp = document.createElement("div");
         temp.innerHTML = html;
@@ -80,6 +75,10 @@ class Func{
         const numberMaxPower = this.getMultitplyOfTen(max);
         return numberMaxPower - numberPower;
     }
+
+    random(min, max){
+        return Math.floor(Math.random() * (max - min) + min);
+    }
 }
 
 HTMLElement.prototype.appendAllChildren = function(arrayOfElement){
@@ -87,7 +86,6 @@ HTMLElement.prototype.appendAllChildren = function(arrayOfElement){
         this.appendChild(arrayOfElement[i]);
     }
 }
-
 
 const functionInstance = new Func();
 export default functionInstance;

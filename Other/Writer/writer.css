@@ -1,24 +1,32 @@
-#words{ font-size: 30px; }
-.highlight{ background-color: #EEF43B; }
-.highlightWorongWord{ background-color: #ff0101b1; }
+:root{
+    --lineHeight: 30px;
+}
+
+.before, .selected, .after{
+    font-size: var(--lineHeight);
+}
+
+#highlight{ background-color: #EEF43B; }
+#highlightWrongWord{ background-color: #ff0101b1; }
 .show { display: block; }
 
 .writerWindow{
     position: relative;
-    padding-top: 200px;
-    padding-left: 30px;
-    padding-right: 30px;
-    height: 300px;
-    display: block;
-    margin: auto;
+    padding: 0px 30px;
 }
 
 .keyBoardWindow{
     position: relative;
     background-color: rgb(48, 48, 48);
     width: 100%;
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
     word-wrap: break-word;
+    box-sizing: border-box;
+}
+
+.playScreen{
+    max-height: calc(var(--lineHeight) * 3);
+    overflow: hidden;
 }
 
 .endScreen{
@@ -27,17 +35,26 @@
     width: 100%;
     height: 100%;
     display: none;
+    z-index: 2;
+    display: flex;
 }
 
-.endScreen > div{
+.endScreen > p{
     position: relative;
     width: 50%;
     text-align: center;
+    margin: auto;
 }
 
 .screen{
     position: relative;
     width: 100%;
+    overflow: hidden;
+}
+
+.playScreen{
+    position: relative;
+    top: 0px;
 }
 
 .input{
@@ -45,65 +62,77 @@
     border: none;
 }
 
-/* ##################### SETTINGS ########################### */
-.settings{
+/* ######################## top settings ######################## */
+.topSettings{
+    position: relative;
     display: flex;
+    box-sizing: border-box;
     gap: 10px;
+    padding: 10px;
     width: 100%;
+    height: 42px;
     overflow: hidden;
     align-items: center;
-    padding: 10px;
     background-color: rgb(112, 63, 63);
 }
 
-.settings > input[type="text"], .settings > input[type="number"]{
+.topSettings > input[type="text"],
+.topSettings > input[type="number"]{
     max-width: 100px;
 }
 
 .restart{
-    width: 50px;
-    border-radius: 4px;
+    margin-left: auto;
     border: none;
 }
 
-.keyBoard {
-    position: absolute;
-    /* right: 0px; */
-    width: 20px;
-    height: 20px;
+.moreSettings.closed::after,
+.moreSettings.opened::after{
+    border: none
 }
 
-.settings-button{
-    position: relative;
-    border: none;
-    width: 100%;
+.moreSettings{
     height: 100%;
-    border-radius: 4px;
-    background-image: url("/Images/Icons/settings.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+    aspect-ratio: 1/1;
 }
 
-.keyboard{
-    text-decoration: none;
-    display: block;
-    background-color: rgb(48, 48, 48);
-}
-  
-@media only screen and (max-width: 530px) { 
+@media only screen and (max-width: 530px){ 
     .restart{
         display: none;
     }
 }
 
-@media only screen and (max-width: 500px) { 
-    .timer{
+@media only screen and (max-width: 600px){ 
+    .restart, .timer{
         display: none;
     }
 }
 
-@media only screen and (max-width: 360px) { 
-    .wordsInput{
-        display: none;
+/* ######################## settings ######################## */
+.settings{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.settings > div:first-child{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.settings > .keyboard{
+    padding: 10px;
+}
+
+@media only screen and (max-width: 1500px){ 
+    .settings{
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .settings > div:first-child > div{
+        display: flex;
+        gap: 4px;
     }
 }

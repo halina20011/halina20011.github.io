@@ -1,6 +1,11 @@
-import {createScript} from "./import.js";
 import {headHtml} from "../Menu/head.js";
 
+function createScript(path, parent, mode = null){
+    const script = document.createElement("script");
+    script.type = (mode != null) ? mode : "text/javascript";
+    script.src = path;
+    parent.appendChild(script);
+}
 const columnUp = document.getElementById("columnUp");
 // createScript("/Menu/head.js", columnUp, "module");
 
