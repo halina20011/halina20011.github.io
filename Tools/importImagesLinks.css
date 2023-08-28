@@ -5,16 +5,13 @@
     --image-link-width1: 100%;
 }
 
-.importSpot{
-    padding-top: 10px;
-}
-
 .projects{
-    display: relative;
+    position: relative;
     display: grid;
     box-sizing: border-box;
     gap: 10px;
     grid-template-columns: repeat(3, var(--image-link-width3));
+    padding-bottom: 20px;
 }
 
 .projects > button{

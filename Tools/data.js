@@ -1,53 +1,5 @@
 export const imagesLinksData = {
-    "Index": {
-        "SudokuProject": {
-            "className": "SudokuProject",
-            "path": "/Other/Sudoku/sudoku.html",
-            "imgPath": "/Images/Miniature/sudoku.png",
-            "name": "sudoku solver",
-            "projectTextInfo": [
-                "simple sudoku solver using backtracking algorithm"
-            ],
-            "addAdicionalThings": null,
-            "addScript": null,
-            "addCss": null
-        },
-        "BinaryTreeProject": {
-            "className": "BinaryTreeProject",
-            "path": "/Other/Tools/binaryTree.html",
-            "imgPath": "/Images/Miniature/binaryTree.png",
-            "name": "binary tree",
-            "projectTextInfo": [
-                "tool that lets you view, create and modify binary trees"
-            ],
-            "addAdicionalThings": null,
-            "addScript": null,
-            "addCss": null
-        },
-        "NotesProject": {
-            "className": "NotesProject",
-            "path": "/Other/Notes/notes.html",
-            "imgPath": "/Images/Miniature/notes.svg",
-            "name": "Notes",
-            "projectTextInfo": [
-                "practice names of notes"
-            ],
-            "addAdicionalThings": null,
-            "addScript": null,
-            "addCss": null
-        },
-        "PiDigitsProject": {
-            "className": "PiDigitsProject",
-            "path": "/Other/Pi/pi.html",
-            "imgPath": "/Images/Miniature/pi.png",
-            "name": "Pi digits",
-            "projectTextInfo": [
-               "Who wouldn't want to learn some digits of pi?"
-            ],
-            "addAdicionalThings": null,
-            "addScript": null,
-            "addCss": null
-        },
+    "Canvas": {
         "BezierCurveProject": {
             "className": "BezierCurveProject",
             "path": "/Canvas/BezierCurve/bezierCurve.html",
@@ -128,22 +80,6 @@ export const imagesLinksData = {
                 }
             `
         },
-        "ASCIIGenerator": {
-            "className": "AsciiGeneratorProject",
-            "path": "/Canvas/ASCII/ascii.html",
-            "imgPath": "/Images/Miniature/asciiGenerator.png",
-            "name": "ASCII Generator",
-            "projectTextInfo": [
-                "Convert image to ASCII text"
-            ],
-            "addAdicionalThings": null,
-            "addScript": null,
-            "addCss": `
-                .AsciiGeneratorProject > .backgroundImg > .img{
-                    background-color: rgb(0, 0, 0, 1);
-                }
-            `
-        },
         "MarchingSquares": {
             "className": "MarchingSquaresProject",
             "path": "/Canvas/MarchingSquares/marchingSquares.html",
@@ -199,7 +135,7 @@ export const imagesLinksData = {
         },
         "Clock": {
             "className": "ClockProject",
-            "path ": "/Clock/clock.html",
+            "path": "/Clock/clock.html",
             "imgPath": "/Images/Miniature/Clock/ClockBackground.png",
             "name": "Clock",
             "projectTextInfo": [
@@ -207,32 +143,125 @@ export const imagesLinksData = {
                 "Just a clock..."
             ],
             "addAdicionalThings": `
-                <div class=arrowHours style="
-                    position: absolute;
-                    width: 100%;
-                    background-size: 100%;
-                    background-repeat: no-repeat;
-                    padding-bottom: 100%;
-                    background-image: url(/Images/Miniature/Clock/arrowHours.png)";
-                ></div>
-                <div class="arrowMinutes" style="
-                    position: absolute;
-                    width: 100%;
-                    background-size: 100%;
-                    background-repeat: no-repeat;
-                    padding-bottom: 100%;
-                    background-image: url(/Images/Miniature/Clock/arrowMinutes.png)";
-                ></div>
-                <div class="arrowSeconds" style="
-                    position: absolute;
-                    width: 100%;
-                    background-size: 100%;
-                    background-repeat: no-repeat;
-                    padding-bottom: 100%;
-                    background-image: url(/Images/Miniature/Clock/arrowSeconds.png)";
-                ></div>
+                <div class="arrowSeconds" style="background-image: url('/Images/Miniature/Clock/arrowSeconds.png')";></div>
+                <div class="arrowHours"   style="background-image: url('/Images/Miniature/Clock/arrowHours.png')";></div>
+                <div class="arrowMinutes" style="background-image: url('/Images/Miniature/Clock/arrowMinutes.png')";></div>
             `,
             "addScript": "/Clock/clockAnimation.js",
+            "addCss": `
+                .ClockProject > .backgroundImg > div > [class^="arrow"]{
+                    position: absolute;
+                    width: 100%;
+                    background-size: 100%;
+                    background-repeat: no-repeat;
+                    padding-bottom: 100%;
+                }
+            `
+        }
+    },
+    "Tools":{
+        "BinaryTreeProject": {
+            "className": "BinaryTreeProject",
+            "path": "/Other/Tools/binaryTree.html",
+            "imgPath": "/Images/Miniature/binaryTree.png",
+            "name": "binary tree",
+            "projectTextInfo": [
+                "tool that lets you view, create and modify binary trees"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
+        "NotesProject": {
+            "className": "NotesProject",
+            "path": "/Other/Notes/notes.html",
+            "imgPath": "/Images/Miniature/notes.svg",
+            "name": "Notes",
+            "projectTextInfo": [
+                "practice names of notes"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
+        "SudokuProject": {
+            "className": "SudokuProject",
+            "path": "/Other/Sudoku/sudoku.html",
+            "imgPath": "/Images/Miniature/sudoku.png",
+            "name": "sudoku solver",
+            "projectTextInfo": [
+                "simple sudoku solver using backtracking algorithm"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
+        "PiDigitsProject": {
+            "className": "PiDigitsProject",
+            "path": "/Other/Pi/pi.html",
+            "imgPath": "/Images/Miniature/pi.png",
+            "name": "Pi digits",
+            "projectTextInfo": [
+               "Who wouldn't want to learn some digits of pi?"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
+        "ASCIIGenerator": {
+            "className": "AsciiGeneratorProject",
+            "path": "/Canvas/ASCII/ascii.html",
+            "imgPath": "/Images/Miniature/asciiGenerator.png",
+            "name": "ASCII Generator",
+            "projectTextInfo": [
+                "Convert image to ASCII text"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": `
+                .AsciiGeneratorProject > .backgroundImg > .img{
+                    background-color: rgb(0, 0, 0, 1);
+                }
+            `
+        }
+    },
+    "Projects":{
+        "ArduinoTicTacToe": {
+            "className": "ArduinoTicTacToeProject",
+            "path": "/Arduino/arduinoTicTacToe.html",
+            "imgPath": "/Images/Miniature/arduinoTicTacToe.png",
+            "name": "Arduino Tic Tac Toe",
+            "projectTextInfo": [
+                "Learn Arduino", 
+                "Little tutorial on how to program Arduino Uno to play on it Tic Tac Toe with 3.5\" TFT Lcd touch screen"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
+        "PilotPenHolder": {
+            "className": "PilotPenHolderProject",
+            "path": "/Other/PilotPenHolder/pilotPenHolder.html",
+            "imgPath": "/Images/Miniature/pilotPenHolder.png",
+            "name": "Pilot Pen Holder for Ender 3",
+            "projectTextInfo": [
+                "Pilot Pen Holder for Ender 3"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
+        "ArduinoDisplayGame": {
+            "className": "ArduinoDisplayGameProject",
+            "path": "/Arduino/arduinoLcdI2CGame.html",
+            "imgPath": "/Images/Miniature/arduinoDisplayGame.png",
+            "name": "Simple game for Arduino",
+            "projectTextInfo": [
+                "Learn Arduino", 
+                "Simple game for Arduino with LCD I2C display"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
             "addCss": null
         }
     },
@@ -289,19 +318,6 @@ export const imagesLinksData = {
             "addScript": null,
             "addCss": null
         },
-        "ArduinoTicTacToe": {
-            "className": "ArduinoTicTacToeProject",
-            "path": "/Arduino/arduinoTicTacToe.html",
-            "imgPath": "/Images/Miniature/arduinoTicTacToe.png",
-            "name": "Arduino Tic Tac Toe",
-            "projectTextInfo": [
-                "Learn Arduino", 
-                "Little tutorial on how to program Arduino Uno to play on it Tic Tac Toe with 3.5\" TFT Lcd touch screen"
-            ],
-            "addAdicionalThings": null,
-            "addScript": null,
-            "addCss": null
-        },
         "ArduinoSH5461AS": {
             "className": "ArduinoSH5461ASProject",
             "path": "/Arduino/arduinoSH5461AS.html",
@@ -315,42 +331,5 @@ export const imagesLinksData = {
             "addScript": null,
             "addCss": null
         },
-        "ArduinoDisplayGame": {
-            "className": "ArduinoDisplayGameProject",
-            "path": "/Arduino/arduinoLcdI2CGame.html",
-            "imgPath": "/Images/Miniature/arduinoDisplayGame.png",
-            "name": "Simple game for Arduino",
-            "projectTextInfo": [
-                "Learn Arduino", 
-                "Simple game for Arduino with LCD I2C display"
-            ],
-            "addAdicionalThings": null,
-            "addScript": null,
-            "addCss": null
-        },
-        "PilotPenHolder": {
-            "className": "PilotPenHolderProject",
-            "path": "/Other/PilotPenHolder/pilotPenHolder.html",
-            "imgPath": "/Images/Miniature/pilotPenHolder.png",
-            "name": "Pilot Pen Holder for Ender 3",
-            "projectTextInfo": [
-                "Pilot Pen Holder for Ender 3"
-            ],
-            "addAdicionalThings": null,
-            "addScript": null,
-            "addCss": null
-        },
-        "marshallBluetoothUpdate": {
-            "className": "marshallBluetoothUpdateProject",
-            "path": "/Other/marshallBluetoothUpdate.html",
-            "imgPath": "/Images/Miniature/marshallBluetoothUpdate.png",
-            "name": "Marshall Bluetooth Update",
-            "projectTextInfo": [
-                "Simple way how to add Bluetooth to your headphones"
-            ],
-            "addAdicionalThings": null,
-            "addScript": null,
-            "addCss": null
-        }
     }
 }

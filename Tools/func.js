@@ -81,6 +81,27 @@ class Func{
     }
 }
 
+class Vec2{
+    constructor(x, y){
+        this.x = x;
+        this.y = y;
+    }
+    
+    addVal(b){
+        this.x += b.x; 
+        this.y += b.y;
+    }
+
+    subtractVal(b){
+        this.x -= b.x; 
+        this.y -= b.y;
+    }
+
+    subtract(b){
+        return new Vec2(this.x - b.x, this.y - b.y);
+    }
+}
+
 HTMLElement.prototype.appendAllChildren = function(arrayOfElement){
     for(let i = 0; i < arrayOfElement.length; i++){
         this.appendChild(arrayOfElement[i]);
@@ -89,3 +110,4 @@ HTMLElement.prototype.appendAllChildren = function(arrayOfElement){
 
 const functionInstance = new Func();
 export default functionInstance;
+export {Vec2};
