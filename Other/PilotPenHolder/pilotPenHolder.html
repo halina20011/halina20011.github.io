@@ -27,11 +27,11 @@
                     <p>In feature i will add images and examples of what you can do with it.</p>
                     <div class="fS8"></div>
 
-                    <p>You will need a sping, I took it from gun toy</p>
+                    <p>You will need a spring, I took it from a toy gun</p>
                     <p>Spring has about 34mm in height and 14mm in diameter. Pilot Pen was choosen, because it has different colors and widths.</p>
                     <div class="fS8"></div>
 
-                    <div>3D Files: <a href="https://www.thingiverse.com/thing:5912499">https://www.thingiverse.com/thing:5912499</a></div>
+                    <p>3D Files: <a href="https://www.thingiverse.com/thing:5912499">https://www.thingiverse.com/thing:5912499</a></p>
                 </div>
                 <div class="freeLine"></div>
 
@@ -41,11 +41,34 @@
                 <jumpLink id="TheStoryBehindIt"></jumpLink>
                 <h2>The story behind it</h2>
                 <div class="paragraph">
-                    <p>The reason why I started working on this is because I had to hand in hand written essay/paper. So why to spend 10 minutes rewriting it on papaper when I spend unhealthy amout of time to make it "easyer"? Unfortunately I had problems with first two versions, because there were unprintable on my printer. So I write the essay/paper by hand and hand it... Later, third time I designed the part from scratch I made it more durable, modulable and printable.</p>
-                    <p>When it came the time to print it I hade same issuies as last time. The resolution was terible. I first tryied to reach to someone who would print it on better printer as service, I was ignored by different people whom I asked (to be fare after some time I got one reptly, but that was late).</p>
+                    <p>The reason why I started working on this is because I had to hand in hand written essay/paper. So why should i spend 10 minutes rewriting it on papaper when I can spend unhealthy amout of time trying to make it "easyer"? Unfortunately I had problems with first two versions, because there were unprintable on my printer. So I had writen the essay/paper by hand and handed it in... Later, the third time I have designed the part from scratch and made it more durable, modulable and printable.</p>
+                    <p>When it came the time to print it I hade same issuies as last time. The print resolution was terrible. I first tried to reach to someone who would print it on better printer as service, I was ignored by different people whom I asked (to be fare after some time I got one reptly, but that was late).</p>
                     <p>The other option left was to buy 0.2mm nozzle and try my luck with my printer. At first I didn't believe that it could succeed, but later, when I tried to print something with the new nozzle, the results were amazing. Yes the print time is kind of long, but the result is worth it.</p>
                     <p>So after discovering that my printer is capable of printing new iterations of my designs I got to work again.</p>
-                    <p>Long story short after many prints and redisings this is what I have.</p>
+                    <p>Long story short, after many prints and redesigns, this is what I have.</p>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                               Svg2Gcode                                -->
+                <!-- ###################################################################### -->
+                <jumpLink id="Svg2Gcode"></jumpLink>
+                <h2>Svg to Gcode</h2>
+                <div class="paragraph">
+                    <p>Another thing that I have decided is to make my own program that will generate the gcode for the machine. I have tried python then I switched to c and used a library for parsing the svg paths but that failed. Next time I have used only library (libxml2) for parsing the svg file to the elements. This works but it was a lot of fun making, especially the part when parsing and making the arc command.</p>
+                    <div class="fS8"></div>
+                    <p>Code: <a href="https://github.com/halina20011/Svg2Gcode">Svg2Gcode</a></p>
+                </div>
+                <div class="freeLine"></div>
+
+                <!-- ###################################################################### -->
+                <!--                                All links                               -->
+                <!-- ###################################################################### -->
+                <jumpLink id="AllLinks"></jumpLink>
+                <h2>All links</h2>
+                <div class="paragraph">
+                    <p>3D Files: <a href="https://www.thingiverse.com/thing:5912499">https://www.thingiverse.com/thing:5912499</a></p>
+                    <p>Code: <a href="https://github.com/halina20011/Svg2Gcode">Svg2Gcode</a></p>
                 </div>
                 <div class="freeLine"></div>
 
@@ -67,6 +90,8 @@
                     <p>Table of contents</p>
                     <div class="pageContent">
                         <button onclick="document.location='#TheStoryBehindIt'">The story behind it</button>
+                        <button onclick="document.location='#Svg2Gcode'">Svg2Gcode</button>
+                        <button onclick="document.location='#AllLinks'">All links</button>
                         <button onclick="document.location='#Images'">Images</button>
                     </div>
                 </div>
