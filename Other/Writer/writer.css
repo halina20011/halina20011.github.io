@@ -1,14 +1,47 @@
+*{
+    position: relative;
+}
+
 :root{
-    --lineHeight: 30px;
+    --textHeight: 25px;
+    --lineHeight: 34px;
 }
 
-.before, .selected, .after{
-    font-size: var(--lineHeight);
+.correct, .currentCorrect, .currentIncorrect, .current, .afterIncorrect, .after{
+    position: relative;
+    font-family: monospace;
+    font-size: var(--textHeight);
+    overflow: hidden;
 }
 
-#highlight{ background-color: #EEF43B; }
-#highlightWrongWord{ background-color: #ff0101b1; }
-.show { display: block; }
+.correct, .currentCorrect{
+    color: green;
+}
+
+.currentCorrect, .currentIncorrect, .current{
+    text-decoration: underline;
+}
+
+#wrong, .currentIncorrect, .afterIncorrect{
+    background-color: red;
+}
+
+/* .current::before{ */
+/*     content: ""; */
+/*     display: inline-block; */
+/*     width: 2px; */
+/*     height: var(--textHeight); */
+/*     color: black; */
+/*     background-color: black; */
+/* } */
+
+.before{
+    color: green;
+}
+
+.selected{
+    text-decoration: underline;
+}
 
 .writerWindow{
     position: relative;
@@ -26,7 +59,9 @@
 
 .playScreen{
     max-height: calc(var(--lineHeight) * 3);
-    overflow: hidden;
+    position: relative;
+    top: 0px;
+    padding: 0px 0px 3px 0px;
 }
 
 .endScreen{
@@ -50,11 +85,6 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-}
-
-.playScreen{
-    position: relative;
-    top: 0px;
 }
 
 .input{
@@ -109,29 +139,50 @@
 }
 
 /* ######################## settings ######################## */
-.settings{
+.randomLetters{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.settings > div:first-child{
+.randomLetters > div:first-child{
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.settings > .keyboard{
+.randomLetters > .keyboard{
     padding: 10px;
 }
 
+.customText{
+    position: relative;
+    width: 100%;
+}
+
+.savedText{
+    width: 100%;
+}
+
+.savedText > div{
+    display: flex;
+    gap: 10px;
+    background-color: #454545;
+    width: 100%;
+    padding: 5px;
+}
+
+.savedText > div > p{
+    margin-right: auto;
+}
+
 @media only screen and (max-width: 1500px){ 
-    .settings{
+    .randomLetters{
         flex-direction: column;
         gap: 10px;
     }
 
-    .settings > div:first-child > div{
+    .randomLetters > div:first-child > div{
         display: flex;
         gap: 4px;
     }

@@ -24,10 +24,9 @@
             <div class="columnMiddle" id="columnMiddle">
                 <div class="writerWindow">
                     <div class="topSettings">
-                        <p class="mistakes" id="mistakes">0</p>
+                        <!-- <p class="wpm">0</p> -->
+                        <!-- <p class="mistakes" id="mistakes">0</p> -->
                         <p id="timer">0:00</p>
-                        <input type="checkbox" id="randomizeText" onclick="roll(this, 'customText', 'hidden'); roll(this, 'numberOfLetters', 'hidden');" checked>
-                        <input type="number" value="10" min="10" max="100" id="numberOfLetters">
                         <button class="restart refreshButton byHeight" id="restart"></button>
                         <button class="moreSettings settingsButton byHeight"></button>
                     </div>
@@ -36,34 +35,56 @@
                             <div class="endScreen">
                                 <p class="timerEnd">0</p>
                                 <p class="mistakesEnd">0</p>
+                                <p class="wpmEnd">0</p>
                             </div>
                             <div class="playScreen">
-                                    <span class="before"></span><span class="selected"></span><span class="after"></span>
+                                <span class="correct"></span><span class="currentCorrect"></span><span class="currentIncorrect"></span><span class="current"></span><span class="afterIncorrect"></span><span class="after"></span>
                             </div>
                         </div>
                         <input class="input" id="input">
                     </div>
-                    <div class="fS8"></div> 
+                    <div class="fS8"></div>
                     <div class="settings">
-                        <div>
+                        <div style="display: flex; gap: 10px;">
+                            <h3>type: </h3>
+                            <select class="type">
+                                <option value="0">random letters</option>
+                                <option value="1">custom text</option>
+                                <option value="2">saved text</option>
+                            </select>
+                        </div>
+                        <div class="fS16"></div>
+                        <div class="randomLetters">
                             <div>
-                                <p>letters</p>
-                                <button class="toggleAllLetters">all</button>
-                                <button class="toggleLine1">line 1</button>
-                                <button class="toggleLine2">line 2</button>
-                                <button class="toggleLine3">line 3</button>
+                                <div>
+                                    <p>number of letters</p>
+                                    <input type="number" value="60" min="1" max="500" id="numberOfLetters" style="max-width: 100px;">
+                                </div>
+                                <div>
+                                    <p>letters</p>
+                                    <button class="toggleAllLetters">all</button>
+                                    <button class="toggleLine1">line 1</button>
+                                    <button class="toggleLine2">line 2</button>
+                                    <button class="toggleLine3">line 3</button>
+                                </div>
+                                <div>
+                                    <p>other</p>
+                                    <button class="toggleNumbers">numbers</button>
+                                    <button class="toggleAlphanumeric">alphanumeric</button>
+                                </div>
                             </div>
-                            <div>
-                                <p>other</p>
-                                <button class="toggleNumbers">numbers</button>
-                                <button class="toggleAlphanumeric">alphanumeric</button>
+                            <div class="keyboard" id="keyboard"></div>
+                        </div>
+                        <div class="customText" class="hidden">
+                            <button class="saveText" style="display: block;">save text</button>
+                            <textarea type="text" id="wordsInput" placeholder="Text" style="max-width: 100%;">text is a text and not a text is not a text</textarea>
+                        </div>
+                        <div class="savedText">
+                            <div class="savedTextHolder">
+                                <button>use</button>
+                                <button>remove</button>
                             </div>
                         </div>
-                        <div class="keyboard" id="keyboard"></div>
-                    </div>
-                    <div id="customText" class="hidden">
-                        <p>custom text</p>
-                        <textarea type="text" id="wordsInput" placeholder="Text" style="max-width: 100%">text</textarea>
                     </div>
                 </div>
             </div>

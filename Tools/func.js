@@ -79,6 +79,40 @@ class Func{
     random(min, max){
         return Math.floor(Math.random() * (max - min) + min);
     }
+
+    map(x, inMin, inMax, outMin, outMax){
+        return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    }
+
+    idDigit(char){
+        if(char.length != 1){
+            return false;
+        }
+        const v = char.charCodeAt(0);
+        // 0 - 48
+        // 9 - 57
+        return (47 < v && v < 58);
+    }
+
+    toggle(query, defaultValue, elements, defaultClass, actionClass){
+        const element = document.querySelector(query);
+        element.checked = defaultValue;
+
+        elements.forEach((element, i) => {
+            if(defaultClass[i]){
+                element.classList.add(actionClass);
+            }
+            else{
+                element.classList.remove(actionClass);
+            }
+        });
+
+        element.addEventListener("click", () => {
+            elements.forEach(element => {
+                element.classList.toggle(actionClass);
+            });
+        });
+    }
 }
 
 class Vec2{
@@ -100,6 +134,27 @@ class Vec2{
     subtract(b){
         return new Vec2(this.x - b.x, this.y - b.y);
     }
+
+    scale(sX, sY){
+        this.x *= sX;
+        this.y *= sY;
+    }
+}
+
+class Random{
+    // [[key, value],...]
+    constructor(arr){
+        // arr => [value_1, value_1, value_2,...]
+        this.table = arr.map((_, i) => {
+            return Array.from({length: arr[i][1]}, () => arr[i][0]);
+        }).flat();
+
+        this.length = this.table.length;
+    }
+
+    random(){
+        return this.table[Math.floor(Math.random() * this.length)];
+    }
 }
 
 HTMLElement.prototype.appendAllChildren = function(arrayOfElement){
@@ -110,4 +165,4 @@ HTMLElement.prototype.appendAllChildren = function(arrayOfElement){
 
 const functionInstance = new Func();
 export default functionInstance;
-export {Vec2};
+export {Vec2, Random};

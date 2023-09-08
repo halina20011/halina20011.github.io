@@ -1,58 +1,56 @@
 import Keyboard from "./keyboard.js"
 import func from "../../Tools/func.js";
+import {Random} from "../../Tools/func.js";
 
-let keys = [];
-let listOfLetters = [];
-let listOfWords = [];
-let text = "";
-let listOfWordsStartEnd = [];
+let words = [];
+
+let generate;
+let index = 0, mistakesMade = 0, yOffset = 0;
+let prevInput = "";
+
+let timeStarted = undefined;
 
 const keyaboard = new Keyboard(document.querySelector(".keyboard"));
 
 keyaboard.toggleLine(2);
 
-let order = 0;
-let mistakesMade = 0;
-let prevInput = "";
-
-let timeStarted = undefined;
-
-let yOffset = 0;
-
 const timer = document.getElementById("timer");
-const mistakes = document.getElementById("mistakes");
-document.getElementById("input").oninput = (e) => {
-    update(e.target.value);
-}
+// const mistakes = document.getElementById("mistakes");
+// const wpm = document.querySelector(".wpm");
+document.getElementById("input").addEventListener("input", (e) => { update(e.target.value); });
 
 const numberOfLetters = document.getElementById("numberOfLetters");
-const numberOfLettersClass = document.getElementsByClassName("numberOfLetters");
 
-const randomizeText = document.querySelector("#randomizeText");
+const randomLetters = document.querySelector(".randomLetters");
+
+const customText = document.querySelector(".customText");
+const savedText = document.querySelector(".savedText");
+document.querySelector(".saveText").addEventListener("click", () => {
+    const name = prompt("Name: ");
+    // console.log(name);
+    if(name != null){
+        window.localStorage.setItem(name, wordsInput.value)
+    }
+});
 
 const screen = document.querySelector(".screen");
 const playScreen = document.querySelector(".playScreen");
 
-const before = document.querySelector(".before");
-const selected = document.querySelector(".selected");
+const correct = document.querySelector(".correct");
+const currentCorrect = document.querySelector(".currentCorrect");
+const currentIncorrect = document.querySelector(".currentIncorrect");
+const current = document.querySelector(".current");
+const afterIncorrect = document.querySelector(".afterIncorrect");
 const after = document.querySelector(".after");
 
 document.getElementById("restart").addEventListener("click", function() { setUp(); }, false);
 
 const wordsInput = document.getElementById("wordsInput"); 
 
-const wordsInputClass = document.getElementsByClassName("wordsInput"); 
-
 const endScreen = document.querySelector(".endScreen");
 const timerEnd = document.querySelector(".timerEnd");
 const mistakesEnd = document.querySelector(".mistakesEnd");
-
-randomizeText.addEventListener("change", () => { checkMode(randomizeText.checked); });
-
-const settings = document.querySelector(".settings");
-document.querySelector(".moreSettings").addEventListener("click", () => {
-    settings.classList.toggle("hidden");
-}, false);
+const wpmEnd = document.querySelector(".wpmEnd");
 
 // settings buttons
 document.querySelector(`.toggleNumbers`).addEventListener("click", () => keyaboard.toggleAllNumbers(), false);
@@ -62,18 +60,8 @@ for(let n = 1; n < 4; n++){
     document.querySelector(`.toggleLine${n}`).addEventListener("click", () => keyaboard.toggleLine(n), false);
 }
 
-function checkMode(value){
-    if(value){
-        // console.log("Randomize Checkbox is checked..");
-        displayNone(wordsInputClass, "block");
-        displayNone(numberOfLettersClass, "none");
-    } 
-    else{
-        // console.log("Randomize Checkbox is not checked..");
-        displayNone(wordsInputClass, "none");
-        displayNone(numberOfLettersClass, "block");
-    }
-}
+const settings = document.querySelector(".settings");
+func.toggle(".moreSettings", true, [settings], [false], "hidden");
 
 function clearInput(){
     input.value = "";
@@ -82,8 +70,8 @@ function clearInput(){
 window.self.addEventListener("resize", () => { moveLines() }, false);
 
 function moveLines(){
-    const item = selected.getClientRects()[0].y;
-    const parent = screen.getClientRects()[0].y;
+    const item = current.getBoundingClientRect().y;
+    const parent = screen.getBoundingClientRect().y;
     if(item == parent){
         return;
     }
@@ -92,50 +80,10 @@ function moveLines(){
     playScreen.style.top = `${yOffset}px`;
 }
 
-function showWorld(){
-    if(listOfWords[order] == undefined){
-        end();
-    }
-    else{
-        highlightWord(true);
-    }
-}
-
-function update(input){
-    if(timeStarted == undefined){
-        timeStarted = Date.now();
-    }
-
-    const correctWord = listOfWords[order];
-    const lastWord = (order + 1 < listOfWords.length);
-    const endMatch = correctWord + ((lastWord) ? " " : "");
-
-    // console.log(input.length, input, endMatch.substring(0, input.length));
-    if(prevInput.length < input.length && input != endMatch.substring(0, input.length)){
-        mistakesMade++;
-        mistakes.innerHTML = mistakesMade;
-        highlightWord(false);
-    }
-    // if the input matches the correctWord and there is an space at the end if needed 
-    // move to the next word
-    else if(input == endMatch){
-        order++;
-        clearInput();
-        prevInput = "";
-        showWorld();
-        return;
-    }
-    else{
-        highlightWord(true);
-    }
-
-    prevInput = input;
-}
-
-function displayNone(elements, state){
-    for(let i = 0; i < elements.length; i++){
-        elements[i].style.display = state;
-    }
+const savedTextHolder = document.querySelector(".savedTextHolder");
+function loadSavedTexts(){
+    savedTextHolder.innerHTML = "";
+    window.localStorage;
 }
 
 function convertTime(time){
@@ -154,118 +102,237 @@ const timerDuration = () => {
     return convertTime(duration);
 }
 
-function end(){
-    endScreen.style.display = "flex";
-    mistakesEnd.innerHTML = `${mistakesMade} mistakes`;
-    
-    timerEnd.innerHTML = timerDuration();
-    timeStarted = undefined;
+const WPM = () => {
+    const duration = ((Date.now() - timeStarted) / 1000 / 60);
+    return (index / duration).toFixed(0);
 }
 
-function highlightWord(state){
-    const from = listOfWordsStartEnd[order][0];
-    const to = listOfWordsStartEnd[order][1];
+function showWorld(){
+    if(words[index] == undefined){
+        endScreen.style.display = "flex";
+        mistakesEnd.innerHTML = `${mistakesMade} mistakes`;
+        wpmEnd.innerHTML = `${WPM()}WPM`;
+        
+        timerEnd.innerHTML = timerDuration();
+        timeStarted = undefined;
+    }
+    else{
+        highlightWord();
+    }
+}
 
-    before.innerHTML = text.substring(0, from);
-    selected.innerHTML = text.substring(from, to);
-    selected.id = (state) ? "highlight" : "highlightWrongWord";
+function update(input){
+    if(timeStarted == undefined){
+        timeStarted = Date.now();
+    }
 
-    after.innerHTML = text.substring(to, text.length);
+    const correctWord = words[index].content;
+    // console.log(correctWord);
+    const lastWord = (index + 1 < words.length);
+    const endMatch = correctWord + ((lastWord) ? " " : "");
+
+    // console.log(input.length, input, endMatch.substring(0, input.length));
+    if(prevInput.length < input.length && input != endMatch.substring(0, input.length)){
+        mistakesMade++;
+        // mistakes.innerHTML = mistakesMade;
+    }
+    // if the input matches the correctWord and there is an space at the end if needed 
+    // move to the next word
+    else if(input == endMatch){
+        index++;
+        clearInput();
+        prevInput = "";
+        showWorld();
+        return;
+    }
+
+    highlightWord();
+    prevInput = input;
+}
+
+function substring(str, len){
+    let end = 0;
+    while(0 < len){
+        if(str[end] == "<" && end + 3 < str.length && str.substring(end, end + 4) == "<br>"){
+            end += 4;
+        }
+        else{
+            len--;
+        }
+        end++;
+    }
+
+    return end;
+}
+
+function highlightWord(){
+    // "one w|ord two words"
+    // correctStr = "one"
+    // after = "two words"
+    const correctStr = Object.keys(words).filter((_, i) => { return i < index; }).map(key => words[key].value(true)).join(" ");
+    const afterStr = Object.keys(words).filter((_, i) => { return index < i; }).map(key => words[key].value(true)).join(" ");
+    
+    const word = words[index].value();
+    const match = word.substring(0, input.value.length);
+    let correctEnd = 0;
+    for(; correctEnd < match.length; correctEnd++){
+        if(input.value[correctEnd] != match[correctEnd]){
+            break;
+        }
+    }
+
+    const spaceBefore = (correctStr == "") ? "" : " ";
+    const spaceAfter = (afterStr == "") ? "" : " ";
+    
+    let afterText = `${spaceAfter}${afterStr}`;
+    
+    const currentWord = words[index].value();
+
+    currentCorrect.innerHTML = currentWord.substring(0, correctEnd);
+
+    currentIncorrect.innerHTML = "";
+    afterIncorrect.innerHTML = "";
+    if(correctEnd == match.length && input.value.length == match.length){
+        current.innerHTML = currentWord.substring(correctEnd);
+    }
+    else{
+        const incorrectEnd = input.value.length;
+        const overflowLength = input.value.length - match.length;
+        // console.log(`overflowLength: ${overflowLength}`);
+        
+        currentIncorrect.innerHTML = currentWord.substring(correctEnd, incorrectEnd);
+        current.innerHTML = currentWord.substring(incorrectEnd);
+
+        const overflowEnd = substring(afterText, overflowLength);
+        // console.log(`overflowEnd ${overflowEnd}`);
+        afterIncorrect.innerHTML = afterText.substring(0, overflowEnd);
+        afterText = afterText.substring(overflowEnd);
+        // console.log(`>${afterIncorrect.innerHTML}<>${afterText}<`);
+
+        // console.log(index);
+        // console.log(end);
+    }
+    current.innerHTML += (words[index].newLine) ? "<br>" : "";
+
+    correct.innerHTML = `${correctStr}${spaceBefore}`;
+    after.innerHTML = afterText;
     moveLines();
 }
 
-function lettersToWords(){
-    let word = "";
-    let list = [];
-    for(let i = 0; i < listOfLetters.length; i++){
-        // if word is empty add to list first
-        if(word == ""){
-            list.push(i);
-        }
+class Word{
+    constructor(content, newLine){
+        this.content = content;
+        this.newLine = newLine;
+    }
 
-        if(listOfLetters[i] == " " || i == listOfLetters.length - 1){
-            let index = i;
-            if(i == listOfLetters.length - 1){
-                // console.log(i, listOfLetters.length - 1);
-                word += listOfLetters[i];
-                index++;
-            }
-
-            list.push(index);
-            listOfWordsStartEnd.push(list);
-            listOfWords.push(word);
-            word = "";
-            list = [];
-        }
-        else{
-            word += listOfLetters[i];
-        }
+    value(add){
+        return `${this.content}${(this.newLine && add) ? "<br>" : ""}`
     }
 }
 
-//                                 1, 2, 3, 4, 5, 6, 7, 8, 9
-const wordLengthProbabability =   [0, 2, 3, 7, 9, 2, 1, 0, 0];
-
-function generateList(){
-    if(randomizeText.checked){
-        const maxTextLength = numberOfLetters.value;
-        const maxWordIndex = keys.length; // get lenght of keys to know what is top number for random
-
-        // calculate max range for word length probabability
-        let maxRange = 0;
-        for(let i = 0; i < wordLengthProbabability.length; i++){
-            maxRange += wordLengthProbabability[i];
+function lettersToWords(letters){
+    letters = letters.replace(/ +/g, " ").replace(/ \n/g, '\n');
+    // console.log(JSON.stringify(letters));
+    let word = "";
+    words = [];
+    for(let i = 0; i < letters.length; i++){
+        if(letters[i] == " " || letters[i] == "\n" || i == letters.length - 1){
+            if(word != ""){
+                if(i == letters.length - 1 && letters[i] != "\n"){
+                    word += letters[i];
+                }
+                
+                words.push(new Word(word, letters[i] == "\n"));
+            }
+            word = "";
         }
-        console.log(`Max range: ${maxRange}`);
-
-        // generate wordLengthProbababilityList
-        const wordLengthProbababilityList = [];
-        for(let i = 0; i < wordLengthProbabability.length; i++){
-            const wordLengthProb = wordLengthProbabability[i];
-            for(let x = 0; x < wordLengthProb; x++){
-                wordLengthProbababilityList.push(i + 1);
-            }
-        }
-        console.log(`Word length probabability list:`, wordLengthProbababilityList);
-        
-        while(listOfLetters.length < maxTextLength){
-            // generate next length of the word
-            const maxWLength = maxTextLength - listOfLetters.length;
-            let wordLength = wordLengthProbababilityList[func.random(0, maxRange)];
-            // console.log(`Word length: ${wordLength}`);
-
-            // check if the word length would overflow
-            wordLength = (wordLength <= maxWLength) ? wordLength : maxWLength;
-            for(let i = 0; i < wordLength; i++){
-                const random = func.random(0, maxWordIndex);    // generate random number
-                const keyaboard = keys[random];                     // get key with random index
-                listOfLetters.push(keyaboard);
-            }
-
-            // add space
-            if(listOfLetters.length + 1 < maxTextLength){
-                listOfLetters.push(" ");
-            }
-            else if(listOfLetters.length + 1 == maxTextLength){
-                listOfLetters.push(keys[0]);
-            }
-        }
-    }
-    else{
-        for(let i = 0; i < wordsInput.value.length; i++){
-            listOfLetters.push(wordsInput.value[i]);
+        else{
+            word += letters[i];
         }
     }
 
-    console.log(listOfLetters);
-    lettersToWords();
+    // console.log(words);
+}
+
+const wordLengthProbabability = [[2, 2], [3,3], [4,7], [5,9], [6,2], [7,1]];
+const random = new Random(wordLengthProbabability);
+
+function generateFromRandom(){
+    // get list of selected letters that can be used
+    const keys = keyaboard.getLetters();
+    const letters = [];
+
+    const maxTextLength = numberOfLetters.value;
+    const maxWordIndex = keys.length; // get lenght of keys to know what is top number for random
+
+    while(letters.length < maxTextLength){
+        // generate next length of the word
+        const maxWLength = maxTextLength - letters.length;
+        let wordLength = random.random();
+        // console.log(`Word length: ${wordLength}`);
+
+        // check if the word length would overflow
+        wordLength = (wordLength <= maxWLength) ? wordLength : maxWLength;
+        for(let i = 0; i < wordLength; i++){
+            const random = func.random(0, maxWordIndex);    // generate random number
+            const keyaboard = keys[random];                     // get key with random index
+            letters.push(keyaboard);
+        }
+
+        // add space
+        if(letters.length + 1 < maxTextLength){
+            letters.push(" ");
+        }
+        else if(letters.length + 1 == maxTextLength){
+            letters.push(keys[0]);
+        }
+    }
+    
+    return letters.join("");
+}
+
+function generateFromCustom(){
+    return wordsInput.value;
+}
+
+let selectedText = null;
+function drawSavedTexts(){
+    const items = window.localStorage;
+    // console.log(items);
+    savedText.innerHTML = "";
+    Object.keys(items).forEach(name => {
+        // console.log(items[name]);
+        const element = document.createElement("div");
+
+        const textName = func.createElement(`<p>${name}</p>`);
+        const select = func.createElement("<button>use</button>");
+        select.onclick = () => {
+            selectedText = name;
+            setUp();
+        }
+        const remove = func.createElement("<button>remove<button>")
+        remove.onclick = () => {
+            window.localStorage.removeItem(name);
+            if(selectedText == name){
+                selectedText = null;
+            }
+            drawSavedTexts();
+        }
+        element.appendChild(textName);
+        element.appendChild(select);
+        element.appendChild(remove);
+        savedText.appendChild(element);
+    });
+}
+
+function generateFromSaved(){
+    const content = window.localStorage[selectedText];
+    return (content) ? content : "";
 }
 
 function setUp(){
-    listOfLetters = [];
-    listOfWords = [];
-    listOfWordsStartEnd = [];
-    order = 0;
+    words = [];
+    index = 0;
     prevInput = "";
 
     yOffset = 0;
@@ -273,24 +340,46 @@ function setUp(){
 
     endScreen.style.display = "none";
     mistakesMade = 0;
+    // mistakes.innerHTML = mistakesMade;
     timeStarted = undefined;
     timer.innerHTML = "0:00";
 
-    // get list of selected letters that can be used
-    keys = keyaboard.getLetters();
-
-    clearInput();                                   // clear word input
-    generateList();                                 // generate list of letter
-    text = listOfWords.join(" ");
+    clearInput();                   // clear word input
+    const letters = generate();     // generate list of letter
+    lettersToWords(letters);
     showWorld();
 }
 
-checkMode(randomizeText.checked);
+const type = document.querySelector(".type");
+const holderList = [randomLetters, customText, savedText];
+const generateList = [generateFromRandom, generateFromCustom, generateFromSaved];
+const typeAction = () => {
+    const selectedIndex = parseInt(type.value);
+    for(let i = 0; i < 3; i++){
+        if(i == selectedIndex){
+            holderList[i].classList.remove("hidden");
+        }
+        else{
+            holderList[i].classList.add("hidden");
+        }
+    }
+    generate = generateList[selectedIndex];
+    if(selectedIndex == 2){
+        loadSavedTexts();
+        drawSavedTexts();
+        return;
+    }
+    setUp();
+}
+typeAction();
+type.addEventListener("change", typeAction);
+
 setUp();
 
 // update
 setInterval(() => {
     if(timeStarted != undefined){
         timer.innerHTML = timerDuration();
+        // wpm.innerHTML = `${WPM()}WPM`;
     }
 }, 500);

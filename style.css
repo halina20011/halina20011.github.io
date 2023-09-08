@@ -209,6 +209,11 @@ body{
     height: 8px;
 }
 
+.fS16{
+    min-width: 100%;
+    height: 16px;
+}
+
 .freeLine{
     min-width: 100%;
     height: 16px;

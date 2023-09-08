@@ -121,18 +121,6 @@ export const imagesLinksData = {
             "addScript": null,
             "addCss": null
         },
-        "Test typing": {
-            "className": "WriterProject",
-            "path": "/Other/Writer/writer.html",
-            "imgPath": "/Images/Miniature/w.png",
-            "name": "Test typing",
-            "projectTextInfo": [
-                "Do you want to practice typing on the keyboard?"
-            ],
-            "addAdicionalThings": null,
-            "addScript": null,
-            "addCss": null
-        },
         "Clock": {
             "className": "ClockProject",
             "path": "/Clock/clock.html",
@@ -179,6 +167,18 @@ export const imagesLinksData = {
             "name": "Notes",
             "projectTextInfo": [
                 "practice names of notes"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
+        "Test typing": {
+            "className": "WriterProject",
+            "path": "/Other/Writer/writer.html",
+            "imgPath": "/Images/Miniature/w.png",
+            "name": "Test typing",
+            "projectTextInfo": [
+                "Do you want to practice typing on the keyboard?"
             ],
             "addAdicionalThings": null,
             "addScript": null,

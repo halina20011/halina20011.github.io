@@ -28,6 +28,7 @@
 .keyboard{
     position: relative;
     display: flex;
+    height: fit-content;
     flex-direction: column;
     width: calc(var(--key1Width) * 13 + var(--key6Width) + 14 * var(--gap));
     gap: var(--gap);
