@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test case generator</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Free web programming tutorials">
+    <meta name="author" content="Mario Duraković">
+    <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
+    <meta name="keywords" content="Halina programming, Arduino learn">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="./testCaseGenerator.css">
+    <script defer type="module" src="/Tools/importFile.js"></script>
+    <script defer type="module" src="./testCaseGenerator.js"></script>
+</head>
+<head>
+    <div class="columnUp" id="columnUp">
+    </div>
+    <div class="columnDisplay" id="columnDisplay">
+        <div class="contentContainer">
+            <div class="columnLeft" id="columnLeft">
+            </div>
+            <div class="columnMiddle" id="columnMiddle">
+                <h1>Test case generator</h1>
+                <div class="content">
+                    <ul class="bar">
+                        <ul>
+                            <div>Add</div>
+                            <li class="addDropdownContext"></li>
+                        </ul>
+                        <div class="generate">generate</div>
+                        <!-- <div class="resizeButton"></div> -->
+                        <!-- <div class="save">save</div> -->
+                    </ul>
+                    <div class="generator">
+                        <div class="view">
+                            <div class="elementHolder"></div>
+                            <canvas class="glCanvas" width="1000" height="1000"></canvas>
+                        </div>
+                        <textarea class="generatedOutput"></textarea>
+                    </div>
+                </div>
+                <!-- <div class="contextMenu"> -->
+                <!--     <button class="">duplicate</button> -->
+                <!--     <button class="">remove</button> -->
+                <!-- </div> -->
+            </div>
+            <div class="columnRight" id="columnRight">
+            </div>
+        </div>
+    </div>
+    <div class="columnDown"></div>
+</body>
+</html>

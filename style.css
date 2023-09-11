@@ -242,7 +242,7 @@ jumpLink{
 }
 
 .homeButton, .refreshButton, .addButton, .removeButton, .okButton, .downloadButton,
-.settingsButton, .downloadAllButton, .playButton, .pauseButton, .timelapseButton{
+.settingsButton, .resizeButton, .downloadAllButton, .playButton, .pauseButton, .timelapseButton{
     width: var(--button-size);
     height: var(--button-size);
     
@@ -278,7 +278,8 @@ jumpLink{
 
 .downloadButton     { background-image: url("/Images/Icons/download.png");  }
 
-.settingsButton      { background-image: url("Images/Icons/settings.png");   }
+.settingsButton     { background-image: url("Images/Icons/settings.png");   }
+.resizeButton       { background-image: url("Images/Icons/screenResize.png");   }
 
 .playButton         { background-image: url("/Images/Icons/play.png");      }
 .pauseButton        { background-image: url("/Images/Icons/pause.png");     }
