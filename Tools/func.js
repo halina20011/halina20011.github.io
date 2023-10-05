@@ -121,6 +121,11 @@ class Vec2{
         this.y = y;
     }
     
+    set(vec){
+        this.x = vec.x;
+        this.y = vec.y
+    }
+
     addVal(b){
         this.x += b.x; 
         this.y += b.y;
@@ -131,6 +136,10 @@ class Vec2{
         this.y -= b.y;
     }
 
+    add(b){
+        return new Vec2(this.x + b.x, this.y + b.y);
+    }
+
     subtract(b){
         return new Vec2(this.x - b.x, this.y - b.y);
     }
@@ -138,6 +147,10 @@ class Vec2{
     scale(sX, sY){
         this.x *= sX;
         this.y *= sY;
+    }
+
+    copy(){
+        return new Vec2(this.x, this.y);
     }
 }
 

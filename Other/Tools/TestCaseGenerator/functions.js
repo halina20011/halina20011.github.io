@@ -133,6 +133,7 @@ class Functions{
                 new FunctionButton("long text", () => { new NodeInput(types.INPUT_LONG_TEXT_TYPE); }),
                 new FunctionButton("int",    () => { new NodeInput(types.INPUT_INT_TYPE); }),
                 new FunctionButton("float",    () => { new NodeInput(types.INPUT_FLOAT_TYPE); }),
+                new FunctionButton("array",    () => { new NodeInput(types.INPUT_ARRAY_TYPE); }),
             ],
             "Output":[
                 new FunctionButton("new", () => { new NodeOutput(); } )

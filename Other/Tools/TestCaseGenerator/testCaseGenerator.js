@@ -4,15 +4,6 @@ import {Functions} from "./functions.js"
 import func from "../../../Tools/func.js";
 import {Vec2} from "../../../Tools/func.js";
 
-import {createProgram, createShader, Resize} from "../glFunc.js";
-import {drawLine} from "../glMath.js";
-
-import {shader as vertexShaderSource} from "../Shaders/vertexShader.js";
-import {shader as fragmentShaderSource} from "../Shaders/fragmentShader.js";
-
-const canvas = document.querySelector(".glCanvas");
-const gl = canvas.getContext("webgl2");
-
 document.querySelector(".generate").addEventListener("click", () => { generate(); });
 // document.querySelector(".save").addEventListener("click", () => { save(); });
 
@@ -31,13 +22,21 @@ generatedOutput.value = "";
 
 const elementHolder = document.querySelector(".elementHolder");
 
+const autoCopy = document.querySelector(".autoCopy");
+autoCopy.addEventListener("click", () => {
+    autoCopy.classList.toggle("enabled");
+});
+
 const nodes = {};
 const outputs = {};
 
 let id = 0;
 let mouse = false;
 let focuse = null;
-let offset = null;
+let prevPos = null;
+
+const pos = new Vec2(0, 0);
+let noSelect = false;
 
 let selected = null;
 let shift = false;
@@ -45,60 +44,16 @@ let shift = false;
 let connectorFocuse = null;
 let firstConnector = null, secondConnector = null;
 
-const width = 1, height = 1;
-let colorLocation, resolutionUniformLocation, translationUniformLocation, scaleUniformLocation;
+const svg = document.querySelector("svg");
 
-function glInit(){
-    if(gl === null){
-        alert("unable to initialize webgl");
-        return;
-    }
+function drawLL(x1, y1, x2, y2){
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", x1);
+    line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2);
+    line.setAttribute("y2", y2);
 
-    // initinitialization code
-    const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-    const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
-
-    const program = createProgram(gl, vertexShader, fragmentShader);
-
-    const positionAttribureLocation = gl.getAttribLocation(program, "a_position");
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-
-    colorLocation = gl.getUniformLocation(program, "uColor");
-    resolutionUniformLocation = gl.getUniformLocation(program, "uResolution");
-    translationUniformLocation = gl.getUniformLocation(program, "uTranslation");
-    scaleUniformLocation = gl.getUniformLocation(program, "uScale");
-
-    const vao = gl.createVertexArray();
-    gl.bindVertexArray(vao);
-    gl.enableVertexAttribArray(positionAttribureLocation);
-
-    // rendering code
-    resize.resizeCanvasToDisplaySize(canvas);
-
-    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-    // console.log(gl.canvas.width, gl.canvas.height);
-
-    gl.clearColor(0.0, 0.0, 0.0, 0.0);
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-    gl.useProgram(program);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-
-    const size = 2;
-    const type = gl.FLOAT;
-    const normalize = false;
-    const stride = 0;
-    const offset = 0;
-    gl.vertexAttribPointer(positionAttribureLocation, size, type, normalize, stride, offset);
-
-    gl.uniform4f(colorLocation, 0, 0, 0, 1.0);
-    gl.uniform2f(translationUniformLocation, 0, 0);
-    gl.uniform2f(scaleUniformLocation, 1, 1);
-    gl.uniform2f(resolutionUniformLocation, width, height);
-
-    // drawLine(gl, 0, 0, 0.1, 0.1, 0.010);
+    svg.appendChild(line);
 }
 
 document.addEventListener("keydown", (e) => {
@@ -115,17 +70,17 @@ document.addEventListener("keyup", (e) => {
 
 // mouseenter -> down -> move
 document.addEventListener("mousedown", (e) => {
+    if(!mouseEvent(e, elementHolder).inside){
+        return;
+    }
+
     if(e.button != 0){
         return;
     }
     mouse = true;
+    const mousePos = new Vec2(e.x, e.y);
+    prevPos = mousePos;
     if(focuse){
-        const elementRect = focuse.node.getBoundingClientRect();
-        const mousePos = new Vec2(e.x, e.y);
-        const elementOffset = new Vec2(elementRect.x, elementRect.y);
-
-        offset = mousePos.subtract(elementOffset);
-
         if(shift){
             const from = selected;
             const to = focuse;
@@ -151,7 +106,6 @@ document.addEventListener("mousedown", (e) => {
         else{
             firstConnector = connectorFocuse;
         }
-
     }
 });
 
@@ -177,40 +131,101 @@ document.addEventListener("mouseup", (e) => {
     secondConnector = null;
     updateLines();
     focuse = null;
+    prevPos = null;
+
+    noSelect = true;
+    document.body.classList.remove("noSelect");
 });
 
-// TODO: scale
-// TODO: move
-// TODO: clipping
 document.addEventListener("mousemove", (e) => {
     const mousePos = new Vec2(e.clientX, e.clientY);
-    const elementHolderRect = elementHolder.getBoundingClientRect();
-    const elementHolderOffset = new Vec2(elementHolderRect.left, elementHolderRect.top);
+    if(!prevPos){
+        prevPos = mousePos;
+    }
+    
+    const dis = mousePos.subtract(prevPos);
+    prevPos = mousePos;
+
+    if(mouse && !noSelect){
+        noSelect = true;
+        document.body.classList.add("noSelect");
+    }
 
     if(mouse && focuse){
-        mousePos.subtractVal(elementHolderOffset);
-        mousePos.subtractVal(offset);
-        
-        focuse.node.style.top = `${mousePos.y}px`;
-        focuse.node.style.left = `${mousePos.x}px`;
+        focuse.position.addVal(dis);
+
+        focuse.updatePosition();
         updateLines();
     }
     else if(mouse && firstConnector){
-        console.log("drawing");
+        updateLines();
         firstConnector.draw(mousePos);
+    }
+    else if(mouse && prevPos){
+        pos.addVal(dis);
+        
+        updatePositions();
         updateLines();
     }
 }, false);
 
+const mouseEvent = (e, element) => {
+    const [x, y] = [e.x, e.y];
+    const rect = element.getBoundingClientRect();
+    const click = new Vec2(x - rect.left, y - rect.top);
+    let inside = false;
+    if(0 <= click.x && 0 <= click.y && click.x < rect.width && click.y < rect.height){
+        inside = true;
+    }
+
+    return {"clickPos": click, "inside": inside};
+}
+
+const contextMenu = document.querySelector(".contextMenu");
+const contextMenuRemove = document.querySelector(".contextMenu > .remove");
+let contextMenuTarget = null;
+
+const contextMenuExit = () => {
+    contextMenuTarget = null;
+    contextMenu.classList.add("hidden");
+}
+
 // TODO: contextmenu
-// document.addEventListener("contextmenu", (e) => {
-//     const [x, y] = [e.x, e.y];
-//     const rect = elementHolder.getBoundingClientRect();
-//     if(rect.left < x && x < rect.left + rect.width && rect.top < y && y < rect.top + rect.height){
-//         console.log(e);
-//         e.preventDefault();
-//     }
-// });
+document.addEventListener("contextmenu", (e) => {
+    const click = mouseEvent(e, elementHolder);
+    console.log(click);
+    if(click.inside == true){
+        if(focuse){
+            contextMenu.classList.remove("hidden");
+            contextMenuTarget = focuse;
+            contextMenu.style.left = `${click.clickPos.x}px`;
+            contextMenu.style.top = `${click.clickPos.y}px`;
+        }
+        e.preventDefault();
+    }
+});
+
+contextMenuRemove.addEventListener("click", () => {
+    console.log(Object.keys(nodes).length);
+    if(contextMenuTarget){
+        contextMenuTarget.connectionLeft.forEach(con => con.disconnect());
+        contextMenuTarget.connectionRight.forEach(con => con.disconnect());
+        contextMenuTarget.node.remove();
+        if(contextMenuTarget.type == types.ELEMENT_NODE_OUTPUT_TYPE){
+            delete outputs[contextMenuTarget.id];
+        }
+        delete nodes[contextMenuTarget.id];
+
+        contextMenuExit();
+    }
+    // console.log(Object.keys(nodes).length);
+
+    updateLines();
+});
+
+contextMenu.addEventListener("pointerleave", () => {
+    contextMenuExit();
+});
 
 HTMLElement.prototype.appendAllChildren = function(arrayOfElement){
     for(let i = 0; i < arrayOfElement.length; i++){
@@ -218,21 +233,28 @@ HTMLElement.prototype.appendAllChildren = function(arrayOfElement){
     }
 }
 
-function updateLines(){
-    let linesDrawn = 0;
+function updatePositions(){
     Object.keys(nodes).forEach(key => {
-        const node = nodes[key]
+        const node = nodes[key];
+        node.updatePosition();
+    });
+}
+
+function updateLines(){
+    svg.innerHTML = "";
+    
+    // if(firstConnector){
+    //     firstConnector.draw(mousePos);
+    // }
+
+    Object.keys(nodes).forEach(key => {
+        const node = nodes[key];
         node.connectionRight.forEach(connection => {
             if(connection.connectedTo){
-                linesDrawn++;
                 connection.draw(null);
             }
         });
     });
-    if(linesDrawn == 0 && !firstConnector){
-        gl.clearColor(0.0, 0.0, 0.0, 0.0);
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    }
 }
 
 // on mouseenter
@@ -258,7 +280,7 @@ class Connection{
         this.node = node;
         this.id = [this.node.id, this.node.connectorId++];
         this.orientationClass = (orientation == types.LEFT_CONNECTION) ? "left" : "right";
-        console.log(orientation);
+        // console.log(orientation);
         
         this.connectedTo = null;
         this.lineConnection = null;
@@ -272,12 +294,10 @@ class Connection{
         parent.appendChild(this.element);
         
         this.element.addEventListener("mouseenter", () => {
-            if(!focuse){
-                connectorFocuse = this;
-                if(firstConnector && firstConnector.node.id != this.node.id){
-                    console.log(`${firstConnector.node.id} => ${this.node.id}`);
-                    secondConnector = this;
-                }
+            connectorFocuse = this;
+            if(firstConnector && firstConnector.node.id != this.node.id){
+                console.log(`${firstConnector.node.id} => ${this.node.id}`);
+                secondConnector = this;
             }
         }, false);
         this.element.addEventListener("mouseleave", () => {
@@ -297,11 +317,11 @@ class Connection{
         if(this.inputNode){
             if(this.connectedTo){
                 if(this.orientationClass == "left"){
-                    this.inputNode.classList.add("hidden");
+                    this.inputNode.classList.add("hiddenVis");
                 }
             }
             else{
-                this.inputNode.classList.remove("hidden");
+                this.inputNode.classList.remove("hiddenVis");
             }
         }
 
@@ -309,7 +329,7 @@ class Connection{
             this.connectedTo.connectorListener(false);
         }
 
-        console.log(`connection has changed`);
+        // console.log(`connection has changed`);
     }
 
     pos(){
@@ -340,15 +360,10 @@ class Connection{
         const elementHolderRect = elementHolder.getBoundingClientRect();
         const elementHolderOffset = new Vec2(elementHolderRect.left, elementHolderRect.top);
 
-        const xScale = 1 / elementHolderRect.width;
-        const yScale = 1 / elementHolderRect.height;
-
-        from.subtractVal(elementHolderOffset)
+        from.subtractVal(elementHolderOffset);
         to.subtractVal(elementHolderOffset);
-        from.scale(xScale, yScale);
-        to.scale(xScale, yScale);
 
-        drawLine(gl, from.x, from.y, to.x, to.y, 8 * xScale);
+        drawLL(from.x, from.y, to.x, to.y);
     }
 
     getOutput(){
@@ -381,8 +396,7 @@ class Node{
     constructor(x, y){
         this.id = id++;
         this.connectorId = 0;
-        this.x = (x == null) ? 0 : x;
-        this.y = (y == null) ? 0 : y;
+        this.position = new Vec2((x == null) ? 0 : x, (y == null) ? 0 : y);
     }
     
     // node
@@ -392,6 +406,7 @@ class Node{
     //    - body
     //  - right
     init(type, elementName){
+        this.type = type;
         this.node = func.createElement(`<div class="node ${list[type]}"></div>`);
         this.element = func.createElement(`
         <div class="element">
@@ -417,21 +432,21 @@ class Node{
     }
 
     addCss(){
-        this.node.style.top = `${this.y}px`;
-        this.node.style.left = `${this.x}px`;
+        this.node.style.top = `${this.position.y}px`;
+        this.node.style.left = `${this.position.x}px`;
     }
 
     addEvents(){
-        this.element.addEventListener("mouseenter", () => { 
+        this.element.addEventListener("pointerenter", () => { 
             if(!focuse && !firstConnector){ 
                 focuse = this;
-                // console.log(`focuse ${focuse}`);
             }
         });
-        this.element.addEventListener("mouseleave", () => { 
-            if(!mouse){
+        this.element.addEventListener("pointerleave", (e) => { 
+            const click = mouseEvent(e, this.element);
+            // console.log(click);
+            if(!mouse && click.inside == false){
                 focuse = null; 
-                // console.log(`focuse end`);
             }
         });
     }
@@ -449,6 +464,11 @@ class Node{
         }
 
         return list[0];
+    }
+
+    updatePosition(){
+        this.node.style.top = `${this.position.y + pos.y}px`;
+        this.node.style.left = `${this.position.x + pos.x}px`;
     }
 }
 
@@ -477,7 +497,7 @@ class NodeFunction extends Node{
         super(x, y, 100);
         this.name = name;
         this.inputNodes = [];
-        console.log(name);
+        // console.log(name);
         this.init(types.ELEMENT_NODE_FUNCTION_TYPE, this.name);
     }
 
@@ -486,17 +506,14 @@ class NodeFunction extends Node{
         const argsTypes = functions.info[this.name].argsTypes;
         this.functionInputs = [];
         for(let i = 0; i < args.length; i++){
-            const line = document.createElement("div");
             const inputName = func.createElement(`<p>${args[i]}</p>`);
             const inputNode = func.createElement(`<input type="text">}`);
             this.connectionLeft.push(new Connection(types.LEFT_CONNECTION, this, inputNode, argsTypes[i]));
             this.inputNodes.push(inputNode);
             this.functionInputs.push(inputName);
 
-            this.body.appendChild(line);
-
-            line.appendChild(inputName);
-            line.appendChild(inputNode);
+            this.body.appendChild(inputName);
+            this.body.appendChild(inputNode);
         }
 
         this.connectionRight.push(new Connection(types.RIGHT_CONNECTION, this));
@@ -508,30 +525,9 @@ class NodeFunction extends Node{
         const fArgs = [];
         for(let i = 0; i < args.length; i++){
             fArgs.push(this.connectionLeft[i].getOutput());
-            // if(this.connectionLeft[i] && this.connectionLeft[i].connectedTo){
-            //     fArgs.push(this.connectionLeft[i].connectedTo.node.getOutput());
-            // }
-            // else{
-            //     if(this.type == types.INPUT_INT_TYPE){
-            //         return fArgs.push(this.input.value);
-            //     }
-            //     else if(this.type == types.INPUT_FLOAT_TYPE){
-            //         return fArgs.push(this.input.value);
-            //     }
-            //     else if(this.type == types.INPUT_ARRAY_TYPE){
-            //         return fArgs.push(this.input.value);
-            //     }
-            //     else{
-            //
-            //         return this.input.value;
-            //     }
-            //
-            //     fArgs.push(this.inputNodes[i].getOutput());
-            // }
         }
-        // console.log(fArgs);
+
         const fOutput = func.apply(null, fArgs);
-        console.log(`${this.name} => ${fOutput}`);
         return fOutput;
     }
 }
@@ -594,10 +590,6 @@ class NodeInput extends Node{
 //     const data = url.searchParams.get("data");
 // }
 
-const resize = new Resize(canvas, [1000, 1000]);
-glInit();
-
-
 const functions = new Functions(NodeInput, NodeFunction, NodeOutput);
 
 const a = new NodeFunction("fromRegExp", 50, 50);
@@ -612,13 +604,16 @@ b.connectionRight[0].connect(o.connectionLeft[0]);
 updateLines();
 generate();
 
-window.self.addEventListener("resize", updateLines);
-
 function generate(){
-    generatedOutput.value = "";
+    let output = ""
     Object.keys(outputs).forEach(key => {
         const str = outputs[key].getOutput();
-        console.log(str);
-        generatedOutput.value += `${str}\n`;
+        output += `${str}\n`;
     });
+
+    generatedOutput.value = output;
+
+    if(autoCopy.classList.contains("enabled")){
+        navigator.clipboard.writeText(output);
+    }
 }
