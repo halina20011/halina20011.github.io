@@ -1,83 +1,106 @@
-import {CANVAS} from "/Canvas/canvas.js";
-import {DOWNLOADER} from "/Canvas/download.js";
+import {cubeData, sphereData, torusData} from "./modeData.js";
 
-let canvasEl = document.getElementById("my-canvas");
+import {createProgram, createShader, Resize} from "../../Other/Tools/glFunc.js";
+import {drawLine} from "../../Other/Tools/glMath.js";
 
-let canvas = new CANVAS(canvasEl);
-let downloader = new DOWNLOADER(canvasEl);
+import {shader as fragmentShaderSource} from "../../Other/Tools/Shaders/fragmentShader.js";
 
-function timelapsee(fArguments){
-    let howMenySteps = parseInt(fArguments[0].value);
-    let xAxisToAdd = degreeToRadian(parseInt(fArguments[1].value));
-    let yAxisToAdd = degreeToRadian(parseInt(fArguments[2].value));
-    let zAxisToAdd = degreeToRadian(parseInt(fArguments[3].value));
-    console.log(`Run ${howMenySteps} steps`);
-    for(let i = 0; i < howMenySteps; i++){
-        main();
-        cube.rotation[0] += xAxisToAdd;
-        cube.rotation[1] += yAxisToAdd;
-        cube.rotation[2] += zAxisToAdd;
-        downloader.addImage();
-        console.log(`Step currently running: ${i}`);
+// TODO: add downloader
+
+const vertexShaderSource = `#version 300 es
+    in vec2 a_position;
+    uniform vec2 uTranslation;
+    uniform vec2 uResolution;
+    uniform vec2 uScale;
+
+    void main(){
+        vec2 position = (a_position + uTranslation)*uScale;
+        vec2 zeroToOne = position / uResolution;
+        vec2 zeroToTwo = zeroToOne * 2.0;
+        vec2 clipSpace = zeroToTwo - 1.0;
+        gl_Position = vec4(position, 0, 1);
+    }`;
+
+const canvas = document.querySelector(".glCanvas");
+const gl = canvas.getContext("webgl2");
+
+let colorLocation, resolutionUniformLocation, translationUniformLocation, scaleUniformLocation;
+
+// const downloadImageButton = document.getElementById("downloadImage");
+// downloadImageButton.addEventListener("click", function() { downloader.downloadImage(); }, false);
+
+const setDefault = document.getElementById("setDefault");
+setDefault.addEventListener("click", () => { object.setDefault(); camera.setDefault(); });
+
+HTMLSelectElement.prototype.onSelect = function(f, run){
+    if(run){
+        f(this.value);
     }
-    downloader.downloadAll();
+
+    this.addEventListener("change", (e) => { f(this.value, e); }, false);
 }
 
-let timelapseInputData = {
-    "function": timelapsee,
-    "arguments": [{
-            "text": {"element": "p", "innerHTML": "How meny steps to take: "},
-            "howMenySteps": {"element": "input", "type": "number", "value": 1, "from": "1"},
-        },
-        {
-            "text": {"element": "p", "innerHTML": "X rotation to to the object each step: "},
-            "xAxisToAdd": {"element": "input", "type": "number", "value": 0},
-        },
-        {
-            "text": {"element": "p", "innerHTML": "Y rotation to to the object each step: "},
-            "yAxisToAdd": {"element": "input", "type": "number", "value": 0},
-        },
-        {
-            "text": {"element": "p", "innerHTML": "Z rotation to to the object each step: "},
-            "zAxisToAdd": {"element": "input", "type": "number", "value": 0},
-        }
-    ]
-}
-
-let timelapse = downloader.timelapse(timelapseInputData);
-
-let downloadImageButton = document.getElementById("downloadImage");
-downloadImageButton.addEventListener("click", function() { downloader.downloadImage(); }, false);
-
-let updateButton = document.getElementById("update");
+const updateButton = document.getElementById("update");
 updateButton.addEventListener("click", function() { 
-    camera.setDefault(); 
-    cube.setDefault();
-    animationRotationX.value = 0;
-    animationRotationY.value = 0;
-    animationRotationZ.value = 0;
+    main();
 }, false);
 
-let timeDelay = document.getElementById("timeDelay");
-let perspectiveProjectionCheckbox = document.getElementById("perspectiveProjection");
-let aplyAnimationCheckbox = document.getElementById("aplyAnimation");
+HTMLElement.prototype.$ = function(name, f, run){
+    if(run == true && f){
+        f();
+    }
+    this.addEventListener(name, () => { f(); }, false);
+}
 
-let animationRotationX = document.getElementById("animationRotationX");
-let animationRotationY = document.getElementById("animationRotationY");
-let animationRotationZ = document.getElementById("animationRotationZ");
+HTMLElement.prototype.inputToDeg = function(){
+    return parseInt(this.value);
+}
 
-let focalLength = 25;
+let projectionType = false;
+const perspectiveProjectionCheckbox = document.querySelector("#perspectiveProjection");
+perspectiveProjectionCheckbox.$("input", () => { projectionType = perspectiveProjection.checked; }, true);
 
-let orthographicProjection = [
-    [1, 0, 0],
-    [0, 1, 0]
+let animation = false;
+const applyAnimationCheckbox = document.getElementById("applyAnimation");
+applyAnimationCheckbox.$("input", () => { animation = applyAnimationCheckbox.checked;}, true);
+
+const timeDelay = document.getElementById("timeDelay");
+timeDelay.$("input", () => {
+    timeout = parseInt(timeDelay.value);
+    if(!timeout){
+        timeout = timeDelay.min;
+        timeDelay.value = timeDelay.min;
+    }
+});
+let timeout = parseInt(timeDelay.value);
+
+const animationOffset = [0, 0, 0];
+const animationRotationX = document.getElementById("animationRotationX");
+const animationRotationY = document.getElementById("animationRotationY");
+const animationRotationZ = document.getElementById("animationRotationZ");
+
+animationRotationX.$("input", () => {animationOffset[0] = animationRotationX.inputToDeg()}, true);
+animationRotationY.$("input", () => {animationOffset[1] = animationRotationY.inputToDeg()}, true);
+animationRotationZ.$("input", () => {animationOffset[2] = animationRotationZ.inputToDeg()}, true);
+
+const focalLength = 25;
+
+const orthographicProjection = [
+    [-1, 0, 0],
+    [0, -1, 0]
 ];
 
 function getMultitplyOfTen(number){
-    if(number == 0){
+    let answer = 0;
+    if(number < 0){
+        number = -number;
+        answer = 1;
+    }
+    else if(number == 0){
         return 1;
     }
-    return Math.floor(Math.log10(number) + 1);
+    answer += Math.floor(Math.log10(number) + 1);
+    return answer;
 }
 
 function calculateNumberOfSpaces(number, max){
@@ -85,273 +108,97 @@ function calculateNumberOfSpaces(number, max){
         number *= -1;
     }
 
-    let numberPower = getMultitplyOfTen(number);
-    let numberMaxPower = getMultitplyOfTen(max);
+    const numberPower = getMultitplyOfTen(number);
+    const numberMaxPower = getMultitplyOfTen(max);
 
     return numberMaxPower - numberPower;
 }
 
 function updateText(number, max, numberEl, invisibleNumber){
     // Make invisible numbers
-    let stringLength = calculateNumberOfSpaces(number, max);
+    const stringLength = calculateNumberOfSpaces(number, max);
     let spaces = "0".repeat(stringLength);
     if(0 < number){
         spaces = "-" + spaces;
     }
+
     invisibleNumber.innerHTML = spaces;
     numberEl.innerHTML = number;
 }
 
-function updatePosition(object, type, value){
-    let positionAxis = object.positionAxis[type];
-    if(value == null){
-        object.position[type] = parseInt(positionAxis.value);
-    }
-    else{
-        object.position[type] = value;
-        positionAxis.value = value;
-        console.log(value);
-    }
 
-    main();
+function parseInput(input){
+    const val = parseInt(input);
+    return (isNaN(val)) ? 0 : val;
 }
 
-function updateRotation(object, type, value){
-    // console.log(object);
-    let rotationAxis = object.rotationAxis[type];
-    // console.log(rotationAxis);
-    if(value == null){
-        object.rotation[type] = degreeToRadian(parseInt(rotationAxis[0].value));
-    }
-    else{
-        object.rotation[type] = value;
-        rotationAxis[0].value = value;
-    }
+class Object{
+    constructor(data){
+        this.data = data.data;
+        if(this.data != null){
+            this.vertices = data.data[0];
+            this.edges = data.data[1];
+            this.faces = data.data[2];
+            this.transformed = Array.from({length: data.data[0].length}, () => [0,0]);
+        } 
 
-    updateText(parseInt(rotationAxis[0].value), 360, rotationAxis[1], rotationAxis[2]);
+        this.position = (data.position != null) ? data.position : [0, 0, 0];
+        this.rotation = (data.rotation != null) ? data.rotation : [0, 0, 0];
+        this.scale = (data.scale != null) ? data.scale : [1, 1, 1];
 
-    main();
-}
+        this.default = [[...this.position], [...this.rotation]];
 
-class CAMERA{
-    constructor(position = [0, 0, 0], rotation = [0, 0, 0]){
-        this.position = position;
-        this.rotation = rotation;
+        const names = ["X", "Y", "Z"];
+        const namePrefix = (data.prefix != null) ? data.prefix : "object";
 
-        this.default = [[...position], [...rotation]];
-        // Camera
-        // Position
-        this.positionX = document.getElementById("camPositionX");
-        this.positionY = document.getElementById("camPositionY");
-        this.positionZ = document.getElementById("camPositionZ");
+        this.positionText = [];
+        this.rotationText = [];
 
-        // Rotation
-        this.rotationX = document.getElementById("camRotationX");
-        this.rotationY = document.getElementById("camRotationY");
-        this.rotationZ = document.getElementById("camRotationZ");
+        names.forEach((n, i) => {
+            const position = document.getElementById(`${namePrefix}Position${n}`);
+            this.positionText.push(position);
 
-        this.cameraRotationXTextParent = document.getElementById("cameraRotationXText");
-        this.cameraRotationXText = this.cameraRotationXTextParent.children[1];
-        this.invisibleCameraRotationXText = this.cameraRotationXTextParent.children[0];
+            position.$("input", () => {
+                this.move(parseInput(position.value), i);
+                main();
+            }, true);
 
-        this.cameraRotationYTextParent = document.getElementById("cameraRotationYText");
-        this.cameraRotationYText = this.cameraRotationYTextParent.children[1];
-        this.invisibleCameraRotationYText = this.cameraRotationYTextParent.children[0];
-        
-        this.cameraRotationZTextParent = document.getElementById("cameraRotationZText");
-        this.cameraRotationZText = this.cameraRotationZTextParent.children[1];
-        this.invisibleCameraRotationZText = this.cameraRotationZTextParent.children[0];
+            const rotation = document.getElementById(`${namePrefix}Rotation${n}`);
+            const textParent = document.getElementById(`${namePrefix}Rotation${n}Text`);
+            const text = textParent.children[1];
+            const invisibleObject = textParent.children[0]; 
 
-        this.positionAxis = [
-            this.positionX,
-            this.positionY,
-            this.positionZ
-        ]
+            this.rotationText.push([text, invisibleObject,rotation]);
 
-        this.rotationAxis = [
-            [this.rotationX, this.cameraRotationXText, this.invisibleCameraRotationXText], 
-            [this.rotationY, this.cameraRotationYText, this.invisibleCameraRotationYText], 
-            [this.rotationZ, this.cameraRotationZText, this.invisibleCameraRotationZText]
-        ];
-
-        this.positionX.addEventListener("input", () => {this.updateXPosition();}, false);
-        this.positionY.addEventListener("input", () => {this.updateYPosition();}, false);
-        this.positionZ.addEventListener("input", () => {this.updateZPosition();}, false);
-
-        this.rotationX.addEventListener("input", () => {this.updateXRotation()}, false);
-        this.rotationY.addEventListener("input", () => {this.updateYRotation()}, false);
-        this.rotationZ.addEventListener("input", () => {this.updateZRotation()}, false);
-        
-        this.updateXPosition = (value = null) => {
-            updatePosition(this, 0, value);
-        }
-        
-        this.updateYPosition = (value = null) => {
-            updatePosition(this, 1, value);
-        }
-        
-        this.updateZPosition = (value = null) => {
-            updatePosition(this, 2, value);
-        }
-
-        this.updateXRotation = (value = null) => {
-            updateRotation(this, 0, value);
-        }
-        
-        this.updateYRotation = (value = null) => {
-            updateRotation(this, 1, value);
-        }
-        
-        this.updateZRotation = (value = null) => {
-            updateRotation(this, 2, value);
-        }
-        
-        this.updateTransformations = [
-            [this.updateXPosition, this.updateYPosition, this.updateZPosition], 
-            [this.updateXRotation, this.updateYRotation, this.updateZRotation]
-        ];
-    }
-    
-    xRotationMatrix(angleX){
-        let x = [
-            [1, 0, 0],
-            [0, Math.cos(angleX), Math.sin(angleX)],
-            [0, -Math.sin(angleX), Math.cos(angleX)],
-        ]
-        return x;
-    }
-    
-    yRotationMatrix(angleY){
-        let y = [
-            [Math.cos(angleY), 0, -Math.sin(angleY)],
-            [0, 1, 0],
-            [Math.sin(angleY), 0, Math.cos(angleY)]
-        ]
-        return y;
-    }
-    
-    zRotationMatrix(angleZ){
-        let z = [
-            [Math.cos(angleZ), Math.sin(angleZ), 0],
-            [-Math.sin(angleZ), Math.cos(angleZ), 0],
-            [0, 0, 1]
-        ]
-        return z;
+            rotation.$("input", () => {
+                this.rotate(parseInput(rotation.value), i);
+                main();
+            }, true);
+        });
     }
 
     setDefault(){
-        for(let x = 0; x < 2; x++){
-            for(let i = 0; i < 3; i++){
-                this.updateTransformations[x][i](this.default[x][i]);
-            }
+        for(let i = 0; i < 3; i++){
+            this.move(this.default[0][i], i);
+            this.rotate(this.default[1][i], i);
         }
     }
 
-    update(){
-        for(let x = 0; x < 2; x++){
-            for(let i = 0; i < 3; i++){
-                this.updateTransformations[x][i]();
-            }
-        }
-    }
-}
-
-class OBJECT{
-    constructor(faces, position = [0, 0, 0], rotation = [0, 0, 0], scale = [1, 1, 1]){
-        this.position = position;
-        this.rotation = rotation;
-        this.scale = scale;
-
-        this.faces = faces;
-        this.default = [[...position], [...rotation]];
-
-        // Position
-        this.positionX = document.getElementById("positionX");
-        this.positionY = document.getElementById("positionY");
-        this.positionZ = document.getElementById("positionZ");
-        
-        // Position
-        this.rotationX = document.getElementById("rotationX");
-        this.rotationY = document.getElementById("rotationY");
-        this.rotationZ = document.getElementById("rotationZ");
-
-        this.objectRotationXTextParent = document.getElementById("objectRotationXText");
-        this.objectRotationXText = this.objectRotationXTextParent.children[1];
-        this.invisibleObjectRotationXText = this.objectRotationXTextParent.children[0];
-
-        this.objectRotationYTextParent = document.getElementById("objectRotationYText");
-        this.objectRotationYText = this.objectRotationYTextParent.children[1];
-        this.invisibleObjectRotationYText = this.objectRotationYTextParent.children[0];
-        
-        this.objectRotationZTextParent = document.getElementById("objectRotationZText");
-        this.objectRotationZText = this.objectRotationZTextParent.children[1];
-        this.invisibleObjectRotationZText = this.objectRotationZTextParent.children[0]; 
-
-        this.positionAxis = [
-            positionX,
-            positionY,
-            positionZ
-        ]
-
-        this.rotationAxis = [
-            [this.rotationX, this.objectRotationXText, this.invisibleObjectRotationXText], 
-            [this.rotationY, this.objectRotationYText, this.invisibleObjectRotationYText], 
-            [this.rotationZ, this.objectRotationZText, this.invisibleObjectRotationZText]
-        ];
-
-
-        this.positionX.addEventListener("input", () => {this.updateXPosition();}, false);
-        this.positionY.addEventListener("input", () => {this.updateYPosition();}, false);
-        this.positionZ.addEventListener("input", () => {this.updateZPosition();}, false);
-
-        this.rotationX.addEventListener("input", () => {this.updateXRotation()}, false);
-        this.rotationY.addEventListener("input", () => {this.updateYRotation()}, false);
-        this.rotationZ.addEventListener("input", () => {this.updateZRotation()}, false);
-    
-        this.updateXPosition = (value = null) => {
-            updatePosition(this, 0, value);
-        }
-        
-        this.updateYPosition = (value = null) => {
-            updatePosition(this, 1, value);
-        }
-        
-        this.updateZPosition = (value = null) => {
-            updatePosition(this, 2, value);
-        }
-
-        this.updateXRotation = (value = null) => {
-            updateRotation(this, 0, value);
-        }
-        
-        this.updateYRotation = (value = null) => {
-            updateRotation(this, 1, value);
-        }
-        
-        this.updateZRotation = (value = null) => {
-            updateRotation(this, 2, value);
-        }
-        
-        this.updateTransformations = [
-            [this.updateXPosition, this.updateYPosition, this.updateZPosition], 
-            [this.updateXRotation, this.updateYRotation, this.updateZRotation]
-        ];
+    move(value, type){
+        this.position[type] = value;
+        this.positionText[type] = this.position[type];
     }
 
-    setDefault(){
-        for(let x = 0; x < 2; x++){
-            for(let i = 0; i < 3; i++){
-                this.updateTransformations[x][i](this.default[x][i]);
-            }
+    rotate(value, type){
+        const rot = Math.abs(value);
+        const sig = (0 < value);
+        if(180 < rot){
+            value = (-180 + (rot - 180)) * ((sig) ? 1 : -1);
         }
-    }
 
-    update(){
-        for(let x = 0; x < 2; x++){
-            for(let i = 0; i < 3; i++){
-                this.updateTransformations[x][i]();
-            }
-        }
+        this.rotation[type] = value;
+        this.rotationText[type][2].value = value;
+        updateText(value, -180, this.rotationText[type][0], this.rotationText[type][1]);
     }
 }
 
@@ -372,7 +219,7 @@ function printMatrix(matrix){
 }
 
 function multiplyMatrix(a, b){
-    let result = [];
+    const result = [];
 
     if(a[0].length != b.length){
         console.error("Wrong size");
@@ -393,7 +240,7 @@ function multiplyMatrix(a, b){
 }
 
 function addPosints(a, b){
-    let result = [];
+    const result = [];
 
     if(a.length != b.length){
         console.error("Wrong size");
@@ -409,35 +256,43 @@ function addPosints(a, b){
     return result;
 }
 
+Number.prototype.inputToDeg
+
 function rotationMatrixZ(angle){
-    let _rotationMatrixZ = [
+    angle = degreeToRadian(angle);
+    const _rotationMatrixZ = [
         [Math.cos(angle), -Math.sin(angle), 0],
         [Math.sin(angle), Math.cos(angle), 0],
         [0, 0, 1]
     ]
-    return _rotationMatrixZ
+
+    return _rotationMatrixZ;
 }
 
 function rotationMatrixY(angle){
-    let _rotationMatrixY = [
+    angle = degreeToRadian(angle);
+    const _rotationMatrixY = [
         [Math.cos(angle), 0,  -Math.sin(angle)],
         [0, 1, 0],
         [Math.sin(angle), 0, Math.cos(angle)]
     ];
+
     return _rotationMatrixY;
 }
 
 function rotationMatrixX(angle){
-    let _rotationMatrixX = [
+    angle = degreeToRadian(angle);
+    const _rotationMatrixX = [
         [1, 0, 0],
         [0, Math.cos(angle), -Math.sin(angle)],
         [0, Math.sin(angle), Math.cos(angle)]
     ];
+
     return _rotationMatrixX;
 }
 
 function scaleMatrix(x, y, z){
-    let _scaleMatrix = [
+    const _scaleMatrix = [
         [x, 0, 0],
         [0, y, 0],
         [0, 0, z]
@@ -446,146 +301,177 @@ function scaleMatrix(x, y, z){
 }
 
 function projectPoints(points, position, rotation, scale, perspectiveProjection){
-    let scalingMatrix = scaleMatrix(scale[0], scale[1], scale[2]);
-    let scaled = multiplyMatrix(scalingMatrix, points);
+    // transform position globaly
+    const scalingMatrix = scaleMatrix(scale[0], scale[1], scale[2]);
+    const scaled = multiplyMatrix(scalingMatrix, points);
+    const global = addPosints(camera.position, scaled);
 
-    let xRotationM = rotationMatrixX(rotation[0]);
-    let yRotationM = rotationMatrixY(rotation[1]);
-    let zRotationM = rotationMatrixZ(rotation[2]);
+    const xRotationM = rotationMatrixX(rotation[0]);
+    const yRotationM = rotationMatrixY(rotation[1]);
+    const zRotationM = rotationMatrixZ(rotation[2]);
 
-    // Rotate cube
-    let xRotated = multiplyMatrix(xRotationM, scaled);
-    let yRotated = multiplyMatrix(yRotationM, xRotated);
-    let zRotated = multiplyMatrix(zRotationM, yRotated);
+    // rotate object
+    // scaled => xRotated => yRotated => xRotated
+    const xRotated = multiplyMatrix(xRotationM, global);
+    const yRotated = multiplyMatrix(yRotationM, xRotated);
+    const zRotated = multiplyMatrix(zRotationM, yRotated);
+
+    // camera
+    const cameraXRotationMatrix = rotationMatrixX(camera.rotation[0]);
+    const cameraYRotationMatrix = rotationMatrixY(camera.rotation[1]);
+    const cameraZRotationMatrix = rotationMatrixY(camera.rotation[2]);
+
+    const local = addPosints(position, zRotated);
+
+    const cameraRX = multiplyMatrix(cameraXRotationMatrix, local);
+    const cameraRY = multiplyMatrix(cameraYRotationMatrix, cameraRX);
+    const cameraRZ = multiplyMatrix(cameraZRotationMatrix, cameraRY);
     
-    // Camera
-    let cameraXRotationMatrix = camera.xRotationMatrix(camera.rotation[0]);
-    let cameraYRotationMatrix = camera.yRotationMatrix(camera.rotation[1]);
-    let cameraZRotationMatrix = camera.zRotationMatrix(camera.rotation[2]);
-
-    // Transform position globaly
-    let globalObjectPosition = addPosints(position, zRotated);
-    let globalPosition = addPosints(camera.position, globalObjectPosition);
-
-    let cameraRX = multiplyMatrix(cameraXRotationMatrix, globalPosition);
-    let cameraRY = multiplyMatrix(cameraYRotationMatrix, cameraRX);
-    let cameraRZ = multiplyMatrix(cameraZRotationMatrix, cameraRY);
-    
-    let projected2d;
     if(perspectiveProjection == true){
-        let z = focalLength / (focalLength - cameraRZ[2]);
-        // let z = screenX / (2 * Math.tan());
-        let perspectiveProjection = [
+        const z = focalLength / (focalLength - cameraRZ[2]);
+        // const z = screenX / (2 * Math.tan());
+        const perspectiveProjection = [
             [-z, 0, 0],
             [0, -z, 0]
-        ]
-        projected2d = multiplyMatrix(perspectiveProjection, cameraRZ);
-    }
-    else{
-        projected2d = multiplyMatrix(orthographicProjection, cameraRZ);
+        ];
+
+        return multiplyMatrix(perspectiveProjection, cameraRZ)
     }
 
-    return projected2d;
+    return multiplyMatrix(orthographicProjection, cameraRZ);
 }
+
+function glInit(){
+    if(gl === null){
+        alert("unable to initialize webgl");
+        return false;
+    }
+
+    // initinitialization code
+    const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+    const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+
+    const program = createProgram(gl, vertexShader, fragmentShader);
+
+    const positionAttribureLocation = gl.getAttribLocation(program, "a_position");
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+
+    colorLocation = gl.getUniformLocation(program, "uColor");
+    resolutionUniformLocation = gl.getUniformLocation(program, "uResolution");
+    translationUniformLocation = gl.getUniformLocation(program, "uTranslation");
+    scaleUniformLocation = gl.getUniformLocation(program, "uScale");
+
+    const vao = gl.createVertexArray();
+    gl.bindVertexArray(vao);
+    gl.enableVertexAttribArray(positionAttribureLocation);
+
+    // rendering code
+    resize.resizeCanvasToDisplaySize(canvas);
+
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
+    gl.clearColor(0.0, 0.0, 0.0, 0.0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    gl.useProgram(program);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+
+    const size = 2;
+    const type = gl.FLOAT;
+    const normalize = false;
+    const stride = 0;
+    const offset = 0;
+    gl.vertexAttribPointer(positionAttribureLocation, size, type, normalize, stride, offset);
+
+    const width = 10;
+    const height = 1;
+
+    gl.uniform2f(resolutionUniformLocation, width, height);
+    gl.uniform2f(translationUniformLocation, 0, 0);
+    gl.uniform2f(scaleUniformLocation, 0.7, 0.7);
+
+    gl.uniform4f(colorLocation, 0, 0, 0, 1);
+
+    return true;
+}
+
+// function drawFace(face){
+//     f.forEach(p => {
+//         points.push(t[p][0]); 
+//         points.push(t[p][1]);
+//     });
+//
+//     const buffer = new Float32Array(points);
+//     gl.bufferData(gl.ARRAY_BUFFER, buffer, gl.STATIC_DRAW);
+//     // const primitiveType = gl.TRIANGLES;
+//     const primitiveType = gl.LINE_LOOP;
+//     const offset = 0;
+//     const count = points.length/2;
+//     gl.drawArrays(primitiveType, offset, count);
+// }
 
 function main(){
-    canvas.clear();
-    let points = [];
-    cube.faces.forEach(face => {
-        face.forEach(point => {
-            let x, y;
-            
-            // perspectiveProjection.checked = true
-            [x, y] = projectPoints(point, cube.position, cube.rotation, cube.scale, perspectiveProjectionCheckbox.checked);
-            [x, y] = canvas.pointToPixel(x, y);
-            
-            points.push([x, y]);
-            // console.log(x, y);
-        });
-        for(let pointI = 0; pointI < points.length; pointI++){ 
-            let nexPointI = (pointI + 1) % points.length;
-            canvas.drawLine(points[nexPointI][0], points[nexPointI][1], points[pointI][0], points[pointI][1]);
-            canvas.drawPoint(points[pointI][0], points[pointI][1]);
+    if(object == null){
+        return;
+    }
+
+    gl.clearColor(0.0, 0.0, 0.0, 0.0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    if(animation){
+        for(let i = 0; i < 3; i++){
+            object.rotate(object.rotation[i] + animationOffset[i], i);
         }
-        points = [];
+    }
+
+    object.vertices.forEach((v,i) => {
+        object.transformed[i] = projectPoints(v, object.position, object.rotation, object.scale, projectionType);
     });
 
-    canvas.swapBuffer();
+    object.faces.forEach(f => {
+        const t = object.transformed;
+        for(let i = 0; i < f.length - 1; i++){
+            const p1 = t[f[i]];
+            const p2 = t[f[i + 1]];
+            drawLine(gl, p1[0], p1[1], p2[0], p2[1], 0.01);
+        }
+
+        drawLine(gl, t[f[0]][0], t[f[0]][1], t[f[f.length - 1]][0], t[f[f.length -1]][1], 0.01);
+
+    });
 }
 
-let loop = () => {
-    if(aplyAnimationCheckbox.checked == true){
-        cube.rotation[0] += degreeToRadian(parseInt(animationRotationX.value));
-        cube.rotation[1] += degreeToRadian(parseInt(animationRotationY.value));
-        cube.rotation[2] += degreeToRadian(parseInt(animationRotationZ.value));
-    }
-    timeout = parseInt(timeDelay.value);
-    if(!timeout){
-        timeout = timeDelay.min;
-        timeDelay.value = timeDelay.min
-    }
+const resize = new Resize(canvas, [1000,1000]);
+glInit();
+
+const loop = () => {
     main();
     setTimeout(loop, timeout);
 }
 
-let camera = new CAMERA([0, 0, -10], [0, 0, 0]);
+let object = null;
+const camera = new Object({prefix: "camera"});
 
-let cube = new OBJECT(
-    // Faces
-    [
-        // First face
-        [
-            [ 1, -1,  1],
-            [-1, -1,  1],
-            [-1, -1, -1],
-            [ 1, -1, -1]
-        ],
-        // Second face
-        [
-            [ 1, -1,  1],
-            [ 1,  1,  1],
-            [-1,  1,  1],
-            [-1, -1,  1]
-        ],
-        // Third face
-        [
-            [ 1, 1,  1],
-            [-1, 1,  1],
-            [-1, 1, -1],
-            [ 1, 1, -1]
-        ],
-        // Thought face
-        [
-            [ 1, -1, -1],
-            [ 1,  1, -1],
-            [-1,  1, -1],
-            [-1, -1, -1]
-        ],
-        // Fifth face
-        [
-            [ 1, -1,  1],
-            [ 1,  1,  1],
-            [ 1,  1, -1],
-            [ 1, -1, -1],
-        ],
-        // Sixth
-        [
-            [-1, -1,  1],
-            [-1,  1,  1],
-            [-1,  1, -1],
-            [-1, -1, -1],
-        ]
+const scale = 0.8;
+const cube = new Object({data: cubeData, scale: [scale, scale, scale]});
+const sphere = new Object({data: sphereData, scale: [scale, scale, scale]});
+const torus = new Object({data: torusData, scale: [scale, scale, scale]});
 
-    ],
-    [0, 0, 0], // Global position
-    [0, 0, 0], // Rotation
-    [10, 10, 10]  // Scale
-)
+const objects = {cube, sphere, torus};
 
-cube.update();
-camera.update();
+const objectSelect = document.querySelector(".objectSelect");
+objectSelect.onSelect((val) => {
+    if(objects[val]){
+        object = objects[val];
+    }
+    else{
+        object = objects[Object.keys(objects)[0]];
+    }
+
+    main();
+}, true);
 
 main();
-let timeout = parseInt(timeDelay.value);
 
 setTimeout(loop, timeout);

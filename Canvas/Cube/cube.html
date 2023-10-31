@@ -27,17 +27,26 @@
                 <h1 style="text-align: center">Cube</h1>
                 <div class="fS8"></div>
                 <div div class="window">
-                    <canvas class="my-canvas" style="background-color:black;" id="my-canvas" width="400" height="400"></canvas>
+                    <canvas class="my-canvas glCanvas" width="1000" height="1000"></canvas>
                     <div class="settings">
                         <div class="canvasButtons" id="canvasButtons">
-                            <button class="downloadButton" id="downloadImage"></button>
+                            <!-- <button class="downloadButton" id="downloadImage"></button> -->
                             <button class="refreshButton" id="update"></button>
+                            <button class="downloadButton" id="setDefault"></button>
                         </div>
                         <div class="fS8"></div>
                         <!-- Global settings -->
                         <div class="settingSameLine">
+                            <p>Object</p>
+                                <select class="objectSelect">
+                                <option value="cube">cube</option>
+                                <option value="sphere">sphere</option>
+                                <option value="torus">torus</option>
+                            </select>
+                        </div>
+                        <div class="settingSameLine">
                             <p>Time delay [ms]</p>
-                            <input type="number" id="timeDelay" value="10" min="0" min="10000">
+                            <input type="number" id="timeDelay" value="50" min="0" min="10000">
                         </div>
                         <div class="settingSameLine">
                             <p>Perspective projection: </p>
@@ -45,7 +54,7 @@
                         </div>
                         <div class="settingSameLine">
                             <p>Aply animation: </p>
-                            <input type="checkbox" id="aplyAnimation">
+                            <input type="checkbox" id="applyAnimation">
                         </div>
 
                         <button id="DropdownButton" class="opened" onclick="roll(this, 'objectSettings', 'hide')">Object settings</button>
@@ -55,15 +64,15 @@
                                 <div class="settingSameLine" style="display: block;">
                                     <div class="settingSameLine">
                                         <p>X: </p>
-                                        <input type="number" id="positionX" style="width: 100%;" value="0">
+                                        <input type="number" id="objectPositionX" style="width: 100%;" value="0">
                                     </div>
                                     <div class="settingSameLine">
                                         <p>Y: </p>
-                                        <input type="number" id="positionY" style="width: 100%;" value="0">
+                                        <input type="number" id="objectPositionY" style="width: 100%;" value="0">
                                     </div>
                                     <div class="settingSameLine">
                                         <p>Z: </p>
-                                        <input type="number" id="positionZ" style="width: 100%;" value="0">
+                                        <input type="number" id="objectPositionZ" style="width: 100%;" value="0">
                                     </div>
                                 </div>
                             </div>
@@ -73,18 +82,18 @@
                                 <div class="settingSameLine" style="display: block;">
                                     <div class="settingSameLine">
                                         <p>X: </p>
-                                        <input type="range" id="rotationX" style="width: 100%;" value="-30" min="-360" max="360">
-                                        <div id="objectRotationXText"><p id="invisible">-000</p><p>0</p></div>
+                                        <input type="range" id="objectRotationX" style="width: 100%;" value="-30" min="-180" max="180">
+                                        <div id="objectRotationXText"><p id="invisible">-00</p><p>0</p></div>
                                     </div>
                                     <div class="settingSameLine">
                                         <p>Y: </p>
-                                        <input type="range" id="rotationY" style="width: 100%;" value="35" min="-360" max="360">
-                                        <div id="objectRotationYText"><p id="invisible">-000</p><p>0</p></div>
+                                        <input type="range" id="objectRotationY" style="width: 100%;" value="35" min="-180" max="180">
+                                        <div id="objectRotationYText"><p id="invisible">-00</p><p>0</p></div>
                                     </div>
                                     <div class="settingSameLine">
                                         <p>Z: </p>
-                                        <input type="range" id="rotationZ" style="width: 100%;" value="0" min="-360" max="360">
-                                        <div id="objectRotationZText"><p id="invisible">-000</p><p>0</p></div>
+                                        <input type="range" id="objectRotationZ" style="width: 100%;" value="0" min="-180" max="180">
+                                        <div id="objectRotationZText"><p id="invisible">-00</p><p>0</p></div>
                                     </div>
                                 </div>
                             </div>
@@ -97,15 +106,15 @@
                                 <div class="settingSameLine" style="display: block;">
                                     <div class="settingSameLine">
                                         <p>X: </p>
-                                        <input type="number" id="camPositionX" style="width: 100%;" value="0">
+                                        <input type="number" id="cameraPositionX" style="width: 100%;" value="0">
                                     </div>
                                     <div class="settingSameLine">
                                         <p>Y: </p>
-                                        <input type="number" id="camPositionY" style="width: 100%;" value="0">
+                                        <input type="number" id="cameraPositionY" style="width: 100%;" value="0">
                                     </div>
                                     <div class="settingSameLine">
                                         <p>Z: </p>
-                                        <input type="number" id="camPositionZ" style="width: 100%;" value="10">
+                                        <input type="number" id="cameraPositionZ" style="width: 100%;" value="0">
                                     </div>
                                 </div>
                             </div>
@@ -115,17 +124,17 @@
                                 <div class="settingSameLine" style="display: block;">
                                     <div class="settingSameLine">
                                         <p>X: </p>
-                                        <input type="range" id="camRotationX" style="width: 100%;" min="-360" max="360" value="0">
+                                        <input type="range" id="cameraRotationX" style="width: 100%;" min="-180" max="180" value="0">
                                         <div id="cameraRotationXText"><p id="invisible">-000</p><p>0</p></div>
                                     </div>
                                     <div class="settingSameLine">
                                         <p>Y: </p>
-                                        <input type="range" id="camRotationY" style="width: 100%;" min="-360" max="360" value="0">
+                                        <input type="range" id="cameraRotationY" style="width: 100%;" min="-180" max="180" value="0">
                                         <div id="cameraRotationYText"><p id="invisible">-000</p><p>0</p></div>
                                     </div>
                                     <div class="settingSameLine">
                                         <p>Z: </p>
-                                        <input type="range" id="camRotationZ" style="width: 100%;" min="-360" max="360" value="0">
+                                        <input type="range" id="cameraRotationZ" style="width: 100%;" min="-180" max="180" value="0">
                                         <div id="cameraRotationZText"><p id="invisible">-000</p><p>0</p></div>
                                     </div>
                                 </div>
@@ -140,15 +149,15 @@
                                 <div class="settingSameLine" style="display: block;">
                                     <div class="settingSameLine">
                                         <p>X: </p>
-                                        <input type="number" id="animationRotationX" style="width: 100%;" min="-360" max="360" value="-1">
+                                        <input type="number" id="animationRotationX" style="width: 100%;" min="-180" max="180" value="-1">
                                     </div>
                                     <div class="settingSameLine">
                                         <p>Y: </p>
-                                        <input type="number" id="animationRotationY" style="width: 100%;" min="-360" max="360" value="1">
+                                        <input type="number" id="animationRotationY" style="width: 100%;" min="-180" max="180" value="1">
                                     </div>
                                     <div class="settingSameLine">
                                         <p>Z: </p>
-                                        <input type="number" id="animationRotationZ" style="width: 100%;" min="-360" max="360" value="2">
+                                        <input type="number" id="animationRotationZ" style="width: 100%;" min="-180" max="180" value="2">
                                     </div>
                                 </div>
                             </div>
