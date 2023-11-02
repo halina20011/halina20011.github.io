@@ -3,16 +3,20 @@
     display: flex;
 }
 
-.my-canvas, .settings{
+.window > *{
     position: relative;
     width: 50%;
     height: 100%;
-    border: 1px solid black;
     margin: 2px;
     box-sizing: border-box;
 }
 
+.canvases > *{
+    width: 100%;
+}
+
 .settings{
+    border: 1px solid black;
     padding: 5px;
 }
 

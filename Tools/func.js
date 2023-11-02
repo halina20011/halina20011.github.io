@@ -113,6 +113,10 @@ class Func{
             });
         });
     }
+
+    toProc(val, max){
+        return (val / max) * 100;
+    }
 }
 
 class Vec2{
@@ -170,6 +174,65 @@ class Random{
     }
 }
 
+const mouseEvent = (e, element) => {
+    const [x, y] = [e.x, e.y];
+    const rect = element.getBoundingClientRect();
+    const click = new Vec2(x - rect.left, y - rect.top);
+    let inside = false;
+    if(0 <= click.x && 0 <= click.y && click.x < rect.width && click.y < rect.height){
+        inside = true;
+    }
+
+    return {"clickPos": click, "inside": inside};
+}
+
+class MoveListener{
+    constructor(canvas){
+        this.focuse = null;
+        this.canvas = canvas;
+        this.down = false;
+        window.self.addEventListener("mousemove", (e) => {
+            const m = mouseEvent(e, this.canvas);
+            if(this.focuse && this.down && m.inside){
+                const cl = this.canvas.getBoundingClientRect();
+                const [width, height] = [cl.width, cl.height];
+                const x = functionInstance.map(m.clickPos.x, 0, width, 0,this.canvas.width);
+                const y = functionInstance.map(m.clickPos.y, 0, height, 0,this.canvas.height);
+                this.focuse.f(x, y);
+            }
+        });
+        
+        window.self.addEventListener("mousedown", () => {
+            this.down = true;
+        });
+
+        window.self.addEventListener("mouseup", () => {
+            this.down = false;
+            this.focuse = null;
+        });
+
+    }
+
+    add(element, f){
+        new Move(this, element, f);
+    }
+}
+
+class Move{
+    constructor(moveListener, element, f){
+        this.x;
+        this.y;
+        this.element = element;
+        this.f = f;
+        this.element.addEventListener("pointerenter", () => { moveListener.focuse = this; });
+        this.element.addEventListener("pointerleave", () => { 
+            if(moveListener.down == false){
+                moveListener.focuse = null; 
+            }
+        });
+    }
+}
+
 HTMLElement.prototype.appendAllChildren = function(arrayOfElement){
     for(let i = 0; i < arrayOfElement.length; i++){
         this.appendChild(arrayOfElement[i]);
@@ -178,4 +241,4 @@ HTMLElement.prototype.appendAllChildren = function(arrayOfElement){
 
 const functionInstance = new Func();
 export default functionInstance;
-export {Vec2, Random};
+export {Vec2, Random, MoveListener};

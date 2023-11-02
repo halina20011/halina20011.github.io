@@ -27,7 +27,11 @@
                 <h1 style="text-align: center">Bezier Curve</h1>
                 <div class="fS8"></div>
                 <div class="window">
-                    <canvas class="my-canvas" style="background-color:black;" id="my-canvas" width="400" height="400"></canvas>
+                    <div class="canvases">
+                        <canvas class="my-canvas" style="background-color:black;" id="my-canvas" width="400" height="400"></canvas>
+                        <div class="pointsHolder" style="position: absolute; width: 100%; padding-bottom: 100%; top:0px;">
+                        </div>
+                    </div>
                     <div class="settings">
                         <div class="canvasButtons" id="canvasButtons">
                             <button class="addButton" id="addButton"></button>
@@ -36,12 +40,16 @@
                         </div>
                         <div class="fS8"></div>
                         <div class="settingSameLine">
+                            <p>show help lines</p>
+                            <input type="checkbox" class="helpLines" checked="true">
+                        </div>
+                        <div class="settingSameLine">
                             <p>t: </p>
                             <input type="range" id="t" style="width: 100%;" value="0.70" min="0" max="1" step="0.05">
                             <div id="tText">0.70</div>
                         </div>
                         <div class="fS8"></div>
-                        <div class="bezierCurveSettingsContainer" id="bezierCurveSettingsContainer"></div>
+                        <div class="bezierCurvePoints"></div>
                     </div>
                 </div>
             </div>
