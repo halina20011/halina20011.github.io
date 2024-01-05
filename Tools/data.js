@@ -1,5 +1,17 @@
 export const imagesLinksData = {
     "Canvas": {
+        "RaycastingProject": {
+            "className": "RaycastingProject",
+            "path": "/Canvas/Raycasting/raycasting.html",
+            "imgPath": "/Images/Miniature/raycasting.jpeg",
+            "name": "Raycasting",
+            "projectTextInfo": [
+               "raycasting in 2d"
+            ],
+            "addAdicionalThings": null,
+            "addScript": null,
+            "addCss": null
+        },
         "BezierCurveProject": {
             "className": "BezierCurveProject",
             "path": "/Canvas/BezierCurve/bezierCurve.html",

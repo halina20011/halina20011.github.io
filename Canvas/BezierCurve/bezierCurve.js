@@ -1,5 +1,5 @@
 import func from "../../Tools/func.js";
-import { MoveListener } from "../../Tools/func.js";
+import { MoveListener, ValueElement} from "../../Tools/func.js";
 
 import {CANVAS} from "../canvas.js";
 import {DOWNLOADER} from "../download.js";
@@ -14,6 +14,7 @@ const moveListener = new MoveListener(canvasEl);
 const curvePoints = {};
 let counter = 0;
 
+let resolution = 0.1;
 let tValue = 0.7;
 
 const addButton = document.getElementById("addButton");
@@ -24,13 +25,8 @@ addButton.addEventListener("click", () => {
 
 const bezierCurvePoints = document.querySelector(".bezierCurvePoints");
 
-HTMLElement.prototype.$ = function(name, f, run){
-    if(run == true && f){
-        f();
-    }
-
-    this.addEventListener(name, () => { f(); }, false);
-}
+const resolutionInputEl = document.querySelector("#resolutionInputEl");
+const resolutionValueHolder = document.querySelector("#resolutionValueHolder");
 
 function timelapsee(fArguments){
     const howMenySteps = parseInt(fArguments[0].value);
@@ -85,12 +81,6 @@ const tText = document.getElementById("tText");
 
 // Controls
 const t = document.getElementById("t");
-t.$("input", () => {
-    const f = parseFloat(t.value).toFixed(2);
-    tValue = f;
-    tText.innerHTML = f;
-    main();
-}, true);
 
 const colors = [[255, 0, 0, 255], [0, 255, 0, 255], [0, 0, 255, 255], [125, 125, 125, 255], [0, 255, 255, 255], [255, 0, 255, 255]];
 
@@ -111,7 +101,13 @@ class CurvePoint{
         
         this.create(x, y);
 
-        moveListener.add(this.pointHolder, (x,y) => { this.moveX(x); this.moveY(y); main(); });
+        moveListener.add(this.pointHolder, (x, y) => {
+            const cl = canvasEl.getBoundingClientRect();
+            const [width, height] = [cl.width, cl.height];
+            this.moveX(func.map(x, 0, width, 0, canvas.width)); 
+            this.moveY(func.map(y, 0, height, 0, canvas.height));
+            main(); 
+        });
     }
         
     moveX(x){
@@ -214,7 +210,6 @@ function main(){
     });
     
     const points = [];
-    const resolution = 0.1;
     for(let _t = 0; _t < tValue; _t += resolution){
         points.push(drawBezierCurve(_t, controlPoints, 0, false));
     }
@@ -235,3 +230,18 @@ new CurvePoint(350, 200);
 new CurvePoint(300, 250);
 
 main();
+
+const resolutioValue = new ValueElement(resolutionValueHolder, 0.001, 0.1);
+resolutionInputEl.$("input", () => {
+    resolution = Math.pow(10, -parseInt(resolutionInputEl.value));
+    resolutioValue.update(resolution);
+    console.log(resolution);
+    main();
+}, true);
+
+t.$("input", () => {
+    const f = parseFloat(t.value).toFixed(2);
+    tValue = f;
+    tText.innerHTML = f;
+    main();
+}, true);

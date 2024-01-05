@@ -1,30 +1,30 @@
-import {CANVAS} from "/Canvas/canvas.js";
-import {DOWNLOADER} from "/Canvas/download.js";
+import {CANVAS} from "./canvas.js";
+import {DOWNLOADER} from "./download.js";
 
-let canvasEl = document.getElementById("my-canvas");
+const canvasEl = document.getElementById("my-canvas");
 
-let canvas = new CANVAS(canvasEl);
-let downloader = new DOWNLOADER(canvasEl);
+const canvas = new CANVAS(canvasEl);
+const downloader = new DOWNLOADER(canvasEl);
 
-let downloadImageButton = document.getElementById("downloadImage");
+const downloadImageButton = document.getElementById("downloadImage");
 downloadImageButton.addEventListener("click", function() { downloader.downloadImage(); }, false);
 
-let updateButton = document.getElementById("update");
+const updateButton = document.getElementById("update");
 updateButton.addEventListener("click", function() { main(); }, false);
 
 function map(x, inMin, inMax, outMin, outMax){
     return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 }
 
-let from = -10;
-let to =    10;
+const from = -10;
+const to   =  10;
 
 function main(){
     canvas.drawGrid(1);
     for(let X = 0; X < canvas.width; X++){
-        let x = map(X, 0, canvas.width, from, to);
-        let y = x;
-        let Y = map(y, from, to, canvas.height / 2, canvas.height / -2);
+        const x = map(X, 0, canvas.width, from, to);
+        const y = x;
+        const Y = map(y, from, to, canvas.height / 2, canvas.height / -2);
         canvas.drawPixel(X, Y)
     }
 

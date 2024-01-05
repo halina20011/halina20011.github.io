@@ -79,6 +79,15 @@ class Func{
     random(min, max){
         return Math.floor(Math.random() * (max - min) + min);
     }
+    
+    // math functions
+    min(a, b){
+        return (a < b) ? a : b;
+    }
+
+    max(a, b){
+        return (a < b) ? b : a;
+    }
 
     map(x, inMin, inMax, outMin, outMax){
         return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
@@ -117,7 +126,17 @@ class Func{
     toProc(val, max){
         return (val / max) * 100;
     }
+
+    toRad(radius){
+        return (Math.PI * radius) / 180;
+    }
+
+    toDeg(rad){
+        return (rad * 180) / Math.PI;
+    }
 }
+
+const func = new Func();
 
 class Vec2{
     constructor(x, y){
@@ -156,6 +175,28 @@ class Vec2{
     copy(){
         return new Vec2(this.x, this.y);
     }
+    
+    dist(){
+        return (this.x * this.x) + (this.y * this.y);
+    }
+
+    min(v1, v2){
+        if(!v1 || !v2){
+            return (!v1) ? v2 : v1;
+        }
+        const d1 = v1.subtract(this).dist();
+        const d2 = v2.subtract(this).dist();
+        return (d1 < d2) ? v1 : v2;
+    }
+
+    max(v1, v2){
+        if(!v1 || !v2){
+            return (!v1) ? v2 : v1;
+        }
+        const d1 = v1.dist();
+        const d2 = v2.dist();
+        return (d1 < d2) ? v2 : v1;
+    }
 }
 
 class Random{
@@ -191,30 +232,43 @@ class MoveListener{
         this.focuse = null;
         this.canvas = canvas;
         this.down = false;
+        this.prevX = null;
+        this.prevY = null;
+        this.followers = [];
         window.self.addEventListener("mousemove", (e) => {
             const m = mouseEvent(e, this.canvas);
-            if(this.focuse && this.down && m.inside){
-                const cl = this.canvas.getBoundingClientRect();
-                const [width, height] = [cl.width, cl.height];
-                const x = functionInstance.map(m.clickPos.x, 0, width, 0,this.canvas.width);
-                const y = functionInstance.map(m.clickPos.y, 0, height, 0,this.canvas.height);
-                this.focuse.f(x, y);
+            const x = m.clickPos.x;
+            const y = m.clickPos.y;
+            if(this.focuse != null && this.down == true && m.inside){
+                this.focuse.f(x, y, this.prevX - x, this.prevY - y);
             }
+            for(const follower of this.followers){
+                follower.func(x, y);
+            }
+            this.prevX = x;
+            this.prevY = y;
         });
         
         window.self.addEventListener("mousedown", () => {
             this.down = true;
+            // console.log("down");
         });
 
         window.self.addEventListener("mouseup", () => {
+            this.prevX = null;
+            this.prevY = null;
             this.down = false;
-            this.focuse = null;
+            // console.log("up");
         });
 
     }
 
     add(element, f){
         new Move(this, element, f);
+    }
+
+    addFollower(updateFunc){
+        this.followers.push(new Follower(updateFunc));
     }
 }
 
@@ -233,12 +287,264 @@ class Move{
     }
 }
 
+// const updateFunc = (x, y) => {
+//     this.x = x;
+//     this.y = y;
+//     update();
+// }
+class Follower{
+    constructor(updateFunc){
+        this.func = updateFunc;
+    }
+}
+
+class ValueElement{
+    constructor(holder, min, max){
+        this.holder = holder;
+        
+        this.invisibleEl = func.createElement(`<p id="invisible"></p>`);
+        this.valueEl = func.createElement(`<p></p>`);
+
+        this.holder.appendAllChildren([this.invisibleEl, this.valueEl]);
+
+        this.min = min;
+        this.max = max;
+        this.minusPrefix = (min < 0);
+        this.dotPrefix = (!Number.isInteger(min) || !Number.isInteger(max));
+        this.maxSpacesSize = func.max(this.getMultitplyOfTen(min), this.getMultitplyOfTen(max));
+        // console.log(this.getMultitplyOfTen(min), this.getMultitplyOfTen(max));
+        // console.log(this.maxSpacesSize);
+        
+        this.externalUpdateFunc = null;
+    }
+
+    getMultitplyOfTen(number){
+        let answer = 0;
+        
+        if(!Number.isInteger(number)){
+            answer++;
+        }
+
+        if(number < 0){
+            number = -number;
+            answer++;
+        }
+        else if(number == 0){
+            return 1;
+        }
+
+        answer += Math.abs(Math.floor(Math.log10(number) + 1));
+        return answer;
+    }
+
+    calculateNumberOfSpaces(number){
+        const numberPower = getMultitplyOfTen(number);
+        const numberMaxPower = getMultitplyOfTen(max);
+
+        return numberMaxPower - numberPower;
+    }
+
+    update(value){
+        let spacesSize = 0;
+        // if min is negative 
+        //  add every time minus to the positive values
+        const minus = (this.minusPrefix && 0 <= number) ? "-" : "";
+        const dot = (this.dotPrefix && Number.isInteger(value)) ? "0." : "";
+        spacesSize += this.maxSpacesSize - this.getMultitplyOfTen(value);
+        
+        // make invisible numbers
+        const spaces = minus + dot + "0".repeat(spacesSize);
+
+        this.invisibleEl.innerHTML = spaces;
+        this.valueEl.innerHTML = value;
+        if(this.externalUpdateFunc){
+            this.externalUpdateFunc();
+        }
+    }
+}
+
+class Movable{
+    constructor(canvas, pointsHolder, moveListener, pos){
+        this.pos = pos;
+
+        this.canvas = canvas;
+        this.sheetPoint = func.createElement(`<div style="position: absolute;"></div>`);
+        this.externalUpdateFunc = null;
+
+        pointsHolder.appendChild(this.sheetPoint);
+        
+        moveListener.add(this.sheetPoint, (x, y) => {
+            const cl = canvas.getBoundingClientRect();
+            const [width, height] = [cl.width, cl.height];
+            this.pos.y = Math.floor(func.map(y, 0, height, 0, canvas.height));
+            this.pos.x = Math.floor(func.map(x, 0, width, 0, canvas.width)); 
+            this.update();
+            if(this.externalUpdateFunc){
+                this.externalUpdateFunc();
+            }
+        });
+
+        this.update();
+    }
+
+    delete(){
+        this.sheetPoint.remove();
+    }
+
+    update(){
+        this.sheetPoint.style.left = `${func.toProc(this.pos.x, this.canvas.width)}%`;
+        this.sheetPoint.style.top = `${func.toProc(this.pos.y, this.canvas.height)}%`;
+    }
+}
+
+function createPoint(minX, minY, maxX, maxY){
+    const pointEl = func.createElement(`<div class="settingSameLine">
+            <p>X: </p>
+            <input type="number" min="${minX}" max="${maxX}" value="0"></input>
+            <p>Y: </p>
+            <input type="number" min="${minY}" max="${maxY}" value="0"></input>
+        </div>`);
+
+    return [
+        pointEl,
+        pointEl.children[1],
+        pointEl.children[3],
+    ];
+}
+
+class PointValue{
+    constructor(holder, pos){
+        this.pos = pos;
+        this.create(holder);
+
+        this.externalUpdateFunc = null;
+        this.delFunc = null;
+        this.xInput.$("input", () => {
+            this.pos.x = parseInt(this.xInput.value);
+            if(this.externalUpdateFunc){
+                this.externalUpdateFunc();
+            }
+        });
+
+        this.yInput.$("input", () => {
+            this.pos.y = parseInt(this.yInput.value);
+            if(this.externalUpdateFunc){
+                this.externalUpdateFunc();
+            }
+        });
+    }
+
+    create(holder, minX, minY){
+        [this.pointEl, this.xInput, this.yInput] = createPoint(minX, minY);
+        
+        this.element = func.createElement(`<div class="pointValue">
+                <div class="fS8"></div>
+                <div style="display: flex; justify-content: flex-end;">
+                    <button class="removeButton"></button>
+                </div>
+            </div>
+        `);
+        
+        this.removeButton = this.element.children[1].children[0];
+        this.element.insertBefore(this.pointEl, this.element.children[0]);
+        this.removeButton.$("click", () => {
+            if(this.delFunc){
+                this.delFunc();
+            }
+            this.delete();
+        });
+
+        holder.appendChild(this.element);
+    }
+    
+    update(){
+        this.xInput.value = this.pos.x;
+        this.yInput.value = this.pos.y;
+    }
+
+    delete(){
+        this.element.remove();
+    }
+}
+
+class VertexValue{
+    constructor(holder, p1, p2){
+        this.p1 = p1;
+        this.p2 = p2;
+        this.create(holder);
+
+        this.externalUpdateFunc = null;
+        this.delFunc = null;
+        
+        const val = [
+            (n) => this.p1.x = n, 
+            (n) => this.p1.y = n, 
+            (n) => this.p2.x = n, 
+            (n) => this.p2.y = n
+        ];
+
+        [this.xInput1, this.yInput1, this.xInput2, this.yInput2].forEach((input, i) => {
+            input.$("input", () => {
+                val[i](parseInt(input.value));
+                if(this.externalUpdateFunc){
+                    this.externalUpdateFunc();
+                }
+            });
+        });
+
+        this.update();
+    }
+
+    create(holder, minX, minY){
+        [this.point1El, this.xInput1, this.yInput1] = createPoint(minX, minY);
+        [this.point2El, this.xInput2, this.yInput2] = createPoint(minX, minY);
+        
+        this.element = func.createElement(`<div class="vertexValue">
+                <div class="fS8"></div>
+                <div style="display: flex; justify-content: flex-end;">
+                    <button class="removeButton"></button>
+                </div>
+            </div>
+        `);
+        
+        this.removeButton = this.element.children[1].children[0];
+        this.element.insertBefore(this.point2El, this.element.children[0]);
+        this.element.insertBefore(this.point1El, this.point2El);
+        this.removeButton.$("click", () => {
+            if(this.delFunc){
+                this.delFunc();
+            }
+            this.delete();
+        });
+
+        holder.appendChild(this.element);
+    }
+    
+    update(){
+        this.xInput1.value = this.p1.x;
+        this.yInput1.value = this.p1.y;
+        this.xInput2.value = this.p2.x;
+        this.yInput2.value = this.p2.y;
+    }
+
+    delete(){
+        this.element.remove();
+    }
+}
+
+HTMLElement.prototype.$ = function(name, f, run){
+    if(run == true && f){
+        f();
+    }
+
+    this.addEventListener(name, () => { f(); }, false);
+}
+
 HTMLElement.prototype.appendAllChildren = function(arrayOfElement){
     for(let i = 0; i < arrayOfElement.length; i++){
         this.appendChild(arrayOfElement[i]);
     }
 }
 
-const functionInstance = new Func();
-export default functionInstance;
-export {Vec2, Random, MoveListener};
+export default func;
+export {Vec2, Random, MoveListener, ValueElement, Movable, PointValue, VertexValue};

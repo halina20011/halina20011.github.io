@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bezier Curve</title>
+    <title>Raycasting</title>
     <meta charset="UTF-8">
-    <meta name="description" content="Bezier curve">
+    <meta name="description" content="Free web programming tutorials">
     <meta name="author" content="Mario Duraković">
     <link rel="icon" href="/Images/halinaCircle.png" type="image/x-icon">
     <meta name="keywords" content="Halina programming, Arduino learn">
@@ -11,10 +11,9 @@
     <link rel="stylesheet" type="text/css" href="/text.css">
     <link rel="stylesheet" type="text/css" href="/style.css">
     <link rel="stylesheet" type="text/css" href="/Canvas/canvas.css">
-    <link rel="stylesheet" type="text/css" href="bezierCurve.css">
     <script defer type="module" src="/Tools/importFile.js"></script>
-    <script defer type="module" src="bezierCurve.js"></script>
-    <script defer type="module" src="/Canvas/download.js"></script>
+    <script defer type="module" src="/Canvas/canvas.js"></script>
+    <script defer type="module" src="./raycasting.js"></script>
 </head>
 <body>
     <div class="columnUp" id="columnUp">
@@ -24,38 +23,33 @@
             <div class="columnLeft" id="columnLeft">
             </div>
             <div class="columnMiddle" id="columnMiddle">
-                <h1 style="text-align: center">Bezier Curve</h1>
+                <h1 style="text-align: center">Raycasting</h1>
                 <div class="fS8"></div>
                 <div class="window">
                     <div class="canvases">
                         <canvas class="my-canvas" style="background-color:black;" id="my-canvas" width="400" height="400"></canvas>
-                        <div class="pointsHolder" style="position: absolute; width: 100%; padding-bottom: 100%; top:0px;">
-                        </div>
+                        <div class="pointsHolder"></div>
                     </div>
                     <div class="settings">
                         <div class="canvasButtons" id="canvasButtons">
-                            <button class="addButton" id="addButton"></button>
                             <button class="downloadButton" id="downloadImage"></button>
                             <button class="refreshButton" id="update"></button>
+                            <button class="addButton" id="addButton"></button>
+                        </div>
+                        <div class="settingSameLine">
+                            <p>window boundaries</p>
+                            <input type="checkbox" id="boundaries" checked>
+                        </div>
+                        <div class="settingSameLine">
+                            <p>number of rays: </p>
+                            <input type="number" id="rayNumber" min="1" max="360" value="100">
+                        </div>
+                        <div class="settingSameLine">
+                            <p>mouse mode: </p>
+                            <input type="checkbox" id="mouseMode">
                         </div>
                         <div class="fS8"></div>
-                        <div class="settingSameLine">
-                            <p>show help lines</p>
-                            <input type="checkbox" class="helpLines" checked="true">
-                        </div>
-                        <div class="settingSameLine">
-                            <p>t: </p>
-                            <input type="range" id="t" style="width: 100%;" value="0.70" min="0" max="1" step="0.05">
-                            <div id="tText">0.70</div>
-                        </div>
-                        <div class="settingSameLine">
-                            <p>resolution: </p>
-                            <input type="number" id="resolutionInputEl" min="1" max="3" value="1">
-                            <div id="resolutionValueHolder"></div>
-                        </div>
-                        <div class="fS8"></div>
-                        <h4>Points:</h4>
-                        <div class="bezierCurvePoints"></div>
+                        <div class="pointsValues"></div>
                     </div>
                 </div>
             </div>

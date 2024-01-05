@@ -74,6 +74,40 @@
     margin-left: 5px;
 }
 
+.pointsHolder{
+    position: absolute;
+    width: 100%;
+    padding-bottom: 100%;
+    top:0px;
+    overflow: hidden;
+}
+
+.pointsHolder > *{
+    background-color:transparent;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    border: 1px solid white;
+    transform:translate(-50%, -50%);
+    user-select: none;
+}
+
+
+.pointsValues, .vertexValues{
+    width: 100%;
+    max-height: 30vh;
+    overflow-y: scroll;
+}
+
+.pointValue, .vertexValue{
+    margin: 0px 0px 5px 0px;
+    width: 100%;
+    background-color: rgb(49, 49, 49);
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
 @media only screen and (max-width: 600px) {
     .window{
         display: inline-block;
