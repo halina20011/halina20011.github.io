@@ -1,0 +1,30 @@
+:root{
+    --selector-height: 40px;
+    --window-color: #393939;
+}
+
+.windowSelectors{
+    height: var(--selector-height);
+    width: 100%;
+    display: inline-flex;
+    box-sizing: border-box;
+    overflow: hidden
+}
+
+.windowSelectors > *{
+    height: 100%;
+    width: fit-content;
+    align-items: center;
+    display: flex;
+    text-align: center;
+    align-self: flex-end;
+    background-color: #424242;
+    white-space: nowrap;
+    border: none;
+    padding: 0 10px;
+    text-decoration: none;
+}
+
+.windowWindows, .selected{
+    background-color: var(--window-color);
+}
