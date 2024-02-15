@@ -134,6 +134,18 @@ class Func{
     toDeg(rad){
         return (rad * 180) / Math.PI;
     }
+
+    shuffle(arr){
+        for(let i = 0; i < arr.length; i++){
+            const rIndex = this.random(0, arr.length);
+            const t = arr[i];
+            arr[i] = arr[rIndex]
+            arr[rIndex] = t;
+        }
+
+        return arr;
+    }
+
 }
 
 const func = new Func();
@@ -544,6 +556,10 @@ HTMLElement.prototype.appendAllChildren = function(arrayOfElement){
     for(let i = 0; i < arrayOfElement.length; i++){
         this.appendChild(arrayOfElement[i]);
     }
+}
+
+String.prototype.capitalizeFirst = function(){
+    return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
 export default func;

@@ -57,6 +57,11 @@
     box-sizing: border-box;
 }
 
+.progressBar{
+    height: 5px;
+    background-color: #454545;
+}
+
 .playScreen{
     max-height: calc(var(--lineHeight) * 3);
     position: relative;
@@ -126,6 +131,10 @@
     aspect-ratio: 1/1;
 }
 
+.randomLettersWindow, .customTextWindow, .savedTextWindow, .randomWordsWindow{
+    padding: 10px;
+}
+
 @media only screen and (max-width: 530px){ 
     .restart{
         display: none;
@@ -139,36 +148,41 @@
 }
 
 /* ######################## settings ######################## */
-.randomLetters{
+.randomLettersWindow{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    overflow: hidden;
 }
 
-.randomLetters > div:first-child{
+.randomLettersWindow > div:first-child{
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.randomLetters > .keyboard{
+.randomLettersWindow > .keyboard{
     padding: 10px;
 }
 
-.customText{
+.customTextWindow{
     position: relative;
     width: 100%;
 }
 
+.customTextWindow > textarea{
+    min-width: 100%;
+    min-height: 20px;
+}
+
 .savedText{
     width: 100%;
+    background-color: #454545;;
 }
 
 .savedText > div{
     display: flex;
     gap: 10px;
-    background-color: #454545;
-    width: 100%;
     padding: 5px;
 }
 
@@ -177,12 +191,12 @@
 }
 
 @media only screen and (max-width: 1500px){ 
-    .randomLetters{
+    .randomLettersWindow{
         flex-direction: column;
         gap: 10px;
     }
 
-    .randomLetters > div:first-child > div{
+    .randomLettersWindow > div:first-child > div{
         display: flex;
         gap: 4px;
     }

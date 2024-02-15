@@ -1,14 +1,15 @@
 import Keyboard from "./keyboard.js"
 import func from "../../Tools/func.js";
 import {Random} from "../../Tools/func.js";
+import WindowSelector from "../../Tools/windows.js";
 
 let words = [];
 
-let generate;
+let generateFunc = generateFromRandom;
 let index = 0, mistakesMade = 0, yOffset = 0;
 let prevInput = "";
 
-let timeStarted = undefined;
+let timeStarted = null;
 
 const keyaboard = new Keyboard(document.querySelector(".keyboard"));
 
@@ -18,18 +19,17 @@ const timer = document.getElementById("timer");
 // const mistakes = document.getElementById("mistakes");
 // const wpm = document.querySelector(".wpm");
 document.getElementById("input").addEventListener("input", (e) => { update(e.target.value); });
+const progressBar = document.querySelector(".progressBar");
 
 const numberOfLetters = document.getElementById("numberOfLetters");
 
-const randomLetters = document.querySelector(".randomLetters");
-
-const customText = document.querySelector(".customText");
-const savedText = document.querySelector(".savedText");
+const savedTexts = new Map();
+const savedTextWindow = document.querySelector(".savedTextWindow");
 document.querySelector(".saveText").addEventListener("click", () => {
     const name = prompt("Name: ");
     // console.log(name);
     if(name != null){
-        window.localStorage.setItem(name, wordsInput.value)
+        new Text(savedTextWindow, name, wordsInput.value);
     }
 });
 
@@ -60,6 +60,12 @@ for(let n = 1; n < 4; n++){
     document.querySelector(`.toggleLine${n}`).addEventListener("click", () => keyaboard.toggleLine(n), false);
 }
 
+// Random words
+const removeDuplicates = document.querySelector("#removeDuplicates");
+const toLowerCase = document.querySelector("#toLowerCase");
+const randomCase = document.querySelector("#randomCase");
+const numberOfWords = document.querySelector("#numberOfWords");
+
 const settings = document.querySelector(".settings");
 func.toggle(".moreSettings", true, [settings], [false], "hidden");
 
@@ -80,10 +86,14 @@ function moveLines(){
     playScreen.style.top = `${yOffset}px`;
 }
 
-const savedTextHolder = document.querySelector(".savedTextHolder");
 function loadSavedTexts(){
-    savedTextHolder.innerHTML = "";
-    window.localStorage;
+    savedTextWindow.innerHTML = "";
+    savedTexts.clear();
+    const items = window.localStorage;
+    Object.keys(items).forEach(key => {
+        new Text(savedTextWindow, key, items[key]);
+    });
+
 }
 
 function convertTime(time){
@@ -114,7 +124,8 @@ function showWorld(){
         wpmEnd.innerHTML = `${WPM()}WPM`;
         
         timerEnd.innerHTML = timerDuration();
-        timeStarted = undefined;
+        timeStarted = null;
+        progressBar.style.width = "100%";
     }
     else{
         highlightWord();
@@ -145,7 +156,7 @@ function update(input){
         showWorld();
         return;
     }
-
+    
     highlightWord();
     prevInput = input;
 }
@@ -216,7 +227,49 @@ function highlightWord(){
 
     correct.innerHTML = `${correctStr}${spaceBefore}`;
     after.innerHTML = afterText;
+
+    progressBar.style.width = `${index/words.length * 100}%`
     moveLines();
+}
+
+class Text{
+    constructor(parent, key, value){
+        this.key = key;
+        this.value = value;
+        this.element = func.createElement(`<div class="savedText sameLine">
+                <div>
+                    <p>${key}</p>
+                </div>
+                <div>
+                    <button class="useText">use</button>
+                    <button class="removeText">remove</button>
+                    <input type="checkbox" checked="">
+                </div>
+            </div>`);
+
+        this.element.querySelector(".useText").$("click", () => {
+            selectedText = key;
+            setUp();
+        }, false);
+        this.checkbox = this.element.querySelector("input");
+        this.element.querySelector(".removeText").$("click", ()=> {
+            window.localStorage.removeItem(key);
+            savedTexts.delete(this.key);
+            if(selectedText == key){
+                selectedText = null;
+            }
+
+            this.delete();
+        }, false);
+
+        parent.appendChild(this.element);
+
+        savedTexts.set(key, this);
+    }
+
+    delete(){
+        this.element.remove();
+    }
 }
 
 class Word{
@@ -296,38 +349,10 @@ function generateFromCustom(){
 }
 
 let selectedText = null;
-function drawSavedTexts(){
-    const items = window.localStorage;
-    // console.log(items);
-    savedText.innerHTML = "";
-    Object.keys(items).forEach(name => {
-        // console.log(items[name]);
-        const element = document.createElement("div");
-
-        const textName = func.createElement(`<p>${name}</p>`);
-        const select = func.createElement("<button>use</button>");
-        select.onclick = () => {
-            selectedText = name;
-            setUp();
-        }
-        const remove = func.createElement("<button>remove<button>")
-        remove.onclick = () => {
-            window.localStorage.removeItem(name);
-            if(selectedText == name){
-                selectedText = null;
-            }
-            drawSavedTexts();
-        }
-        element.appendChild(textName);
-        element.appendChild(select);
-        element.appendChild(remove);
-        savedText.appendChild(element);
-    });
-}
 
 function generateFromSaved(){
     const content = window.localStorage[selectedText];
-    return (content) ? content : "";
+    return (content) ? content : "not selected";
 }
 
 function setUp(){
@@ -341,39 +366,56 @@ function setUp(){
     endScreen.style.display = "none";
     mistakesMade = 0;
     // mistakes.innerHTML = mistakesMade;
-    timeStarted = undefined;
+    timeStarted = null;
     timer.innerHTML = "0:00";
 
     clearInput();                   // clear word input
-    const letters = generate();     // generate list of letter
+    const letters = generateFunc();     // generate list of letter
+    // console.log(letters);
     lettersToWords(letters);
     showWorld();
 }
 
-const type = document.querySelector(".type");
-const holderList = [randomLetters, customText, savedText];
-const generateList = [generateFromRandom, generateFromCustom, generateFromSaved];
-const typeAction = () => {
-    const selectedIndex = parseInt(type.value);
-    for(let i = 0; i < 3; i++){
-        if(i == selectedIndex){
-            holderList[i].classList.remove("hidden");
+function generateWords(){
+    let words = [];
+    const set = new Set();
+    savedTexts.forEach(item => {
+        if(item.checkbox.checked){
+            const itemstr = item.value.split(/[ \n,]/g).filter(str => (0 < str.length));
+            words = [...words, ...itemstr];
         }
-        else{
-            holderList[i].classList.add("hidden");
-        }
-    }
-    generate = generateList[selectedIndex];
-    if(selectedIndex == 2){
-        loadSavedTexts();
-        drawSavedTexts();
-        return;
-    }
-    setUp();
-}
-typeAction();
-type.addEventListener("change", typeAction);
+    });
 
+    if(removeDuplicates.checked){
+        words.forEach(set.add, set);
+        words = Array.from(set);
+    }
+
+    if(toLowerCase.checked){
+        words = words.map(str => str.toLowerCase());
+    }
+
+    const size = parseInt(numberOfWords.value);
+    if(words.length == 0){
+        return "zero saved and enabled texts"
+    }
+
+    return Array.from({length: size}, () => {
+        const w = words[func.random(0, words.length)];
+        if(randomCase.checked && func.random(0, 5) == 0){
+            return w.capitalizeFirst();
+        }
+        return w;
+    }).join(" ");
+}
+
+const generateList = [generateFromRandom, generateWords, generateFromCustom, generateFromSaved];
+
+new WindowSelector(".windows", (i) => {
+    generateFunc = generateList[i];
+});
+
+loadSavedTexts();
 setUp();
 
 // update

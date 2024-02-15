@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="writer.css">
     <link rel="stylesheet" type="text/css" href="keyboard.css">
     <script defer type="module" src="/Tools/importFile.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Tools/windows.css">
     <script defer type="module" src="writer.js"></script>
     <script defer type="module" src="toolTip.js"></script>
 </head>
@@ -31,6 +32,7 @@
                         <button class="moreSettings settingsButton byHeight"></button>
                     </div>
                     <div class="keyBoardWindow">
+                        <div class="progressBar"></div>
                         <div class="screen">
                             <div class="endScreen">
                                 <p class="timerEnd">0</p>
@@ -45,16 +47,13 @@
                     </div>
                     <div class="fS8"></div>
                     <div class="settings">
-                        <div style="display: flex; gap: 10px;">
-                            <h3>type: </h3>
-                            <select class="type">
-                                <option value="0">random letters</option>
-                                <option value="1">custom text</option>
-                                <option value="2">saved text</option>
-                            </select>
+                        <div class="windows">
+                            <button class="randomLetters">random letters</button>
+                            <button class="randomWords">random words</button>
+                            <button class="customText">custom text</button>
+                            <button class="savedText">saved text</button>
                         </div>
-                        <div class="fS16"></div>
-                        <div class="randomLetters">
+                        <div class="randomLettersWindow">
                             <div>
                                 <div>
                                     <p>number of letters</p>
@@ -75,14 +74,37 @@
                             </div>
                             <div class="keyboard" id="keyboard"></div>
                         </div>
-                        <div class="customText" class="hidden">
-                            <button class="saveText" style="display: block;">save text</button>
+                        <div class="customTextWindow" class="hidden">
                             <textarea type="text" id="wordsInput" placeholder="Text" style="max-width: 100%;">text is a text and not a text is not a text</textarea>
+                            <div class="fS8"></div>
+                            <div style="display: flex; justify-content: flex-end;">
+                                <button class="saveText" style="display: block;">save text</button>
+                            </div>
                         </div>
-                        <div class="savedText">
+                        <div class="savedTextWindow">
                             <div class="savedTextHolder">
                                 <button>use</button>
                                 <button>remove</button>
+                            </div>
+                        </div>
+                        <div class="randomWordsWindow">
+                            <div>
+                                <div class="sameLine">
+                                    <p>number of words</p>
+                                    <input type="number" value="60" min="1" max="500" id="numberOfWords" style="max-width: 100px;">
+                                </div>
+                                <div class="sameLine"> 
+                                    <p>remove duplicates</p>
+                                    <input type="checkbox" id="removeDuplicates" checked="">
+                                </div>
+                                <div class="sameLine"> 
+                                    <p>to lower case</p>
+                                    <input type="checkbox" id="toLowerCase" checked="">
+                                </div>
+                                <div class="sameLine"> 
+                                    <p>random case</p>
+                                    <input type="checkbox" id="randomCase" checked="">
+                                </div>
                             </div>
                         </div>
                     </div>
