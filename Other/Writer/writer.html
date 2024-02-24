@@ -52,6 +52,7 @@
                             <button class="randomWords">random words</button>
                             <button class="customText">custom text</button>
                             <button class="savedText">saved text</button>
+                            <button class="mistakes">mistakes</button>
                         </div>
                         <div class="randomLettersWindow">
                             <div>
@@ -74,19 +75,6 @@
                             </div>
                             <div class="keyboard" id="keyboard"></div>
                         </div>
-                        <div class="customTextWindow" class="hidden">
-                            <textarea type="text" id="wordsInput" placeholder="Text" style="max-width: 100%;">text is a text and not a text is not a text</textarea>
-                            <div class="fS8"></div>
-                            <div style="display: flex; justify-content: flex-end;">
-                                <button class="saveText" style="display: block;">save text</button>
-                            </div>
-                        </div>
-                        <div class="savedTextWindow">
-                            <div class="savedTextHolder">
-                                <button>use</button>
-                                <button>remove</button>
-                            </div>
-                        </div>
                         <div class="randomWordsWindow">
                             <div>
                                 <div class="sameLine">
@@ -106,6 +94,40 @@
                                     <input type="checkbox" id="randomCase" checked="">
                                 </div>
                             </div>
+                        </div>
+                        <div class="customTextWindow" class="hidden">
+                            <div>
+                                <div class="sameLine" style="display: flex; justify-content: space-between;">
+                                    <p>remove diacritics</p>
+                                    <input type="checkbox" class="removeDiacritics" checked="">
+                                </div>
+                                <div class="sameLine" style="display: flex; justify-content: space-between;">
+                                    <p>whole text</p>
+                                    <input type="checkbox" class="customTextWholeText" checked="">
+                                </div>
+                                <div class="customTextLengthHolder sameLine" style="display: flex; justify-content: space-between;">
+                                    <p>length</p>
+                                    <input type="number" value="60" min="1" class="customTextLength" style="max-width: 100px;">
+                                </div>
+                            </div>
+                            <div class="fS8"></div>
+                            <textarea type="text" id="customTextInput" placeholder="Text" style="max-width: 100%;">text is a text and not a text is not a text</textarea>
+                            <div class="fS8"></div>
+                            <div style="display: flex; justify-content: flex-end;">
+                                <button class="saveText" style="display: block;">save text</button>
+                            </div>
+                        </div>
+                        <div class="savedTextWindow">
+                            <div class="savedTextHolder">
+                                <button>use</button>
+                                <button>remove</button>
+                            </div>
+                        </div>
+                        <div class="mistakesWindow">
+                            <div class="sameLine" style="display: flex; justify-content: flex-end;">
+                                <button class="clearMistakes">clear mistakes</button>
+                            </div>
+                            <div class="mistakesHolder"></div>
                         </div>
                     </div>
                 </div>

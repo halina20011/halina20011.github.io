@@ -7,9 +7,12 @@ let words = [];
 
 let generateFunc = generateFromRandom;
 let index = 0, mistakesMade = 0, yOffset = 0;
+const mistakes = new Map();
 let prevInput = "";
 
 let timeStarted = null;
+
+let selectedText = null;
 
 const keyaboard = new Keyboard(document.querySelector(".keyboard"));
 
@@ -29,7 +32,8 @@ document.querySelector(".saveText").addEventListener("click", () => {
     const name = prompt("Name: ");
     // console.log(name);
     if(name != null){
-        new Text(savedTextWindow, name, wordsInput.value);
+        window.localStorage.setItem(name, customTextInput.value);
+        new Text(savedTextWindow, name, customTextInput.value);
     }
 });
 
@@ -43,9 +47,9 @@ const current = document.querySelector(".current");
 const afterIncorrect = document.querySelector(".afterIncorrect");
 const after = document.querySelector(".after");
 
-document.getElementById("restart").addEventListener("click", function() { setUp(); }, false);
+document.getElementById("restart").addEventListener("click", setUp, false);
 
-const wordsInput = document.getElementById("wordsInput"); 
+const customTextInput = document.getElementById("customTextInput"); 
 
 const endScreen = document.querySelector(".endScreen");
 const timerEnd = document.querySelector(".timerEnd");
@@ -68,6 +72,25 @@ const numberOfWords = document.querySelector("#numberOfWords");
 
 const settings = document.querySelector(".settings");
 func.toggle(".moreSettings", true, [settings], [false], "hidden");
+
+document.querySelector(".clearMistakes").$("click", () => {
+    mistakes.clear();
+    showMistakes();
+});
+const mistakesHolder = document.querySelector(".mistakesHolder");
+
+const removeDiacritics = document.querySelector(".removeDiacritics");
+const customTextWholeText = document.querySelector(".customTextWholeText");
+const customTextLengthHolder = document.querySelector(".customTextLengthHolder");
+const customTextLength = document.querySelector(".customTextLength");
+customTextWholeText.$("input", () => {
+    if(customTextWholeText.checked){
+        customTextLengthHolder.classList.add("hidden");
+    }
+    else{
+        customTextLengthHolder.classList.remove("hidden");
+    }
+}, true);
 
 function clearInput(){
     input.value = "";
@@ -93,7 +116,6 @@ function loadSavedTexts(){
     Object.keys(items).forEach(key => {
         new Text(savedTextWindow, key, items[key]);
     });
-
 }
 
 function convertTime(time){
@@ -132,9 +154,27 @@ function showWorld(){
     }
 }
 
+// TODO: add item to sroted array, dont sort it again
+function showMistakes(){
+    const mistakesArray = Array.from(mistakes.entries());
+    mistakesArray.sort((a, b) => a[1] - b[1]);
+    mistakesHolder.innerHTML = "";
+    mistakesArray.forEach(([word, val]) => {
+        const element = func.createElement(`<div class="mistake sameLine">
+                <p>${word}</p>
+                <p>${val.count}</p>
+            </div>`);
+        mistakesHolder.appendChild(element);
+    });
+}
+
 function update(input){
     if(timeStarted == undefined){
         timeStarted = Date.now();
+    }
+
+    if(words.length <= index){
+        return;
     }
 
     const correctWord = words[index].content;
@@ -145,6 +185,11 @@ function update(input){
     // console.log(input.length, input, endMatch.substring(0, input.length));
     if(prevInput.length < input.length && input != endMatch.substring(0, input.length)){
         mistakesMade++;
+        if(!mistakes.has(correctWord)){
+            mistakes.set(correctWord, {count: 0});
+        }
+        mistakes.get(correctWord).count++;
+        showMistakes();
         // mistakes.innerHTML = mistakesMade;
     }
     // if the input matches the correctWord and there is an space at the end if needed 
@@ -344,15 +389,27 @@ function generateFromRandom(){
     return letters.join("");
 }
 
-function generateFromCustom(){
-    return wordsInput.value;
-}
+customTextInput.addEventListener("input", () => {
+    if(removeDiacritics.checked){
+        const strInput = customTextInput.value;
+        customTextInput.value = strInput.normalize("NFD").replace(/\p{Diacritic}/gu, "");
+    }
+});
 
-let selectedText = null;
+function generateFromCustom(){
+    if(customTextWholeText.checked){
+        return customTextInput.value;
+    }
+    
+    const arr = customTextInput.value.split(" ");
+    return arr.slice(0, parseInt(customTextLength.value)).join(" ");
+}
 
 function generateFromSaved(){
     const content = window.localStorage[selectedText];
-    return (content) ? content : "not selected";
+    const text = (content) ? content : "not selected";
+    customTextInput.value = text;
+    return text;
 }
 
 function setUp(){
@@ -365,6 +422,7 @@ function setUp(){
 
     endScreen.style.display = "none";
     mistakesMade = 0;
+    showMistakes();
     // mistakes.innerHTML = mistakesMade;
     timeStarted = null;
     timer.innerHTML = "0:00";
@@ -376,15 +434,8 @@ function setUp(){
     showWorld();
 }
 
-function generateWords(){
-    let words = [];
+function generateWords(words){
     const set = new Set();
-    savedTexts.forEach(item => {
-        if(item.checkbox.checked){
-            const itemstr = item.value.split(/[ \n,]/g).filter(str => (0 < str.length));
-            words = [...words, ...itemstr];
-        }
-    });
 
     if(removeDuplicates.checked){
         words.forEach(set.add, set);
@@ -409,7 +460,29 @@ function generateWords(){
     }).join(" ");
 }
 
-const generateList = [generateFromRandom, generateWords, generateFromCustom, generateFromSaved];
+function generateRandomWords(){
+    let from = [];
+    savedTexts.forEach(item => {
+        if(item.checkbox.checked){
+            const itemstr = item.value.split(/[ \n,]/g).filter(str => (0 < str.length));
+            from = [...from, ...itemstr];
+        }
+    });
+
+    return generateWords(from);
+}
+
+function generateFromMistakes(){
+    if(mistakes.size <= 0){
+        return "zero mistakes";
+    }
+
+    const arr = Array.from(mistakes.keys());
+    // console.log(arr);
+    return generateWords(arr);
+}
+
+const generateList = [generateFromRandom, generateRandomWords, generateFromCustom, generateFromSaved, generateFromMistakes];
 
 new WindowSelector(".windows", (i) => {
     generateFunc = generateList[i];

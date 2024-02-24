@@ -131,7 +131,7 @@
     aspect-ratio: 1/1;
 }
 
-.randomLettersWindow, .customTextWindow, .savedTextWindow, .randomWordsWindow{
+.randomLettersWindow, .customTextWindow, .savedTextWindow, .randomWordsWindow, .mistakesWindow{
     padding: 10px;
 }
 
@@ -175,7 +175,7 @@
     min-height: 20px;
 }
 
-.savedText{
+.savedText, .mistakesHolder > div{
     width: 100%;
     background-color: #454545;;
 }
